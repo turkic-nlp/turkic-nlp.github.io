@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turkic NLP — Toolkit &amp; Book for 20+ Languages</title>
+  <meta name="description" content="Open-source NLP toolkit and practical book covering 20+ Turkic languages: Turkish, Kazakh, Uzbek, Azerbaijani, Kyrgyz, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Nav ─────────────────────────────────────────────────────── -->
+    <nav class="nav">
+      <div class="brand">
+        <img src="/images/cover.png" alt="Turkic NLP" />
+        Turkic NLP
+      </div>
+      <div class="nav-links">
+        <a href="/toolkit/">Toolkit</a>
+        <a href="/book/">Book</a>
+        <a href="https://github.com/turkic-nlp" target="_blank" rel="noopener">GitHub</a>
+        <a href="#support" class="nav-cta">Support ☕</a>
+      </div>
+    </nav>
+
+    <!-- ── Hero ─────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero-card">
+        <div class="badge">Open · Research-backed · Community-driven</div>
+        <h1 class="hero-title">NLP for 20+ Turkic languages.</h1>
+        <p class="hero-subtitle">
+          A practical, pip-installable Python toolkit and an open textbook — built together so you can go from raw text to annotated output across the Turkic language family.
+        </p>
+        <div class="hero-meta">
+          <span class="pill">21 languages</span>
+          <span class="pill">Morphology &amp; POS</span>
+          <span class="pill">Translation &amp; Embeddings</span>
+          <span class="pill">Apache 2.0</span>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="/toolkit/">Explore the toolkit →</a>
+          <a class="button secondary" href="/book/">Read the book</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <h2>From text to understanding</h2>
+        <p>One unified pipeline for tokenization, morphological analysis, POS tagging, dependency parsing, named entity recognition, multilingual embeddings, and machine translation.</p>
+        <div class="install-pill">
+          <span class="prompt">$</span> pip install turkicnlp
+        </div>
+        <p class="small" style="margin-top:0.8rem;">Works with Turkish, Kazakh, Uzbek, Kyrgyz, Uyghur, Tatar and 15 more languages.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Two pillars ──────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="split">
+        <div class="card">
+          <div class="card-icon">🔧</div>
+          <h3>The Toolkit</h3>
+          <p>A Stanza-inspired modular pipeline with Apertium FST morphology, NLLB-200 translation and embeddings, and Stanza neural models for parsing and tagging.</p>
+          <p>Supports 21 Turkic languages. Script-aware from the ground up — Latin, Cyrillic, and Perso-Arabic handled natively.</p>
+          <div class="actions" style="margin-top:1rem;">
+            <a class="button primary" href="/toolkit/">Get started</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📖</div>
+          <h3>The Book</h3>
+          <p><em>NLP for Turkic Languages</em> is a practical, open-access textbook covering foundations through modern LLMs — with exercises, code examples, and linguistic depth for every chapter.</p>
+          <p>Freely available online. Because knowledge about under-resourced languages should be open.</p>
+          <div class="actions" style="margin-top:1rem;">
+            <a class="button secondary" href="/book/">Coming soon</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── What the toolkit does ────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-badge">Toolkit capabilities</div>
+      <h2 class="section-title">Everything you need to build Turkic NLP systems</h2>
+      <p class="section-lead">Processor-based pipeline architecture — pick what you need, chain it together, get annotated output in CoNLL-U or JSON.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">🔤</div>
+          <h3>Tokenization &amp; Scripts</h3>
+          <p>Neural (Stanza) and rule-based tokenizers for Latin, Cyrillic, and Perso-Arabic scripts. Automatic script detection and transliteration.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧬</div>
+          <h3>Morphological Analysis</h3>
+          <p>Apertium HFST finite-state transducers for 21 languages, loaded natively via Python. No system Apertium install required.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏷️</div>
+          <h3>POS &amp; Dependency Parsing</h3>
+          <p>Stanza neural models trained on Universal Dependencies treebanks for Turkish, Kazakh, Kyrgyz, Uyghur, and Ottoman Turkish.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h3>Translation &amp; Embeddings</h3>
+          <p>NLLB-200 (600M) translation and multilingual sentence embeddings for 11 Turkic languages. One download, all languages.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <h3>CoNLL-U I/O</h3>
+          <p>Full CoNLL-U parser and writer. Import treebanks, export annotated documents, and plug into any UD-compatible pipeline.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔬</div>
+          <h3>Research-ready</h3>
+          <p>MWT expansion, tag mapping (Apertium → UD), batch processing, and GPU support. Built for reproducible NLP research.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Languages ────────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-badge">Language coverage</div>
+      <h2 class="section-title">21 Turkic languages and growing</h2>
+      <p class="section-lead">From well-resourced Turkish to endangered varieties — the toolkit covers the full breadth of the family.</p>
+      <div class="lang-grid">
+        <div class="lang-pill full"><span class="lang-name">Turkish</span><span class="lang-code">tur</span><span class="lang-level">Full pipeline</span></div>
+        <div class="lang-pill full"><span class="lang-name">Kazakh</span><span class="lang-code">kaz</span><span class="lang-level">Full pipeline</span></div>
+        <div class="lang-pill full"><span class="lang-name">Kyrgyz</span><span class="lang-code">kir</span><span class="lang-level">Full pipeline</span></div>
+        <div class="lang-pill full"><span class="lang-name">Uyghur</span><span class="lang-code">uig</span><span class="lang-level">Full pipeline</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Uzbek</span><span class="lang-code">uzb</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Azerbaijani</span><span class="lang-code">aze</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Tatar</span><span class="lang-code">tat</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Bashkir</span><span class="lang-code">bak</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Turkmen</span><span class="lang-code">tuk</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Crimean Tatar</span><span class="lang-code">crh</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">S. Azerbaijani</span><span class="lang-code">azb</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Chuvash</span><span class="lang-code">chv</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Gagauz</span><span class="lang-code">gag</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Sakha</span><span class="lang-code">sah</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Karakalpak</span><span class="lang-code">kaa</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Nogai</span><span class="lang-code">nog</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Kumyk</span><span class="lang-code">kum</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Karachay-Balkar</span><span class="lang-code">krc</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Altai</span><span class="lang-code">alt</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Tuvan</span><span class="lang-code">tyv</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Khakas</span><span class="lang-code">kjh</span><span class="lang-level">Morphology</span></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Support ──────────────────────────────────────────────────── -->
+    <section class="support" id="support">
+      <div class="section-badge">Support the project</div>
+      <h2>Help keep Turkic NLP open</h2>
+      <p class="support-lead">
+        Both the toolkit and the book are free and open-source. If this work is useful to you — whether for research, teaching, or building products — consider supporting its development.
+      </p>
+      <div class="donate-grid">
+        <!-- ✏️ Replace with your PayPal.me link -->
+        <a class="donate-btn paypal" href="https://paypal.me/sherzodhakimov" target="_blank" rel="noopener">
+          <span class="icon">💙</span> Donate via PayPal
+        </a>
+        <a class="donate-btn patreon" href="https://patreon.com/SherzodHakimov" target="_blank" rel="noopener">
+          <span class="icon">🎁</span> Support on Patreon
+        </a>
+      </div>
+      <p class="support-note">Funds go directly toward model training, infrastructure, and time spent writing the open book.</p>
+    </section>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="footer">
+      <div>© 2025 Turkic NLP · Apache 2.0 · Built for the community</div>
+      <div class="footer-links">
+        <a href="/toolkit/">Toolkit</a>
+        <a href="/book/">Book</a>
+        <a href="https://github.com/turkic-nlp" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://pypi.org/project/turkicnlp/" target="_blank" rel="noopener">PyPI</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

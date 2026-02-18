@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TurkicNLP Toolkit — Python NLP for 21 Turkic Languages</title>
+  <meta name="description" content="A pip-installable Python NLP toolkit for 21 Turkic languages. Morphology, POS tagging, dependency parsing, translation, and embeddings." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Nav ─────────────────────────────────────────────────────── -->
+    <nav class="nav">
+      <div class="brand">
+        <img src="/images/cover.png" alt="Turkic NLP" />
+        Turkic NLP
+      </div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/book/">Book</a>
+        <a href="https://github.com/turkic-nlp/turkicnlp" target="_blank" rel="noopener">GitHub</a>
+        <a href="/#support" class="nav-cta">Support ☕</a>
+      </div>
+    </nav>
+
+    <!-- ── Hero ─────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero-card">
+        <div class="badge">Toolkit · v0.1.1</div>
+        <h1 class="hero-title">The TurkicNLP Toolkit</h1>
+        <p class="hero-subtitle">
+          A modular, pip-installable Python library for NLP across the Turkic language family. Morphology, POS tagging, dependency parsing, named entity recognition, multilingual embeddings, and machine translation — in one unified pipeline.
+        </p>
+        <div class="hero-meta">
+          <span class="pill">21 languages</span>
+          <span class="pill">Python 3.9+</span>
+          <span class="pill">Apache 2.0</span>
+          <span class="pill">CoNLL-U native</span>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/turkic-nlp/turkicnlp" target="_blank" rel="noopener">View on GitHub →</a>
+          <a class="button secondary" href="https://pypi.org/project/turkicnlp/" target="_blank" rel="noopener">PyPI package</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <h2>Installation</h2>
+        <p>Core library — morphology + tokenization:</p>
+        <div class="install-pill"><span class="prompt">$</span> pip install turkicnlp</div>
+        <p style="margin-top:1rem;">With neural models (Stanza + Transformers):</p>
+        <div class="install-pill"><span class="prompt">$</span> pip install "turkicnlp[stanza,nllb]"</div>
+        <p class="small" style="margin-top:1rem;">
+          Apertium FST data (GPL-3.0) is downloaded separately at runtime — it is never bundled in the pip package.
+        </p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Quick start ──────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-badge">Quick start</div>
+      <h2 class="section-title">Up and running in three steps</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Install the library</h4>
+            <p>Install from PyPI with optional extras depending on which processors you need.</p>
+            <div class="install-pill" style="margin-top:0.6rem;"><span class="prompt">$</span> pip install "turkicnlp[stanza,nllb]"</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Download models for your language</h4>
+            <p>Models are fetched on demand and cached in <code>~/.turkicnlp/models/</code>.</p>
+<pre><code><span class="k">import</span> turkicnlp
+
+<span class="c"># Download Stanza + Apertium models for Turkish</span>
+turkicnlp.download(<span class="s">"tur"</span>, processors=[<span class="s">"tokenize"</span>, <span class="s">"morph"</span>, <span class="s">"pos"</span>, <span class="s">"lemma"</span>, <span class="s">"depparse"</span>])</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Build a pipeline and annotate text</h4>
+            <p>Processors chain automatically in the correct order.</p>
+<pre><code>nlp = turkicnlp.Pipeline(<span class="s">"tur"</span>, processors=[<span class="s">"tokenize"</span>, <span class="s">"pos"</span>, <span class="s">"lemma"</span>, <span class="s">"depparse"</span>])
+doc = nlp(<span class="s">"Bugün hava çok güzel ve parkta yürüyüş yaptım."</span>)
+
+<span class="k">for</span> sentence <span class="k">in</span> doc.sentences:
+    <span class="k">for</span> word <span class="k">in</span> sentence.words:
+        print(f<span class="s">"{word.text:&lt;16} {word.upos:&lt;8} {word.lemma}"</span>)
+
+<span class="c"># Bugün            ADV      bugün</span>
+<span class="c"># hava             NOUN     hava</span>
+<span class="c"># çok              ADV      çok</span>
+<span class="c"># güzel            ADJ      güzel</span>
+<span class="c"># parkta           NOUN     park</span>
+<span class="c"># yürüyüş          NOUN     yürüyüş</span>
+<span class="c"># yaptım           VERB     yap</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Translation / Embeddings example ─────────────────────────── -->
+    <section class="section">
+      <div class="section-badge">Machine translation</div>
+      <h2 class="section-title">NLLB-200 translation &amp; embeddings</h2>
+      <p class="section-lead">Powered by Facebook's NLLB-200-distilled-600M model, supporting 11 Turkic languages.</p>
+
+      <div class="split">
+        <div>
+<pre><code><span class="c"># Translate Kazakh → English</span>
+nlp = turkicnlp.Pipeline(
+    <span class="s">"kaz"</span>,
+    processors=[<span class="s">"translate"</span>],
+    translate_tgt_lang=<span class="s">"eng"</span>
+)
+doc = nlp(<span class="s">"Бүгін ауа райы өте жақсы."</span>)
+print(doc.translation)
+<span class="o"># The weather is very good today.</span>
+
+<span class="c"># Sentence embeddings for semantic similarity</span>
+embed = turkicnlp.Pipeline(<span class="s">"tur"</span>, processors=[<span class="s">"embeddings"</span>])
+doc = embed(<span class="s">"Parkta yürüyüş çok güzeldi."</span>)
+print(len(doc.embedding))   <span class="c"># 1024-dim vector</span></code></pre>
+        </div>
+        <div class="highlight">
+          <h3>Supported languages for MT &amp; Embeddings</h3>
+          <p class="small">These 11 languages have full NLLB-200 support for both translation and semantic embeddings:</p>
+          <div class="lang-grid" style="margin-top:0.8rem;">
+            <div class="lang-pill morph"><span class="lang-name">Turkish</span><span class="lang-code">tur</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Kazakh</span><span class="lang-code">kaz</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Kyrgyz</span><span class="lang-code">kir</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Uzbek</span><span class="lang-code">uzb</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Azerbaijani</span><span class="lang-code">aze</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Tatar</span><span class="lang-code">tat</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Bashkir</span><span class="lang-code">bak</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Turkmen</span><span class="lang-code">tuk</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Uyghur</span><span class="lang-code">uig</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Crimean Tatar</span><span class="lang-code">crh</span></div>
+            <div class="lang-pill morph"><span class="lang-name">S. Azerbaijani</span><span class="lang-code">azb</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Processors ───────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-badge">Pipeline processors</div>
+      <h2 class="section-title">Modular pipeline architecture</h2>
+      <p class="section-lead">Request only the processors you need. Dependencies are resolved automatically.</p>
+      <div class="proc-grid">
+        <div class="proc-card">
+          <span class="proc-name">tokenize</span>
+          <h4>Tokenization</h4>
+          <p>Neural (Stanza) or rule-based. Handles multi-word tokens, sentence splitting.</p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">morph</span>
+          <h4>Morphological Analysis</h4>
+          <p>Apertium HFST FSTs for 21 languages. Lemma, POS, and full morphological features.</p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">pos</span>
+          <h4>POS Tagging</h4>
+          <p>Stanza neural tagger trained on UD treebanks. Outputs UPOS, XPOS, and features.</p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">lemma</span>
+          <h4>Lemmatization</h4>
+          <p>Stanza neural lemmatizer for tur, kaz, kir, uig. Apertium fallback for others.</p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">depparse</span>
+          <h4>Dependency Parsing</h4>
+          <p>Biaffine attention parser via Stanza. UD-compatible dependency relations.</p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">ner</span>
+          <h4>Named Entities</h4>
+          <p>NER processor for entity extraction. BIO tagging format. <em>(In development)</em></p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">embeddings</span>
+          <h4>Sentence Embeddings</h4>
+          <p>NLLB-200 encoder states. 1024-dim multilingual vectors for semantic search and similarity.</p>
+        </div>
+        <div class="proc-card">
+          <span class="proc-name">translate</span>
+          <h4>Machine Translation</h4>
+          <p>NLLB-200 sequence-to-sequence generation. Any Turkic language → any FLORES-200 language.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Language support table ────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-badge">Language support matrix</div>
+      <h2 class="section-title">What works for each language</h2>
+      <p class="section-lead">✓ available &nbsp;·&nbsp; ~ in development &nbsp;·&nbsp; – not yet available</p>
+      <div class="feature-wrap">
+        <table class="feature-table">
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Code</th>
+              <th>Script</th>
+              <th>Tokenize</th>
+              <th>Morphology</th>
+              <th>POS / Dep</th>
+              <th>Embeddings</th>
+              <th>Translation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="lang-col">Turkish</td>         <td class="code-col">tur</td><td>Latin</td>         <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Kazakh</td>          <td class="code-col">kaz</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Kyrgyz</td>          <td class="code-col">kir</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Uyghur</td>          <td class="code-col">uig</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Uzbek</td>           <td class="code-col">uzb</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="partial">~</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Azerbaijani</td>     <td class="code-col">aze</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="partial">~</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Tatar</td>           <td class="code-col">tat</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Bashkir</td>         <td class="code-col">bak</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Turkmen</td>         <td class="code-col">tuk</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Crimean Tatar</td>   <td class="code-col">crh</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">S. Azerbaijani</td>  <td class="code-col">azb</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Chuvash</td>         <td class="code-col">chv</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Sakha (Yakut)</td>   <td class="code-col">sah</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Gagauz</td>          <td class="code-col">gag</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Karakalpak</td>      <td class="code-col">kaa</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">+ 6 more</td>        <td class="code-col">…</td>  <td>Cyrillic</td>     <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small" style="margin-top:1rem;">~ = rule-based tokenizer available. Neural models require treebank data. Contributions welcome!</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Architecture ─────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="split">
+        <div>
+          <div class="section-badge">Design</div>
+          <h2 class="section-title">Built to be extended</h2>
+          <p>TurkicNLP follows a Stanza-inspired architecture. Every processor declares what it <code>PROVIDES</code> and <code>REQUIRES</code> — the pipeline resolves dependencies automatically.</p>
+          <p>Script-aware from the ground up: models are keyed by <code>lang/script/processor/backend</code>. The pipeline auto-detects scripts, inserts transliteration steps where needed, and bridges models across writing systems.</p>
+          <p>Apertium FST data is GPL-3.0 and always downloaded separately — never bundled in the Apache 2.0 pip package.</p>
+        </div>
+        <div>
+<pre><code><span class="c"># Pipeline execution order</span>
+script_detect → transliterate
+  → tokenize → mwt → morph
+  → pos → lemma → depparse
+  → ner → embeddings
+  → sentiment → translate
+
+<span class="c"># Model storage layout</span>
+~/.turkicnlp/models/
+  tur/Latn/morph/apertium/
+  kaz/Cyrl/tokenize/stanza/
+  huggingface/
+    facebook--nllb-200-distilled-600M/</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Contributing ─────────────────────────────────────────────── -->
+    <section class="section" id="contributing">
+      <div class="section-badge">Contributing</div>
+      <h2 class="section-title">Help us cover more languages</h2>
+      <p class="section-lead">TurkicNLP is a community effort. There are many ways to contribute — no matter your background.</p>
+
+      <div class="contrib-grid">
+        <div class="contrib-card">
+          <div class="contrib-icon">🐛</div>
+          <h4>Report bugs</h4>
+          <p>Found an issue? Open a GitHub issue with your language, input text, and the error. Reproducible reports are hugely helpful.</p>
+        </div>
+        <div class="contrib-card">
+          <div class="contrib-icon">🌍</div>
+          <h4>Add a language</h4>
+          <p>Have an Apertium FST or UD treebank for a Turkic language not yet covered? Add a catalog entry and open a PR.</p>
+        </div>
+        <div class="contrib-card">
+          <div class="contrib-icon">🧪</div>
+          <h4>Improve tag mappings</h4>
+          <p>Apertium → UD tag mappings exist for Turkish, Kazakh, and Tatar. Help us add mappings for Uzbek, Azerbaijani, Kyrgyz, and others.</p>
+        </div>
+        <div class="contrib-card">
+          <div class="contrib-icon">📊</div>
+          <h4>Share datasets</h4>
+          <p>Do you have annotated data, parallel corpora, or evaluation benchmarks for Turkic languages? Let us know or link them in the catalog.</p>
+        </div>
+        <div class="contrib-card">
+          <div class="contrib-icon">🧠</div>
+          <h4>Train neural models</h4>
+          <p>Help train POS taggers, dependency parsers, or NER models for under-resourced languages. Training scripts are in the repo.</p>
+        </div>
+        <div class="contrib-card">
+          <div class="contrib-icon">📝</div>
+          <h4>Contribute to the book</h4>
+          <p>The open book needs reviewers, code examples, and native speaker insights. See the book repository for how to get involved.</p>
+        </div>
+      </div>
+
+      <div class="highlight" style="margin-top:2rem;">
+        <h3>How to get started</h3>
+        <div class="steps" style="margin-top:1rem;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Fork &amp; clone the repository</h4>
+              <div class="install-pill" style="margin-top:0.4rem;"><span class="prompt">$</span> git clone https://github.com/turkic-nlp/turkicnlp</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Install in development mode</h4>
+              <div class="install-pill" style="margin-top:0.4rem;"><span class="prompt">$</span> pip install -e ".[dev,stanza,nllb]"</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Run the tests</h4>
+              <div class="install-pill" style="margin-top:0.4rem;"><span class="prompt">$</span> pytest turkicnlp/tests/</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <h4>Open a pull request</h4>
+              <p>All PRs are reviewed. Small, focused changes merge faster. When in doubt, open an issue first to discuss the approach.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── License ──────────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="split">
+        <div>
+          <div class="section-badge">Licensing</div>
+          <h2 class="section-title">Open source, with clear boundaries</h2>
+          <p>The <strong>TurkicNLP library</strong> is <strong>Apache 2.0</strong> — use it freely in research and commercial projects.</p>
+          <p><strong>Apertium FST data</strong> (morphological analyzers) is <strong>GPL-3.0-or-later</strong>. It is downloaded separately at runtime and is never bundled in the pip package. Each language's data directory includes its license file.</p>
+          <p><strong>Stanza models</strong> and <strong>NLLB-200</strong> are used under their respective licenses (Apache 2.0 and CC-BY-NC-4.0).</p>
+        </div>
+        <div class="highlight">
+          <h3>Quick reference</h3>
+          <table style="width:100%;font-family:var(--mono);font-size:0.82rem;border-collapse:collapse;">
+            <tr><td style="padding:0.4rem 0;color:var(--ink);font-weight:600;">turkicnlp (pip)</td><td style="color:var(--accent);">Apache 2.0</td></tr>
+            <tr style="border-top:1px solid var(--line);"><td style="padding:0.4rem 0;color:var(--ink);font-weight:600;">Apertium FSTs</td><td style="color:var(--accent-2);">GPL-3.0-or-later</td></tr>
+            <tr style="border-top:1px solid var(--line);"><td style="padding:0.4rem 0;color:var(--ink);font-weight:600;">Stanza models</td><td style="color:var(--accent);">Apache 2.0</td></tr>
+            <tr style="border-top:1px solid var(--line);"><td style="padding:0.4rem 0;color:var(--ink);font-weight:600;">NLLB-200</td><td style="color:var(--muted);">CC-BY-NC-4.0</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Support ──────────────────────────────────────────────────── -->
+    <section class="support" id="support">
+      <div class="section-badge">Support the project</div>
+      <h2>Keep Turkic NLP open &amp; growing</h2>
+      <p class="support-lead">
+        If TurkicNLP saves you time or powers your research, consider supporting its development. Every contribution helps fund model training, new language coverage, and the open book.
+      </p>
+      <div class="donate-grid">
+        <!-- ✏️ Replace with your PayPal.me link -->
+        <a class="donate-btn paypal" href="https://paypal.me/sherzodhakimov" target="_blank" rel="noopener">
+          <span class="icon">💙</span> Donate via PayPal
+        </a>
+        <a class="donate-btn patreon" href="https://patreon.com/SherzodHakimov" target="_blank" rel="noopener">
+          <span class="icon">🎁</span> Support on Patreon
+        </a>
+      </div>
+      <p class="support-note">The book will always be free. Donations help make that sustainable.</p>
+    </section>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="footer">
+      <div>TurkicNLP Toolkit · Apache 2.0 · <a href="https://github.com/turkic-nlp/turkicnlp" target="_blank" rel="noopener">turkic-nlp/turkicnlp</a></div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/book/">Book</a>
+        <a href="https://github.com/turkic-nlp/turkicnlp" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://pypi.org/project/turkicnlp/" target="_blank" rel="noopener">PyPI</a>
+        <a href="#contributing">Contributing</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
