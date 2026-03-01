@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Turkic NLP — Toolkit &amp; Book for 20+ Languages</title>
-  <meta name="description" content="Open-source NLP toolkit covering 20+ Turkic languages: Turkish, Kazakh, Uzbek, Azerbaijani, Kyrgyz, and more." />
+  <title>Turkic NLP — Toolkit &amp; Book for 24 Languages</title>
+  <meta name="description" content="Open-source NLP toolkit covering 24 Turkic languages: Turkish, Kazakh, Uzbek, Azerbaijani, Kyrgyz, and more." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet" />
@@ -36,14 +36,14 @@
           A practical, pip-installable Python toolkit — built so you can go from raw text to annotated output across the Turkic language family.
         </p>
         <div class="hero-meta">
-          <span class="pill">21 languages</span>
+          <span class="pill">24 languages</span>
           <span class="pill">Morphology &amp; POS</span>
           <span class="pill">Translation &amp; Embeddings</span>
           <span class="pill">Apache 2.0</span>
         </div>
         <div class="actions">
           <a class="button primary" href="/toolkit/">Explore the toolkit →</a>
-          <!-- <a class="button secondary" href="/book/">Read the book</a> -->
+          <a class="button secondary" href="https://arxiv.org/abs/2602.19174" target="_blank" rel="noopener">Read the paper</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -65,7 +65,7 @@
           <div class="card-icon">🔧</div>
           <h3>The Toolkit</h3>
           <p>A Stanza-inspired modular pipeline with Apertium FST morphology, NLLB-200 translation and embeddings, and Stanza neural models for parsing and tagging.</p>
-          <p>Supports 21 Turkic languages. Script-aware from the ground up — Latin, Cyrillic, and Perso-Arabic handled natively.</p>
+          <p>Supports 24 Turkic languages. Script-aware from the ground up — Latin, Cyrillic, and Perso-Arabic handled natively.</p>
           <div class="actions" style="margin-top:1rem;">
             <a class="button primary" href="/toolkit/">Get started</a>
           </div>
@@ -103,7 +103,7 @@
         <div class="card">
           <div class="card-icon">🏷️</div>
           <h3>POS &amp; Dependency Parsing</h3>
-          <p>Stanza neural models trained on Universal Dependencies treebanks for Turkish, Kazakh, Kyrgyz, Uyghur, and Ottoman Turkish.</p>
+          <p>Stanza neural models trained on Universal Dependencies treebanks for Turkish, Kazakh, Kyrgyz, Uyghur, and Ottoman Turkish. Custom-trained Stanza models also available for Uzbek, Turkmen, and Azerbaijani.</p>
         </div>
         <div class="card">
           <div class="card-icon">🌐</div>
@@ -128,20 +128,21 @@
     <!-- ── Languages ────────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-badge">Language coverage</div>
-      <h2 class="section-title">21 Turkic languages and growing</h2>
+      <h2 class="section-title">24 Turkic languages and growing</h2>
       <p class="section-lead">From well-resourced Turkish to endangered varieties — the toolkit covers the full breadth of the family.</p>
       <div class="lang-grid">
         <div class="lang-pill full"><span class="lang-name">Turkish</span><span class="lang-code">tur</span><span class="lang-level">Full pipeline</span></div>
         <div class="lang-pill full"><span class="lang-name">Kazakh</span><span class="lang-code">kaz</span><span class="lang-level">Full pipeline</span></div>
         <div class="lang-pill full"><span class="lang-name">Kyrgyz</span><span class="lang-code">kir</span><span class="lang-level">Full pipeline</span></div>
         <div class="lang-pill full"><span class="lang-name">Uyghur</span><span class="lang-code">uig</span><span class="lang-level">Full pipeline</span></div>
-        <div class="lang-pill morph"><span class="lang-name">Uzbek</span><span class="lang-code">uzb</span><span class="lang-level">Morph + MT</span></div>
-        <div class="lang-pill morph"><span class="lang-name">Azerbaijani</span><span class="lang-code">aze</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Uzbek</span><span class="lang-code">uzb</span><span class="lang-level">POS + Parsing + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Azerbaijani</span><span class="lang-code">aze</span><span class="lang-level">POS + Parsing + MT</span></div>
         <div class="lang-pill morph"><span class="lang-name">Tatar</span><span class="lang-code">tat</span><span class="lang-level">Morph + MT</span></div>
         <div class="lang-pill morph"><span class="lang-name">Bashkir</span><span class="lang-code">bak</span><span class="lang-level">Morph + MT</span></div>
-        <div class="lang-pill morph"><span class="lang-name">Turkmen</span><span class="lang-code">tuk</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Turkmen</span><span class="lang-code">tuk</span><span class="lang-level">POS + Parsing + MT</span></div>
         <div class="lang-pill morph"><span class="lang-name">Crimean Tatar</span><span class="lang-code">crh</span><span class="lang-level">Morph + MT</span></div>
         <div class="lang-pill morph"><span class="lang-name">S. Azerbaijani</span><span class="lang-code">azb</span><span class="lang-level">Morph + MT</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Ottoman Turkish</span><span class="lang-code">ota</span><span class="lang-level">POS + Parsing</span></div>
         <div class="lang-pill morph"><span class="lang-name">Chuvash</span><span class="lang-code">chv</span><span class="lang-level">Morphology</span></div>
         <div class="lang-pill morph"><span class="lang-name">Gagauz</span><span class="lang-code">gag</span><span class="lang-level">Morphology</span></div>
         <div class="lang-pill morph"><span class="lang-name">Sakha</span><span class="lang-code">sah</span><span class="lang-level">Morphology</span></div>
@@ -152,6 +153,8 @@
         <div class="lang-pill morph"><span class="lang-name">Altai</span><span class="lang-code">alt</span><span class="lang-level">Morphology</span></div>
         <div class="lang-pill morph"><span class="lang-name">Tuvan</span><span class="lang-code">tyv</span><span class="lang-level">Morphology</span></div>
         <div class="lang-pill morph"><span class="lang-name">Khakas</span><span class="lang-code">kjh</span><span class="lang-level">Morphology</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Old Turkish</span><span class="lang-code">otk</span><span class="lang-level">Transliteration</span></div>
+        <div class="lang-pill morph"><span class="lang-name">Khalaj</span><span class="lang-code">klj</span><span class="lang-level">Planned</span></div>
       </div>
     </section>
 

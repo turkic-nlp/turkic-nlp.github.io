@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TurkicNLP Toolkit — Python NLP for 21 Turkic Languages</title>
-  <meta name="description" content="A pip-installable Python NLP toolkit for 21 Turkic languages. Morphology, POS tagging, dependency parsing, translation, and embeddings." />
+  <title>TurkicNLP Toolkit — Python NLP for 24 Turkic Languages</title>
+  <meta name="description" content="A pip-installable Python NLP toolkit for 24 Turkic languages. Morphology, POS tagging, dependency parsing, translation, and embeddings." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet" />
@@ -36,7 +36,7 @@
           A modular, pip-installable Python library for NLP across the Turkic language family. Morphology, POS tagging, dependency parsing, named entity recognition, multilingual embeddings, and machine translation — in one unified pipeline.
         </p>
         <div class="hero-meta">
-          <span class="pill">21 languages</span>
+          <span class="pill">24 languages</span>
           <span class="pill">Python 3.9+</span>
           <span class="pill">Apache 2.0</span>
           <span class="pill">CoNLL-U native</span>
@@ -44,6 +44,7 @@
         <div class="actions">
           <a class="button primary" href="https://github.com/turkic-nlp/turkicnlp" target="_blank" rel="noopener">View on GitHub →</a>
           <a class="button secondary" href="https://pypi.org/project/turkicnlp/" target="_blank" rel="noopener">PyPI package</a>
+          <a class="button secondary" href="https://arxiv.org/abs/2602.19174" target="_blank" rel="noopener">arXiv preprint</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -180,7 +181,7 @@ print(len(doc.embedding))   <span class="c"># 1024-dim vector</span></code></pre
         <div class="proc-card">
           <span class="proc-name">lemma</span>
           <h4>Lemmatization</h4>
-          <p>Stanza neural lemmatizer for tur, kaz, kir, uig. Apertium fallback for others.</p>
+          <p>Stanza neural lemmatizer for tur, kaz, kir, uig, uzb, tuk, aze. Apertium fallback for others.</p>
         </div>
         <div class="proc-card">
           <span class="proc-name">depparse</span>
@@ -231,22 +232,30 @@ print(len(doc.embedding))   <span class="c"># 1024-dim vector</span></code></pre
             <tr><td class="lang-col">Kazakh</td>          <td class="code-col">kaz</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Kyrgyz</td>          <td class="code-col">kir</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Uyghur</td>          <td class="code-col">uig</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
-            <tr><td class="lang-col">Uzbek</td>           <td class="code-col">uzb</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="partial">~</td><td class="check">✓</td><td class="check">✓</td></tr>
-            <tr><td class="lang-col">Azerbaijani</td>     <td class="code-col">aze</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="partial">~</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Uzbek</td>           <td class="code-col">uzb</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Azerbaijani</td>     <td class="code-col">aze</td><td>Latin / Cyrillic</td><td class="partial">~</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Tatar</td>           <td class="code-col">tat</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Bashkir</td>         <td class="code-col">bak</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
-            <tr><td class="lang-col">Turkmen</td>         <td class="code-col">tuk</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Turkmen</td>         <td class="code-col">tuk</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Crimean Tatar</td>   <td class="code-col">crh</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">S. Azerbaijani</td>  <td class="code-col">azb</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Chuvash</td>         <td class="code-col">chv</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
             <tr><td class="lang-col">Sakha (Yakut)</td>   <td class="code-col">sah</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
             <tr><td class="lang-col">Gagauz</td>          <td class="code-col">gag</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Karakalpak</td>      <td class="code-col">kaa</td><td>Latin</td>         <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">+ 6 more</td>        <td class="code-col">…</td>  <td>Cyrillic</td>     <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Karakalpak</td>      <td class="code-col">kaa</td><td>Latin / Cyrillic</td><td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Nogai</td>           <td class="code-col">nog</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Kumyk</td>           <td class="code-col">kum</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Karachay-Balkar</td> <td class="code-col">krc</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Altai</td>           <td class="code-col">alt</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Tuvan</td>           <td class="code-col">tyv</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Khakas</td>          <td class="code-col">kjh</td><td>Cyrillic</td>      <td class="partial">~</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Ottoman Turkish</td> <td class="code-col">ota</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Old Turkish</td>     <td class="code-col">otk</td><td>Runic</td>         <td class="partial">~</td><td class="none">–</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Khalaj</td>          <td class="code-col">klj</td><td>Perso-Arabic</td>  <td class="none">–</td><td class="none">–</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="small" style="margin-top:1rem;">~ = rule-based tokenizer available. Neural models require treebank data. Contributions welcome!</p>
+      <p class="small" style="margin-top:1rem;">✓ = available &nbsp;·&nbsp; ~ = rule-based tokenizer / in development &nbsp;·&nbsp; – = not yet available. POS / Dep for Uzbek, Turkmen, and Azerbaijani uses custom-trained Stanza models; for Turkish, Kazakh, Kyrgyz, Uyghur, and Ottoman Turkish uses official Stanza / UD models.</p>
     </section>
 
     <div class="divider"></div>
@@ -275,6 +284,36 @@ script_detect → transliterate
   kaz/Cyrl/tokenize/stanza/
   huggingface/
     facebook--nllb-200-distilled-600M/</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Citation ─────────────────────────────────────────────────── -->
+    <section class="section" id="citation">
+      <div class="section-badge">Citation</div>
+      <h2 class="section-title">If you use TurkicNLP in your research</h2>
+      <p class="section-lead">Please cite the accompanying paper published on arXiv:</p>
+      <div class="split">
+        <div>
+          <p>Sherzod Hakimov. <em>TurkicNLP: An NLP Toolkit for Turkic Languages</em>. arXiv:2602.19174, 2026.</p>
+          <div class="actions" style="margin-top:1rem;">
+            <a class="button primary" href="https://arxiv.org/abs/2602.19174" target="_blank" rel="noopener">Read on arXiv →</a>
+            <a class="button secondary" href="https://arxiv.org/pdf/2602.19174" target="_blank" rel="noopener">PDF</a>
+          </div>
+        </div>
+        <div>
+<pre><code>@misc{hakimov2026turkicnlp,
+  title  = {TurkicNLP: An NLP Toolkit
+            for Turkic Languages},
+  author = {Sherzod Hakimov},
+  year   = {2026},
+  eprint = {2602.19174},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url    = {https://arxiv.org/abs/2602.19174}
+}</code></pre>
         </div>
       </div>
     </section>
@@ -408,6 +447,7 @@ script_detect → transliterate
         <!-- <a href="/book/">Book</a> -->
         <a href="https://github.com/turkic-nlp/turkicnlp" target="_blank" rel="noopener">GitHub</a>
         <a href="https://pypi.org/project/turkicnlp/" target="_blank" rel="noopener">PyPI</a>
+        <a href="https://arxiv.org/abs/2602.19174" target="_blank" rel="noopener">arXiv</a>
         <a href="#contributing">Contributing</a>
       </div>
     </footer>
