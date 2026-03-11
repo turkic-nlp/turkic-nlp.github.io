@@ -51,10 +51,10 @@
         <h2>Installation</h2>
         <p>Core library — morphology + tokenization:</p>
         <div class="install-pill"><span class="prompt">$</span> pip install turkicnlp</div>
-        <p style="margin-top:1rem;">With neural models (Stanza + Transformers):</p>
-        <div class="install-pill"><span class="prompt">$</span> pip install "turkicnlp[stanza,nllb]"</div>
+        <p style="margin-top:1rem;">With all models:</p>
+        <div class="install-pill"><span class="prompt">$</span> pip install "turkicnlp[all]"</div>
         <p class="small" style="margin-top:1rem;">
-          Apertium FST data (GPL-3.0) is downloaded separately at runtime — it is never bundled in the pip package.
+          Models are downloaded separately at runtime — they are never bundled in the pip package.
         </p>
       </div>
     </section>
@@ -66,31 +66,32 @@
       <div class="section-badge">Quick start</div>
       <h2 class="section-title">Up and running in three steps</h2>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div>
-            <h4>Install the library</h4>
-            <p>Install from PyPI with optional extras depending on which processors you need.</p>
-            <div class="install-pill" style="margin-top:0.6rem;"><span class="prompt">$</span> pip install "turkicnlp[stanza,nllb]"</div>
+      <div class="split">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Install the library</h4>
+              <p>Install from PyPI with optional extras depending on which processors you need.</p>
+              <div class="install-pill" style="margin-top:0.6rem;"><span class="prompt">$</span> pip install "turkicnlp[stanza,nllb]"</div>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div>
-            <h4>Download models for your language</h4>
-            <p>Models are fetched on demand and cached in <code>~/.turkicnlp/models/</code>.</p>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Download models for your language</h4>
+              <p>Models are fetched on demand and cached in <code>~/.turkicnlp/models/</code>.</p>
 <pre><code><span class="k">import</span> turkicnlp
 
 <span class="c"># Download Stanza + Apertium models for Turkish</span>
 turkicnlp.download(<span class="s">"tur"</span>, processors=[<span class="s">"tokenize"</span>, <span class="s">"morph"</span>, <span class="s">"pos"</span>, <span class="s">"lemma"</span>, <span class="s">"depparse"</span>])</code></pre>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div>
-            <h4>Build a pipeline and annotate text</h4>
-            <p>Processors chain automatically in the correct order.</p>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Build a pipeline and annotate text</h4>
+              <p>Processors chain automatically in the correct order.</p>
 <pre><code>nlp = turkicnlp.Pipeline(<span class="s">"tur"</span>, processors=[<span class="s">"tokenize"</span>, <span class="s">"pos"</span>, <span class="s">"lemma"</span>, <span class="s">"depparse"</span>])
 doc = nlp(<span class="s">"Bugün hava çok güzel ve parkta yürüyüş yaptım."</span>)
 
@@ -105,6 +106,22 @@ doc = nlp(<span class="s">"Bugün hava çok güzel ve parkta yürüyüş yaptım
 <span class="c"># parkta           NOUN     park</span>
 <span class="c"># yürüyüş          NOUN     yürüyüş</span>
 <span class="c"># yaptım           VERB     yap</span></code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="highlight">
+          <h3>Supported languages for POS, Lemma &amp; Parsing</h3>
+          <p class="small">These 9 languages have full Stanza neural models for tokenization, POS tagging, lemmatization, and dependency parsing:</p>
+          <div class="lang-grid" style="margin-top:0.8rem;">
+            <div class="lang-pill full"><span class="lang-name">Turkish</span><span class="lang-code">tur</span></div>
+            <div class="lang-pill full"><span class="lang-name">Kazakh</span><span class="lang-code">kaz</span></div>
+            <div class="lang-pill full"><span class="lang-name">Kyrgyz</span><span class="lang-code">kir</span></div>
+            <div class="lang-pill full"><span class="lang-name">Uyghur</span><span class="lang-code">uig</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Uzbek</span><span class="lang-code">uzb</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Azerbaijani</span><span class="lang-code">aze</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Tatar</span><span class="lang-code">tat</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Bashkir</span><span class="lang-code">bak</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Turkmen</span><span class="lang-code">tuk</span></div>
           </div>
         </div>
       </div>
