@@ -111,7 +111,7 @@ doc = nlp(<span class="s">"Bugün hava çok güzel ve parkta yürüyüş yaptım
         </div>
         <div class="highlight">
           <h3>Supported languages for POS, Lemma &amp; Parsing</h3>
-          <p class="small">These 13 languages have neural models for tokenization, POS tagging, lemmatization, and dependency parsing:</p>
+          <p class="small">These 15 languages have neural models for tokenization, POS tagging, lemmatization, and dependency parsing:</p>
           <div class="lang-grid" style="margin-top:0.8rem;">
             <div class="lang-pill full"><span class="lang-name">Turkish</span><span class="lang-code">tur</span></div>
             <div class="lang-pill full"><span class="lang-name">Kazakh</span><span class="lang-code">kaz</span></div>
@@ -125,6 +125,8 @@ doc = nlp(<span class="s">"Bugün hava çok güzel ve parkta yürüyüş yaptım
             <div class="lang-pill morph"><span class="lang-name">Sakha</span><span class="lang-code">sah</span></div>
             <div class="lang-pill morph"><span class="lang-name">Karakalpak</span><span class="lang-code">kaa</span></div>
             <div class="lang-pill morph"><span class="lang-name">Kumyk</span><span class="lang-code">kum</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Karachay-Balkar</span><span class="lang-code">krc</span></div>
+            <div class="lang-pill morph"><span class="lang-name">Nogai</span><span class="lang-code">nog</span></div>
             <div class="lang-pill morph"><span class="lang-name">Ottoman Turkish</span><span class="lang-code">ota</span></div>
           </div>
         </div>
@@ -192,17 +194,17 @@ print(len(doc.embedding))   <span class="c"># 1024-dim vector</span></code></pre
         <div class="proc-card">
           <span class="proc-name">morph</span>
           <h4>Morphological Analysis</h4>
-          <p>Apertium HFST FSTs for 21 languages. Lemma, POS, and full morphological features.</p>
+          <p>Apertium HFST FSTs for 20 languages. Lemma, POS, and full morphological features.</p>
         </div>
         <div class="proc-card">
           <span class="proc-name">pos</span>
           <h4>POS Tagging</h4>
-          <p>Stanza neural tagger and multilignal neural models for 13 languages. Outputs UPOS, XPOS, and features.</p>
+          <p>Stanza neural tagger and multilingual neural models for 15 languages. Outputs UPOS, XPOS, and features.</p>
         </div>
         <div class="proc-card">
           <span class="proc-name">lemma</span>
           <h4>Lemmatization</h4>
-          <p>Stanza neural lemmatizer and multilignal neural models for 13 languages. Apertium fallback for others.</p>
+          <p>Stanza neural lemmatizer and multilingual neural models for 15 languages. Apertium fallback for others.</p>
         </div>
         <div class="proc-card">
           <span class="proc-name">depparse</span>
@@ -258,25 +260,25 @@ print(len(doc.embedding))   <span class="c"># 1024-dim vector</span></code></pre
             <tr><td class="lang-col">Tatar</td>           <td class="code-col">tat</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Bashkir</td>         <td class="code-col">bak</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Turkmen</td>         <td class="code-col">tuk</td><td>Latin</td>         <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
-            <tr><td class="lang-col">Crimean Tatar</td>   <td class="code-col">crh</td><td>Latin</td>         <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td class="lang-col">Crimean Tatar</td>   <td class="code-col">crh</td><td>Latin</td>         <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">S. Azerbaijani</td>  <td class="code-col">azb</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="check">✓</td><td class="check">✓</td></tr>
             <tr><td class="lang-col">Sakha (Yakut)</td>   <td class="code-col">sah</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
             <tr><td class="lang-col">Karakalpak</td>      <td class="code-col">kaa</td><td>Latin / Cyrillic</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
             <tr><td class="lang-col">Kumyk</td>           <td class="code-col">kum</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Karachay-Balkar</td> <td class="code-col">krc</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Nogai</td>           <td class="code-col">nog</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
             <tr><td class="lang-col">Ottoman Turkish</td> <td class="code-col">ota</td><td>Perso-Arabic</td>  <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Chuvash</td>         <td class="code-col">chv</td><td>Cyrillic</td>      <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Gagauz</td>          <td class="code-col">gag</td><td>Latin</td>         <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Nogai</td>           <td class="code-col">nog</td><td>Cyrillic</td>      <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Karachay-Balkar</td> <td class="code-col">krc</td><td>Cyrillic</td>      <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Altai</td>           <td class="code-col">alt</td><td>Cyrillic</td>      <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Tuvan</td>           <td class="code-col">tyv</td><td>Cyrillic</td>      <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Khakas</td>          <td class="code-col">kjh</td><td>Cyrillic</td>      <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
-            <tr><td class="lang-col">Khalaj</td>          <td class="code-col">klj</td><td>Perso-Arabic</td>  <td class="none">–</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Chuvash</td>         <td class="code-col">chv</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Gagauz</td>          <td class="code-col">gag</td><td>Latin</td>         <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Altai</td>           <td class="code-col">alt</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Tuvan</td>           <td class="code-col">tyv</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Khakas</td>          <td class="code-col">kjh</td><td>Cyrillic</td>      <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
+            <tr><td class="lang-col">Khalaj</td>          <td class="code-col">klj</td><td>Latin</td>         <td class="check">✓</td><td class="check">✓</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
             <tr><td class="lang-col">Old Turkish</td>     <td class="code-col">otk</td><td>Runic</td>         <td class="partial">~</td><td class="none">–</td><td class="none">–</td><td class="none">–</td><td class="none">–</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="small" style="margin-top:1rem;">✓ = available &nbsp;·&nbsp; ~ = in development &nbsp;·&nbsp; – = not yet available. POS / Dep for Turkish, Kazakh, Kyrgyz, Uyghur uses official Stanza / UD models; for Uzbek, Turkmen, Tatar, Bashkir, Azerbaijani uses custom-trained Stanza models; for Sakha, Karakalpak, Kumyk, Ottoman Turkish uses Glot500-based multilingual models.</p>
+      <p class="small" style="margin-top:1rem;">✓ = available &nbsp;·&nbsp; ~ = in development &nbsp;·&nbsp; – = not yet available. POS / Dep for Turkish, Kazakh, Kyrgyz, Uyghur uses official Stanza / UD models; for Uzbek, Turkmen, Tatar, Bashkir, Azerbaijani uses custom-trained Stanza models; for Sakha, Karakalpak, Kumyk, Karachay-Balkar, Nogai, Ottoman Turkish uses Glot500-based multilingual models.</p>
     </section>
 
     <div class="divider"></div>
