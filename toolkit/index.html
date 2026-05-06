@@ -141,7 +141,7 @@ doc = nlp(<span class="s">"Bugün hava çok güzel ve parkta yürüyüş yaptım
     <section class="section">
       <div class="section-badge">Machine translation</div>
       <h2 class="section-title">NLLB-200 translation &amp; embeddings</h2>
-      <p class="section-lead">Powered by Facebook's NLLB-200-distilled-600M model, supporting 11 Turkic languages.</p>
+      <p class="section-lead">Powered by Facebook's NLLB-200-distilled-600M model, supporting 11 Turkic languages. Browse <a href="https://huggingface.co/turkicnlp" target="_blank" rel="noopener">models and datasets on HuggingFace</a>.</p>
 
       <div class="split">
         <div>
@@ -350,12 +350,12 @@ print(t_cts.transliterate(<span class="s">"Azərbaycan dili"</span>))
         <div class="proc-card">
           <span class="proc-name">embeddings</span>
           <h4>Sentence Embeddings</h4>
-          <p>NLLB-200 encoder states. 1024-dim multilingual vectors for semantic search and similarity.</p>
+          <p>NLLB-200 encoder states. 1024-dim multilingual vectors for semantic search and similarity. <a href="https://huggingface.co/turkicnlp" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Models on HF</a></p>
         </div>
         <div class="proc-card">
           <span class="proc-name">translate</span>
           <h4>Machine Translation</h4>
-          <p>NLLB-200 sequence-to-sequence generation. Any Turkic language → any FLORES-200 language.</p>
+          <p>NLLB-200 sequence-to-sequence generation. Any Turkic language → any FLORES-200 language. <a href="https://huggingface.co/turkicnlp" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Models on HF</a></p>
         </div>
         <div class="proc-card">
           <span class="proc-name">lid</span>
@@ -441,7 +441,7 @@ print(t_cts.transliterate(<span class="s">"Azərbaycan dili"</span>))
           <h2 class="section-title">Built to be extended</h2>
           <p>TurkicNLP follows a Stanza-inspired architecture. Every processor declares what it <code>PROVIDES</code> and <code>REQUIRES</code> — the pipeline resolves dependencies automatically.</p>
           <p>Script-aware from the ground up: models are keyed by <code>lang/script/processor/backend</code>. The pipeline auto-detects scripts, inserts transliteration steps where needed, and bridges models across writing systems.</p>
-          <p>Apertium FST data is GPL-3.0 and always downloaded separately — never bundled in the Apache 2.0 pip package.</p>
+          <p>Apertium FST data is GPL-3.0 and always downloaded separately — never bundled in the Apache 2.0 pip package. <a href="https://huggingface.co/turkicnlp" target="_blank" rel="noopener">All models and datasets hosted on HuggingFace</a>.</p>
         </div>
         <div>
 <pre><code><span class="c"># Pipeline execution order</span>
