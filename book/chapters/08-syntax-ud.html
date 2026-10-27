@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>8&nbsp; Syntactic Structure and Universal Dependencies – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/09-sequence-labeling.html" rel="next">
+<link href="../chapters/07-neural-morphology.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/08-syntax-ud.html">Syntax</a></li><li class="breadcrumb-item"><a href="../chapters/08-syntax-ud.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-syntax-sketch" id="toc-sec-syntax-sketch" class="nav-link active" data-scroll-target="#sec-syntax-sketch"><span class="header-section-number">8.1</span> A Computational Sketch of Turkic Syntax</a>
+  <ul class="collapse">
+  <li><a href="#case-marked-arguments-and-word-order" id="toc-case-marked-arguments-and-word-order" class="nav-link" data-scroll-target="#case-marked-arguments-and-word-order"><span class="header-section-number">8.1.1</span> Case-Marked Arguments and Word Order</a></li>
+  <li><a href="#scrambling-and-information-structure" id="toc-scrambling-and-information-structure" class="nav-link" data-scroll-target="#scrambling-and-information-structure"><span class="header-section-number">8.1.2</span> Scrambling and Information Structure</a></li>
+  <li><a href="#pro-drop-the-absent-subject" id="toc-pro-drop-the-absent-subject" class="nav-link" data-scroll-target="#pro-drop-the-absent-subject"><span class="header-section-number">8.1.3</span> Pro-Drop: The Absent Subject</a></li>
+  <li><a href="#participial-relative-clauses-the-pre-nominal-clause" id="toc-participial-relative-clauses-the-pre-nominal-clause" class="nav-link" data-scroll-target="#participial-relative-clauses-the-pre-nominal-clause"><span class="header-section-number">8.1.4</span> Participial Relative Clauses: The Pre-Nominal Clause</a></li>
+  <li><a href="#postpositions-and-the-case-postposition-system" id="toc-postpositions-and-the-case-postposition-system" class="nav-link" data-scroll-target="#postpositions-and-the-case-postposition-system"><span class="header-section-number">8.1.5</span> Postpositions and the Case-Postposition System</a></li>
+  </ul></li>
+  <li><a href="#sec-ud-framework" id="toc-sec-ud-framework" class="nav-link" data-scroll-target="#sec-ud-framework"><span class="header-section-number">8.2</span> The Universal Dependencies Framework for Turkic</a>
+  <ul class="collapse">
+  <li><a href="#uds-core-representational-choices" id="toc-uds-core-representational-choices" class="nav-link" data-scroll-target="#uds-core-representational-choices"><span class="header-section-number">8.2.1</span> UD’s Core Representational Choices</a></li>
+  <li><a href="#turkic-specific-annotation-decisions" id="toc-turkic-specific-annotation-decisions" class="nav-link" data-scroll-target="#turkic-specific-annotation-decisions"><span class="header-section-number">8.2.2</span> Turkic-Specific Annotation Decisions</a></li>
+  <li><a href="#sec-gold-arc-diagnostics" id="toc-sec-gold-arc-diagnostics" class="nav-link" data-scroll-target="#sec-gold-arc-diagnostics"><span class="header-section-number">8.2.3</span> Descriptive gold-arc diagnostics</a></li>
+  </ul></li>
+  <li><a href="#sec-treebanks" id="toc-sec-treebanks" class="nav-link" data-scroll-target="#sec-treebanks"><span class="header-section-number">8.3</span> Turkic Treebanks</a>
+  <ul class="collapse">
+  <li><a href="#turkish-in-ud-2.17" id="toc-turkish-in-ud-2.17" class="nav-link" data-scroll-target="#turkish-in-ud-2.17"><span class="header-section-number">8.3.1</span> Turkish in UD 2.17</a></li>
+  <li><a href="#other-turkic-treebanks" id="toc-other-turkic-treebanks" class="nav-link" data-scroll-target="#other-turkic-treebanks"><span class="header-section-number">8.3.2</span> Other Turkic Treebanks</a></li>
+  <li><a href="#languages-without-treebanks" id="toc-languages-without-treebanks" class="nav-link" data-scroll-target="#languages-without-treebanks"><span class="header-section-number">8.3.3</span> Languages Without Treebanks</a></li>
+  <li><a href="#the-ud-turkic-parallel-treebanks" id="toc-the-ud-turkic-parallel-treebanks" class="nav-link" data-scroll-target="#the-ud-turkic-parallel-treebanks"><span class="header-section-number">8.3.4</span> The UD-Turkic Parallel Treebanks</a></li>
+  </ul></li>
+  <li><a href="#sec-parsing" id="toc-sec-parsing" class="nav-link" data-scroll-target="#sec-parsing"><span class="header-section-number">8.4</span> Dependency Parsing for Turkic</a>
+  <ul class="collapse">
+  <li><a href="#transition-based-parsing" id="toc-transition-based-parsing" class="nav-link" data-scroll-target="#transition-based-parsing"><span class="header-section-number">8.4.1</span> Transition-Based Parsing</a></li>
+  <li><a href="#graph-based-biaffine-parsing" id="toc-graph-based-biaffine-parsing" class="nav-link" data-scroll-target="#graph-based-biaffine-parsing"><span class="header-section-number">8.4.2</span> Graph-Based (Biaffine) Parsing</a></li>
+  <li><a href="#hard-cases-for-turkic-parsers" id="toc-hard-cases-for-turkic-parsers" class="nav-link" data-scroll-target="#hard-cases-for-turkic-parsers"><span class="header-section-number">8.4.3</span> Hard Cases for Turkic Parsers</a></li>
+  <li><a href="#evaluation-results-per-language-vs.-multilingual-parsing" id="toc-evaluation-results-per-language-vs.-multilingual-parsing" class="nav-link" data-scroll-target="#evaluation-results-per-language-vs.-multilingual-parsing"><span class="header-section-number">8.4.4</span> Evaluation Results: Per-Language vs.&nbsp;Multilingual Parsing</a></li>
+  <li><a href="#measured-official-treebank-baselines" id="toc-measured-official-treebank-baselines" class="nav-link" data-scroll-target="#measured-official-treebank-baselines"><span class="header-section-number">8.4.5</span> Measured official-treebank baselines</a></li>
+  </ul></li>
+  <li><a href="#sec-crosslingual" id="toc-sec-crosslingual" class="nav-link" data-scroll-target="#sec-crosslingual"><span class="header-section-number">8.5</span> Cross-Lingual Parsing</a>
+  <ul class="collapse">
+  <li><a href="#zero-shot-and-proxy-language-transfer" id="toc-zero-shot-and-proxy-language-transfer" class="nav-link" data-scroll-target="#zero-shot-and-proxy-language-transfer"><span class="header-section-number">8.5.1</span> Zero-Shot and Proxy-Language Transfer</a></li>
+  <li><a href="#script-normalisation" id="toc-script-normalisation" class="nav-link" data-scroll-target="#script-normalisation"><span class="header-section-number">8.5.2</span> Script Normalisation</a></li>
+  <li><a href="#silver-treebanks-and-annotation-projection" id="toc-silver-treebanks-and-annotation-projection" class="nav-link" data-scroll-target="#silver-treebanks-and-annotation-projection"><span class="header-section-number">8.5.3</span> Silver Treebanks and Annotation Projection</a></li>
+  </ul></li>
+  <li><a href="#sec-build-treebank" id="toc-sec-build-treebank" class="nav-link" data-scroll-target="#sec-build-treebank"><span class="header-section-number">8.6</span> Building a Treebank for a New Turkic Language</a></li>
+  <li><a href="#sec-ch08-hands-on" id="toc-sec-ch08-hands-on" class="nav-link" data-scroll-target="#sec-ch08-hands-on"><span class="header-section-number">8.7</span> Hands-On: Parsing Turkish Text with TurkicNLP</a>
+  <ul class="collapse">
+  <li><a href="#parsing-a-turkish-sentence" id="toc-parsing-a-turkish-sentence" class="nav-link" data-scroll-target="#parsing-a-turkish-sentence"><span class="header-section-number">8.7.1</span> Parsing a Turkish Sentence</a></li>
+  <li><a href="#reading-and-writing-conll-u" id="toc-reading-and-writing-conll-u" class="nav-link" data-scroll-target="#reading-and-writing-conll-u"><span class="header-section-number">8.7.2</span> Reading and Writing CoNLL-U</a></li>
+  <li><a href="#evaluating-on-the-turkish-pud-test-set" id="toc-evaluating-on-the-turkish-pud-test-set" class="nav-link" data-scroll-target="#evaluating-on-the-turkish-pud-test-set"><span class="header-section-number">8.7.3</span> Evaluating on the Turkish PUD Test Set</a></li>
+  <li><a href="#zero-shot-application-to-azerbaijani" id="toc-zero-shot-application-to-azerbaijani" class="nav-link" data-scroll-target="#zero-shot-application-to-azerbaijani"><span class="header-section-number">8.7.4</span> Zero-Shot Application to Azerbaijani</a></li>
+  </ul></li>
+  <li><a href="#sec-ch08-synthesis" id="toc-sec-ch08-synthesis" class="nav-link" data-scroll-target="#sec-ch08-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch08-further-reading" id="toc-sec-ch08-further-reading" class="nav-link" data-scroll-target="#sec-ch08-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch08-exercises" id="toc-sec-ch08-exercises" class="nav-link" data-scroll-target="#sec-ch08-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/08-syntax-ud.html">Syntax</a></li><li class="breadcrumb-item"><a href="../chapters/08-syntax-ud.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-08-syntax-ud" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Explain why English-style positional shortcuts are unreliable for Turkic languages and which signals (position, morphology, lexical selection, context) parsers combine instead</li>
+<li>Describe the role of participial relative clauses in creating long-distance dependencies</li>
+<li>Summarise the Universal Dependencies framework and identify the Turkic-specific annotation choices it leaves open</li>
+<li>Use the UD 2.17 inventory to identify Turkic treebanks and release-specific gaps</li>
+<li>Contrast transition-based and graph-based (biaffine) dependency parsing and reason about their fit with SOV languages</li>
+<li>Design and evaluate a zero-shot cross-lingual parsing pipeline for a Turkic language with no treebank</li>
+<li>Plan the construction of a new Turkic treebank, from sentence selection and pre-annotation to validation and release</li>
+</ul>
+</div>
+</div>
+<p>This chapter examines how Turkic words combine into sentences and how Universal Dependencies (UD) represents that structure. The main topics are case-marked arguments, flexible word order, omitted subjects and participial clauses. Parsers must use these cues together; position alone is insufficient.</p>
+<p>The chapter then surveys the UD 2.17 treebanks, explains dependency parsing and compares documented parser results. The final sections cover transfer and the construction of a new treebank. Throughout, annotation conventions matter: two treebanks can assign different heads or labels to the same kind of construction.</p>
+<section id="sec-syntax-sketch" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sec-syntax-sketch"><span class="header-section-number">8.1</span> A Computational Sketch of Turkic Syntax</h2>
+<section id="case-marked-arguments-and-word-order" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="case-marked-arguments-and-word-order"><span class="header-section-number">8.1.1</span> Case-Marked Arguments and Word Order</h3>
+<p>English declarative clauses often place the subject before the verb and the object after it. These are useful cues, but English parsers also need lexical, morphological and contextual information.</p>
+<p>Turkish makes this strategy unreliable. Consider the sentence <em>Ali kitabı okudu</em> (“Ali read the book”). The canonical, rhetorically neutral order is subject–object–predicate, and scrambling rearranges it for pragmatic purposes, for example to object–subject–verb or verb–subject–object <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, sec. 56.3</a>, pp.&nbsp;935–936)</span>. With an accusative-marked object, all six permutations of subject, object and verb can be used in a suitable discourse situation <span class="citation" data-cites="hoffman1994turkish">(<a href="../references.html#ref-hoffman1994turkish" role="doc-biblioref">Hoffman 1994, 117</a>)</span>. This does not mean that every sentence permutes freely: orders other than SOV are marked, and order is more rigid in subordinate than in main clauses <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 936</a>)</span>:</p>
+<div id="tbl-word-order" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-word-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.1: The six constituent orders of a simple Turkish transitive sentence. SOV is the neutral order; the other five occur in suitable discourse contexts. The accusative suffix <em>-ı</em> on <em>kitab-ı</em> (“book-ACC”) identifies the object in each order. Pragmatic labels (topic, focus, backgrounding) are deliberately not assigned per row, because they depend on a discourse context that a table cannot show.
+</figcaption>
+<div aria-describedby="tbl-word-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Order</th>
+<th>Turkish</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SOV</td>
+<td><em>Ali kitabı okudu</em></td>
+<td>neutral, default</td>
+</tr>
+<tr class="even">
+<td>OSV</td>
+<td><em>kitabı Ali okudu</em></td>
+<td>marked; context-dependent</td>
+</tr>
+<tr class="odd">
+<td>SVO</td>
+<td><em>Ali okudu kitabı</em></td>
+<td>marked; context-dependent</td>
+</tr>
+<tr class="even">
+<td>OVS</td>
+<td><em>kitabı okudu Ali</em></td>
+<td>marked; context-dependent</td>
+</tr>
+<tr class="odd">
+<td>VSO</td>
+<td><em>okudu Ali kitabı</em></td>
+<td>marked; context-dependent</td>
+</tr>
+<tr class="even">
+<td>VOS</td>
+<td><em>okudu kitabı Ali</em></td>
+<td>marked; context-dependent</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The family-wide pattern also has exceptions. Johanson describes contact-induced verb-medial order in Gagauz, Karaim and Cypriot Turkish <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 936</a>)</span>. The Turkish table is therefore not a word-order rule for every variety.</p>
+<p>How often each order occurs in edited text is measured in Exercise 1: among BOUN training sentences whose root has an overt subject and an overt object, 87.1% are SOV, followed by OSV (6.7%), OVS (3.3%) and SVO (2.5%); VSO and VOS occur three times in 957 sentences.</p>
+<p>The accusative suffix <em>-ı</em> identifies <em>kitabı</em> as the direct object in each order. The unmarked <em>Ali</em> is the subject, identified here by verbal agreement and the accusative marking on the other argument. Lack of a suffix alone would be insufficient: non-specific objects can also be unmarked, and possessive <em>-ı/-i</em> can resemble the accusative. Word order contributes both grammatical and pragmatic information, including topic, focus and backgrounding. An SVO shortcut would mislabel some of these reordered arguments.</p>
+<p>To test whether explicit morphology helps, compare the same parser with and without predicted features. A contextual encoder may already recover some of this information from word forms.</p>
+</section>
+<section id="scrambling-and-information-structure" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="scrambling-and-information-structure"><span class="header-section-number">8.1.2</span> Scrambling and Information Structure</h3>
+<p>The reordering illustrated in <a href="#tbl-word-order" class="quarto-xref">Table&nbsp;<span>8.1</span></a> is not random. It follows regular principles of <strong>information structure</strong>: what is topical (given information, often fronted), what is focused (new or contrastive information, often immediately pre-verbal in Turkish), and what is backgrounded (often after the verb) <span class="citation" data-cites="Johanson_2021 hoffman1994turkish">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, sec. 56.4</a>, pp.&nbsp;937–949; <a href="../references.html#ref-hoffman1994turkish" role="doc-biblioref">Hoffman 1994, 117</a>)</span>.</p>
+<p>A transferred model must account for these links between discourse role and position. A sentence-initial topic in Turkish may be a subject, object or adjunct. The constituent immediately before the verb often carries focus, whatever its grammatical role.</p>
+<p>This matters concretely for tasks like machine translation (where reordering must preserve pragmatic meaning, not just grammatical structure), sentiment analysis (where focus-marked constituents carry heightened emphasis), and information extraction (where the topic is often what the sentence is <em>about</em>, not what the syntax labels as subject).</p>
+</section>
+<section id="pro-drop-the-absent-subject" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="pro-drop-the-absent-subject"><span class="header-section-number">8.1.3</span> Pro-Drop: The Absent Subject</h3>
+<p>Turkic languages generally allow a referential subject pronoun to be omitted when its referent is recoverable, though the conditions and frequency vary by language and discourse <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, sec. 54.7</a>, pp.&nbsp;851–853)</span>. In Turkish main clauses null subjects are much more frequent than overt ones, whereas Uyghur and Yakut use anaphoric pronouns more often <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 851–52</a>)</span>. Agreement constrains person and number; it does not identify an antecedent or encode grammatical gender. Turkish <em>Okudu</em> can mean “he/she/it read” in context, with third-person singular verbal agreement.</p>
+<p>An overt pronoun may still be used for contrast or topic shift. Exercise 3 measures subject omission under an explicit eligibility definition rather than treating every missing subject arc as pro-drop. In the IMST training set, 43.8% of finite, active, non-imperative verbal predicates have an overt subject: 56.9% in the third person but only 13.5% in the first and 15.1% in the second, where the agreement suffix marks person and number, but does not identify the referent.</p>
+<p>Pro-drop creates several downstream problems:</p>
+<p><strong>Coreference resolution</strong> must track implicit subjects. A system that only links overt mentions needs an additional representation for implicit subjects.</p>
+<p><strong>Machine translation</strong> into languages such as English, French or German often needs an overt subject where the Turkic source omits one. Choosing a pronoun or noun phrase requires the referent to be recovered from agreement and discourse context. A target pronoun may also require a gender distinction absent from the source verb.</p>
+<p><strong>Syntactic annotation</strong> must decide how to represent the absent subject. Universal Dependencies handles this by recording person and number in the verb’s FEATS column and leaving no subject arc in the parse graph when no overt subject is present.</p>
+</section>
+<section id="participial-relative-clauses-the-pre-nominal-clause" class="level3" data-number="8.1.4">
+<h3 data-number="8.1.4" class="anchored" data-anchor-id="participial-relative-clauses-the-pre-nominal-clause"><span class="header-section-number">8.1.4</span> Participial Relative Clauses: The Pre-Nominal Clause</h3>
+<p>Prenominal participial clauses differ from the relative-clause pattern illustrated by the English example below. In English, a relative clause follows the head noun. It may begin with a relative pronoun (<em>who</em>, <em>which</em>) or marker (<em>that</em>), though some relatives have no overt marker:</p>
+<blockquote class="blockquote">
+<p>the man <strong>who</strong> came yesterday</p>
+</blockquote>
+<p>In Turkish, the relative clause <strong>precedes</strong> the head noun, contains no complementiser, and marks clause type on the verb with a participial suffix rather than a separate word:</p>
+<blockquote class="blockquote">
+<p><strong>dün gelen</strong> adam yesterday come.PTCP man “the man who came yesterday”</p>
+</blockquote>
+<p>The participial form <em>gelen</em> (come.PTCP) is a non-finite verbal form that modifies <em>adam</em> (“man”) directly. When the relative clause is complex, with its own arguments, adjuncts and embedded clauses, the entire structure builds to the left of the head noun:</p>
+<blockquote class="blockquote">
+<p><strong>[Atatürk’ün 1928’de başlattığı]</strong> dil reformu Atatürk-GEN 1928-LOC begin-CAUS-NMLZ-POSS.3 language reform-POSS.3 “the language reform [that Atatürk started in 1928]”</p>
+</blockquote>
+<p>(The <em>-u</em> on <em>reform-u</em> is the possessive marker of the Turkish noun compound <em>dil reform-u</em>, not an accusative.) <a href="#fig-parse-tree-participial-ch8" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> shows the two constructions as dependency trees.</p>
+<div id="fig-parse-tree-participial-ch8" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked dependency diagrams showing the English relative pronoun and Turkish participial modifier, with one head per word.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-parse-tree-participial-ch8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-parse-tree-participial/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Two stacked dependency diagrams showing the English relative pronoun and Turkish participial modifier, with one head per word.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-parse-tree-participial-ch8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Basic UD dependencies for English (top) and Turkish (bottom). English has a post-nominal relative clause with who as the subject of came; Turkish Dün gelen adam gitti has a prenominal participial clause with no relative pronoun. Each word has exactly one head; enhanced coreference edges are omitted.
+</figcaption>
+</figure>
+</div>
+<p>Three distinctions matter for parsing:</p>
+<p><strong>Where the long arcs are.</strong> Three different distances are easy to confuse:</p>
+<ol type="1">
+<li><em>Clause width</em>: how many words the relative clause spans (<em>Atatürk’ün 1928’de başlattığı</em>: three words).</li>
+<li><em>Dependent-to-participle distance</em>: how far the clause’s own dependents are from the participle that heads them (<em>başlattığı → Atatürk’ün</em>: two positions; <em>başlattığı → 1928’de</em>: one).</li>
+<li><em>Participle-to-noun distance</em>: how far the participle is from the noun it modifies. The participle is normally the <em>last</em> word of the relative clause, so this edge is short whatever the clause width: <em>reformu → başlattığı</em> (<code>acl</code>) spans two words here, with only the compound modifier <em>dil</em> in between.</li>
+</ol>
+<p>A wide relative clause can still have a short participle-to-noun edge. Long arcs may instead connect the participle to an early dependent, or the sentence-final main verb to the subject phrase. Turkic heads usually follow their dependents, with exceptions such as postverbal constituents and some coordination structures. A left-to-right transition-based parser must therefore keep dependents on its stack until their head appears. Throughout this chapter, arrows run from head to dependent.</p>
+<p><strong>Clause-boundary cues.</strong> The Turkish construction uses a participial suffix where the English example has a relative pronoun. A parser can use a morphological analyser or learn this cue from word representations; an explicit analysis is not required by every architecture.</p>
+<p><strong>Left-branching accumulation.</strong> A Turkic noun phrase can contain several participial modifiers before its head noun. Each clause may also contain embedded clauses, creating a long sequence before the noun. Exercise 2 measures these sequences in BOUN training data. For nouns that head a participial clause, the median number of preceding words is 4 in biographical, instructional and popular-culture text, 5 in essays and 6 in news. The 90th percentiles range from 10 to 13 words; the maximum is 75.</p>
+<p>Despite these long examples, the median participial clause in these samples is shorter than the median relative clause in EN-EWT: 4 versus 6 words. Its participle is also usually adjacent to the noun, with a median distance of 1, compared with 3 for English <code>acl:relcl</code>.</p>
+</section>
+<section id="postpositions-and-the-case-postposition-system" class="level3" data-number="8.1.5">
+<h3 data-number="8.1.5" class="anchored" data-anchor-id="postpositions-and-the-case-postposition-system"><span class="header-section-number">8.1.5</span> Postpositions and the Case-Postposition System</h3>
+<p>Turkic languages use <strong>postpositions</strong>, which follow rather than precede the noun phrase. A postposition selects a specific case on its nominal complement. For example, Turkish <em>için</em> (“for”) takes the nominative with nouns (but the genitive with most pronouns: <em>benim için</em> “for me”); <em>sonra</em> (“after”) takes the ablative; <em>göre</em> (“according to”) takes the dative. The case suffix is carried by the nominal, not by the postposition.</p>
+<p>Some dependency traditions treat the postposition as the head of its phrase, but UD does not. In UD, the nominal is the head of an ordinary adpositional phrase. The postposition attaches to the nominal with <code>case</code>; the nominal’s external relation depends on the construction. Its morphological case and the postposition’s identity jointly help identify that construction. For example, in <em>Ali için geldim</em> (“I came for Ali”):</p>
+<pre><code>geldim  --obl--&gt;   Ali
+Ali     --case--&gt;  için</code></pre>
+<p>The verb <em>geldim</em> is the root; <em>Ali</em> attaches to it as <code>obl</code>; <em>için</em> attaches to <em>Ali</em> as <code>case</code>. Inside a noun phrase the nominal would attach as <code>nmod</code> instead of <code>obl</code>.</p>
+</section>
+</section>
+<section id="sec-ud-framework" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="sec-ud-framework"><span class="header-section-number">8.2</span> The Universal Dependencies Framework for Turkic</h2>
+<section id="uds-core-representational-choices" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="uds-core-representational-choices"><span class="header-section-number">8.2.1</span> UD’s Core Representational Choices</h3>
+<p>Universal Dependencies <span class="citation" data-cites="demarneffe2021universal nivre2016ud">(<a href="../references.html#ref-demarneffe2021universal" role="doc-biblioref">Marneffe et al. 2021</a>; <a href="../references.html#ref-nivre2016ud" role="doc-biblioref">Nivre et al. 2016</a>)</span> represents basic syntax as directed arcs from heads to dependent <strong>syntactic words</strong>. These need not coincide with orthographic tokens: CoNLL-U can use a range ID for a multiword token and integer IDs for its component words. UD v2 defines 37 universal relations; labels such as <code>acl:relcl</code> are subtypes, not additional universal relations. The root word is encoded with <code>HEAD=0</code> and <code>DEPREL=root</code>, where 0 is the artificial root (<a href="https://universaldependencies.org/format.html">CoNLL-U specification</a>).</p>
+<p>Each word has a universal POS tag (UPOS), an optional language-specific POS tag (XPOS), and morphological feature–value pairs (FEATS). For illustration, a finite verb might have <code>Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin</code>. A participle may carry <code>VerbForm=Part</code>, tense and possessor agreement; a case feature is appropriate only if that form is actually case-inflected. The exact bundle must follow the language and treebank guidelines.</p>
+<p><a href="#tbl-ud-features" class="quarto-xref">Table&nbsp;<span>8.2</span></a> lists the morphological features most heavily used in Turkic UD treebanks.</p>
+<div id="tbl-ud-features" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ud-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.2: Core Universal Dependencies morphological features heavily used in Turkic treebanks. The VerbForm feature is especially important: participial (Part) and converbal (Conv) forms are the primary mechanisms for subordinate clauses.
+</figcaption>
+<div aria-describedby="tbl-ud-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 50%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Values (sample)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Case</td>
+<td>Nom, Acc, Dat, Loc, Abl, Gen</td>
+<td>Selected values; inventories differ by language</td>
+</tr>
+<tr class="even">
+<td>Number</td>
+<td>Sing, Plur</td>
+<td>Dual absent in most modern Turkic</td>
+</tr>
+<tr class="odd">
+<td>Person</td>
+<td>1, 2, 3</td>
+<td>Verbal agreement; possessor features use the [psor] layer</td>
+</tr>
+<tr class="even">
+<td>Tense</td>
+<td>Past, Pres, Fut</td>
+<td>Interacts with Aspect and Mood</td>
+</tr>
+<tr class="odd">
+<td>Aspect</td>
+<td>Perf, Imp, Prog</td>
+<td>Not always distinguished from Tense in UD</td>
+</tr>
+<tr class="even">
+<td>Mood</td>
+<td>Ind, Cnd, Opt, Imp, Pot, Nec</td>
+<td>Indicative, conditional, optative, imperative, potential (ability), necessitative</td>
+</tr>
+<tr class="odd">
+<td>Voice</td>
+<td>Act, Pass, Cau, Rcp, Rfl</td>
+<td>Voice categories (and their combinations, e.g.&nbsp;<code>CauPass</code>)</td>
+</tr>
+<tr class="even">
+<td>VerbForm</td>
+<td>Fin, Part, Conv, Vnoun</td>
+<td>Finite, Participial, Converbal, Verbal noun</td>
+</tr>
+<tr class="odd">
+<td>Polarity</td>
+<td>Neg</td>
+<td>Morphological negation on verbs</td>
+</tr>
+<tr class="even">
+<td>Number[psor], Person[psor]</td>
+<td>Sing/Plur; 1/2/3</td>
+<td>Possessor agreement on nominals</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="turkic-specific-annotation-decisions" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="turkic-specific-annotation-decisions"><span class="header-section-number">8.2.2</span> Turkic-Specific Annotation Decisions</h3>
+<p>The UD guidelines specify the representation for many common constructions but leave certain language-specific cases to individual treebank documentation. Several of these are common in Turkic text.</p>
+<p><strong>Light verb constructions.</strong> Turkish and other Turkic languages frequently form complex predicates from a nominal and a light verb: <em>okuma yaptı</em> (“did reading” = “read”), <em>yardım etti</em> (“did help” = “helped”). In the documented UD analysis the light verb is the head and the nominal is its dependent with <code>compound:lvc</code>:</p>
+<pre><code>etti  --compound:lvc--&gt;  yardım</code></pre>
+<p>This matches the <a href="https://universaldependencies.org/tr/dep/compound-lvc.html">Turkish UD relation documentation</a>, but the released data need to be checked independently. In UD 2.17, examples of <em>yardım et-</em> in BOUN (<code>news_578</code>), IMST (<code>00170166_6</code>) and PUD (<code>n01134015</code>) have the <strong>opposite head direction</strong>: the noun <em>yardım</em> heads the verb with <code>compound:lvc</code> (sentence IDs and POS tags in <code>tables/tbl-ud217-inventory/light-verbs.csv</code>). <a href="#tbl-lvc-direction" class="quarto-xref">Table&nbsp;<span>8.3</span></a> shows how systematic the convention is: the pattern holds well beyond a few stray examples. In BOUN, IMST, PUD and the two Ottoman Turkish treebanks, nearly every <code>compound:lvc</code> arc runs from the nominal to a light verb on its right. In the Turkish and Azerbaijani TueCL sets, in Kazakh-KTB, Tatar-NMCTT and the Uzbek treebanks the verb is the head, as the documentation describes.</p>
+<div id="tbl-lvc-direction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lvc-direction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.3: Head direction of <code>compound:lvc</code> in the official UD 2.17 Turkic treebanks (all splits pooled; treebanks with no such arc omitted). “Nominal head” means any head whose UPOS is not VERB or AUX, so the light verb depends on the noun or adjective. Counts are an annotation-convention diagnostic, not a parser result. Generated by <code>tables/tbl-ud217-lvc-direction/generate.py</code> from hash-verified release files; URLs and hashes are in <code>data.csv</code>.
+</figcaption>
+<div aria-describedby="tbl-lvc-direction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Treebank (all splits)</th>
+<th style="text-align: right;"><code>compound:lvc</code> arcs</th>
+<th style="text-align: right;">Verb/AUX head</th>
+<th style="text-align: right;">Nominal head</th>
+<th style="text-align: right;">Dependent before head</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Azerbaijani-TueCL</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kazakh-KTB</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kyrgyz-TueCL</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ottoman Turkish-BOUN</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ottoman Turkish-DUDU</td>
+<td style="text-align: right;">905</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">904</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tatar-NMCTT</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkish-BOUN</td>
+<td style="text-align: right;">1,265</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">1,236</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turkish-IMST</td>
+<td style="text-align: right;">523</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">507</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkish-PUD</td>
+<td style="text-align: right;">201</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turkish-TueCL</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkish German-SAGT</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">94</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uyghur-UDT</td>
+<td style="text-align: right;">268</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">263</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uzbek-TueCL</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uzbek-UT</td>
+<td style="text-align: right;">215</td>
+<td style="text-align: right;">213</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uzbek-UzUDT</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Neither direction is a grammatical fact about Turkish: both are annotation conventions for the same construction, and a parser trained on one learns that convention. A relation name alone is therefore insufficient: compare heads, labels, POS tags and the relevant construction before pooling treebanks or comparing scores across them.</p>
+<p><strong>Postposition attachment.</strong> As in <a href="#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>, the nominal heads the phrase and the postposition attaches to it with <code>case</code>. The nominal itself is attached as <code>obl</code> when the phrase modifies a predicate and as <code>nmod</code> when it modifies a nominal. The nominal carries the case selected by the postposition, which gives partly redundant information for semantic interpretation.</p>
+<p><strong>Pro-drop representation.</strong> When the subject is omitted, no subject arc appears in the parse graph. The verb’s FEATS column records <code>Number=Sing|Person=3</code> (or whatever the morphological agreement is), providing information about the absent subject. Basic UD does not introduce empty words for omitted subject pronouns, regardless of language. Enhanced dependencies and empty nodes for ellipsis are a separate representation, not a Turkic-specific exception.</p>
+<p><strong>Possessive-existential clauses.</strong> One common Turkic possession construction combines a genitive possessor, a possessive suffix and an existential predicate. In the recurring Kyrgyz sentence <em>Менин машинам бар</em> ‘I have a car’ (Kyrgyz-KTMU <code>001</code>, <a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a>), the possessor <em>Менин</em> attaches to <em>машинам</em> with <code>nmod</code>, <em>машинам</em> is the <code>nsubj</code> of <em>бар</em>, and <em>бар</em> is the root:</p>
+<pre><code>бар  --nsubj--&gt;  машинам  --nmod--&gt;  Менин</code></pre>
+<p>Other analyses of the same release are defensible; this is one of them. Treebanks differ in the part of speech they give the existential (<em>бар</em>, Turkish <em>var</em>), in whether the possessor is <code>nmod</code> or <code>nmod:poss</code>, and in what they treat as the head of a predicate without a verb; consult the documentation of the treebank you train on. The same release also tags <em>машинам</em> <code>Case=Gen</code> and <em>бар</em> <code>VERB</code> with <code>Aspect=Perf|Tense=Pres</code>, although <em>машинам</em> has no genitive suffix and <em>бар</em> carries no tense or aspect morphology (<a href="05-morphological-structure.html#sec-recurring-analysis" class="quarto-xref"><span>Section 5.4.4</span></a>). These feature values look like annotation errors rather than a convention. Check features as well as relations before training on, or teaching from, a treebank.</p>
+<p><strong>Converb (gerund) clauses.</strong> Turkish and related languages use forms such as <em>-arak</em>, <em>-ıp</em>, <em>-ken</em> and <em>-ınca</em> in adverbial clauses. In this use, the converbal verb attaches to the main predicate with <code>advcl</code>, and its own arguments attach to it. Converbs also occur in clause chains and auxiliary constructions (Kazakh <em>оқып жатыр</em> ‘is reading’, where the treebank may treat <em>жатыр</em> as <code>aux</code> of the converb), so the form alone does not determine the dependency relation.</p>
+<p><strong>Coordinated verb phrases.</strong> In Turkic, coordinated clauses often share the subject and other arguments, with only the final verb fully inflected, and non-final verbs in a converbal or other non-finite form. UD coordination normally attaches later conjuncts to the <em>first</em> conjunct with <code>conj</code>, not to the final fully inflected verb. Whether a non-final converb is analysed as a conjunct at all, or as an <code>advcl</code> of the final verb, is a treebank-level decision that differs between Turkic treebanks; check the guidelines of the treebank you train on.</p>
+</section>
+<section id="sec-gold-arc-diagnostics" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="sec-gold-arc-diagnostics"><span class="header-section-number">8.2.3</span> Descriptive gold-arc diagnostics</h3>
+<p>The official UD 2.17 test files support a reproducible descriptive check without training a parser. <a href="#tbl-ud-arc-lengths" class="quarto-xref">Table&nbsp;<span>8.4</span></a> and <a href="#fig-ud-arc-lengths" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> use basic heads over integer-ID syntactic words. They exclude root arcs and arcs whose dependent is <code>PUNCT</code>, while retaining punctuation positions when measuring distance. Multiword-token headers and empty nodes are excluded. The generator checks every input against the inventory’s SHA-256 manifest.</p>
+<div id="tbl-ud-arc-lengths" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ud-arc-lengths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.4: Basic dependency distance in selected official UD 2.17 test sets, measured in integer-ID word positions. Root and punctuation-dependent arcs are excluded; intervening punctuation still occupies a position. P90 uses nearest rank. All 25 treebanks and source hashes are in the accompanying CSV. These are corpus diagnostics, not parser scores or matched language comparisons.
+</figcaption>
+<div aria-describedby="tbl-ud-arc-lengths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Treebank</th>
+<th style="text-align: right;">Sentences</th>
+<th style="text-align: right;">Arcs</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">P90</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Azerbaijani-TueCL</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">582</td>
+<td style="text-align: right;">2.04</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kazakh-KTB</td>
+<td style="text-align: right;">1,047</td>
+<td style="text-align: right;">6,978</td>
+<td style="text-align: right;">2.61</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kyrgyz-KTMU</td>
+<td style="text-align: right;">1,222</td>
+<td style="text-align: right;">8,965</td>
+<td style="text-align: right;">2.30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tatar-NMCTT</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">1,764</td>
+<td style="text-align: right;">3.07</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkish-BOUN</td>
+<td style="text-align: right;">979</td>
+<td style="text-align: right;">9,205</td>
+<td style="text-align: right;">2.76</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turkish-IMST</td>
+<td style="text-align: right;">1,100</td>
+<td style="text-align: right;">6,999</td>
+<td style="text-align: right;">2.53</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uyghur-UDT</td>
+<td style="text-align: right;">900</td>
+<td style="text-align: right;">7,386</td>
+<td style="text-align: right;">2.89</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uzbek-UT</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">4,570</td>
+<td style="text-align: right;">2.66</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="fig-ud-arc-lengths" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dot-and-line chart of 25 UD 2.17 test sets: mean dependency distance between about 1.4 (Turkish-Tourism) and 3.2 (Turkish_German-SAGT) word positions, with lines from median to 90th percentile reaching up to 8 for Turkish-PUD and Tatar-NMCTT.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ud-arc-lengths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-ud-arc-lengths/figure.png" class="img-fluid figure-img" alt="Dot-and-line chart of 25 UD 2.17 test sets: mean dependency distance between about 1.4 (Turkish-Tourism) and 3.2 (Turkish_German-SAGT) word positions, with lines from median to 90th percentile reaching up to 8 for Turkish-PUD and Tatar-NMCTT.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ud-arc-lengths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: Mean, median and 90th-percentile basic dependency distances for the 25 official UD 2.17 test sets in the book inventory. Genre, sentence length, translation and annotation choices differ across treebanks; these distributions do not isolate a language effect.
+</figcaption>
+</figure>
+</div>
+<p><a href="../tables/tbl-ud-arc-lengths/data.csv">The complete CSV</a> also records counts and distance sums for <code>acl</code> and its subtypes. That label alone does not identify all and only participial relative clauses: Exercise 2 selects participial modifiers as <code>acl</code> arcs whose dependent has <code>VerbForm=Part</code>. These counts are not parsing accuracy.</p>
+</section>
+</section>
+<section id="sec-treebanks" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sec-treebanks"><span class="header-section-number">8.3</span> Turkic Treebanks</h2>
+<section id="turkish-in-ud-2.17" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="turkish-in-ud-2.17"><span class="header-section-number">8.3.1</span> Turkish in UD 2.17</h3>
+<p>This inventory is pinned to <strong>UD 2.17</strong>, rather than mixing live statistics with older paper counts. It was regenerated from the official release-tag CoNLL-U files. The local training directory also contains derived data; those additions are excluded. The source URLs and SHA-256 hashes are saved under <code>tables/tbl-ud217-inventory/</code>.</p>
+<div id="tbl-turkish-treebanks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-turkish-treebanks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.5: UD 2.17 inventory, generated from the release CoNLL-U files by <code>tables/tbl-ud217-inventory/generate.py</code>; file hashes are recorded alongside the CSV. A zero means no sentences in that split. Word and token totals sum all splits; multiword-token ranges count once in the token total, and empty nodes count in neither. Historical and code-switched treebanks retain their UD language names.
+</figcaption>
+<div aria-describedby="tbl-turkish-treebanks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Treebank</th>
+<th style="text-align: right;">Train sentences</th>
+<th style="text-align: right;">Dev sentences</th>
+<th style="text-align: right;">Test sentences</th>
+<th style="text-align: right;">Syntactic words</th>
+<th style="text-align: right;">Orthographic tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish-Atis</td>
+<td style="text-align: right;">4,274</td>
+<td style="text-align: right;">572</td>
+<td style="text-align: right;">586</td>
+<td style="text-align: right;">45,907</td>
+<td style="text-align: right;">45,907</td>
+</tr>
+<tr class="even">
+<td>Turkish-BOUN</td>
+<td style="text-align: right;">7,803</td>
+<td style="text-align: right;">979</td>
+<td style="text-align: right;">979</td>
+<td style="text-align: right;">125,212</td>
+<td style="text-align: right;">121,835</td>
+</tr>
+<tr class="odd">
+<td>Turkish-FrameNet</td>
+<td style="text-align: right;">2,288</td>
+<td style="text-align: right;">205</td>
+<td style="text-align: right;">205</td>
+<td style="text-align: right;">19,223</td>
+<td style="text-align: right;">19,223</td>
+</tr>
+<tr class="even">
+<td>Turkish-GB</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2,880</td>
+<td style="text-align: right;">17,177</td>
+<td style="text-align: right;">16,803</td>
+</tr>
+<tr class="odd">
+<td>Turkish-IMST</td>
+<td style="text-align: right;">3,435</td>
+<td style="text-align: right;">1,100</td>
+<td style="text-align: right;">1,100</td>
+<td style="text-align: right;">58,096</td>
+<td style="text-align: right;">56,422</td>
+</tr>
+<tr class="even">
+<td>Turkish-Kenet</td>
+<td style="text-align: right;">15,398</td>
+<td style="text-align: right;">1,646</td>
+<td style="text-align: right;">1,643</td>
+<td style="text-align: right;">178,658</td>
+<td style="text-align: right;">178,658</td>
+</tr>
+<tr class="odd">
+<td>Turkish-PUD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,000</td>
+<td style="text-align: right;">16,881</td>
+<td style="text-align: right;">16,535</td>
+</tr>
+<tr class="even">
+<td>Turkish-Penn</td>
+<td style="text-align: right;">14,850</td>
+<td style="text-align: right;">622</td>
+<td style="text-align: right;">924</td>
+<td style="text-align: right;">183,555</td>
+<td style="text-align: right;">183,555</td>
+</tr>
+<tr class="odd">
+<td>Turkish-Tourism</td>
+<td style="text-align: right;">15,473</td>
+<td style="text-align: right;">2,166</td>
+<td style="text-align: right;">2,191</td>
+<td style="text-align: right;">91,152</td>
+<td style="text-align: right;">91,152</td>
+</tr>
+<tr class="even">
+<td>Turkish-TueCL</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">904</td>
+<td style="text-align: right;">883</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Related resources include Ottoman Turkish and Turkish–German and Turkish–English code-switched treebanks, listed separately below.</p>
+<p>For general edited and web text, <strong>TR-BOUN</strong> offers several genres and carefully documented Turkish annotation decisions <span class="citation" data-cites="turk2022boun">(<a href="../references.html#ref-turk2022boun" role="doc-biblioref">Türk et al. 2022</a>)</span>. Size alone favours other treebanks: TR-Kenet and TR-Penn contain more words, and TR-Tourism more sentences (<a href="#tbl-turkish-treebanks" class="quarto-xref">Table&nbsp;<span>8.5</span></a>). Choose according to the evaluation domain; tourism reviews or flight queries may call for a matching domain-specific treebank.</p>
+<p><strong>TR-IMST</strong> matters for the comparisons below because it supplies the Stanza checkpoint’s training data. <strong>TR-PUD</strong> belongs to the Parallel UD (PUD) collection, which annotates the same 1,000 sentences in many languages.</p>
+<p>Annotation differs between Turkish treebanks in the treatment of light verb constructions (<a href="#tbl-lvc-direction" class="quarto-xref">Table&nbsp;<span>8.3</span></a>), copulas and complex predicates. Researchers combining multiple treebanks should verify that these constructions are handled consistently before pooling training data.</p>
+</section>
+<section id="other-turkic-treebanks" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="other-turkic-treebanks"><span class="header-section-number">8.3.2</span> Other Turkic Treebanks</h3>
+<div id="tbl-other-treebanks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-other-treebanks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.6: UD 2.17 inventory, generated from the release CoNLL-U files by <code>tables/tbl-ud217-inventory/generate.py</code>; file hashes are recorded alongside the CSV. A zero means no sentences in that split. Word and token totals sum all splits; multiword-token ranges count once in the token total, and empty nodes count in neither. Historical and code-switched treebanks retain their UD language names.
+</figcaption>
+<div aria-describedby="tbl-other-treebanks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Treebank</th>
+<th style="text-align: right;">Train sentences</th>
+<th style="text-align: right;">Dev sentences</th>
+<th style="text-align: right;">Test sentences</th>
+<th style="text-align: right;">Syntactic words</th>
+<th style="text-align: right;">Orthographic tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Azerbaijani-TueCL</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">912</td>
+<td style="text-align: right;">902</td>
+</tr>
+<tr class="even">
+<td>Kazakh-KTB</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,047</td>
+<td style="text-align: right;">10,536</td>
+<td style="text-align: right;">10,495</td>
+</tr>
+<tr class="odd">
+<td>Kyrgyz-KTMU</td>
+<td style="text-align: right;">1,308</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,222</td>
+<td style="text-align: right;">24,128</td>
+<td style="text-align: right;">24,128</td>
+</tr>
+<tr class="even">
+<td>Kyrgyz-TueCL</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">1,250</td>
+<td style="text-align: right;">1,214</td>
+</tr>
+<tr class="odd">
+<td>Old Turkish-Clausal</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">158</td>
+</tr>
+<tr class="even">
+<td>Ottoman Turkish-BOUN</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">400</td>
+<td style="text-align: right;">8,851</td>
+<td style="text-align: right;">8,834</td>
+</tr>
+<tr class="odd">
+<td>Ottoman Turkish-DUDU</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,762</td>
+<td style="text-align: right;">17,125</td>
+<td style="text-align: right;">16,728</td>
+</tr>
+<tr class="even">
+<td>Tatar-NMCTT</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">2,280</td>
+<td style="text-align: right;">2,280</td>
+</tr>
+<tr class="odd">
+<td>Turkish English-BUTR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">393</td>
+<td style="text-align: right;">393</td>
+</tr>
+<tr class="even">
+<td>Turkish German-SAGT</td>
+<td style="text-align: right;">578</td>
+<td style="text-align: right;">801</td>
+<td style="text-align: right;">805</td>
+<td style="text-align: right;">37,227</td>
+<td style="text-align: right;">36,934</td>
+</tr>
+<tr class="odd">
+<td>Uyghur-UDT</td>
+<td style="text-align: right;">1,656</td>
+<td style="text-align: right;">900</td>
+<td style="text-align: right;">900</td>
+<td style="text-align: right;">40,236</td>
+<td style="text-align: right;">40,236</td>
+</tr>
+<tr class="even">
+<td>Uzbek-TueCL</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">939</td>
+<td style="text-align: right;">939</td>
+</tr>
+<tr class="odd">
+<td>Uzbek-UT</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">5,930</td>
+<td style="text-align: right;">5,930</td>
+</tr>
+<tr class="even">
+<td>Uzbek-UzUDT</td>
+<td style="text-align: right;">483</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">7,542</td>
+<td style="text-align: right;">7,542</td>
+</tr>
+<tr class="odd">
+<td>Yakut-YKTDT</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">299</td>
+<td style="text-align: right;">1,460</td>
+<td style="text-align: right;">1,459</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>A treebank that ships only a test split can be used for evaluation. Training on that split is ruled out. Sizes and split availability differ substantially, motivating multilingual training (<a href="#sec-parsing" class="quarto-xref"><span>Section 8.4</span></a>) and cross-lingual approaches (<a href="#sec-crosslingual" class="quarto-xref"><span>Section 8.5</span></a>). The release uses the name <strong>Old Turkish–Clausal</strong>; historical resource names in older publications should not be treated as additional released treebanks.</p>
+</section>
+<section id="languages-without-treebanks" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="languages-without-treebanks"><span class="header-section-number">8.3.3</span> Languages Without Treebanks</h3>
+<p>In the pinned UD 2.17 inventory (check newer releases before starting a project), many Turkic languages have no UD treebank, among them Turkmen, Bashkir, Chuvash, Crimean Tatar, Gagauz, Nogai, Karachay-Balkar, Tuvan, Khakas, Shor, and Altai. Karakalpak and Kumyk have sentences in the in-progress UD-Turkic parallel collection but no released treebank yet. For the treebank-less languages, the routes to dependency parsing are multilingual or cross-lingual transfer, silver treebanks, and annotation projection (<a href="#sec-crosslingual" class="quarto-xref"><span>Section 8.5</span></a>). In the long run, the route is to build a treebank (<a href="#sec-build-treebank" class="quarto-xref"><span>Section 8.6</span></a>).</p>
+</section>
+<section id="the-ud-turkic-parallel-treebanks" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="the-ud-turkic-parallel-treebanks"><span class="header-section-number">8.3.4</span> The UD-Turkic Parallel Treebanks</h3>
+<p>The UD-Turkic initiative addresses cross-lingual comparison directly. <span class="citation" data-cites="eslami2025parallel">Akhundjanova et al. (<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">2025</a>)</span> annotated the same 148 sentences, grammar-style examples of core constructions, in Azerbaijani, Kyrgyz, Turkish, and Uzbek, released as the TueCL treebanks in UD 2.16. In UD 2.17 the Kyrgyz file has grown to 173 sentences (<a href="#tbl-other-treebanks" class="quarto-xref">Table&nbsp;<span>8.6</span></a>), so compare the languages on shared sentence IDs. Files for Kazakh, Uyghur, Tatar, Karakalpak, Kumyk, and Sakha are in progress in the initiative’s repository (<code>github.com/ud-turkic/parallel</code>).</p>
+<p>These treebanks chiefly support <strong>comparison and evaluation</strong>. Their parallel content lets researchers compare how annotators handle participial clauses, light verbs, copulas and coordination, and develop shared Turkic annotation guidelines. They also supply manually annotated test sets. TurkicNLP evaluates parsers on ten languages using the released sets and the in-progress files (<a href="#sec-parsing" class="quarto-xref"><span>Section 8.4</span></a>).</p>
+</section>
+</section>
+<section id="sec-parsing" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sec-parsing"><span class="header-section-number">8.4</span> Dependency Parsing for Turkic</h2>
+<section id="transition-based-parsing" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="transition-based-parsing"><span class="header-section-number">8.4.1</span> Transition-Based Parsing</h3>
+<p>Transition-based dependency parsing <span class="citation" data-cites="jurafsky2024slp">(<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">Jurafsky and Martin 2024</a>, chapter “Dependency Parsing”)</span> processes the input sentence left to right, maintaining a <em>stack</em> of partially built structure and a <em>buffer</em> of unprocessed words. In the <em>arc-standard</em> system, each step applies one of three actions, where <span class="math inline">\(s_0\)</span> is the top of the stack and <span class="math inline">\(s_1\)</span> the item beneath it: <em>shift</em> (move the next word from the buffer onto the stack); <em>left-arc</em> (make <span class="math inline">\(s_0\)</span> the head of <span class="math inline">\(s_1\)</span>, a leftward arc <span class="math inline">\(s_0 \rightarrow s_1\)</span>, and pop <span class="math inline">\(s_1\)</span>); or <em>right-arc</em> (make <span class="math inline">\(s_1\)</span> the head of <span class="math inline">\(s_0\)</span>, a rightward arc <span class="math inline">\(s_1 \rightarrow s_0\)</span>, and pop <span class="math inline">\(s_0\)</span>). In a head-final sentence most arcs are built by <em>left-arc</em>, after the head has been shifted.</p>
+<p>Early data-driven Turkish parsers included MaltParser, which <span class="citation" data-cites="eryigit2008dependency">Eryiğit, Nivre, and Oflazer (<a href="../references.html#ref-eryigit2008dependency" role="doc-biblioref">2008</a>)</span> applied to inflectional groups: the subword units between derivational boundaries. Arc-standard decoding takes a linear number of transitions, with encoder and search costs counted separately. In an SOV sentence, the parser holds the subject and object on its stack until the main verb arrives. Long participial clauses can deepen that stack and increase opportunities for early errors to propagate.</p>
+<p>Modern transition-based parsers can score transitions with a bidirectional LSTM or transformer that has already read the whole sentence, including the final verb. Greedy decoding can still propagate errors; beam search keeps alternatives. With contextual encoders, transition-based and graph-based parsers show similar accuracy and error profiles <span class="citation" data-cites="kulmizev2019deep">(<a href="../references.html#ref-kulmizev2019deep" role="doc-biblioref">Kulmizev et al. 2019</a>)</span>.</p>
+</section>
+<section id="graph-based-biaffine-parsing" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="graph-based-biaffine-parsing"><span class="header-section-number">8.4.2</span> Graph-Based (Biaffine) Parsing</h3>
+<p>Graph-based parsing <span class="citation" data-cites="dozat2017biaffine">(<a href="../references.html#ref-dozat2017biaffine" role="doc-biblioref">Dozat and Manning 2017</a>)</span> takes a different approach: encode the entire sentence at once, then score all possible dependency arcs globally. Biaffine graph-based parsers are among the most widely used architectures for high-accuracy dependency parsing, including the Stanza parser <span class="citation" data-cites="qi2020stanza">(<a href="../references.html#ref-qi2020stanza" role="doc-biblioref">Qi et al. 2020</a>)</span>.</p>
+<p>The architecture proceeds in three stages:</p>
+<p><strong>1. Contextual encoding.</strong> A bidirectional LSTM or transformer encoder processes the full sentence and produces a contextual representation for each token. The encoder sees the entire sentence, including the verb at the end, before any attachment is scored. (Transition-based parsers can use the same kind of encoder; the difference lies in how attachments are decided, not in what the encoder sees.)</p>
+<p><strong>2. Biaffine arc scoring.</strong> For each ordered pair of tokens <span class="math inline">\((i, j)\)</span>, compute an arc score: <span class="math display">\[s_\text{arc}(i, j) = {h_j^{(\text{head})}}^{\top} U \, h_i^{(\text{dep})} + {h_j^{(\text{head})}}^{\top} u\]</span> the score for word <span class="math inline">\(j\)</span> being the head of word <span class="math inline">\(i\)</span>, where <span class="math inline">\(h_i^{(\text{dep})}\)</span> and <span class="math inline">\(h_j^{(\text{head})}\)</span> are learned dependent and head representations derived from the encoder output (via separate MLPs), <span class="math inline">\(U\)</span> is a bilinear weight matrix and <span class="math inline">\(u\)</span> an affine term that captures how likely word <span class="math inline">\(j\)</span> is to take dependents at all <span class="citation" data-cites="dozat2017biaffine">(<a href="../references.html#ref-dozat2017biaffine" role="doc-biblioref">Dozat and Manning 2017</a>)</span>. Implementations differ in the exact affine terms. A separate biaffine classifier scores the dependency label for each arc.</p>
+<p><strong>3. Maximum spanning tree decoding.</strong> A common non-projective decoder finds a maximum spanning tree from arc scores with Chu–Liu/Edmonds, with root constraints, then assigns labels to the chosen arcs. Other implementations may score labelled arcs jointly or use projective decoding; the biaffine scorer alone does not determine the decoder. Because the tree is chosen globally, a long arc (say, from the sentence-final verb back to a subject that contains a wide relative clause) is scored directly rather than built after a sequence of earlier greedy decisions.</p>
+<p>Stanza <span class="citation" data-cites="qi2020stanza">(<a href="../references.html#ref-qi2020stanza" role="doc-biblioref">Qi et al. 2020</a>)</span> provides BiLSTM-based biaffine parsers for Turkic UD treebanks. Its 1.11.0 model catalogue, used for the measurements in this chapter, covers five Turkic languages: Turkish, Kazakh, Kyrgyz, Uyghur, and Ottoman Turkish (plus Turkish–German code-switching). The 1.15.0 catalogue adds an Uzbek (UzUDT) model and a second Ottoman Turkish model (DUDU). TurkicNLP uses Stanza’s own models for the first four languages, adds its own Stanza models for Azerbaijani, Uzbek, Turkmen, Tatar, and Bashkir (trained on silver treebanks where no UD data existed), and provides a multilingual biaffine parser on a frozen Glot500 encoder. That parser is trained on ten languages and covers 15, five of them zero-shot <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</p>
+</section>
+<section id="hard-cases-for-turkic-parsers" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="hard-cases-for-turkic-parsers"><span class="header-section-number">8.4.3</span> Hard Cases for Turkic Parsers</h3>
+<p>Evaluation on Turkic UD treebanks reveals consistent difficult constructions:</p>
+<p><strong>Long arcs around participial clauses.</strong> As described in <a href="#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>, the participle-to-noun edge is usually short; the difficult arcs are those from early dependents of a wide relative clause to its participle, and from the sentence-final verb back to a subject that contains such a clause. Attachment accuracy generally falls as arc length grows; in the classic comparison, the graph-based MSTParser was more precise on long arcs than the greedy transition-based MaltParser <span class="citation" data-cites="mcdonald2007characterizing">(<a href="../references.html#ref-mcdonald2007characterizing" role="doc-biblioref">McDonald and Nivre 2007</a>)</span>. The fall is steep for Turkish. Exercise 2 runs the Stanza Turkish (IMST) parser on the BOUN test set from gold words: UAS is 83.3% on arcs between adjacent words, 67.7% at distance 2, 59.2% at 3–4, 54.2% at 5–7 and 43.9% at distance 8 or more. These are cross-treebank scores for a single graph-based parser; with contextual encoders, transition-based parsers show a similar error profile <span class="citation" data-cites="kulmizev2019deep">(<a href="../references.html#ref-kulmizev2019deep" role="doc-biblioref">Kulmizev et al. 2019</a>)</span>.</p>
+<p><strong>Light verb constructions.</strong> The difference in head direction between treebanks (<a href="#tbl-lvc-direction" class="quarto-xref">Table&nbsp;<span>8.3</span></a>) propagates into parser confusion: a model trained on IMST or BOUN learns that the light verb depends on its noun, while the Turkish and Azerbaijani TueCL test sets expect the opposite. BOUN and IMST share the dominant head direction. Pooling them with TueCL, or evaluating across these conventions, requires checking and documenting the mismatch. The hands-on example below shows the IMST convention in a trained model.</p>
+<p><strong>Coordination.</strong> Where non-final verbs appear in converbal form, the parser must learn the training treebank’s decision about whether such a verb is a conjunct (with later conjuncts attached to it) or an adverbial clause. The verb form alone does not settle this distinction.</p>
+<p><strong>Postposition attachment ambiguity.</strong> A postpositional phrase may attach to the verb as an <em>obl</em> modifier or to a nominal as an <em>nmod</em> modifier. Disambiguation requires semantic knowledge about the postposition’s typical modifier type and the context.</p>
+</section>
+<section id="evaluation-results-per-language-vs.-multilingual-parsing" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="evaluation-results-per-language-vs.-multilingual-parsing"><span class="header-section-number">8.4.4</span> Evaluation Results: Per-Language vs.&nbsp;Multilingual Parsing</h3>
+<p><a href="#tbl-parsing-results" class="quarto-xref">Table&nbsp;<span>8.7</span></a> compares per-language Stanza models with TurkicNLP’s multilingual parser. It records the local manuscript snapshot of 13 October 2026 (<code>tables/tbl-parsing-results/source.tex</code>). Some cells and sample sizes differ from the cited arXiv version <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>, so the table should be read as that frozen diagnostic.</p>
+<p>The first two groups use gold UD-Turkic parallel test sets. The third uses silver Turkmen and Bashkir sets produced by automatic translation and annotation. Both backends receive the same automatic tokenisation. UPOS is scored on words whose boundaries match the gold tokenisation; UAS and LAS use the subset whose gold and predicted heads also match in their word boundaries. UAS counts correct heads, and LAS correct heads and labels.</p>
+<p>These scores are conditional on alignment. Tokenisation failures remove words from the denominator. The scores therefore differ from the official CoNLL 2018 tokenisation-aware LAS F1 and cannot be compared directly with it.</p>
+<div id="tbl-parsing-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-parsing-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.7: POS tagging and dependency parsing from the frozen local manuscript table of 13 October 2026 (<code>tables/tbl-parsing-results/source.tex</code>), associated with <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>. This snapshot differs from the public arXiv table in some cells and sample sizes. Both backends receive the same automatic tokenisation. These are <em>conditional</em> scores, not the official tokenisation-aware CoNLL 2018 LAS F1: UPOS is computed over the n words whose boundaries match gold, and UAS/LAS additionally require matched gold and predicted heads, so tokenisation errors drop out of the denominator. <sup>†</sup>Zero-shot with proxy embeddings: Karakalpak → Uzbek, Kumyk → Tatar, Sakha → Bashkir. <sup>‡</sup>Silver test sets (translated and automatically annotated); these mainly measure agreement with the process that produced them. Tatar (29 words), Sakha (16), Kumyk (144) and Karakalpak (235) are qualitative examples, not grounds for ranking. Bold: higher score of the two backends. The source’s aggregate is omitted because it mixes gold and silver rows.
+</figcaption>
+<div aria-describedby="tbl-parsing-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Matched words (n)</th>
+<th>Stanza UPOS</th>
+<th>Stanza UAS</th>
+<th>Stanza LAS</th>
+<th>Multilingual UPOS</th>
+<th>Multilingual UAS</th>
+<th>Multilingual LAS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Gold UD-Turkic parallel test sets — supervised</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Turkish</td>
+<td>877</td>
+<td>85.1</td>
+<td>75.3</td>
+<td>63.5</td>
+<td><strong>86.9</strong></td>
+<td><strong>84.5</strong></td>
+<td><strong>70.1</strong></td>
+</tr>
+<tr class="odd">
+<td>Azerbaijani</td>
+<td>869</td>
+<td>84.9</td>
+<td>72.3</td>
+<td>60.8</td>
+<td><strong>87.0</strong></td>
+<td><strong>76.2</strong></td>
+<td><strong>64.5</strong></td>
+</tr>
+<tr class="even">
+<td>Kazakh</td>
+<td>851</td>
+<td>87.9</td>
+<td>67.4</td>
+<td>57.4</td>
+<td><strong>88.8</strong></td>
+<td><strong>71.9</strong></td>
+<td><strong>59.9</strong></td>
+</tr>
+<tr class="odd">
+<td>Kyrgyz</td>
+<td>1,166</td>
+<td>71.1</td>
+<td>50.2</td>
+<td>29.4</td>
+<td><strong>79.0</strong></td>
+<td><strong>63.9</strong></td>
+<td><strong>41.0</strong></td>
+</tr>
+<tr class="even">
+<td>Tatar</td>
+<td>29</td>
+<td><strong>86.2</strong></td>
+<td>69.2</td>
+<td>57.7</td>
+<td>79.3</td>
+<td><strong>77.8</strong></td>
+<td><strong>70.4</strong></td>
+</tr>
+<tr class="odd">
+<td>Uyghur</td>
+<td>758</td>
+<td>76.9</td>
+<td>77.1</td>
+<td>62.3</td>
+<td><strong>79.7</strong></td>
+<td><strong>81.5</strong></td>
+<td><strong>66.7</strong></td>
+</tr>
+<tr class="even">
+<td>Uzbek</td>
+<td>905</td>
+<td>71.8</td>
+<td>67.2</td>
+<td>46.3</td>
+<td><strong>87.6</strong></td>
+<td><strong>81.5</strong></td>
+<td><strong>68.3</strong></td>
+</tr>
+<tr class="odd">
+<td><em>Gold UD-Turkic parallel test sets — zero-shot</em><sup>†</sup></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Karakalpak<sup>†</sup></td>
+<td>235</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>77.5</td>
+<td>61.7</td>
+<td>45.8</td>
+</tr>
+<tr class="odd">
+<td>Kumyk<sup>†</sup></td>
+<td>144</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>78.5</td>
+<td>60.4</td>
+<td>45.5</td>
+</tr>
+<tr class="even">
+<td>Sakha<sup>†</sup></td>
+<td>16</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>93.8</td>
+<td>60.0</td>
+<td>46.7</td>
+</tr>
+<tr class="odd">
+<td><em>Silver test sets</em><sup>‡</sup></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Turkmen<sup>‡</sup></td>
+<td>825</td>
+<td><strong>86.1</strong></td>
+<td>76.8</td>
+<td>67.8</td>
+<td>85.8</td>
+<td><strong>77.9</strong></td>
+<td><strong>68.4</strong></td>
+</tr>
+<tr class="odd">
+<td>Bashkir<sup>‡</sup></td>
+<td>814</td>
+<td>87.0</td>
+<td>72.8</td>
+<td>62.5</td>
+<td><strong>89.6</strong></td>
+<td><strong>75.8</strong></td>
+<td><strong>63.8</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The multilingual parser has higher conditional LAS in every language covered by both systems; UPOS results are mixed. Architecture, encoder and training data also differ, so a controlled experiment would be needed to attribute this advantage to parameter sharing.</p>
+<p>The zero-shot Karakalpak, Kumyk and Sakha rows reach conditional LAS in the mid-40s. They demonstrate transfer on these small samples; representative, manually checked data would be needed to assess practical usefulness. Treat the Sakha (16 words) and Tatar (29 words) rows as qualitative examples. A single word shifts their percentages by several points.</p>
+<p>Scores are modest even for Turkish on these short, construction-dense parallel sentences. Scores from a language’s own treebank test set, such as BOUN, describe a different evaluation setting.</p>
+</section>
+<section id="measured-official-treebank-baselines" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="measured-official-treebank-baselines"><span class="header-section-number">8.4.5</span> Measured official-treebank baselines</h3>
+<p>A separate evaluation runs cached Stanza checkpoints on the complete official <strong>UD 2.17 test files</strong> for Kazakh-KTB, Kyrgyz-KTMU, Turkish-IMST and Uyghur-UDT. These are different evaluation collections from the parallel-treebank comparison above. The first condition supplies gold sentence and syntactic-word boundaries, but only word forms enter the model: POS, features, lemmas and dependencies are predicted.</p>
+<div id="tbl-ud217-pretrained-probe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ud217-pretrained-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.8: Measured pretrained Stanza scores (%) on official UD 2.17 test files, using gold sentence and syntactic-word boundaries and predicted tags/features. The UD scorer includes punctuation in UAS/LAS; all denominators are retained. † Kazakh is a replay diagnostic with split-exposure risk, not held-out accuracy. These are not raw-text or newly trained results. Source: <code>run_parsing.py</code>.
+</figcaption>
+<div aria-describedby="tbl-ud217-pretrained-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test treebank</th>
+<th style="text-align: right;">Words</th>
+<th style="text-align: right;">UPOS</th>
+<th style="text-align: right;">UFeats</th>
+<th style="text-align: right;">UAS</th>
+<th style="text-align: right;">LAS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kyrgyz-KTMU</td>
+<td style="text-align: right;">11771</td>
+<td style="text-align: right;">90.40</td>
+<td style="text-align: right;">71.78</td>
+<td style="text-align: right;">82.98</td>
+<td style="text-align: right;">71.17</td>
+</tr>
+<tr class="even">
+<td>Turkish-IMST</td>
+<td style="text-align: right;">10032</td>
+<td style="text-align: right;">95.18</td>
+<td style="text-align: right;">92.47</td>
+<td style="text-align: right;">78.37</td>
+<td style="text-align: right;">70.23</td>
+</tr>
+<tr class="odd">
+<td>Uyghur-UDT</td>
+<td style="text-align: right;">10330</td>
+<td style="text-align: right;">89.69</td>
+<td style="text-align: right;">88.38</td>
+<td style="text-align: right;">76.72</td>
+<td style="text-align: right;">65.29</td>
+</tr>
+<tr class="even">
+<td>Kazakh-KTB† (replay, not held-out)</td>
+<td style="text-align: right;">10007</td>
+<td style="text-align: right;">98.74</td>
+<td style="text-align: right;">98.23</td>
+<td style="text-align: right;">96.83</td>
+<td style="text-align: right;">95.57</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The official UD scorer includes punctuation and uses coarse dependency relations. Task checkpoint MD5s were checked against the local Stanza resource manifest.</p>
+<p><strong>The Kazakh row is a replay diagnostic, not held-out accuracy.</strong> Stanza 1.11.0’s <code>process_partial_ud_treebank</code> routine swaps training and test inputs for treebanks without development data when training contains at most 1,000 words and test more than 5,000. Kazakh-KTB meets this rule. The checked checkpoint configuration names the resulting <code>kk_ktb.train.in.conllu</code> and development files, though their historical sentence membership is unavailable. This specific exposure risk prevents interpreting 95.57% as held-out accuracy or comparing it with the other three rows. The audit script, source hash and rule are saved in <code>stanza_split_audit.json</code>.</p>
+<p>The other three current treebanks do not trigger the swap rule; their historical checkpoint membership has not been independently reconstructed either. Differences in treebanks, annotation distributions and checkpoints also prevent using the table to rank languages by difficulty.</p>
+<p>A second pass supplies each gold sentence as text and predicts tokenisation, multiword-token expansion where supported, and all downstream annotations. The official scorer aligns predicted and gold words, retaining segmentation errors in the denominator.</p>
+<div id="tbl-ud217-tokenization-probe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ud217-tokenization-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.9: Measured Stanza scores (%) on the same official UD 2.17 tests. Both conditions retain gold sentence boundaries; the automatic condition predicts tokenization/MWT and uses the official alignment-aware scorer. † Kazakh has split-exposure risk and is not a held-out score. Gold-word LAS is repeated from the preceding table. Source: run_parsing.py and run_parsing_auto.py.
+</figcaption>
+<div aria-describedby="tbl-ud217-tokenization-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Test treebank</th>
+<th style="text-align: right;">Gold-word LAS</th>
+<th style="text-align: right;">Auto word F1</th>
+<th style="text-align: right;">Auto UAS</th>
+<th style="text-align: right;">Auto LAS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kyrgyz-KTMU</td>
+<td style="text-align: right;">71.17</td>
+<td style="text-align: right;">99.12</td>
+<td style="text-align: right;">82.30</td>
+<td style="text-align: right;">70.62</td>
+</tr>
+<tr class="even">
+<td>Turkish-IMST</td>
+<td style="text-align: right;">70.23</td>
+<td style="text-align: right;">97.26</td>
+<td style="text-align: right;">73.57</td>
+<td style="text-align: right;">65.95</td>
+</tr>
+<tr class="odd">
+<td>Uyghur-UDT</td>
+<td style="text-align: right;">65.29</td>
+<td style="text-align: right;">99.48</td>
+<td style="text-align: right;">76.17</td>
+<td style="text-align: right;">64.80</td>
+</tr>
+<tr class="even">
+<td>Kazakh-KTB† (replay, not held-out)</td>
+<td style="text-align: right;">95.57</td>
+<td style="text-align: right;">99.80</td>
+<td style="text-align: right;">96.57</td>
+<td style="text-align: right;">95.34</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Both conditions still supply gold <strong>sentence boundaries</strong>, so the automatic condition does not measure document-level sentence segmentation. No test sentence is dropped or rewritten to force alignment. The Kyrgyz file contains ten <code># text =</code> lines without a space after the equals sign; the loader accepts both metadata spellings and preserves the text. Comparing the two columns measures the effect of the full tokenisation pipeline in these checkpoints, not just isolated token-boundary accuracy.</p>
+</section>
+</section>
+<section id="sec-crosslingual" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="sec-crosslingual"><span class="header-section-number">8.5</span> Cross-Lingual Parsing</h2>
+<section id="zero-shot-and-proxy-language-transfer" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="zero-shot-and-proxy-language-transfer"><span class="header-section-number">8.5.1</span> Zero-Shot and Proxy-Language Transfer</h3>
+<p>In zero-shot parsing, a model trained on one or more Turkic treebanks is applied to a language absent from that training. A multilingual encoder supports this setup. The ten-language parser in <a href="#tbl-parsing-results" class="quarto-xref">Table&nbsp;<span>8.7</span></a> reaches conditional LAS in the mid-40s on small Karakalpak, Kumyk and Sakha samples, using a related language’s proxy embedding <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. Exercise 4 tests a single-source baseline on gold words: the Stanza Turkish (IMST) parser scores LAS 43.2 on Azerbaijani TueCL and 64.3 on the Turkish versions of those sentences. Both experiments show transfer, but their different test sets and conditions prevent a direct comparison of the approaches.</p>
+<p>The principal failure modes are:</p>
+<p><strong>Label conventions.</strong> Even when the parser finds the right head, it often assigns a label according to the source treebanks’ conventions. Language-specific annotation decisions (light verbs, copulas, compound nouns) differ between Turkic treebanks, and the parser cannot infer the target language’s conventions without target data.</p>
+<p><strong>Unseen function words and constructions.</strong> Postpositions, particles and auxiliaries can differ between related languages. Check their attachment errors separately rather than assuming that familiar suffix patterns are enough for transfer.</p>
+<p><strong>Script mismatch.</strong> An unfamiliar script can reduce the lexical information available to an encoder. Shared syntactic patterns may still transfer, but script coverage and parsing accuracy each need their own check.</p>
+</section>
+<section id="script-normalisation" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="script-normalisation"><span class="header-section-number">8.5.2</span> Script Normalisation</h3>
+<p>A Turkish-only encoder may represent Cyrillic Kazakh or Arabic-script Uyghur poorly. A multilingual encoder can already know both scripts even if its parsing fine-tuning used only Turkish. Two options are worth comparing: convert input to the model’s script and map predictions back, or train across scripts with script-specific adapters. TurkicNLP supports input-to-model script bridging within a language (<a href="03-scripts-orthography.html#sec-transliteration" class="quarto-xref"><span>Section 3.4</span></a>); applying a Turkish model to another language still needs an explicit mapping and evaluation.</p>
+<p>Shared-script conversion can increase cognate overlap (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>). Exercise 4 tests its effect on the Stanza Turkish parser with gold words. On Kyrgyz TueCL, LAS rises from 6.2 with Cyrillic input to 22.4 with word-by-word CTS conversion. On Kazakh KTB, it rises from 9.1 to 18.1 with the 2021 Kazakh Latin alphabet and to 27.2 with CTS. Conversion helps in these runs, though the in-language Kyrgyz KTMU model still scores 29.1 on the same Kyrgyz sentences.</p>
+</section>
+<section id="silver-treebanks-and-annotation-projection" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="silver-treebanks-and-annotation-projection"><span class="header-section-number">8.5.3</span> Silver Treebanks and Annotation Projection</h3>
+<p>When a language has no treebank, training data can be created automatically.</p>
+<p><strong>Silver treebanks by translation.</strong> Translate sentences from an existing treebank (e.g., a Turkish training split) into the target language with an MT system or an LLM, and annotate the translations automatically with the best available analysers and parsers, followed by automatic validation. TurkicNLP’s Turkmen and Bashkir models were trained this way <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. Silver data is noisy and inherits the source treebank’s sentence types and annotation decisions. A test set built the same way (the <sup>‡</sup> rows in <a href="#tbl-parsing-results" class="quarto-xref">Table&nbsp;<span>8.7</span></a>) mainly measures agreement with the process that produced it, so it gives only indicative scores.</p>
+<p>Two rules prevent leakage. Split the source material by sentence or document <em>before</em> translating, projecting or producing silver labels, so that no translation of a test sentence ends up in training data. And never train on translations of the sentences used for evaluation, including published parallel test sets such as UD-Turkic or PUD. FLORES-200 is an evaluation resource: use only its designated development split, if any, for tuning, and keep its test split untouched.</p>
+<p><strong>Annotation projection</strong> uses an existing parallel corpus instead:</p>
+<ol type="1">
+<li>Parse the source side (e.g., Turkish) with a high-quality parser.</li>
+<li>Align source and target words with a word aligner (e.g., awesome-align or fast_align).</li>
+<li>Project dependency arcs through the alignment: if source words <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are aligned to target words <span class="math inline">\(i'\)</span> and <span class="math inline">\(j'\)</span>, and there is an arc <span class="math inline">\((i, j)\)</span> in the source parse, propose the arc <span class="math inline">\((i', j')\)</span> in the target, then repair the result into a valid tree.</li>
+</ol>
+<p>The quality of projection depends heavily on alignment precision and coverage, which must be measured for the pair and domain; related vocabulary and similar constituent order can help but do not ensure one-to-one alignment. Exercise 5 projects the Turkish TueCL gold trees onto the Azerbaijani versions of the same 148 sentences with a simple string-similarity aligner. Only 39.4% of the Azerbaijani words receive the right head and label overall, but 83.5% do among the words whose own link and whose head’s link both exist; with Stanza parses instead of gold trees the figures fall to 30.9% and 65.6%. In this experiment, restricting evaluation to aligned words hides much of the projection failure. Report the all-word score alongside the conditional one. Parallel training text is available, for example, from the TIL corpus <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov et al. 2021</a>)</span> and OPUS; FLORES-200 should be reserved for evaluation.</p>
+</section>
+</section>
+<section id="sec-build-treebank" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="sec-build-treebank"><span class="header-section-number">8.6</span> Building a Treebank for a New Turkic Language</h2>
+<p>A manually checked treebank provides a reference for evaluating transfer and, if it includes training data, for adaptation. Plan its purpose, genres and annotation conventions before collecting sentences. One possible workflow is:</p>
+<ol type="1">
+<li><strong>Choose the sentences.</strong> Start with the UD-Turkic parallel sentences <span class="citation" data-cites="eslami2025parallel">(<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">Akhundjanova et al. 2025</a>)</span>: they come with annotated counterparts in related languages, so every decision can be compared, and they immediately yield a parallel test set. Then add natural text (news, Wikipedia, fiction) with a clear licence, ideally a few hundred sentences from at least two genres.</li>
+<li><strong>Document the guidelines.</strong> Write down the decisions for the constructions where Turkic treebanks diverge: light verb constructions (<code>compound:lvc</code> or not), copular clauses and the copula clitics, multi-word token splitting of clitics and suffixed particles, converb chains and coordination, and the treatment of possessive compounds (<em>dil reform-u</em>). Start from the UD guidelines and the target language’s grammar. Compare nearby treebanks, document the chosen conventions and explain departures.</li>
+<li><strong>Pre-annotate automatically.</strong> Run the best available pipeline (the multilingual parser with a suitable proxy language, a related language’s model after transliteration, or projected annotation) and correct its output rather than annotating from scratch. Record which tool produced the pre-annotation.</li>
+<li><strong>Annotate with a UD tool</strong> such as Arborator-Grew or ConlluEditor, which validate the format as you go.</li>
+<li><strong>Double-annotate a sample.</strong> Have two annotators annotate the same 50–100 sentences independently and report agreement (UAS/LAS between annotators and agreement on UPOS and features); discuss disagreements and update the guidelines.</li>
+<li><strong>Validate and release.</strong> Run the official UD validation script, write the README and metadata (sources, licence, annotators, pre-annotation tools), and submit to Universal Dependencies so the treebank appears in the regular releases.</li>
+</ol>
+<p><strong>Case study: a Turkmen treebank.</strong> Turkmen has a mature Latin orthography, an Apertium transducer and a silver Stanza model, but no released treebank in the UD 2.17 inventory. One approach would translate Turkish TueCL and IMST sentences into Turkmen, using NLLB drafts corrected by native speakers. The Apertium morphological analyser alone cannot translate Turkish into Turkmen.</p>
+<p>Next, pre-annotate the translations with the silver model and multilingual parser, and project the Turkish gold annotation for comparison. Trained speakers would correct the results using documented Turkmen guidelines aligned with UD. Fix the split by source sentence before starting: TueCL and IMST test translations belong in test data, and IMST training translations in training data. This would yield a manually checked parallel test set alongside corrected training material.</p>
+</section>
+<section id="sec-ch08-hands-on" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="sec-ch08-hands-on"><span class="header-section-number">8.7</span> Hands-On: Parsing Turkish Text with TurkicNLP</h2>
+<p><strong>Question.</strong> Which dependencies does a pretrained parser recover, and how does it transfer?</p>
+<p><strong>Inputs.</strong> The example sentences, Turkish PUD and Azerbaijani TueCL, with the declared parser resources.</p>
+<p><strong>Compute.</strong> CPU inference; download the relevant Stanza/toolkit models.</p>
+<p><strong>Output.</strong> CoNLL-U predictions and attachment scores under a stated alignment policy.</p>
+<p><strong>Interpretation.</strong> Inspect roots, relative clauses and cross-language lexical errors alongside aggregate scores.</p>
+<p>This tutorial parses Turkish with the Stanza biaffine parser <span class="citation" data-cites="qi2020stanza">(<a href="../references.html#ref-qi2020stanza" role="doc-biblioref">Qi et al. 2020</a>)</span> through TurkicNLP, reads and writes CoNLL-U, and evaluates on the Turkish PUD test set. It then applies the Turkish parser to Azerbaijani text as a zero-shot experiment and compares it with the Azerbaijani and multilingual parsers in TurkicNLP.</p>
+<section id="parsing-a-turkish-sentence" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="parsing-a-turkish-sentence"><span class="header-section-number">8.7.1</span> Parsing a Turkish Sentence</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install "turkicnlp[stanza]==0.5.0"   # Stanza backend; models download from the Hugging Face Hub</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>turkicnlp.download(<span class="st">"tur"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"pos"</span>, <span class="st">"lemma"</span>, <span class="st">"depparse"</span>])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>nlp_tr <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"tur"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"pos"</span>, <span class="st">"lemma"</span>, <span class="st">"depparse"</span>],</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                            pos_backend<span class="op">=</span><span class="st">"stanza"</span>, lemma_backend<span class="op">=</span><span class="st">"stanza"</span>, depparse_backend<span class="op">=</span><span class="st">"stanza"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sentence <span class="op">=</span> <span class="st">"Atatürk'ün 1928'de başlattığı dil reformu Türkiye'yi kökten değiştirdi."</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp_tr(sentence)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'ID'</span><span class="sc">:&lt;4}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'FORM'</span><span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'LEMMA'</span><span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'UPOS'</span><span class="sc">:&lt;6}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'HEAD'</span><span class="sc">:&lt;5}</span><span class="ss"> DEPREL"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> doc.words:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word<span class="sc">.</span><span class="bu">id</span><span class="sc">:&lt;4}</span><span class="ss"> </span><span class="sc">{</span>word<span class="sc">.</span>text<span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span>word<span class="sc">.</span>lemma<span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span>word<span class="sc">.</span>upos<span class="sc">:&lt;6}</span><span class="ss"> </span><span class="sc">{</span>word<span class="sc">.</span>head<span class="sc">:&lt;5}</span><span class="ss"> </span><span class="sc">{</span>word<span class="sc">.</span>deprel<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Output (TurkicNLP 0.5.0 with the Stanza IMST models):</p>
+<pre><code>ID   FORM           LEMMA      UPOS   HEAD  DEPREL
+1    Atatürk'ün     Atatürk    PROPN  3     nsubj
+2    1928'de        1928       NUM    3     obl
+3    başlattığı     başla      VERB   5     acl
+4    dil            dil        NOUN   5     nmod:poss
+5    reformu        reform     NOUN   7     nsubj
+6    Türkiye'yi     Türkiye    PROPN  7     obj
+7    kökten         kök        NOUN   0     root
+8    değiştirdi     değiş      VERB   7     compound
+9    .              .          PUNCT  7     punct</code></pre>
+<p>The relative-clause attachment matches the intended analysis. The participle <em>başlattığı</em> (word 3) takes <em>Atatürk’ün</em> and <em>1928’de</em> as dependents. It attaches as <code>acl</code> to <em>reformu</em> (word 5), with <em>dil</em> between them.</p>
+<p>The main-clause analysis is wrong. The parser treats <em>kökten değiştirdi</em> ‘changed radically’ as a noun-plus-verb predicate: it makes <em>kökten</em> the root and attaches the verb with <code>compound</code>. The intended root is <em>değiştirdi</em>, with <em>kökten</em> as an adverbial modifier. This resembles IMST’s nominal-headed complex-predicate convention (<a href="#tbl-lvc-direction" class="quarto-xref">Table&nbsp;<span>8.3</span></a>), although a single example is too little to identify the cause.</p>
+<p>The output was reproduced exactly on 19 October 2026 with Stanza 1.11.0 and the same IMST checkpoints. Its lemmas also reduce the causative stems <em>başlat-</em> and <em>değiştir-</em> to <em>başla-</em> and <em>değiş-</em>. Check the treebank’s lemma convention before counting those reductions as errors.</p>
+</section>
+<section id="reading-and-writing-conll-u" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="reading-and-writing-conll-u"><span class="header-section-number">8.7.2</span> Reading and Writing CoNLL-U</h3>
+<p>Every TurkicNLP document can be written as CoNLL-U, and CoNLL-U files can be read back into documents:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.utils.conllu <span class="im">import</span> read_conllu, write_conllu</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>write_conllu(doc, <span class="st">"output.conllu"</span>)            <span class="co"># or: print(doc.to_conllu())</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> read_conllu(<span class="st">"output.conllu"</span>)[<span class="dv">0</span>].sentences:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    roots <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> sent.words <span class="cf">if</span> w.head <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(roots) <span class="op">!=</span> <span class="dv">1</span>:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"expected exactly one root"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    root <span class="op">=</span> roots[<span class="dv">0</span>]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    by_id <span class="op">=</span> {w.<span class="bu">id</span>: w <span class="cf">for</span> w <span class="kw">in</span> sent.words <span class="cf">if</span> <span class="bu">isinstance</span>(w.<span class="bu">id</span>, <span class="bu">int</span>)}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Root: </span><span class="sc">{</span>root<span class="sc">.</span>text<span class="sc">!r}</span><span class="ss">  (</span><span class="sc">{</span>root<span class="sc">.</span>deprel<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Sentence length: </span><span class="sc">{</span><span class="bu">len</span>(sent.words)<span class="sc">}</span><span class="ss"> words"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ordinary words only: integer IDs with a non-root head</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (multiword-token ranges and empty nodes are not Word objects with integer IDs)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    arcs <span class="op">=</span> [(<span class="bu">abs</span>(w.<span class="bu">id</span> <span class="op">-</span> w.head), w) <span class="cf">for</span> w <span class="kw">in</span> sent.words</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">isinstance</span>(w.<span class="bu">id</span>, <span class="bu">int</span>) <span class="kw">and</span> <span class="bu">isinstance</span>(w.head, <span class="bu">int</span>) <span class="kw">and</span> w.head <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    max_arc <span class="op">=</span> <span class="bu">max</span>((span <span class="cf">for</span> span, _ <span class="kw">in</span> arcs), default<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    longest <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>by_id[w.head]<span class="sc">.</span>text<span class="sc">}</span><span class="ss">-&gt;</span><span class="sc">{</span>w<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> span, w <span class="kw">in</span> arcs <span class="cf">if</span> span <span class="op">==</span> max_arc]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Longest non-root arc span: </span><span class="sc">{</span>max_arc<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(longest)<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> head, rel, dep <span class="kw">in</span> sent.dependencies:     <span class="co"># (head word, relation, dependent)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>head<span class="sc">.</span>text <span class="cf">if</span> head <span class="cf">else</span> <span class="st">'ROOT'</span><span class="sc">:&lt;12}</span><span class="ss"> --</span><span class="sc">{</span>rel<span class="sc">}</span><span class="ss">--&gt; </span><span class="sc">{</span>dep<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Computed from the printed tree (nine words including the final punctuation), the longest non-root arc spans two words, and four arcs tie: <em>başlattığı → Atatürk’ün</em> (3→1), <em>reformu → başlattığı</em> (5→3), <em>kökten → reformu</em> (7→5) and <em>kökten → .</em> (7→9). It is that short partly because the parser wrongly made <em>kökten</em> the root and attached the subject <em>reformu</em> to it. With the intended analysis, the arc <em>değiştirdi → reformu</em> (8→5) would span three words. Arc lengths are a quick check on where a parser has placed the long dependencies, but in short sentences like this one they are small whatever the analysis.</p>
+</section>
+<section id="evaluating-on-the-turkish-pud-test-set" class="level3" data-number="8.7.3">
+<h3 data-number="8.7.3" class="anchored" data-anchor-id="evaluating-on-the-turkish-pud-test-set"><span class="header-section-number">8.7.3</span> Evaluating on the Turkish PUD Test Set</h3>
+<p>The pinned Turkish PUD file contains 1,000 gold-annotated sentences (<a href="#tbl-turkish-treebanks" class="quarto-xref">Table&nbsp;<span>8.5</span></a>). Record the parser package/model hashes, UD release and scorer revision with the output. Parse the raw text of the test set, write CoNLL-U, and score it with the official CoNLL 2018 shared task evaluation script (<a href="https://universaldependencies.org/conll18/evaluation.html"><code>conll18_ud_eval.py</code></a>), which handles tokenisation mismatches between gold and predicted files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.utils.conllu <span class="im">import</span> write_conllu</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># raw text of tr_pud-ud-test.conllu (the "# text =" lines)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>blocks <span class="op">=</span> Path(<span class="st">"tr_pud-ud-test.conllu"</span>).read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>).strip().split(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>texts <span class="op">=</span> [[line[<span class="dv">9</span>:] <span class="cf">for</span> line <span class="kw">in</span> block.splitlines() <span class="cf">if</span> line.startswith(<span class="st">"# text = "</span>)]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> block <span class="kw">in</span> blocks]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> texts <span class="kw">or</span> <span class="bu">any</span>(<span class="bu">len</span>(lines) <span class="op">!=</span> <span class="dv">1</span> <span class="cf">for</span> lines <span class="kw">in</span> texts):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"expected one original text per gold sentence"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(lines[<span class="dv">0</span>] <span class="cf">for</span> lines <span class="kw">in</span> texts)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>write_conllu(nlp_tr(raw), <span class="st">"tr_pud_predicted.conllu"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> subprocess.run(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        [sys.executable, <span class="st">"conll18_ud_eval.py"</span>, <span class="st">"-v"</span>,      <span class="co"># same Python as this session</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>         <span class="st">"tr_pud-ud-test.conllu"</span>, <span class="st">"tr_pud_predicted.conllu"</span>],</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        capture_output<span class="op">=</span><span class="va">True</span>, text<span class="op">=</span><span class="va">True</span>, check<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> subprocess.CalledProcessError <span class="im">as</span> err:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(err.stderr)                                    <span class="co"># e.g. text mismatch between files</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result.stdout)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Reports tokenisation F1, UPOS, UFeats, AllTags, Lemmas, UAS, LAS, MLAS, BLEX</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="zero-shot-application-to-azerbaijani" class="level3" data-number="8.7.4">
+<h3 data-number="8.7.4" class="anchored" data-anchor-id="zero-shot-application-to-azerbaijani"><span class="header-section-number">8.7.4</span> Zero-Shot Application to Azerbaijani</h3>
+<p>Azerbaijani uses the Latin alphabet, the same script as Turkish, so a Turkish parser can be applied directly. Compare it with the Azerbaijani-specific and multilingual parsers in TurkicNLP:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>az_sentence <span class="op">=</span> <span class="st">"Əhməd dünən aldığı kitabı bu gün oxudu."</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># "Today Ahmad read the book he bought yesterday."</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>parsers <span class="op">=</span> {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Turkish Stanza (zero-shot)"</span>: nlp_tr,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Azerbaijani (custom Stanza)"</span>: turkicnlp.Pipeline(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"aze"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"pos"</span>, <span class="st">"depparse"</span>], pos_backend<span class="op">=</span><span class="st">"stanza"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        depparse_backend<span class="op">=</span><span class="st">"stanza"</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Multilingual (Glot500)"</span>: turkicnlp.Pipeline(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"aze"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"pos"</span>, <span class="st">"depparse"</span>],</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        pos_backend<span class="op">=</span><span class="st">"multilingual_glot500_model"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        depparse_backend<span class="op">=</span><span class="st">"multilingual_glot500_model"</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, nlp <span class="kw">in</span> parsers.items():</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> nlp(az_sentence).words:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>w<span class="sc">.</span>text<span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span>w<span class="sc">.</span>upos<span class="sc">:&lt;6}</span><span class="ss"> </span><span class="sc">{</span>w<span class="sc">.</span>head<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>w<span class="sc">.</span>deprel<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For the Turkish parser, the Stanza IMST models (Stanza 1.11.0, run directly rather than through TurkicNLP) give:</p>
+<pre><code>Turkish Stanza (zero-shot)
+  Əhməd          PROPN  3 nsubj
+  dünən          NOUN   3 obj
+  aldığı         VERB   4 acl
+  kitabı         NOUN   0 root
+  bu             DET    6 det
+  gün            NOUN   7 obl
+  oxudu          NOUN   4 conj
+  .              PUNCT  7 punct</code></pre>
+<p>The participial clause <em>dünən aldığı kitabı</em> is found, but the Azerbaijani words that differ from Turkish fail: <em>dünən</em> ‘yesterday’ (Turkish <em>dün</em>) becomes an object, and the main verb <em>oxudu</em> ‘read’ (Turkish <em>okudu</em>) is tagged as a noun and attached as a conjunct of <em>kitabı</em>, which becomes the root. Running the same loop prints the Azerbaijani and multilingual parsers’ analyses for comparison.</p>
+<p>Scoring the three parsers on the Azerbaijani TueCL test set <span class="citation" data-cites="eslami2025parallel">(<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">Akhundjanova et al. 2025</a>)</span> with <code>conll18_ud_eval.py</code> turns this comparison into an experiment (Exercise 4).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Extending to Cyrillic Turkic Languages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To parse Kazakh or Kyrgyz text with the Turkish model, first convert the input to a Latin-based script with the toolkit’s transliteration mapping (Kazakh has several published Latin designs, so record which mapping is used; or use CTS for both languages; <a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>), apply the Turkish pipeline, and map the analyses back to the original word forms. Whether transliteration helps for a given language pair is an empirical question: compare the native-script multilingual parser, the transliterated Turkish parser and, where available, an in-language model on the same test set (Exercise 4). For Kazakh, <code>turkicnlp.Pipeline("kaz", processors=["tokenize", "pos", "lemma", "depparse"])</code> uses the Stanza model trained on the Kazakh KTB treebank, and the multilingual Glot500 parser covers Kazakh, Kyrgyz and the zero-shot languages Karakalpak, Kumyk, Sakha, Karachay-Balkar and Nogai.</p>
+</div>
+</div>
+<p><strong>Status: demonstration.</strong> The sentence analyses above are recorded output. Exercise 4 records the separate scored transfer comparison.</p>
+</section>
+</section>
+<section id="sec-ch08-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch08-synthesis">What to Take Forward</h2>
+<p>Dependency parsing recovers sentence structure from morphology, position and context, and UD makes the labels comparable while leaving language-specific choices visible. The measured patterns are clear: among BOUN training sentences with an overt subject and object, 87.1% are SOV, and the Stanza Turkish parser’s attachment score falls from 83.3% for adjacent words to 43.9% at distances of eight or more. Choose training and test treebanks from the named release inventory, and report alignment and scoring conventions with every score. <a href="09-sequence-labeling.html" class="quarto-xref"><span>Chapter 9</span></a> applies the same care to word-level labels and entity spans.</p>
+</section>
+<section id="sec-ch08-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch08-further-reading">Further Reading</h2>
+<p>For the linguistic foundations of Turkic syntax, <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span> (Chapters 51–56, from p.&nbsp;788; especially §54.7, §55 and §§56.3–56.4) discusses pro-drop, scrambling, participial clauses, converbs, postpositions, and coordination. The computational consequences of SOV order and participial subordination for parsing are discussed in the context of Turkish NLP by <span class="citation" data-cites="oflazer2018turkish_nlp">Oflazer and Saraçlar (<a href="../references.html#ref-oflazer2018turkish_nlp" role="doc-biblioref">2018</a>)</span>; <span class="citation" data-cites="eryigit2008dependency">Eryiğit, Nivre, and Oflazer (<a href="../references.html#ref-eryigit2008dependency" role="doc-biblioref">2008</a>)</span> studies Turkish dependency parsing over inflectional groups, and <span class="citation" data-cites="hoffman1994turkish">Hoffman (<a href="../references.html#ref-hoffman1994turkish" role="doc-biblioref">1994</a>)</span> relates Turkish word orders to topic and focus.</p>
+<p>The Universal Dependencies framework is defined in <span class="citation" data-cites="demarneffe2021universal">Marneffe et al. (<a href="../references.html#ref-demarneffe2021universal" role="doc-biblioref">2021</a>)</span>, which covers the annotation philosophy, the design of UD relation types, and cross-linguistic consistency. The original multilingual treebank collection is described in <span class="citation" data-cites="nivre2016ud">Nivre et al. (<a href="../references.html#ref-nivre2016ud" role="doc-biblioref">2016</a>)</span>. The Turkish BOUN treebank, a multi-genre treebank widely used for Turkish parser training, is described in detail in <span class="citation" data-cites="turk2022boun">Türk et al. (<a href="../references.html#ref-turk2022boun" role="doc-biblioref">2022</a>)</span>. The Kazakh UD treebank and its annotation principles are described in <span class="citation" data-cites="tyers2015ud_kazakh">Tyers and Washington (<a href="../references.html#ref-tyers2015ud_kazakh" role="doc-biblioref">2015</a>)</span>. The UD-Turkic parallel treebanks enabling cross-language annotation comparison are described in <span class="citation" data-cites="eslami2025parallel">Akhundjanova et al. (<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">2025</a>)</span>. Per-language and multilingual parsing on twelve Turkic languages, including three zero-shot languages and two silver test sets, is evaluated in <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>.</p>
+<p>The biaffine dependency parser, one of the most widely used graph-based architectures, is introduced in <span class="citation" data-cites="dozat2017biaffine">Dozat and Manning (<a href="../references.html#ref-dozat2017biaffine" role="doc-biblioref">2017</a>)</span>. <span class="citation" data-cites="mcdonald2007characterizing">McDonald and Nivre (<a href="../references.html#ref-mcdonald2007characterizing" role="doc-biblioref">2007</a>)</span> compare the error profiles of graph-based and transition-based parsers, and <span class="citation" data-cites="kulmizev2019deep">Kulmizev et al. (<a href="../references.html#ref-kulmizev2019deep" role="doc-biblioref">2019</a>)</span> revisit the comparison with contextual embeddings. Stanza, which provides accessible biaffine parsers for multiple Turkic languages, is described in <span class="citation" data-cites="qi2020stanza">Qi et al. (<a href="../references.html#ref-qi2020stanza" role="doc-biblioref">2020</a>)</span>. TurkishDelightNLP <span class="citation" data-cites="alecakir2022turkishdelightnlp">(<a href="../references.html#ref-alecakir2022turkishdelightnlp" role="doc-biblioref">Alecakir, Bölücü, and Can 2022</a>)</span> uses LSTM-based joint morphology and syntax modelling for Turkish; check its reported scores against the UD release and metric you use.</p>
+<p><a href="16-cross-lingual-transfer.html" class="quarto-xref"><span>Chapter 16</span></a> of this book extends the cross-lingual parsing discussion to a full treatment of transfer strategies by resource level.</p>
+</section>
+<section id="sec-ch08-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch08-exercises">Exercises</h2>
+<ol type="1">
+<li><p><strong>Scrambling and case.</strong> Write a Python function that takes a Turkish sentence in CoNLL-U format, identifies the subject (nsubj), object (obj), and root verb, and reports their relative positions (subject-before-verb? object-before-verb?). Apply it to the first 100 sentences of the TR-BOUN training split that contain an overt subject and an overt object of the root (report how many sentences you had to skip). What percentage of sentences have canonical SOV order? What order variants appear, and how often?</p></li>
+<li><p><strong>Participial arc length.</strong> First inspect how the treebank you choose labels relative clauses: some Turkish treebanks use plain <code>acl</code> for participial modifiers, so an empty <code>acl:relcl</code> query does not mean there are no relative clauses. Using TR-BOUN gold data read with <code>read_conllu</code> (and, separately, the TurkicNLP Turkish pipeline), compute for each participial modifier the three quantities of <a href="#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>: clause width, the longest dependent-to-participle distance, and the participle-to-noun distance. Compare the participle-to-noun distance with the distance of <code>acl:relcl</code> arcs in English UD (EN-EWT). Plot the distributions and report the median and 90th percentile of each. Which of the three quantities differs most between the languages?</p></li>
+<li><p><strong>Pro-drop counting.</strong> Read the Turkish IMST training set with <code>turkicnlp.utils.conllu.read_conllu</code> (gold annotation). Select eligible predicates: finite verbs (<code>VerbForm=Fin</code> or no VerbForm with Person/Number agreement) that are not imperatives and not passive. A missing <code>nsubj</code> is not proof of pro-drop: also count <code>nsubj:pass</code>, <code>csubj</code> and other subject relations, and treat nonfinite clauses separately. For eligible predicates, compute the proportion with an overt subject per tense-mood combination (e.g., <code>Tense=Past|Mood=Ind</code>). Manually adjudicate a random sample of 50 “subjectless” cases and report how many are genuine pro-drop versus annotation errors or other constructions. Then parse the same text with the TurkicNLP Turkish pipeline: does the parser reproduce the gold proportions?</p></li>
+<li><p><strong>Cross-lingual parser evaluation.</strong> Apply the Turkish parser (<code>turkicnlp.Pipeline("tur", processors=["tokenize", "pos", "depparse"])</code>) to the Kyrgyz TueCL and Kazakh KTB test sets and compute UAS and LAS. Repeat after conversion to the 2021 Kazakh Latin alphabet or CTS for Kazakh, and CTS for Kyrgyz, which has no toolkit Latin mapping.</p>
+<p>Keep a verified word-by-word map to the original. Restore FORM values only for one-to-one alignments before scoring: <code>conll18_ud_eval.py</code> aligns text characters, so converted strings cannot be scored against the original gold file directly. If tokenisation changes, reconstruct the original character spans explicitly; list position alone is insufficient.</p>
+<p>Compare with Kyrgyz KTMU on Kyrgyz TueCL and Kazakh KTB on KTB. Treat the latter as an exposure-risk diagnostic because historical training membership remains unknown (<a href="#sec-parsing" class="quarto-xref"><span>Section 8.4</span></a>). Also test the multilingual parser (<code>depparse_backend="multilingual_glot500_model"</code>) on original Cyrillic input and the three hands-on parsers on Azerbaijani TueCL. How does LAS change, and which dependency relations cause the most errors?</p></li>
+<li><p><strong>Annotation projection experiment.</strong> Projected arcs can only be scored against gold annotation of <em>the same</em> target sentences. The Turkish and Azerbaijani TueCL treebanks <span class="citation" data-cites="eslami2025parallel">(<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">Akhundjanova et al. 2025</a>)</span> annotate the same sentences, so they provide such pairs. Parse the Turkish side with the TurkicNLP Turkish pipeline (and, as a separate comparison, use the Turkish gold trees), align words with fast_align or awesome-align, project the arcs to Azerbaijani, repair the result into a tree, and score it against the Azerbaijani gold. What fraction of arcs project correctly? Which dependency types project most reliably? How much of the error comes from alignment rather than from the Turkish parse?</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-eslami2025parallel" class="csl-entry" role="listitem">
+Akhundjanova, Arofat, Furkan Akkurt, Bermet Chontaeva, Soudabeh Eslami, and Çağrı Çöltekin. 2025. <span>“Parallel <span>U</span>niversal <span>D</span>ependencies Treebanks for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the Eighth Workshop on <span>U</span>niversal <span>D</span>ependencies (<span>UDW</span>, <span>S</span>yntax<span>F</span>est 2025)</em>, 129–36. Ljubljana, Slovenia: Association for Computational Linguistics. <a href="https://aclanthology.org/2025.udw-1.14/">https://aclanthology.org/2025.udw-1.14/</a>.
+</div>
+<div id="ref-alecakir2022turkishdelightnlp" class="csl-entry" role="listitem">
+Alecakir, Huseyin, Necva Bölücü, and Burcu Can. 2022. <span>“<span>T</span>urkish<span>D</span>elight<span>NLP</span>: A Neural <span>T</span>urkish <span>NLP</span> Toolkit.”</span> In <em>Proceedings of the 2022 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies: System Demonstrations</em>, 17–26. Hybrid: Seattle, Washington + Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.naacl-demo.3">https://doi.org/10.18653/v1/2022.naacl-demo.3</a>.
+</div>
+<div id="ref-dozat2017biaffine" class="csl-entry" role="listitem">
+Dozat, Timothy, and Christopher D. Manning. 2017. <span>“Deep Biaffine Attention for Neural Dependency Parsing.”</span> In <em>5th International Conference on Learning Representations (<span>ICLR</span>)</em>. <a href="https://openreview.net/forum?id=Hk95PK9le">https://openreview.net/forum?id=Hk95PK9le</a>.
+</div>
+<div id="ref-eryigit2008dependency" class="csl-entry" role="listitem">
+Eryiğit, Gülşen, Joakim Nivre, and Kemal Oflazer. 2008. <span>“Dependency Parsing of <span>T</span>urkish.”</span> <em>Computational Linguistics</em> 34 (3): 357–89. <a href="https://doi.org/10.1162/coli.2008.07-017-R1-06-83">https://doi.org/10.1162/coli.2008.07-017-R1-06-83</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-hoffman1994turkish" class="csl-entry" role="listitem">
+Hoffman, Beryl. 1994. <span>“Generating Context Appropriate Word Orders in <span>T</span>urkish.”</span> In <em>Proceedings of the Seventh International Workshop on Natural Language Generation</em>. <a href="https://aclanthology.org/W94-0314/">https://aclanthology.org/W94-0314/</a>.
+</div>
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+<div id="ref-jurafsky2024slp" class="csl-entry" role="listitem">
+Jurafsky, Daniel, and James H. Martin. 2024. <em>Speech and Language Processing</em>. 3rd ed.
+</div>
+<div id="ref-kulmizev2019deep" class="csl-entry" role="listitem">
+Kulmizev, Artur, Miryam de Lhoneux, Johannes Gontrum, Elena Fano, and Joakim Nivre. 2019. <span>“Deep Contextualized Word Embeddings in Transition-Based and Graph-Based Dependency Parsing – a Tale of Two Parsers Revisited.”</span> In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (<span>EMNLP</span>-<span>IJCNLP</span>)</em>, 2755–68. Hong Kong, China: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D19-1277">https://doi.org/10.18653/v1/D19-1277</a>.
+</div>
+<div id="ref-demarneffe2021universal" class="csl-entry" role="listitem">
+Marneffe, Marie-Catherine de, Christopher D. Manning, Joakim Nivre, and Daniel Zeman. 2021. <span>“<span>U</span>niversal <span>D</span>ependencies.”</span> <em>Computational Linguistics</em> 47 (2): 255–308. <a href="https://doi.org/10.1162/coli_a_00402">https://doi.org/10.1162/coli_a_00402</a>.
+</div>
+<div id="ref-mcdonald2007characterizing" class="csl-entry" role="listitem">
+McDonald, Ryan, and Joakim Nivre. 2007. <span>“Characterizing the Errors of Data-Driven Dependency Parsing Models.”</span> In <em>Proceedings of the 2007 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning (<span>EMNLP</span>-<span>C</span>o<span>NLL</span>)</em>, 122–31. Prague, Czech Republic: Association for Computational Linguistics. <a href="https://aclanthology.org/D07-1013/">https://aclanthology.org/D07-1013/</a>.
+</div>
+<div id="ref-mirzakhalov2021large" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Duygu Ataman, Sherzod Kariev, Francis Tyers, Otabek Abduraufov, Mammad Hajili, et al. 2021. <span>“A Large-Scale Study of Machine Translation in <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing</em>, 5876–90. Online; Punta Cana, Dominican Republic: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.emnlp-main.475">https://doi.org/10.18653/v1/2021.emnlp-main.475</a>.
+</div>
+<div id="ref-nivre2016ud" class="csl-entry" role="listitem">
+Nivre, Joakim, Marie-Catherine de Marneffe, Filip Ginter, Yoav Goldberg, Jan Hajič, Christopher D. Manning, Ryan McDonald, et al. 2016. <span>“<span>U</span>niversal <span>D</span>ependencies V1: A Multilingual Treebank Collection.”</span> In <em>Proceedings of the Tenth International Conference on Language Resources and Evaluation (<span>LREC</span>’16)</em>, 1659–66. Portorož, Slovenia: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L16-1262/">https://aclanthology.org/L16-1262/</a>.
+</div>
+<div id="ref-oflazer2018turkish_nlp" class="csl-entry" role="listitem">
+Oflazer, Kemal, and Murat Saraçlar, eds. 2018. <em>Turkish Natural Language Processing</em>. Theory and Applications of Natural Language Processing. Cham: Springer. <a href="https://doi.org/10.1007/978-3-319-90165-7">https://doi.org/10.1007/978-3-319-90165-7</a>.
+</div>
+<div id="ref-qi2020stanza" class="csl-entry" role="listitem">
+Qi, Peng, Yuhao Zhang, Yuhui Zhang, Jason Bolton, and Christopher D. Manning. 2020. <span>“<span>S</span>tanza: A Python Natural Language Processing Toolkit for Many Human Languages.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: System Demonstrations</em>, 101–8. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-demos.14">https://doi.org/10.18653/v1/2020.acl-demos.14</a>.
+</div>
+<div id="ref-turk2022boun" class="csl-entry" role="listitem">
+Türk, Utku, Furkan Atmaca, Şaziye Betül Özateş, Gözde Berk, Seyyit Talha Bedir, Abdullatif Köksal, Balkız Öztürk Başaran, Tunga Güngör, and Arzucan Özgür. 2022. <span>“Resources for <span>Turkish</span> Dependency Parsing: Introducing the <span>BOUN</span> Treebank and the <span>BoAT</span> Annotation Tool.”</span> <em>Language Resources and Evaluation</em> 56 (1): 259–307. <a href="https://doi.org/10.1007/s10579-021-09558-0">https://doi.org/10.1007/s10579-021-09558-0</a>.
+</div>
+<div id="ref-tyers2015ud_kazakh" class="csl-entry" role="listitem">
+Tyers, Francis M., and Jonathan N. Washington. 2015. <span>“Towards a Free/Open-Source <span>U</span>niversal-<span>D</span>ependency Treebank for <span>K</span>azakh.”</span> In <em>Proceedings of the 3rd International Conference on <span>T</span>urkic Languages Processing (<span>TurkLang</span> 2015)</em>, 276–89. Kazan, Russia.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/07-neural-morphology.html" class="pagination-link" aria-label="Neural Morphology and the Tokenisation Problem">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/09-sequence-labeling.html" class="pagination-link" aria-label="Sequence Labelling: POS Tagging, NER, and Chunking">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>5&nbsp; Morphological Structure: A Linguistic Foundation – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/06-finite-state-morphology.html" rel="next">
+<link href="../chapters/04-corpora-at-scale.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-morphological-structure.html">Morphology</a></li><li class="breadcrumb-item"><a href="../chapters/05-morphological-structure.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-morpheme-inventory" id="toc-sec-morpheme-inventory" class="nav-link active" data-scroll-target="#sec-morpheme-inventory"><span class="header-section-number">5.1</span> The Morpheme Inventory</a>
+  <ul class="collapse">
+  <li><a href="#derivational-vs.-inflectional-morphology" id="toc-derivational-vs.-inflectional-morphology" class="nav-link" data-scroll-target="#derivational-vs.-inflectional-morphology"><span class="header-section-number">5.1.1</span> Derivational vs.&nbsp;Inflectional Morphology</a></li>
+  <li><a href="#the-suffix-template" id="toc-the-suffix-template" class="nav-link" data-scroll-target="#the-suffix-template"><span class="header-section-number">5.1.2</span> The Suffix Template</a></li>
+  <li><a href="#nominal-morphology-in-detail" id="toc-nominal-morphology-in-detail" class="nav-link" data-scroll-target="#nominal-morphology-in-detail"><span class="header-section-number">5.1.3</span> Nominal Morphology in Detail</a></li>
+  <li><a href="#verbal-morphology-in-detail" id="toc-verbal-morphology-in-detail" class="nav-link" data-scroll-target="#verbal-morphology-in-detail"><span class="header-section-number">5.1.4</span> Verbal Morphology in Detail</a></li>
+  </ul></li>
+  <li><a href="#sec-morphophonology" id="toc-sec-morphophonology" class="nav-link" data-scroll-target="#sec-morphophonology"><span class="header-section-number">5.2</span> Morphophonological Alternations</a>
+  <ul class="collapse">
+  <li><a href="#vowel-harmony-in-suffixes" id="toc-vowel-harmony-in-suffixes" class="nav-link" data-scroll-target="#vowel-harmony-in-suffixes"><span class="header-section-number">5.2.1</span> Vowel Harmony in Suffixes</a></li>
+  <li><a href="#consonant-alternations" id="toc-consonant-alternations" class="nav-link" data-scroll-target="#consonant-alternations"><span class="header-section-number">5.2.2</span> Consonant Alternations</a></li>
+  <li><a href="#why-productive-generalisation-matters" id="toc-why-productive-generalisation-matters" class="nav-link" data-scroll-target="#why-productive-generalisation-matters"><span class="header-section-number">5.2.3</span> Why Productive Generalisation Matters</a></li>
+  </ul></li>
+  <li><a href="#sec-analysis" id="toc-sec-analysis" class="nav-link" data-scroll-target="#sec-analysis"><span class="header-section-number">5.3</span> What a Full Morphological Analysis Looks Like</a>
+  <ul class="collapse">
+  <li><a href="#from-surface-form-to-feature-bundle" id="toc-from-surface-form-to-feature-bundle" class="nav-link" data-scroll-target="#from-surface-form-to-feature-bundle"><span class="header-section-number">5.3.1</span> From Surface Form to Feature Bundle</a></li>
+  <li><a href="#three-levels-of-representation" id="toc-three-levels-of-representation" class="nav-link" data-scroll-target="#three-levels-of-representation"><span class="header-section-number">5.3.2</span> Three Levels of Representation</a></li>
+  <li><a href="#an-advanced-example-ambiguity-in-a-long-form" id="toc-an-advanced-example-ambiguity-in-a-long-form" class="nav-link" data-scroll-target="#an-advanced-example-ambiguity-in-a-long-form"><span class="header-section-number">5.3.3</span> An Advanced Example: Ambiguity in a Long Form</a></li>
+  <li><a href="#the-same-analysis-across-three-languages" id="toc-the-same-analysis-across-three-languages" class="nav-link" data-scroll-target="#the-same-analysis-across-three-languages"><span class="header-section-number">5.3.4</span> The Same Analysis Across Three Languages</a></li>
+  <li><a href="#morphological-ambiguity" id="toc-morphological-ambiguity" class="nav-link" data-scroll-target="#morphological-ambiguity"><span class="header-section-number">5.3.5</span> Morphological Ambiguity</a></li>
+  <li><a href="#the-disambiguation-problem" id="toc-the-disambiguation-problem" class="nav-link" data-scroll-target="#the-disambiguation-problem"><span class="header-section-number">5.3.6</span> The Disambiguation Problem</a></li>
+  </ul></li>
+  <li><a href="#sec-cross-lang" id="toc-sec-cross-lang" class="nav-link" data-scroll-target="#sec-cross-lang"><span class="header-section-number">5.4</span> Cross-Language Morphological Comparison</a>
+  <ul class="collapse">
+  <li><a href="#the-shared-template" id="toc-the-shared-template" class="nav-link" data-scroll-target="#the-shared-template"><span class="header-section-number">5.4.1</span> The Shared Template</a></li>
+  <li><a href="#where-uzbek-and-uyghur-diverge" id="toc-where-uzbek-and-uyghur-diverge" class="nav-link" data-scroll-target="#where-uzbek-and-uyghur-diverge"><span class="header-section-number">5.4.2</span> Where Uzbek and Uyghur Diverge</a></li>
+  <li><a href="#selected-cross-language-differences" id="toc-selected-cross-language-differences" class="nav-link" data-scroll-target="#selected-cross-language-differences"><span class="header-section-number">5.4.3</span> Selected Cross-Language Differences</a></li>
+  <li><a href="#sec-recurring-analysis" id="toc-sec-recurring-analysis" class="nav-link" data-scroll-target="#sec-recurring-analysis"><span class="header-section-number">5.4.4</span> The Recurring Examples Analysed</a></li>
+  <li><a href="#sec-chuvash" id="toc-sec-chuvash" class="nav-link" data-scroll-target="#sec-chuvash"><span class="header-section-number">5.4.5</span> Chuvash: The Exceptional Case</a></li>
+  <li><a href="#practical-guidance-starting-from-a-close-relative" id="toc-practical-guidance-starting-from-a-close-relative" class="nav-link" data-scroll-target="#practical-guidance-starting-from-a-close-relative"><span class="header-section-number">5.4.6</span> Practical Guidance: Starting from a Close Relative</a></li>
+  </ul></li>
+  <li><a href="#sec-ch05-hands-on" id="toc-sec-ch05-hands-on" class="nav-link" data-scroll-target="#sec-ch05-hands-on"><span class="header-section-number">5.5</span> Hands-On: Walking Through a Morphological Analysis</a></li>
+  <li><a href="#sec-ch05-synthesis" id="toc-sec-ch05-synthesis" class="nav-link" data-scroll-target="#sec-ch05-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch05-further-reading" id="toc-sec-ch05-further-reading" class="nav-link" data-scroll-target="#sec-ch05-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch05-exercises" id="toc-sec-ch05-exercises" class="nav-link" data-scroll-target="#sec-ch05-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-morphological-structure.html">Morphology</a></li><li class="breadcrumb-item"><a href="../chapters/05-morphological-structure.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-05-morphological-structure" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Distinguish derivational from inflectional morphology and explain their interaction with suffix ordering</li>
+<li>Describe the nominal and verbal suffix sequences of Turkic languages, and the restrictions a template diagram leaves out</li>
+<li>Explain how vowel harmony, consonant assimilation, and stem alternations create allomorphic variation</li>
+<li>Distinguish surface segmentation, morphological analysis and a UD feature bundle, and read each of them</li>
+<li>Identify morphological ambiguity and explain why disambiguation requires contextual information</li>
+<li>Compare the morphological profiles of Turkish, Kazakh, Uzbek, Uyghur, Turkmen and Chuvash and explain key divergences</li>
+</ul>
+</div>
+</div>
+<p>Morphological analysis identifies the stem and grammatical information in a word. Turkish <em>okuyamıyor</em>, for example, expresses reading, inability and progressive aspect. An NLP system may model this structure explicitly or learn it from data. This chapter explains suffix ordering, alternations and ambiguity; the next two chapters show computational methods.</p>
+<p>The basic definitions of agglutination, case and harmony are in <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a>. Here we use them to read complete analyses, compare suffix sequences and resolve ambiguity.</p>
+<section id="sec-morpheme-inventory" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-morpheme-inventory"><span class="header-section-number">5.1</span> The Morpheme Inventory</h2>
+<section id="derivational-vs.-inflectional-morphology" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="derivational-vs.-inflectional-morphology"><span class="header-section-number">5.1.1</span> Derivational vs.&nbsp;Inflectional Morphology</h3>
+<p>A useful starting distinction is between derivation and inflection.</p>
+<p><strong>Derivational morphemes</strong> change the lexical category or meaning of the base. They create a new word, often with a new part of speech. Examples from Turkish:</p>
+<div id="tbl-derivational" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-derivational-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.1: Selected derivational suffixes in Turkish
+</figcaption>
+<div aria-describedby="tbl-derivational-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Suffix</th>
+<th>Output</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>ev</em> (house, N)</td>
+<td><em>-li</em></td>
+<td><em>evli</em> (married, Adj)</td>
+<td>denominal adjective</td>
+</tr>
+<tr class="even">
+<td><em>yaz-</em> (write, V)</td>
+<td><em>-ı</em></td>
+<td><em>yazı</em> (writing, N)</td>
+<td>deverbal noun</td>
+</tr>
+<tr class="odd">
+<td><em>güzel</em> (beautiful, Adj)</td>
+<td><em>-leş-</em></td>
+<td><em>güzelleş-</em> (become beautiful, V)</td>
+<td>deadjectival verb</td>
+</tr>
+<tr class="even">
+<td><em>git-</em> (go, V)</td>
+<td><em>-mek</em></td>
+<td><em>gitmek</em> (to go, V→infinitive)</td>
+<td>infinitive nominalisation</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>In the simple pattern illustrated here, derivational morphemes precede the outer inflection and can be stacked: <em>güzelleştir-</em> (to make beautiful) adds a causative to the deadjectival verb. The resulting derived stem behaves as a new root for subsequent affixation.</p>
+<p><strong>Inflectional morphemes</strong> mark grammatical categories such as number, case, tense and agreement. They usually follow derivation in the patterns shown here. The boundary is not absolute: a category change can introduce another inflectional domain, and individual stems or constructions restrict which suffixes can follow.</p>
+<p>An analyser often needs lexical entries for derived meanings: composition alone cannot tell it that <em>ev-li</em> means ‘married’. Inflection is more systematic, so rules can generate many forms without listing each one. Grammars and treebanks draw the boundary differently, especially for infinitive <em>-mAk</em>, voice suffixes and copular forms. State which convention the analyser follows.</p>
+</section>
+<section id="the-suffix-template" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="the-suffix-template"><span class="header-section-number">5.1.2</span> The Suffix Template</h3>
+<p>Turkic suffix ordering follows regular patterns. Johanson <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, 37</a>)</span> notes that the high degree of synthesis “allows combinations of a large number of bound denominal and deverbal markers to form long sequences”. In the common patterns below, derivational material comes before inflectional material, and each suffix applies to the form on its left. For noun inflection, “Common Turkic follows the ordering number-possessive-case”; Chuvash is the exception, with possessive before number <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 452</a>)</span> (<a href="#sec-chuvash" class="quarto-xref"><span>Section 5.4.5</span></a>).</p>
+<p><strong>Nominal template</strong> (for nouns and adjectives):</p>
+<p><span class="math display">\[\text{Root} \rightarrow [\text{Derivation}]^* \rightarrow \text{Number} \rightarrow \text{Possessive} \rightarrow \text{Case} \rightarrow [\text{Copula}]\]</span></p>
+<ul>
+<li><strong>Derivation</strong> (optional, repeatable): changes stem meaning or category</li>
+<li><strong>Number</strong> (<em>-lar/-ler</em> plural): absence of plural marking need not mean singular reference</li>
+<li><strong>Possessive</strong> (1sg, 2sg, 3sg, 1pl, 2pl, 3pl): marks possessor agreement</li>
+<li><strong>Case</strong> (nominative, accusative, dative, locative, ablative, genitive)</li>
+<li><strong>Copula</strong> (optional): predicative forms <em>-dır/-dir/-dur/-dür</em> or evidential <em>-(y)mış</em></li>
+</ul>
+<p>Example: Turkish <em>ev-ler-imiz-den</em> (from our houses):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Slot</th>
+<th>Morpheme</th>
+<th>Gloss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Root</td>
+<td><em>ev</em></td>
+<td>house</td>
+</tr>
+<tr class="even">
+<td>Number</td>
+<td><em>-ler</em></td>
+<td>PL</td>
+</tr>
+<tr class="odd">
+<td>Possessive</td>
+<td><em>-imiz</em></td>
+<td>POSS.1PL</td>
+</tr>
+<tr class="even">
+<td>Case</td>
+<td><em>-den</em></td>
+<td>ABL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verbal template</strong> (for verbs):</p>
+<p><span class="math display">\[\text{Root} \rightarrow [\text{Derivation}]^* \rightarrow \text{Voice} \rightarrow \text{Ability/Negation} \rightarrow \text{TAM} \rightarrow \text{Person/Number}\]</span></p>
+<ul>
+<li><strong>Derivation</strong> (optional): lexical derivation such as <em>güzel-leş-</em> ‘become beautiful’</li>
+<li><strong>Voice</strong> (passive <em>-Il/-In</em>, causative <em>-DIr/-t</em>, reciprocal <em>-Iş</em>, reflexive <em>-In</em>). Some grammars treat voice as derivation, because it changes the valency of the stem; this book lists it as a separate slot. Apertium encodes voice with tags, while UD uses features such as <code>Voice=Cau</code> and <code>Voice=Pass</code></li>
+<li><strong>Potential</strong> (<em>-(y)a/-(y)e</em>, the ability marker that precedes negation in <em>gel-e-me-</em> “be unable to come”; the positive <em>-(y)abil/-(y)ebil</em> “can” goes back to the same marker plus the verb <em>bil-</em> “know”)</li>
+<li><strong>Negation</strong> (<em>-ma/-me</em>)</li>
+<li><strong>TAM</strong> (tense, aspect, mood: one slot, complex inventory)</li>
+<li><strong>Person/Number</strong> (agreement with subject: 1sg, 2sg, 3sg, 1pl, 2pl, 3pl; two paradigms, see below)</li>
+</ul>
+<p>Read the diagrams as summaries of common sequences. Which suffix can follow depends on the stem, the construction and the morphology already present. TAM may have several exponents (<em>gel-iyor-du</em> ‘was coming’, progressive + past), agreement has several paradigms, and a nominalised verb takes nominal inflection (<em>oku-duk-lar-ı-n-dan</em>). <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a> shows how continuation classes encode the combinations licensed by a language.</p>
+<div id="fig-suffix-template-ch4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-column slot diagram showing the Turkic nominal and verbal suffix templates with example suffixes.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-suffix-template-ch4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-suffix-template/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Two-column slot diagram showing the Turkic nominal and verbal suffix templates with example suffixes.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-suffix-template-ch4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Common nominal and verbal suffix sequences. Ability and negation interact; nominalised verbs enter nominal inflection. Boxes describe morphological domains, not a requirement for an overt suffix in each position.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="nominal-morphology-in-detail" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="nominal-morphology-in-detail"><span class="header-section-number">5.1.3</span> Nominal Morphology in Detail</h3>
+<p><strong>Number.</strong> The plural is marked by <em>-lar/-ler</em> (the two forms differ by vowel harmony). The form without a plural suffix is unmarked for number, and its reference can include more than one entity: Turkish <em>Ali gazete okudu</em> can mean that Ali read a newspaper or newspapers <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 945</a>)</span>. In Turkish, a noun after a numeral normally takes no plural suffix: <em>beş kitap</em> (five book), not <em>beş kitaplar</em>. A system that reads plural marking as a count of referents will therefore be wrong in both directions.</p>
+<p><strong>Possessive.</strong> The Turkish possessive suffixes have different shapes after consonant-final and vowel-final stems. In the abstract notation used here, <em>I</em> stands for the four-way harmonising vowel (ı/i/u/ü) and <em>A</em> for the two-way one (a/e):</p>
+<div id="tbl-poss" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-poss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.2: Turkish possessive suffixes after consonant- and vowel-final stems. <em>I</em> = four-way harmony (ı/i/u/ü), <em>A</em> = two-way harmony (a/e). With a plural noun the plural comes first: <em>ev-ler-im</em> ‘my houses’.
+</figcaption>
+<div aria-describedby="tbl-poss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Possessor</th>
+<th style="text-align: left;">After a consonant</th>
+<th style="text-align: left;">After a vowel</th>
+<th style="text-align: left;">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1sg</td>
+<td style="text-align: left;"><em>-Im</em></td>
+<td style="text-align: left;"><em>-m</em></td>
+<td style="text-align: left;"><em>ev-im</em>, <em>araba-m</em> ‘my house/car’</td>
+</tr>
+<tr class="even">
+<td>2sg</td>
+<td style="text-align: left;"><em>-In</em></td>
+<td style="text-align: left;"><em>-n</em></td>
+<td style="text-align: left;"><em>ev-in</em>, <em>araba-n</em></td>
+</tr>
+<tr class="odd">
+<td>3sg</td>
+<td style="text-align: left;"><em>-I</em></td>
+<td style="text-align: left;"><em>-sI</em></td>
+<td style="text-align: left;"><em>ev-i</em>, <em>araba-sı</em></td>
+</tr>
+<tr class="even">
+<td>1pl</td>
+<td style="text-align: left;"><em>-ImIz</em></td>
+<td style="text-align: left;"><em>-mIz</em></td>
+<td style="text-align: left;"><em>ev-imiz</em>, <em>araba-mız</em></td>
+</tr>
+<tr class="odd">
+<td>2pl</td>
+<td style="text-align: left;"><em>-InIz</em></td>
+<td style="text-align: left;"><em>-nIz</em></td>
+<td style="text-align: left;"><em>ev-iniz</em>, <em>araba-nız</em></td>
+</tr>
+<tr class="even">
+<td>3pl</td>
+<td style="text-align: left;"><em>-lArI</em></td>
+<td style="text-align: left;"><em>-lArI</em></td>
+<td style="text-align: left;"><em>ev-leri</em>, <em>araba-ları</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The third person plural is a source of ambiguity: <em>evleri</em> can be <em>ev-leri</em> ‘their house’ (POSS.3PL) or <em>ev-ler-i</em> ‘his/her houses’ or ‘their houses’ (PL + POSS.3, with a singular or plural possessor), and Turkish does not write a second plural for ‘their houses’. Johanson describes the same three-way reading for the type ‘horse-PL-POSS3’ and notes that a form with two plurals is illicit <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, 459</a>)</span>. A possessive pronoun resolves it for nouns: <em>onların evi</em> only means ‘their house’, and <em>onların evleri</em> only ‘their houses’ <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, 459</a>)</span>. The number of the possessed noun and the number of the possessor cannot be read off as independent slots.</p>
+<p>Possessive suffixes come between number and case, and a third-person possessive is followed by a buffer <em>n</em> before a case suffix: <em>araba-sı-n-ı</em> ‘his/her car’ (ACC), <em>araba-sı-n-da</em> ‘in his/her car’. For segment counts, this book attaches the buffer to the following suffix, as in <a href="02-computational-phenotype.html#sec-ch02-hands-on" class="quarto-xref"><span>Section 2.7</span></a>: <em>araba-sı-nı</em> has three counted pieces. A finer notation, <em>araba-sı-n-ı</em>, shows the buffer separately but does not count it as another morpheme.</p>
+<p><strong>Case.</strong> Six commonly compared cases (not present in every language) are introduced in <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a> (<a href="02-computational-phenotype.html#sec-case" class="quarto-xref"><span>Section 2.3</span></a>). Their suffixes in Turkish are:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 33%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Case</th>
+<th>Suffix</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nominative</td>
+<td><em>∅</em></td>
+<td>Subject; predicate nominal</td>
+</tr>
+<tr class="even">
+<td>Accusative</td>
+<td><em>-(y)ı/i/u/ü</em></td>
+<td>Specific direct object</td>
+</tr>
+<tr class="odd">
+<td>Dative</td>
+<td><em>-(y)a/e</em></td>
+<td>Indirect object; goal; experiencer</td>
+</tr>
+<tr class="even">
+<td>Locative</td>
+<td><em>-da/de/ta/te</em></td>
+<td>Location; point in time</td>
+</tr>
+<tr class="odd">
+<td>Ablative</td>
+<td><em>-dan/den/tan/ten</em></td>
+<td>Source; material; comparison</td>
+</tr>
+<tr class="even">
+<td>Genitive</td>
+<td><em>-(n)ın/in/un/ün</em></td>
+<td>Possession; complement of some postpositions after pronouns (<em>benim için</em> ‘for me’)</td>
+</tr>
+</tbody>
+</table>
+<p>Note the consonant alternation in locative and ablative: <em>-da</em> after voiced consonants and vowels, <em>-ta</em> after voiceless consonants. This is consonant assimilation, discussed in <a href="#sec-morphophonology" class="quarto-xref"><span>Section 5.2</span></a>.</p>
+<p><strong>Copula.</strong> Nominal predicates in Turkic languages can take a copular suffix directly on the noun: Turkish <em>doktor-um</em> (I am a doctor), <em>doktor-sun</em> (you are a doctor), <em>doktor-dur</em> (he/she is a doctor). Third-person present predication can also be unmarked (<em>O doktor</em>, “He/she is a doctor”); <em>-DIr</em> is not an obligatory third-person ending and can add assertive or inferential force. Identifying a nominal predicate therefore requires constructional context <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, chap. 27</a>, pp.&nbsp;555–571)</span>.</p>
+</section>
+<section id="verbal-morphology-in-detail" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="verbal-morphology-in-detail"><span class="header-section-number">5.1.4</span> Verbal Morphology in Detail</h3>
+<p><strong>Voice.</strong> The following table illustrates an unmarked active stem and four voice-related patterns:</p>
+<div id="tbl-voice" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-voice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.3: Turkish verbal voice suffixes (allomorphs vary by phonological context)
+</figcaption>
+<div aria-describedby="tbl-voice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Voice</th>
+<th>Suffix</th>
+<th>Example</th>
+<th>Gloss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Active</td>
+<td><em>∅</em></td>
+<td><em>sev-</em></td>
+<td>love</td>
+</tr>
+<tr class="even">
+<td>Passive</td>
+<td><em>-il/-ın</em></td>
+<td><em>sev-il-</em></td>
+<td>be loved</td>
+</tr>
+<tr class="odd">
+<td>Reflexive</td>
+<td><em>-In</em></td>
+<td><em>yıka-n-</em></td>
+<td>wash oneself</td>
+</tr>
+<tr class="even">
+<td>Reciprocal</td>
+<td><em>-Iş</em></td>
+<td><em>gör-üş-</em></td>
+<td>see each other, meet</td>
+</tr>
+<tr class="odd">
+<td>Causative</td>
+<td><em>-dir/-tir/-ir/-t</em></td>
+<td><em>sev-dir-</em></td>
+<td>make (s.o.) love</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Voice suffixes can be stacked: <em>sev-dir-il-</em> (to be made to love) places passive outside causative, and <em>öl-dür-t-</em> (“have someone killed”) contains successive causatives. No single exhaustive ordering rule follows from such examples. What can come next depends on the stem, valency and construction. This stacking produces the long verb chains discussed in <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a>.</p>
+<p><strong>Negation.</strong> The negation suffix <em>-ma/-me</em> follows voice morphemes and the potential marker and precedes TAM in the ordinary synthetic forms illustrated here: <em>sev-me-</em> (not love), <em>sev-il-me-</em> (not be loved), <em>sev-dir-me-</em> (not cause to love). The template covers verbal <em>-mA-</em> only; other negative constructions work differently. Its surface shape also varies: before progressive <em>-Iyor</em>, its vowel is absent (<em>gel-m-iyor</em>).</p>
+<p><strong>Ability and inability.</strong> Turkish expresses these meanings with suffixes; other Turkic languages also use auxiliary constructions:</p>
+<ul>
+<li><em>gel-ebil-</em> (to be able to come): the stem <em>gel-</em> + ability suffix <em>-ebil-</em> (historically involving <em>bil-</em> “know”)</li>
+<li><em>gel-e-me-</em> (to be unable to come): the stem <em>gel-</em> + <em>-e-</em> + negative <em>-me-</em>; the segmentation convention distinguishes the ability component from negation</li>
+</ul>
+<p>The sequence <em>-(y)eme-/-(y)ama-</em> (potential + negation) is formally distinct from the bare negative <em>-me-/-ma-</em>, so inability and simple negation are not confused: <em>gel-me-di</em> “did not come” vs.&nbsp;<em>gel-e-me-di</em> “could not come”.</p>
+<p><strong>Tense, Aspect, and Mood (TAM).</strong> TAM occupies a single slot in the verbal template but with a complex inventory. Turkish distinguishes:</p>
+<div id="tbl-tam" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.4: Selected Turkish TAM suffixes. <em>A</em> = a/e, <em>I</em> = ı/i/u/ü, <em>D</em> = d/t according to voicing; <em>(y)</em> appears where required.
+</figcaption>
+<div aria-describedby="tbl-tam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 37%">
+<col style="width: 29%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Suffix</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simple past</td>
+<td><em>-DI</em></td>
+<td>Past; not restricted to witnessed events</td>
+</tr>
+<tr class="even">
+<td>Indirective/perfect</td>
+<td><em>-mIş</em></td>
+<td>Inference, report or perfect reading, depending on construction</td>
+</tr>
+<tr class="odd">
+<td>Aorist</td>
+<td><em>-Ar/-Ir/-r</em> (stem-dependent)</td>
+<td>Habitual/generic present</td>
+</tr>
+<tr class="even">
+<td>Present progressive</td>
+<td><em>-Iyor</em> (with stem-vowel adjustments)</td>
+<td>Ongoing action now</td>
+</tr>
+<tr class="odd">
+<td>Future</td>
+<td><em>-(y)AcAk</em></td>
+<td>Future tense</td>
+</tr>
+<tr class="even">
+<td>Conditional</td>
+<td><em>-sA</em></td>
+<td>Conditional mood</td>
+</tr>
+<tr class="odd">
+<td>Optative</td>
+<td><em>-(y)A</em></td>
+<td>Wish/exhortation</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Kazakh, Kyrgyz, and other Kipchak languages share many of these distinctions but with different suffix shapes, and many Turkic languages express aspect partly through converb + auxiliary constructions with verbs such as ‘lie’ (Kazakh <em>оқып жатыр</em> ‘is reading’, Turkmen <em>okap ýatyr</em>; <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span>, p.&nbsp;646). Some of these have fused into one word (Uzbek <em>oʻqiyapti</em> ‘is reading’, historically from <em>oʻqi-b yot-</em>). Analysers must treat them as multi-word or grammaticalised forms.</p>
+<p><strong>Person/Number agreement.</strong> The final slot marks the agreement of the verb with its subject. Turkish has two main agreement paradigms. Suffixes of the “pronominal type” follow the aorist, the progressive, <em>-mIş</em>, the future and the necessitative, and also mark nominal predicates; suffixes of the “possessive type” follow the past <em>-DI</em> and the conditional <em>-sA</em> <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 439, 555</a>)</span>:</p>
+<div id="tbl-agreement" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-agreement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.5: Turkish verbal agreement: the two main paradigms, shown with <em>gel-</em> ‘come’ <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 439</a>)</span>.
+</figcaption>
+<div aria-describedby="tbl-agreement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Person</th>
+<th>After the aorist (<em>gel-ir-</em>)</th>
+<th>After the past (<em>gel-di-</em>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1sg</td>
+<td><em>gelir-im</em> (<em>-(y)Im</em>)</td>
+<td><em>geldi-m</em> (<em>-m</em>)</td>
+</tr>
+<tr class="even">
+<td>2sg</td>
+<td><em>gelir-sin</em> (<em>-sIn</em>)</td>
+<td><em>geldi-n</em> (<em>-n</em>)</td>
+</tr>
+<tr class="odd">
+<td>3sg</td>
+<td><em>gelir</em> (∅)</td>
+<td><em>geldi</em> (∅)</td>
+</tr>
+<tr class="even">
+<td>1pl</td>
+<td><em>gelir-iz</em> (<em>-(y)Iz</em>)</td>
+<td><em>geldi-k</em> (<em>-k</em>)</td>
+</tr>
+<tr class="odd">
+<td>2pl</td>
+<td><em>gelir-siniz</em> (<em>-sInIz</em>)</td>
+<td><em>geldi-niz</em> (<em>-nIz</em>)</td>
+</tr>
+<tr class="even">
+<td>3pl</td>
+<td><em>gelir-ler</em> (<em>-lAr</em>)</td>
+<td><em>geldi-ler</em> (<em>-lAr</em>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>In the two paradigms shown, third person singular has no overt agreement suffix, a fact with consequences for pro-drop and coreference (see <a href="02-computational-phenotype.html#sec-word-order" class="quarto-xref"><span>Section 2.4</span></a> and <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>).</p>
+</section>
+</section>
+<section id="sec-morphophonology" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-morphophonology"><span class="header-section-number">5.2</span> Morphophonological Alternations</h2>
+<p>The same morpheme appears in multiple surface forms depending on phonological context. Three types of alternation are most important for Turkic NLP: vowel harmony in suffixes, consonant assimilation, and stem alternations.</p>
+<section id="vowel-harmony-in-suffixes" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="vowel-harmony-in-suffixes"><span class="header-section-number">5.2.1</span> Vowel Harmony in Suffixes</h3>
+<p>Covered in <a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a>, the harmonising vowels of Turkish suffixes commonly alternate in two-way or four-way sets. Invariant suffixes and consonantal alternations require separate rules. The pattern is:</p>
+<ul>
+<li><strong>2-way suffixes</strong> (back vs.&nbsp;front only): e.g., Turkish plural <em>-lar/-ler</em>
+<ul>
+<li><em>kitap-lar</em> (books, back vowel root)</li>
+<li><em>ev-ler</em> (houses, front vowel root)</li>
+</ul></li>
+<li><strong>4-way suffixes</strong> (back/front × round/unround): e.g., Turkish 1sg possessive <em>-ım/-im/-um/-üm</em>
+<ul>
+<li><em>kol-um</em> (my arm, back round)</li>
+<li><em>kitab-ım</em> (my book, back unround)</li>
+<li><em>göz-üm</em> (my eye, front round)</li>
+<li><em>ev-im</em> (my house, front unround)</li>
+</ul></li>
+</ul>
+<p>For most stems, native or borrowed, the last vowel of the stem determines the harmony class of the suffix, even when earlier syllables mix classes (<em>kitap-lar</em>, <em>telefon-lar</em>). The exceptions listed in <a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a> must be marked in the lexicon: stems whose final consonant selects front suffixes (<em>saat-ler</em> ‘hours’, <em>rol-ü</em> ‘role-ACC’) and suffixes outside the regular pattern (<em>-yor</em>, <em>-ken</em>, and usually <em>-ki</em>). A regular stem and an exceptional one can look alike: <em>saat</em> and <em>sabah</em> both have a back vowel in their final syllable, but only <em>sabah-lar</em> follows the regular rule.</p>
+<p>For morphological analysis, harmony is a strong constraint: if an analyser sees <em>evlerde</em>, it can rule out analyses in which the locative should be <em>-da</em>, because <em>ev</em> is a front-vowel root. Rule-based analysers encode the constraint explicitly; neural analysers can learn it from data.</p>
+</section>
+<section id="consonant-alternations" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="consonant-alternations"><span class="header-section-number">5.2.2</span> Consonant Alternations</h3>
+<p>Beyond vowel harmony, consonant alternations are common at morpheme boundaries.</p>
+<p><strong>Voicing assimilation.</strong> The Turkish past tense suffix is <em>-di/-dı/-du/-dü</em> after voiced consonants and vowels, but <em>-ti/-tı/-tu/-tü</em> after voiceless consonants:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Verb</th>
+<th>Past form</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>gel-</em> (come)</td>
+<td><em>gel-di</em></td>
+<td><em>l</em> is voiced → <em>d</em></td>
+</tr>
+<tr class="even">
+<td><em>git-</em> (go)</td>
+<td><em>git-ti</em></td>
+<td><em>t</em> is voiceless → <em>t</em></td>
+</tr>
+<tr class="odd">
+<td><em>oku-</em> (read)</td>
+<td><em>oku-du</em></td>
+<td><em>u</em> is a vowel → <em>d</em></td>
+</tr>
+<tr class="even">
+<td><em>iç-</em> (drink)</td>
+<td><em>iç-ti</em></td>
+<td><em>ç</em> is voiceless → <em>t</em></td>
+</tr>
+</tbody>
+</table>
+<p>The same assimilation applies to the locative (<em>-da/-ta</em>), ablative (<em>-dan/-tan</em>), and several other suffixes. For the morphological analyser, this means tracking the voicing of the final consonant of the stem. That information is phonologically transparent in the surface form.</p>
+<p><strong>Buffer consonants.</strong> Turkish uses <em>y</em> before vowel-initial accusative and dative suffixes after a vowel-final stem. The <em>n</em> following a third-person possessive is a separate pattern: it also occurs before a consonant-initial case suffix, as <em>ev-i-n-de</em> shows:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Form</th>
+<th>Analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>araba-y-ı</em></td>
+<td>car-(y)-ACC ‘the car’ (not <em>araba-ı</em>)</td>
+</tr>
+<tr class="even">
+<td><em>araba-sı-n-ı</em></td>
+<td>car-POSS.3SG-(n)-ACC ‘his/her car’ (object)</td>
+</tr>
+<tr class="odd">
+<td><em>ev-i-n-de</em></td>
+<td>house-POSS.3SG-(n)-LOC ‘in his/her house’</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stem-final consonant alternation.</strong> Turkish <em>kitap</em> (book) alternates with <em>kitab-</em> before a vowel-initial suffix: <em>kitab-ı</em> (book-ACC). This can be represented with an underlying voiced consonant and a devoicing rule, or with stem allomorphs. It is lexically conditioned; not every stem-final obstruent alternates. The <em>kitap/kitab-</em> alternation must therefore be tracked in the morphological lexicon as a property of the stem.</p>
+<p><strong>Other stem patterns.</strong> Some stems alternate before suffixes; others remain unchanged:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 48%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Root</th>
+<th>Suffixed form</th>
+<th>Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>renk</em> (colour)</td>
+<td><em>renk-li / reng-in</em></td>
+<td><em>k</em> → <em>g</em> in <em>rengin</em></td>
+</tr>
+<tr class="even">
+<td><em>yüz</em> (face)</td>
+<td><em>yüzü / yüz-de</em></td>
+<td>no alternation in this root</td>
+</tr>
+<tr class="odd">
+<td><em>ağız</em> (mouth)</td>
+<td><em>ağzı</em></td>
+<td>vowel deletion: underlying /ağız/ + ACC → <em>ağz-ı</em></td>
+</tr>
+</tbody>
+</table>
+<p>The vowel deletion in <em>ağız → ağz-</em> is a stem alternation triggered by the attachment of a vowel-initial suffix. An analyser must identify which stems license this alternation; it cannot apply deletion to every matching vowel sequence.</p>
+</section>
+<section id="why-productive-generalisation-matters" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="why-productive-generalisation-matters"><span class="header-section-number">5.2.3</span> Why Productive Generalisation Matters</h3>
+<p>The alternations described above mean that the same morpheme can appear in multiple surface forms, and conversely that similar surface strings can correspond to different underlying morphemes. Consider:</p>
+<ul>
+<li><em>kitap-ta</em> (book-LOC) vs.&nbsp;<em>kitab-ı</em> (book-ACC): the same stem surfaces as <em>kitap-</em> and <em>kitab-</em></li>
+<li><em>ev-de</em> (house-LOC) vs.&nbsp;<em>at-ta</em> (horse-LOC): the same locative morpheme surfaces as <em>-de</em> and <em>-ta</em></li>
+</ul>
+<p>A whole-word vocabulary stores these forms separately. Their relationships must be learned from context or supplied as features, and new texts can always contain unlisted forms. Finite-state rules (<a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a>) and character or subword representations (<a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a>) offer different ways to generalise. The next chapters evaluate their coverage, handling of ambiguity and usefulness for particular tasks.</p>
+</section>
+</section>
+<section id="sec-analysis" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-analysis"><span class="header-section-number">5.3</span> What a Full Morphological Analysis Looks Like</h2>
+<section id="from-surface-form-to-feature-bundle" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="from-surface-form-to-feature-bundle"><span class="header-section-number">5.3.1</span> From Surface Form to Feature Bundle</h3>
+<p>A morphological analysis maps a surface word form to a triple: (lemma, part-of-speech, morphological features). In Universal Dependencies notation:</p>
+<p><span class="math display">\[\text{surface form} \rightarrow (\text{lemma, UPOS, FEATS})\]</span></p>
+<p>The FEATS field is a set of attribute-value pairs using the Universal Dependencies morphological feature vocabulary <span class="citation" data-cites="demarneffe2021universal">(<a href="../references.html#ref-demarneffe2021universal" role="doc-biblioref">Marneffe et al. 2021</a>)</span>. For Turkic languages, the relevant feature categories include:</p>
+<ul>
+<li><strong>Number</strong>: <code>Sing</code>, <code>Plur</code></li>
+<li><strong>Case</strong>: <code>Nom</code>, <code>Acc</code>, <code>Dat</code>, <code>Loc</code>, <code>Abl</code>, <code>Gen</code></li>
+<li><strong>Person</strong>: <code>1</code>, <code>2</code>, <code>3</code></li>
+<li><strong>Tense</strong>: <code>Past</code>, <code>Pres</code>, <code>Fut</code>, <code>Pqp</code> (pluperfect, Turkish IMST)</li>
+<li><strong>Aspect</strong>: <code>Perf</code>, <code>Imp</code>, <code>Prog</code>, <code>Hab</code>, <code>Prosp</code></li>
+<li><strong>Mood</strong>: <code>Ind</code>, <code>Cnd</code>, <code>Opt</code>, <code>Imp</code>, <code>Pot</code> (ability), <code>Nec</code>, <code>Des</code>, <code>Gen</code></li>
+<li><strong>Evident</strong>: <code>Fh</code> (firsthand), <code>Nfh</code> (non-firsthand; used for <em>-mIş</em> in these annotations)</li>
+<li><strong>Voice</strong>: <code>Pass</code>, <code>Cau</code>, <code>Rcp</code>, <code>Rfl</code>, and combinations such as <code>CauPass</code></li>
+<li><strong>Polarity</strong>: <code>Pos</code>, <code>Neg</code></li>
+<li><strong>VerbForm</strong>: <code>Fin</code>, <code>Part</code>, <code>Conv</code>, <code>Vnoun</code> (Turkish), <code>Ger</code>, <code>Inf</code> (Kazakh KTB)</li>
+<li><strong>Person[psor]</strong>, <strong>Number[psor]</strong>: possessor person and number (distinct from <code>Poss=Yes</code>)</li>
+<li><strong>NumType</strong>, <strong>PronType</strong>, etc.</li>
+</ul>
+<p>The values beyond the core set were counted in the Turkish IMST and BOUN training files and the Kazakh KTB test file (UD GitHub master branch, accessed 19 October 2026). Treebanks of the same language do not use the same subset: BOUN uses <code>Evident=Fh</code> and <code>Voice=Rfl</code>, IMST does not.</p>
+</section>
+<section id="three-levels-of-representation" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="three-levels-of-representation"><span class="header-section-number">5.3.2</span> Three Levels of Representation</h3>
+<p>A UD feature bundle describes selected grammatical properties of a syntactic word. A transducer may additionally expose derivational steps, surface boundaries and competing readings. We will compare three representations: surface segmentation, morphological analysis (lemma and analyser tags), and UD annotation. For <em>evlerimizden</em> ‘from our houses’:</p>
+<div id="tbl-analysis-example" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-analysis-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.6: Three levels of representation for <em>evlerimizden</em>. The Apertium reading is <code>ev&lt;n&gt;&lt;pl&gt;&lt;px1pl&gt;&lt;abl&gt;</code> (TurkicNLP 0.5.0).
+</figcaption>
+<div aria-describedby="tbl-analysis-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Surface piece</th>
+<th>Analysis (Apertium tag)</th>
+<th>UD feature</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>ev</em></td>
+<td>lemma <em>ev</em>, noun (<code>&lt;n&gt;</code>)</td>
+<td><code>UPOS=NOUN</code></td>
+</tr>
+<tr class="even">
+<td><em>-ler</em></td>
+<td>plural (<code>&lt;pl&gt;</code>)</td>
+<td><code>Number=Plur</code></td>
+</tr>
+<tr class="odd">
+<td><em>-imiz</em></td>
+<td>possessor 1st person plural (<code>&lt;px1pl&gt;</code>)</td>
+<td><code>Person[psor]=1</code>, <code>Number[psor]=Plur</code></td>
+</tr>
+<tr class="even">
+<td><em>-den</em></td>
+<td>ablative (<code>&lt;abl&gt;</code>)</td>
+<td><code>Case=Abl</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The UD line, as TurkicNLP 0.5.0 outputs it:</p>
+<pre><code>form:   evlerimizden
+lemma:  ev
+upos:   NOUN
+feats:  Case=Abl|Number=Plur|Number[psor]=Plur|Person[psor]=1</code></pre>
+<p>Note <code>Number[psor]</code> and <code>Person[psor]</code>: UD distinguishes the number of the noun itself (<code>Number=Plur</code>, ‘houses’) from the person and number of the possessor (‘our’).</p>
+</section>
+<section id="an-advanced-example-ambiguity-in-a-long-form" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="an-advanced-example-ambiguity-in-a-long-form"><span class="header-section-number">5.3.3</span> An Advanced Example: Ambiguity in a Long Form</h3>
+<p>Consider <em>okuyamadıklarından</em>, a nominalised verb with several possessive readings. Three levels must be kept apart: the readings the grammar allows, the readings the analyser returns, and the features a treebank records.</p>
+<p><em>Grammatical readings.</em> The form is <em>oku-ya-ma-dık</em> ‘read-ABIL-NEG-NMLZ’ followed by possessive agreement and the ablative. The nominal can head a headless relative clause, ‘from/among the things that … could not read’, or denote the event; an ablative event nominal commonly expresses a cause, ‘because … could not read’. The possessive identifies the subject of the clause (<a href="02-computational-phenotype.html#sec-agglutination" class="quarto-xref"><span>Section 2.1</span></a>): <em>-lar-ın</em> PL + 2SG (‘you’, with plural <em>-lar</em> marking the things), <em>-lar-ı</em> PL + 3 (‘he/she’ or ‘they’), or <em>-ları</em> 3PL (‘they’, with a singular nominal).</p>
+<p><em>Analyser readings.</em> The Turkish Apertium transducer returns these three readings (ignoring readings with a copula added):</p>
+<pre><code>oku&lt;v&gt;&lt;tv&gt;&lt;abil&gt;&lt;neg&gt;&lt;ger_past&gt;&lt;pl&gt;&lt;px2sg&gt;&lt;abl&gt;    -lar-ın   PL + POSS.2SG   'from what you could not read'
+oku&lt;v&gt;&lt;tv&gt;&lt;abil&gt;&lt;neg&gt;&lt;ger_past&gt;&lt;pl&gt;&lt;px3sp&gt;&lt;abl&gt;    -lar-ı-n  PL + POSS.3     'from what he/she/they could not read'
+oku&lt;v&gt;&lt;tv&gt;&lt;abil&gt;&lt;neg&gt;&lt;ger_past&gt;&lt;px3pl&gt;&lt;abl&gt;        -ları-n   POSS.3PL        'because they could not read'; 'from what they could not read'</code></pre>
+<p>The boundaries differ according to whether <em>-lar</em> marks the nominal’s plural or belongs to third-person plural agreement, and whether <em>-n-</em> is a buffer or part of the second-person possessive. Context narrows the choice. <em>Senin okuyamadıklarından</em> selects the second person (‘from what you could not read’); <em>onun okuyamadıklarından</em> selects a plural nominal with a singular possessor (‘from the things he/she could not read’). <em>Onların okuyamadıklarından</em> can still mean ‘from the things they could not read’ or, with <em>-ları</em> as third-person plural agreement, ‘because they could not read’.</p>
+<p>Apertium lists the morphological possibilities but assigns the same analysis to relative-clause and event readings. Its tag <code>ger_past</code> names <em>-DIK</em>, whose temporal interpretation depends on the construction. Turkish UD treebanks annotate such forms as participles with <code>Aspect=Perf|Tense=Past|VerbForm=Part</code>. Their treatment of ability differs: IMST gives <em>anlayamadığı</em> (sentence <code>00006231_29</code>) <code>Mood=Pot</code>, while BOUN gives <em>damgalayamadığını</em> (sentence <code>news_128</code>) no <code>Mood</code> feature (<a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>). The following illustrates an IMST-style bundle for the POSS.3PL reading:</p>
+<pre><code>form:   okuyamadıklarından
+lemma:  oku
+upos:   VERB
+feats:  Aspect=Perf|Case=Abl|Mood=Pot|Number[psor]=Plur|Person[psor]=3|Polarity=Neg|Tense=Past|VerbForm=Part</code></pre>
+</section>
+<section id="the-same-analysis-across-three-languages" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="the-same-analysis-across-three-languages"><span class="header-section-number">5.3.4</span> The Same Analysis Across Three Languages</h3>
+<p>To illustrate the shared template, consider the parallel: “from our houses” in Turkish, Kazakh, and Uzbek:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Form</th>
+<th>Morphemes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td><em>ev-ler-imiz-den</em></td>
+<td>house-PL-POSS.1PL-ABL</td>
+</tr>
+<tr class="even">
+<td>Kazakh</td>
+<td><em>үй-лер-іміз-ден</em> (üi-ler-ımız-den)</td>
+<td>house-PL-POSS.1PL-ABL</td>
+</tr>
+<tr class="odd">
+<td>Uzbek</td>
+<td><em>uy-lar-imiz-dan</em></td>
+<td>house-PL-POSS.1PL-ABL</td>
+</tr>
+</tbody>
+</table>
+<p>Latin forms in parentheses use the toolkit’s Kazakh transliteration (<a href="03-scripts-orthography.html#sec-transitions" class="quarto-xref"><span>Section 3.2</span></a>). The Apertium analysers for the three languages return the same tag sequence for these forms (<code>&lt;n&gt;&lt;pl&gt;&lt;px1pl&gt;&lt;abl&gt;</code>, TurkicNLP 0.5.0).</p>
+<p>The order of plural, possessive and case is the same in all three languages, as in Common Turkic generally <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 452</a>)</span>. The differences are in the surface forms: Kazakh <em>-іміз</em> harmonises with front stems, Uzbek <em>-imiz</em> is invariant, and the ablative suffix varies. An analyser design for Turkish can therefore be reused for Kazakh and Uzbek by adjusting harmony rules, suffix shapes and lexicon; whether the result works must be validated on the target language, as the next comparison shows.</p>
+<p>For a more demanding comparison, consider the Turkish sentence <em>Kitabı okuyamıyorum</em> (I cannot read the book), its Kazakh equivalent <em>Кітапты оқи алмаймын</em> (Kıtapty oqi almaimyn) and its Turkmen equivalent <em>Kitaby okap bilmeýärin</em>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 31%">
+<col style="width: 27%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Turkish</th>
+<th>Kazakh</th>
+<th>Turkmen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Object</td>
+<td><em>kitab-ı</em> (book-ACC)</td>
+<td><em>кітап-ты</em> (kıtap-ty, book-ACC)</td>
+<td><em>kitab-y</em> (book-ACC)</td>
+</tr>
+<tr class="even">
+<td>Verb</td>
+<td><em>oku-ya-m-ıyor-um</em> (read-ABIL-NEG-PROG-1SG)</td>
+<td><em>оқи ал-ма-й-мын</em> (<em>оқы-</em> ‘read’ + converb, take-NEG-PRS-1SG; analytic)</td>
+<td><em>oka-p bil-me-ýär-in</em> (read-CVB know-NEG-PRS-1SG; analytic)</td>
+</tr>
+</tbody>
+</table>
+<p>Turkish packs inability into <em>okuyamıyorum</em>. Kazakh uses a converb and auxiliary <em>ал-</em> ‘take’: <em>оқи алмаймын</em>, literally ‘reading I do not take’. Turkmen also uses an auxiliary, <em>bil-</em> ‘know’, cognate with Turkish <em>-(y)Abil-</em>. Johanson lists ‘take’, ‘know’ and ‘become’ as ability auxiliaries, including Kazakh <em>žaz-a al-</em> ‘be able to write’ and Uzbek <em>ȯḳi-y-ål-</em> ‘be able to read’ <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, 613</a>)</span>.</p>
+<p>The Kazakh analyser returns <code>ал&lt;vaux&gt;&lt;neg&gt;&lt;aor&gt;&lt;p1&gt;&lt;sg&gt;</code> as one of two readings of <em>алмаймын</em>. Its tense tag is aorist, where our gloss uses present. Both the word structure and the annotation convention need checking when adapting an analyser across languages.</p>
+</section>
+<section id="morphological-ambiguity" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="morphological-ambiguity"><span class="header-section-number">5.3.5</span> Morphological Ambiguity</h3>
+<p>A single surface form can have multiple valid analyses. This is <strong>morphological ambiguity</strong>, and it is pervasive in Turkic text. Two useful distinctions are:</p>
+<p><strong>Analysis ambiguity</strong>: The same segmentation can carry different features. Turkish <em>evi</em> is: - <em>ev-i</em> = house-ACC (‘the house’, as a specific object) - <em>ev-i</em> = house-POSS.3SG (‘his/her house’)</p>
+<p>The boundaries are identical; only the analysis differs. <em>evleri</em> has three readings without a <code>+</code> continuation in the Turkish Apertium transducer: <em>ev-ler-i</em> (house-PL-ACC ‘the houses’), <em>ev-ler-i</em> (house-PL-POSS.3 ‘his/her houses’ or ‘their houses’; Apertium <code>&lt;px3sp&gt;</code>), and <em>ev-leri</em> (house-POSS.3PL ‘their house’). Here the readings also differ in where the boundary falls.</p>
+<p><strong>Category ambiguity</strong>: The same form can belong to different categories. Turkish <em>yazar</em> can be: - A noun: “author” - A verb: <em>yaz-ar</em> “writes” (aorist, 3SG)</p>
+<p>and <em>okuma</em> can be the verbal noun “reading” or the negative imperative “don’t read!”.</p>
+<p>On the Turkish TueCL test file (UD 2.17), 608/730 eligible tokens (83%) receive multiple raw readings; 399/730 (55%) still do after excluding every reading containing a <code>+</code> continuation. On the Kazakh-KTB test file (UD 2.17), a different and larger sample of mostly encyclopaedic and literary sentences, the counts are 6,313/7,667 (82%) and 5,071/7,667 (66%). The denominator consists of integer-ID syntactic words except <code>PUNCT</code>, <code>NUM</code> and <code>SYM</code>, including unknown words (41 Turkish and 56 Kazakh). Thus “without <code>+</code>” is a reproducible filter, not a linguistic test for copulas alone. Lookup uses NFC surface spelling, then Turkish-aware lowercasing for Turkish or ordinary lowercasing for Kazakh only if the surface has no reading. <code>code/ch05-ambiguity/</code> contains the script, exact counts, per-token readings and SHA-256 hashes of the two test files and transducers. Because the samples differ in genre and size, the Turkish–Kazakh difference is not a language comparison; read the figures as properties of these samples. They do not generalise to Turkish or Kazakh text at large. Disambiguation requires context, typically the surrounding words and their likely analyses.</p>
+</section>
+<section id="the-disambiguation-problem" class="level3" data-number="5.3.6">
+<h3 data-number="5.3.6" class="anchored" data-anchor-id="the-disambiguation-problem"><span class="header-section-number">5.3.6</span> The Disambiguation Problem</h3>
+<p>Given a set of possible analyses for each word in a sentence, the disambiguation problem is to select the correct analysis for each word. The constraints are mutual: the analysis of one word affects the analyses of its neighbours. For example, a noun in the accusative makes a following transitive verb more likely.</p>
+<p>Classic approaches train statistical models over sequences of morphological tags on manually disambiguated corpora; for Turkish, <span class="citation" data-cites="hakkanitur2000disambiguation">Hakkani-Tür, Oflazer, and Tür (<a href="../references.html#ref-hakkanitur2000disambiguation" role="doc-biblioref">2000</a>)</span> model the tags of each word as a sequence of inflectional groups (see also <span class="citation" data-cites="oflazer2018turkish_nlp">Oflazer and Saraçlar (<a href="../references.html#ref-oflazer2018turkish_nlp" role="doc-biblioref">2018</a>)</span>, chapter 3). More recent work uses neural taggers trained on Universal Dependencies data <span class="citation" data-cites="qi2020stanza">(<a href="../references.html#ref-qi2020stanza" role="doc-biblioref">Qi et al. 2020</a>)</span>. Supervised taggers need labelled training data, but those labels can come from manual annotation or automatic methods with different error rates. A target-language learning curve shows how additional annotation affects accuracy. This motivates the cross-lingual transfer strategies discussed in <a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a>.</p>
+</section>
+</section>
+<section id="sec-cross-lang" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-cross-lang"><span class="header-section-number">5.4</span> Cross-Language Morphological Comparison</h2>
+<section id="the-shared-template" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="the-shared-template"><span class="header-section-number">5.4.1</span> The Shared Template</h3>
+<p>Use the templates in <a href="#sec-morpheme-inventory" class="quarto-xref"><span>Section 5.1</span></a> to organise comparisons, then check each construction. Chuvash changes nominal suffix order (<a href="#sec-chuvash" class="quarto-xref"><span>Section 5.4.5</span></a>); Kazakh expresses the inability example above analytically. These differences guide what can be reused in the transfer methods of <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a> and <a href="16-cross-lingual-transfer.html" class="quarto-xref"><span>Chapter 16</span></a>.</p>
+<p>What differs across languages is:</p>
+<ol type="1">
+<li>The <strong>inventory</strong> of morphemes in each slot (which suffixes mark which distinctions)</li>
+<li>The <strong>allomorphic rules</strong> (how harmony and assimilation apply)</li>
+<li>The <strong>productivity</strong> of some slots (which suffixes combine freely and which are restricted to particular stems)</li>
+<li>The <strong>degree of analyticity</strong> (how much is expressed by suffixes vs.&nbsp;auxiliary verbs)</li>
+</ol>
+</section>
+<section id="where-uzbek-and-uyghur-diverge" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="where-uzbek-and-uyghur-diverge"><span class="header-section-number">5.4.2</span> Where Uzbek and Uyghur Diverge</h3>
+<p>Uzbek and Uyghur (Karluk branch) diverge from the Oghuz-Kipchak norm most visibly in vowel harmony. In standard written Uzbek, suffix vowels are largely fixed: the Uzbek plural is always <em>-lar</em> regardless of root vowel (unlike Turkish <em>-lar/-ler</em>), and standard Uzbek lacks a clear-cut rounding harmony <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 313</a>)</span>. The writing understates the pronunciation, however: front/back harmony has not vanished in spoken Uzbek, and Johanson calls the impression that it has ceased to function a “false impression” supported by the orthography <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, 245, 307</a>)</span>. For text processing, the written form is what an analyser sees: fewer written vowel alternations, even where pronunciation varies.</p>
+<p>Uyghur writes front/back suffix variants (<em>iš-lar</em> ‘works’ vs.&nbsp;<em>bir-gä</em> ‘to one’; <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span>, p.&nbsp;245). Its Perso-Arabic orthography, unlike Arabic or Persian, writes every vowel, which makes conversion into Latin or Cyrillic largely table-driven (<a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>). The complication for analysis is rather vowel raising in stems (<em>bala</em> ‘child’ → <em>balilar</em> ‘children’; cf.&nbsp;<em>ati-si</em> ‘his/her father’ ← <em>ata</em>, <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span>, p.&nbsp;27), which creates stem alternants an analyser must list or derive. The Apertium Uyghur analyser reads <em>بالىلار</em> (<em>balilar</em>) as <code>بالا&lt;n&gt;&lt;pl&gt;&lt;nom&gt;</code>.</p>
+<p>Uzbek, Uyghur and the Kipchak languages express some verbal categories, particularly aspect and modality, with converb + auxiliary constructions rather than suffix stacking (Kazakh <em>оқи ал-</em> ‘be able to read’, Uzbek <em>oʻqiy ol-</em> ‘be able to read’, Turkmen <em>okap bil-</em> ‘be able to read’; Uzbek after <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span>, p.&nbsp;613). A form that Turkish expresses as a single verb may require two words.</p>
+</section>
+<section id="selected-cross-language-differences" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="selected-cross-language-differences"><span class="header-section-number">5.4.3</span> Selected Cross-Language Differences</h3>
+<p><a href="#tbl-crosslang" class="quarto-xref">Table&nbsp;<span>5.7</span></a> lists only contrasts that are illustrated in this chapter or in <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a>; each cell refers to the standard written language.</p>
+<div id="tbl-crosslang" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-crosslang-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.7: Selected morphological contrasts across five Turkic languages, as illustrated in <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="#sec-book-05-morphological-structure" class="quarto-xref"><span>Chapter 5</span></a>.
+</figcaption>
+<div aria-describedby="tbl-crosslang-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th style="text-align: center;">Turkish</th>
+<th style="text-align: center;">Kazakh</th>
+<th style="text-align: center;">Uzbek</th>
+<th style="text-align: center;">Turkmen</th>
+<th style="text-align: center;">Kyrgyz</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Backness harmony in suffixes, written</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">largely fixed vowels</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="even">
+<td>Rounding harmony in suffixes, written</td>
+<td style="text-align: center;">high-vowel classes</td>
+<td style="text-align: center;">generally not represented</td>
+<td style="text-align: center;">no productive alternation</td>
+<td style="text-align: center;">some suffixes (GEN <em>-üň</em>), not ACC</td>
+<td style="text-align: center;">broader than Turkish</td>
+</tr>
+<tr class="odd">
+<td>Plural <em>-lAr</em></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓ (<em>-лар/-тар/-дар</em>…)</td>
+<td style="text-align: center;"><em>-lar</em> only</td>
+<td style="text-align: center;">✓ (<em>-lar/-ler</em>)</td>
+<td style="text-align: center;">✓</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Row sources: backness examples in <a href="02-computational-phenotype.html#tbl-harmony-examples" class="quarto-xref">Table&nbsp;<span>2.3</span></a>; rounding patterns in <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, 311–15</a>)</span>; plural harmony in <a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a>.</p>
+<p><strong>Differential object marking</strong> affects parsing and translation. Turkish usually marks specific objects with the accusative (<em>kitabı okudum</em> ‘I read the book’) and leaves non-specific objects bare (<em>kitap okudum</em> ‘I read a book / I did book-reading’). A specific indefinite can also take the accusative: <em>bir kitabı okudum</em> ‘I read a certain book’. Kazakh (<em>кітап оқыдым</em> vs.&nbsp;<em>кітапты оқыдым</em>) and Uzbek (<em>kitob oʻqidim</em> vs.&nbsp;<em>kitobni oʻqidim</em>) show the same basic contrast.</p>
+<p>The conditions depend on language, discourse and construction. For parsing, accusative marking is one cue to objecthood; word order and context help identify bare objects. For translation, preserve the intended reference. English articles cannot be mapped directly onto Turkic case suffixes.</p>
+</section>
+<section id="sec-recurring-analysis" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="sec-recurring-analysis"><span class="header-section-number">5.4.4</span> The Recurring Examples Analysed</h3>
+<p>The recurring sentences of <a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a> show several of these contrasts together. Hyphens separate morphs, and glosses follow the Leipzig conventions (abbreviations in <a href="appendix-d.html#tbl-gloss-abbreviations" class="quarto-xref">Table&nbsp;<span>D.1</span></a>); ATTR marks the attributive suffix (Kazakh <em>-ГІ</em>, Uyghur <em>-diki</em>). The Uyghur line uses the treebank’s ULY transliteration.</p>
+<pre><code>Қазақстан   осы   өңір-де-гі        бейбітшілік-ті  қолда-й-ды
+Kazakhstan  this  region-LOC-ATTR   peace-ACC       support-PRS-3
+
+Мен-ин  машина-м      бар
+I-GEN   car-POSS.1SG  existent
+
+Toshkent-da   dzyudo  boʻyicha  Gran-pri    musobaqa-si         boʻl-ib  oʻt-moqda
+Tashkent-LOC  judo    on        Grand.Prix  competition-POSS.3  be-CVB   pass-PROG.3
+
+u    sheher  sirt-i-diki              bir  at     harwi-si-ni      kör-i-du
+3SG  town    outside-POSS.3-LOC.ATTR  a    horse  cart-POSS.3-ACC  see-PRS-3</code></pre>
+<ul>
+<li><strong>Locative + attributive.</strong> Kazakh <em>өңір-де-гі</em> and Uyghur <em>sirt-i-diki</em> turn a locative into a noun modifier with the same suffix order.</li>
+<li><strong>Possessive marking in compounds.</strong> Uzbek <em>Gran-pri musobaqa-si</em> and Uyghur <em>at harwi-si</em> mark the head of a noun compound with the 3rd-person possessive and no genitive. In Kyrgyz <em>Мен-ин машина-м</em>, by contrast, a genitive possessor agrees with a 1st-person possessive suffix.</li>
+<li><strong>Analytic predicates.</strong> Kyrgyz expresses possession with the existential <em>бар</em>, without a verb ‘have’; Uzbek <em>boʻl-ib oʻt-</em> ‘take place’ is a converb + verb combination of the kind described above.</li>
+<li><strong>Person without number.</strong> Kazakh <em>-ды</em> and Uyghur <em>-du</em> mark the 3rd person but not number.</li>
+</ul>
+<p>The treebank annotations differ from these analyses in places: Kyrgyz-KTMU tags <em>машинам</em> as genitive and <em>бар</em> as a verb with tense and aspect; Uyghur-UDT tags <em>sirtidiki</em> as nominative and <em>bir</em> as an ordinal; Kazakh-KTB marks only the locative of <em>өңірдегі</em>. A released annotation documents a convention and can contain errors; <a href="08-syntax-ud.html#sec-ud-framework" class="quarto-xref"><span>Section 8.2</span></a> returns to this point.</p>
+</section>
+<section id="sec-chuvash" class="level3" data-number="5.4.5">
+<h3 data-number="5.4.5" class="anchored" data-anchor-id="sec-chuvash"><span class="header-section-number">5.4.5</span> Chuvash: The Exceptional Case</h3>
+<p>Chuvash is agglutinative, with phonology and morphotactics that differ from Common Turkic. Oghur sound changes give Chuvash <em>r</em> where Common Turkic has <em>z</em> (rhotacism) and <em>l</em> where Common Turkic has <em>š</em> (lambdacism) <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 25</a>)</span>. Its plural is <em>-сем</em> (<em>-säm</em>), becoming <em>-сен</em> before case suffixes <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 453</a>)</span>. Possessive marking comes first: <em>кил-ӗм-сен-чен</em> ‘from my houses’ (house-POSS.1SG-PL-ABL), compared with Turkish <em>ev-ler-im-den</em> <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 452, 455</a>)</span>. A transducer must encode this order along with Chuvash rules and vocabulary.</p>
+<p>On the 20-sentence-per-language TurkicNLP challenge set, Apertium detected the target phenomenon in 80% of the Chuvash sentences and the multilingual neural analyser in 60% <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. The authors suggest that divergent Oghur morphology limits transfer. A comparison this small cannot settle the cause, so test transfer to Chuvash directly.</p>
+</section>
+<section id="practical-guidance-starting-from-a-close-relative" class="level3" data-number="5.4.6">
+<h3 data-number="5.4.6" class="anchored" data-anchor-id="practical-guidance-starting-from-a-close-relative"><span class="header-section-number">5.4.6</span> Practical Guidance: Starting from a Close Relative</h3>
+<p>An existing analyser can provide a starting design for a related language. Choose it by documented structural similarities and tool quality, then check the following parts:</p>
+<ol type="1">
+<li><strong>Reuse the tag set and the morphotactic design</strong> of the relative’s analyser, and check each continuation against the target language.</li>
+<li><strong>Build a new lexicon</strong> for the target language; cognate roots speed this up but must be checked one by one.</li>
+<li><strong>Write the target language’s own alternation rules</strong>: harmony dimensions (and whether they are written), consonant assimilation, stem alternations.</li>
+<li><strong>Adjust suffix shapes.</strong> The Kazakh locative <em>-da/-de/-ta/-te</em> matches Turkish, but the Kazakh accusative <em>-ны/-ні/-ды/-ді/-ты/-ті</em> differs from Turkish <em>-(y)ı/i/u/ü</em>.</li>
+<li><strong>Add language-specific morphemes and constructions</strong> not present in the relative.</li>
+</ol>
+<p>The Apertium Turkic analysers were built in this spirit: each language has its own lexicon and rule files, but they follow shared formalisms and tag conventions <span class="citation" data-cites="washington2014finite">(<a href="../references.html#ref-washington2014finite" role="doc-biblioref">Washington, Salimzyanov, and Tyers 2014</a>)</span>. <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a> develops this architecture in detail.</p>
+</section>
+</section>
+<section id="sec-ch05-hands-on" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-ch05-hands-on"><span class="header-section-number">5.5</span> Hands-On: Walking Through a Morphological Analysis</h2>
+<p><strong>Question.</strong> How does the analyser represent ambiguity and choose a reading?</p>
+<p><strong>Inputs.</strong> The Turkish and Kazakh sentences below and their Apertium resources.</p>
+<p><strong>Compute.</strong> CPU with TurkicNLP and downloaded transducers.</p>
+<p><strong>Output.</strong> Selected lemmas, parts of speech, feature bundles and alternative readings.</p>
+<p><strong>Interpretation.</strong> Compare each field with the sentence context and inspect processor provenance.</p>
+<p>The TurkicNLP toolkit <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span> provides rule-based morphological analysis via Apertium transducers for 20 Turkic languages and a multilingual neural analyser for 22. The following example analyses a Turkish and a Kazakh sentence with TurkicNLP 0.5.0 and the Apertium backend (<code>pip install "turkicnlp[hfst]==0.5.0"</code>; fetch the transducers with <code>turkicnlp.download(lang, processors=["morph"])</code> for each language before running) and prints the selected analysis of each token. Missing values are printed as <code>_</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp <span class="im">import</span> Pipeline</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Turkish ---</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tr_pipeline <span class="op">=</span> Pipeline(<span class="st">"tur"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"morph"</span>], tokenize_backend<span class="op">=</span><span class="st">"rule"</span>, morph_backend<span class="op">=</span><span class="st">"apertium"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>doc_tr <span class="op">=</span> tr_pipeline(<span class="st">"Evlerimizden çok uzaklaşmıştık."</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Turkish morphological analysis:"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> doc_tr.words:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>word<span class="sc">.</span>text<span class="sc">:&lt;16}</span><span class="ss"> lemma=</span><span class="sc">{</span>word<span class="sc">.</span>lemma <span class="kw">or</span> <span class="st">'_'</span><span class="sc">:&lt;10}</span><span class="ss"> upos=</span><span class="sc">{</span>word<span class="sc">.</span>upos <span class="kw">or</span> <span class="st">'_'</span><span class="sc">:&lt;6}</span><span class="ss"> feats=</span><span class="sc">{</span>word<span class="sc">.</span>feats <span class="kw">or</span> <span class="st">'_'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Kazakh (Cyrillic) ---</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>kz_pipeline <span class="op">=</span> Pipeline(<span class="st">"kaz"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"morph"</span>], tokenize_backend<span class="op">=</span><span class="st">"rule"</span>, morph_backend<span class="op">=</span><span class="st">"apertium"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>doc_kz <span class="op">=</span> kz_pipeline(<span class="st">"Үйлерімізден өте алыс кеткенбіз."</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Kazakh morphological analysis:"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> doc_kz.words:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>word<span class="sc">.</span>text<span class="sc">:&lt;16}</span><span class="ss"> lemma=</span><span class="sc">{</span>word<span class="sc">.</span>lemma <span class="kw">or</span> <span class="st">'_'</span><span class="sc">:&lt;10}</span><span class="ss"> upos=</span><span class="sc">{</span>word<span class="sc">.</span>upos <span class="kw">or</span> <span class="st">'_'</span><span class="sc">:&lt;6}</span><span class="ss"> feats=</span><span class="sc">{</span>word<span class="sc">.</span>feats <span class="kw">or</span> <span class="st">'_'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># --- All readings of an ambiguous word (private API in 0.5.0) ---</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>apertium <span class="op">=</span> <span class="bu">next</span>(p <span class="cf">for</span> p <span class="kw">in</span> tr_pipeline._processors <span class="cf">if</span> <span class="bu">hasattr</span>(p, <span class="st">"_analyze"</span>))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> reading <span class="kw">in</span> apertium._analyze(<span class="st">"evleri"</span>):</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(reading[<span class="st">"raw"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Output (local TurkicNLP 0.5.0 checkout and Apertium backend):</p>
+<pre><code>Turkish morphological analysis:
+  Evlerimizden     lemma=ev         upos=NOUN   feats=Case=Abl|Number=Plur|Number[psor]=Plur|Person[psor]=1
+  çok              lemma=çok        upos=ADV    feats=_
+  uzaklaşmıştık    lemma=uzaklaş    upos=VERB   feats=Evident=Nfh|Number=Plur|Person=1|Tense=Past
+  .                lemma=.          upos=PUNCT  feats=_
+
+Kazakh morphological analysis:
+  Үйлерімізден     lemma=үй         upos=NOUN   feats=Case=Abl|Number=Plur|Number[psor]=Plur|Person[psor]=1
+  өте              lemma=өте        upos=ADV    feats=_
+  алыс             lemma=алыс       upos=NOUN   feats=_
+  кеткенбіз        lemma=кет        upos=VERB   feats=Number=Plur|Person=1|Tense=Past
+  .                lemma=.          upos=PUNCT  feats=_
+ev&lt;n&gt;&lt;pl&gt;&lt;acc&gt;
+ev&lt;n&gt;&lt;pl&gt;&lt;px3sp&gt;&lt;nom&gt;
+ev&lt;n&gt;&lt;pl&gt;&lt;px3sp&gt;&lt;nom&gt;+i&lt;cop&gt;&lt;aor&gt;&lt;p3&gt;&lt;sg&gt;
+ev&lt;n&gt;&lt;px3pl&gt;&lt;nom&gt;
+ev&lt;n&gt;&lt;px3pl&gt;&lt;nom&gt;+i&lt;cop&gt;&lt;aor&gt;&lt;p3&gt;&lt;sg&gt;</code></pre>
+<p>The pipeline selects one analysis per word using transducer weights and heuristic context. The transducer can offer several: for <em>evleri</em>, plural accusative, plural with a third-person possessor, a third-person plural possessor, and copular continuations. Check the selected reading against a manually reviewed reference and discuss mismatches, as the exercises do.</p>
+<p>With the PyPI release of TurkicNLP 0.5.0 and the pure-Python <code>pyhfst</code> reader, the readings of <em>evleri</em> are printed in a different order and <em>алыс</em> gets <code>feats=Case=Nom</code>; the selected lemmas and parts of speech are the same.</p>
+<p><em>Evlerimizden</em> and <em>Үйлерімізден</em> receive parallel FEATS bundles for the same structure in different surface forms. Other outputs reveal errors. In <em>uzaklaş-mış-tı-k</em>, <em>-mIş-DI</em> expresses the pluperfect, ‘we had moved far away’. The transducer instead reads <em>-mIş</em> as evidential past (<code>Evident=Nfh|Tense=Past</code>, <a href="#sec-morpheme-inventory" class="quarto-xref"><span>Section 5.1</span></a>); Turkish IMST uses <code>Tense=Pqp</code>. Kazakh <em>алыс</em> ‘far’ is tagged NOUN despite its adverbial use here. The toolkit chooses among transducer readings with heuristics, without a trained syntactic disambiguator (<a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a>). Inspect <code>word._provenance</code> and <code>doc._processor_log</code> to see which processor supplied each field.</p>
+<p><strong>Status: demonstration.</strong> The displayed output is recorded and includes the backend and version differences. Exercise 3 develops the ambiguity comparison.</p>
+</section>
+<section id="sec-ch05-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch05-synthesis">What to Take Forward</h2>
+<p>A morphological analysis links a stem and its affixes to grammatical functions, and context selects among competing readings. Ambiguity is the normal case: in the UD test samples above, 55% of eligible Turkish tokens and 66% of Kazakh ones keep several readings even after continuation readings are removed. Surface segments, analyser tags and UD features answer different questions, so state which representation a tool produces before comparing it with another. <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a> shows how finite-state analysers produce these readings, and <a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a> how neural models select them.</p>
+</section>
+<section id="sec-ch05-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch05-further-reading">Further Reading</h2>
+<ul>
+<li><strong>Turkic morphology</strong>: <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span>, chapter 20 (pp.&nbsp;431–439), introduces morphology; chapter 22 (pp.&nbsp;452–478) treats noun inflection, and chapter 27 (pp.&nbsp;555–571) treats copular devices.</li>
+<li><strong>Turkish morphological analysis</strong>: <span class="citation" data-cites="oflazer1994two">Oflazer (<a href="../references.html#ref-oflazer1994two" role="doc-biblioref">1994</a>)</span> is the foundational computational paper on Turkish two-level morphology; <span class="citation" data-cites="oflazer2018turkish_nlp">Oflazer and Saraçlar (<a href="../references.html#ref-oflazer2018turkish_nlp" role="doc-biblioref">2018, chaps. 2–3</a>)</span> gives a modern treatment of morphological processing and disambiguation for Turkish, and the rest of the book covers parsing, semantic processing and speech.</li>
+<li><strong>Universal Dependencies morphological features</strong>: <span class="citation" data-cites="demarneffe2021universal">Marneffe et al. (<a href="../references.html#ref-demarneffe2021universal" role="doc-biblioref">2021</a>)</span> defines the UD feature inventory; the UD guidelines for Turkic languages at <a href="https://universaldependencies.org">universaldependencies.org</a> provide language-specific annotation decisions.</li>
+<li><strong>Cross-lingual morphology</strong>: <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span> compares finite-state and multilingual neural analysers on a parallel 20-language challenge set, including languages without training data.</li>
+</ul>
+</section>
+<section id="sec-ch05-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch05-exercises">Exercises</h2>
+<ol type="1">
+<li><p><strong>Template exercise.</strong> Analyse <em>kitaplarımıza</em> as <em>kitap-lar-ımız-a</em>. Write a proposed UD feature bundle, then run the analyser of the Hands-On section and compare. Distinguish the noun’s number, the possessor’s person and number, and case. Explain any mismatch, and record the toolkit version and backend.</p></li>
+<li><p><strong>Allomorphy tables.</strong> For the Turkish dative suffix (<em>-a/-e</em>) and the locative suffix (<em>-da/-de/-ta/-te</em>), fill in the correct allomorph for each of the following roots: <em>ev</em> (house), <em>araba</em> (car), <em>göz</em> (eye), <em>kapı</em> (door), <em>çiçek</em> (flower), <em>kuş</em> (bird). State the rule governing each allomorph choice.</p></li>
+<li><p><strong>Morphological ambiguity.</strong> List all readings the Turkish transducer returns for <em>yazar</em>, <em>çalışır</em> and <em>evleri</em> (use the readings call of the Hands-On section, or Zemberek). For each word: (a) gloss each reading; (b) write two sentences in which different readings are correct; (c) say which reading the pipeline selects in each sentence, and whether it is right.</p></li>
+<li><p><strong>Cross-language comparison.</strong> Segment the Kazakh word <em>кетпегендіктен</em> ‘because (someone) did not leave’ as <em>кет-пе-ген-дік-тен</em> (leave-NEG-PTCP-NMLZ-ABL): it contains both a participle <em>-ген</em> and a nominaliser <em>-дік</em>. (a) Give an equivalent Turkish construction and compare the order of the pieces. (b) Propose a UD annotation under the conventions of the Kazakh KTB treebank, and explain which pieces the UD bundle does not show. Compare it with what the Apertium Kazakh analyser returns for the word. (c) Compare Turkmen <em>gitmedigi üçin</em> ‘because (someone) did not go’ (<em>git-me-dig-i üçin</em>, go-NEG-PTCP-POSS.3 for), which expresses the cause with a postposition instead of the ablative.</p></li>
+<li><p><strong>Morphophonological rule writing.</strong> Write a formal rule (in prose or as a conditional) for Turkish consonant alternation in the locative suffix (<em>-da/-ta</em>): state the trigger (what phonological property of the preceding consonant) and the two output forms. Then apply your rule to the following stems: <em>el</em> (hand), <em>kap</em> (lid), <em>göl</em> (lake), <em>at</em> (horse), <em>iç</em> (inside).</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-hakkanitur2000disambiguation" class="csl-entry" role="listitem">
+Hakkani-Tür, Dilek Z., Kemal Oflazer, and Gökhan Tür. 2000. <span>“Statistical Morphological Disambiguation for Agglutinative Languages.”</span> In <em><span>COLING</span> 2000 Volume 1: The 18th International Conference on Computational Linguistics</em>. <a href="https://aclanthology.org/C00-1042/">https://aclanthology.org/C00-1042/</a>.
+</div>
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+<div id="ref-demarneffe2021universal" class="csl-entry" role="listitem">
+Marneffe, Marie-Catherine de, Christopher D. Manning, Joakim Nivre, and Daniel Zeman. 2021. <span>“<span>U</span>niversal <span>D</span>ependencies.”</span> <em>Computational Linguistics</em> 47 (2): 255–308. <a href="https://doi.org/10.1162/coli_a_00402">https://doi.org/10.1162/coli_a_00402</a>.
+</div>
+<div id="ref-oflazer1994two" class="csl-entry" role="listitem">
+Oflazer, Kemal. 1994. <span>“Two-Level Description of <span>Turkish</span> Morphology.”</span> <em>Literary and Linguistic Computing</em> 9 (2): 137–48. <a href="https://doi.org/10.1093/llc/9.2.137">https://doi.org/10.1093/llc/9.2.137</a>.
+</div>
+<div id="ref-oflazer2018turkish_nlp" class="csl-entry" role="listitem">
+Oflazer, Kemal, and Murat Saraçlar, eds. 2018. <em>Turkish Natural Language Processing</em>. Theory and Applications of Natural Language Processing. Cham: Springer. <a href="https://doi.org/10.1007/978-3-319-90165-7">https://doi.org/10.1007/978-3-319-90165-7</a>.
+</div>
+<div id="ref-qi2020stanza" class="csl-entry" role="listitem">
+Qi, Peng, Yuhao Zhang, Yuhui Zhang, Jason Bolton, and Christopher D. Manning. 2020. <span>“<span>S</span>tanza: A Python Natural Language Processing Toolkit for Many Human Languages.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: System Demonstrations</em>, 101–8. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-demos.14">https://doi.org/10.18653/v1/2020.acl-demos.14</a>.
+</div>
+<div id="ref-washington2014finite" class="csl-entry" role="listitem">
+Washington, Jonathan, Ilnar Salimzyanov, and Francis Tyers. 2014. <span>“Finite-State Morphological Transducers for Three <span>K</span>ypchak Languages.”</span> In <em>Proceedings of the Ninth International Conference on Language Resources and Evaluation (<span>LREC</span>’14)</em>, 3378–85. Reykjavik, Iceland: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L14-1143/">https://aclanthology.org/L14-1143/</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-corpora-at-scale.html" class="pagination-link" aria-label="Building Turkic Corpora at Scale">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/06-finite-state-morphology.html" class="pagination-link" aria-label="Finite-State Morphology: The Rule-Based Approach">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

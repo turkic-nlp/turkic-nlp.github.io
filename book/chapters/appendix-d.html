@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>Appendix D — Glossary – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-c.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-d.html"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-gloss-abbreviations" id="toc-sec-gloss-abbreviations" class="nav-link active" data-scroll-target="#sec-gloss-abbreviations">Gloss Abbreviations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-d.html"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-appendix-d" class="quarto-section-identifier">Appendix D — Glossary</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This glossary defines technical terms used throughout the book. Entries are listed alphabetically. <em>See:</em> names the chapter or section where a term is explained in depth; <em>See also:</em> points to related entries. Gloss abbreviations come first.</p>
+<section id="sec-gloss-abbreviations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-gloss-abbreviations">Gloss Abbreviations</h2>
+<p>Interlinear glosses follow the Leipzig Glossing Rules: hyphens separate morphs and their glosses, and a dot joins several meanings expressed by one form (<em>POSS.3SG</em>). Numbers mark person (1, 2, 3).</p>
+<div id="tbl-gloss-abbreviations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gloss-abbreviations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;D.1: Abbreviations used in the book’s interlinear glosses.
+</figcaption>
+<div aria-describedby="tbl-gloss-abbreviations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Label</th>
+<th>Meaning</th>
+<th>Label</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ABIL</td>
+<td>ability</td>
+<td>LOC</td>
+<td>locative</td>
+</tr>
+<tr class="even">
+<td>ABL</td>
+<td>ablative</td>
+<td>NEG</td>
+<td>negation</td>
+</tr>
+<tr class="odd">
+<td>ACC</td>
+<td>accusative</td>
+<td>NMLZ</td>
+<td>nominaliser</td>
+</tr>
+<tr class="even">
+<td>ATTR</td>
+<td>attributive (Kazakh <em>-ГІ</em>, Uyghur <em>-diki</em>)</td>
+<td>NOM</td>
+<td>nominative</td>
+</tr>
+<tr class="odd">
+<td>AUX</td>
+<td>auxiliary</td>
+<td>PASS</td>
+<td>passive</td>
+</tr>
+<tr class="even">
+<td>CAUS</td>
+<td>causative</td>
+<td>PL</td>
+<td>plural</td>
+</tr>
+<tr class="odd">
+<td>COM</td>
+<td>comitative</td>
+<td>POSS</td>
+<td>possessive</td>
+</tr>
+<tr class="even">
+<td>COP</td>
+<td>copula</td>
+<td>PROG</td>
+<td>progressive</td>
+</tr>
+<tr class="odd">
+<td>CVB</td>
+<td>converb</td>
+<td>PRS</td>
+<td>present</td>
+</tr>
+<tr class="even">
+<td>DAT</td>
+<td>dative</td>
+<td>PST</td>
+<td>past</td>
+</tr>
+<tr class="odd">
+<td>GEN</td>
+<td>genitive</td>
+<td>PTCP</td>
+<td>participle</td>
+</tr>
+<tr class="even">
+<td>INS</td>
+<td>instrumental</td>
+<td>Q</td>
+<td>question particle</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>SG</td>
+<td>singular</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="a" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="a">A</h2>
+<dl>
+<dt><span id="glossary-ablative-case">Ablative case</span></dt>
+<dd>
+A grammatical case marking a noun as the source, origin, or point of departure of an action (e.g., “from the city”). In Turkic languages the ablative also encodes comparison (“bigger than the city”). It is marked with <em>-dan/-den/-tan/-ten</em> in Turkish and <em>-дан/-ден</em>, <em>-тан/-тен</em>, <em>-нан/-нен</em> in Kazakh. <em>See also: <a href="#glossary-case-grammatical">Case (grammatical)</a>, <a href="#glossary-dative-case">Dative case</a>.</em>
+</dd>
+<dt><span id="glossary-accusative-case">Accusative case</span></dt>
+<dd>
+A grammatical case that marks the direct object of a transitive verb. Many Turkic languages have differential object marking. In Turkish, specific objects, including specific indefinites, usually take an overt accusative suffix (<em>-(y)ı/i/u/ü</em>), while non-specific objects usually appear unmarked. The conditions vary across languages (<a href="05-morphological-structure.html#sec-cross-lang" class="quarto-xref"><span>Section 5.4</span></a>). <em>See also: <a href="#glossary-case-grammatical">Case (grammatical)</a>, <a href="#glossary-nominative-case">Nominative case</a>.</em>
+</dd>
+<dt><span id="glossary-agglutination">Agglutination</span></dt>
+<dd>
+A morphological strategy in which words are formed by appending a sequence of largely segmentable morphemes, often with identifiable grammatical or derivational functions. Surface shapes can alternate, and form–function mappings are not always one-to-one. Turkic languages are strongly agglutinative: a single verb form may carry tense, aspect, mood, and person agreement through a chain of suffixes. <em>See also: <a href="#glossary-concatenative-morphology">Concatenative morphology</a>, <a href="#glossary-productive-morphology">Productive morphology</a>, <a href="#glossary-suffix-template">Suffix template</a>.</em>
+</dd>
+<dt><span id="glossary-allomorph">Allomorph</span></dt>
+<dd>
+One of two or more phonological variants of the same morpheme. In Turkic languages, allomorphy is principally driven by vowel harmony and consonant assimilation. For example, the Turkish plural morpheme has the allomorphs <em>-lar</em> and <em>-ler</em> depending on the backness of the preceding vowel. <em>See also: <a href="#glossary-vowel-harmony">Vowel harmony</a>, <a href="#glossary-morpheme">Morpheme</a>.</em>
+</dd>
+<dt><span id="glossary-adapter">Adapter</span></dt>
+<dd>
+A small set of trainable parameters inserted into a frozen pretrained model and trained for a task, language or script. Bottleneck adapters and LoRA are different parameterisations; report the trainable modules and save the adapter with its task head. <em>See:</em> <a href="16-cross-lingual-transfer.html#sec-multilingual" class="quarto-xref"><span>Section 16.4</span></a>.
+</dd>
+<dt><span id="glossary-annotation-projection">Annotation projection</span></dt>
+<dd>
+Transferring labels from annotated source sentences to aligned target sentences through word alignments. The result is silver annotation; measure it against gold labels on the same target sentences and report unaligned words. <em>See:</em> <a href="08-syntax-ud.html#sec-crosslingual" class="quarto-xref"><span>Section 8.5</span></a>.
+</dd>
+<dt><span id="glossary-annotator-agreement-kappa">Annotator agreement (Kappa)</span></dt>
+<dd>
+A statistical measure of the degree to which two or more human annotators assign the same label to the same item, corrected for chance agreement. Cohen’s kappa and Fleiss’s kappa are the most common variants. Interpretation depends on the task, label prevalence and chance model; report raw agreement and label counts as well. There is no universal adequacy threshold. <em>See also: <a href="#glossary-inter-annotator-agreement">Inter-annotator agreement</a>.</em>
+</dd>
+<dt><span id="glossary-attention-mechanism">Attention mechanism</span></dt>
+<dd>
+A mechanism that combines information from permitted positions using weights computed from their compatibility with a query. Self-attention relates positions within one sequence; cross-attention draws on another sequence, such as encoder outputs. The transformer uses scaled dot-product attention to combine value vectors, with masks controlling which positions are available <span class="citation" data-cites="vaswani2017attention">(<a href="../references.html#ref-vaswani2017attention" role="doc-biblioref">Vaswani et al. 2017</a>)</span>. <em>See also: <a href="#glossary-multi-head-attention">Multi-head attention</a>, <a href="#glossary-encoder-decoder">Encoder-decoder</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="b" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="b">B</h2>
+<dl>
+<dt><span id="glossary-back-translation">Back-translation</span></dt>
+<dd>
+A data augmentation technique for machine translation in which a target-language monolingual corpus is translated into the source language by a reverse MT system, generating synthetic source-target sentence pairs for training. Its value for a Turkic pair is an empirical question that depends on the reverse system’s quality (<a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a>). <em>See also: <a href="#glossary-transfer-learning">Transfer learning</a>.</em>
+</dd>
+<dt><span id="glossary-bio-tagging">BIO tagging</span></dt>
+<dd>
+A sequence labelling scheme used for span-level tasks such as named entity recognition. Each token is assigned a tag indicating whether it is at the Beginning of a span (B-), Inside a span (I-), or Outside any span (O). Extended variants include BIOES (End, Single) and BILOU. <em>See also: <a href="#glossary-named-entity-recognition-ner">Named entity recognition (NER)</a>, <a href="#glossary-pos-tagging">POS tagging</a>.</em>
+</dd>
+<dt><span id="glossary-bleu">BLEU</span></dt>
+<dd>
+A machine-translation metric combining modified token n-gram precision with a brevity penalty against reference translations. It is sensitive to tokenisation and to alternative word forms, which matters for agglutinative languages; report it with its SacreBLEU signature. <em>See also:</em> <a href="#glossary-chrf">chrF</a>. <em>See:</em> <a href="10-machine-translation.html#sec-neural-mt" class="quarto-xref"><span>Section 10.3</span></a>.
+</dd>
+<dt><span id="glossary-byte-pair-encoding-bpe">Byte-Pair Encoding (BPE)</span></dt>
+<dd>
+A subword tokenisation algorithm that iteratively merges the most frequent adjacent pair of symbols in the training representation (characters or bytes, depending on the tokeniser), producing a vocabulary of variable-length subword units. Originally proposed for data compression and adapted for NLP by <span class="citation" data-cites="sennrich2016bpe">Sennrich, Haddow, and Birch (<a href="../references.html#ref-sennrich2016bpe" role="doc-biblioref">2016</a>)</span>. BPE is used by many Turkic language models and MT systems. <em>See also: <a href="#glossary-subword-tokenisation">Subword tokenisation</a>, <a href="#glossary-fertility-tokeniser">Fertility (tokeniser)</a>, <a href="#glossary-sentencepiece">SentencePiece</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="c" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="c">C</h2>
+<dl>
+<dt><span id="glossary-calibration">Calibration</span></dt>
+<dd>
+The correspondence between predicted confidence and observed outcome frequency under a specified evaluation distribution. Low entropy is not evidence of good calibration.
+</dd>
+<dt><span id="glossary-care-principles">CARE principles</span></dt>
+<dd>
+Collective benefit, Authority to control, Responsibility and Ethics: principles for Indigenous data governance <span class="citation" data-cites="carroll2020care">(<a href="../references.html#ref-carroll2020care" role="doc-biblioref">Carroll et al. 2020</a>)</span>. They pose questions for collaboration with language communities rather than a checklist that settles them. <em>See:</em> <a href="17-endangered-ethics.html#sec-ethics" class="quarto-xref"><span>Section 17.4</span></a>.
+</dd>
+<dt><span id="glossary-case-grammatical">Case (grammatical)</span></dt>
+<dd>
+A grammatical category that encodes the syntactic or semantic role of a noun phrase in a clause. Turkic languages use suffixal case marking; case inventories depend on the language and grammatical analysis; see <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a>. <em>See also: <a href="#glossary-nominative-case">Nominative case</a>, <a href="#glossary-accusative-case">Accusative case</a>, <a href="#glossary-dative-case">Dative case</a>, <a href="#glossary-genitive-case">Genitive case</a>, <a href="#glossary-ablative-case">Ablative case</a>.</em>
+</dd>
+<dt><span id="glossary-chrf">chrF</span></dt>
+<dd>
+A machine-translation metric based on character n-gram overlap with reference translations; chrF++ adds word n-grams. It is less sensitive than BLEU to suffix variation, but a meaning-changing suffix such as negation can leave it almost unchanged. <em>See also:</em> <a href="#glossary-bleu">BLEU</a>. <em>See:</em> <a href="10-machine-translation.html#sec-neural-mt" class="quarto-xref"><span>Section 10.3</span></a> and <a href="15-evaluation-benchmarks.html#sec-eval-challenges" class="quarto-xref"><span>Section 15.2</span></a>.
+</dd>
+<dt><span id="glossary-code-switching">Code-switching</span></dt>
+<dd>
+The alternation between two or more languages within a conversation, sentence, or word, e.g.&nbsp;Kazakh–Russian or Turkish–German mixing. <em>See:</em> <a href="16-cross-lingual-transfer.html#sec-code-switching" class="quarto-xref"><span>Section 16.6</span></a>.
+</dd>
+<dt><span id="glossary-common-turkic-alphabet-cts">Common Turkic Alphabet and Common Turkic Script (CTS)</span></dt>
+<dd>
+A 34-letter Latin alphabet proposed in 1991; a revised version was agreed in 2024 by the Turkic World Common Alphabet Commission as a recommendation to the member states. In this book, CTS names TurkicNLP’s versioned common-script mapping, used as a shared representation for text processing. <em>See:</em> <a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>.
+</dd>
+<dt><span id="glossary-complementizer">Complementiser</span></dt>
+<dd>
+A functional morpheme that introduces a complement clause. Turkic languages often express complementiser-like functions through nominalised or participial verb forms. Finite subordination also uses elements such as Turkish <em>ki</em> and <em>diye</em>.
+</dd>
+<dt><span id="glossary-concatenative-morphology">Concatenative morphology</span></dt>
+<dd>
+Building forms by joining morphemes in a linear sequence. Their surface shapes may alternate. Turkic languages rely heavily on suffixation, alongside alternations, reduplication and other processes. <em>See also: <a href="#glossary-agglutination">Agglutination</a>.</em>
+</dd>
+<dt><span id="glossary-conll-u">CoNLL-U</span></dt>
+<dd>
+The tab-separated file format of Universal Dependencies: one word per line with ID, form, lemma, UPOS, XPOS, features, head, relation, enhanced dependencies and miscellaneous fields. Range IDs mark multiword tokens; decimal-style IDs mark empty nodes in enhanced dependencies. <em>See:</em> <a href="08-syntax-ud.html#sec-ud-framework" class="quarto-xref"><span>Section 8.2</span></a>.
+</dd>
+<dt><span id="glossary-contamination-benchmark">Contamination (benchmark)</span></dt>
+<dd>
+Evaluation items, or close variants of them, appearing in a model’s training data, so that a score can reflect exposure rather than ability. High scores are not proof of it; an independent check is needed. <em>See:</em> <a href="15-evaluation-benchmarks.html#sec-benchmarks" class="quarto-xref"><span>Section 15.3</span></a>. <em>See also:</em> <a href="#glossary-data-leakage">Data leakage</a>.
+</dd>
+<dt><span id="glossary-contextual-embedding">Contextual embedding</span></dt>
+<dd>
+A vector representation of a word or token that is computed in the context of the surrounding sentence, as opposed to a fixed lookup-table embedding. Contextual embeddings are the output of each layer of a transformer encoder; they capture disambiguation information that static word vectors cannot represent. <em>See also: <a href="#glossary-masked-language-model-mlm">Masked language model (MLM)</a>, <a href="#glossary-fine-tuning">Fine-tuning</a>.</em>
+</dd>
+<dt><span id="glossary-converb">Converb</span></dt>
+<dd>
+A non-finite verb form used in adverbial clauses, for example to express time or manner. Turkic converbs also occur in clause chains and auxiliary constructions; their syntax depends on the form and construction. <em>See:</em> <a href="02-computational-phenotype.html#sec-nonfinite" class="quarto-xref"><span>Section 2.5</span></a>.
+</dd>
+<dt><span id="glossary-cross-entropy">Cross-entropy</span></dt>
+<dd>
+A loss function used to train classification and language models, measuring the expected negative log probability assigned by a model <span class="math inline">\(Q\)</span> to outcomes distributed as <span class="math inline">\(P\)</span>: <span class="math inline">\(H(P,Q)=H(P)+D_{KL}(P\|Q)\)</span>. It is not itself a divergence. In language modelling, cross-entropy over a test set can be converted to perplexity by exponentiation with the matching log base (<a href="appendix-a.html#sec-appa-probability" class="quarto-xref"><span>Section A.2</span></a>).
+</dd>
+</dl>
+</section>
+<section id="d" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="d">D</h2>
+<dl>
+<dt><span id="glossary-data-leakage">Data leakage</span></dt>
+<dd>
+Test data influencing model training, fitted preprocessing or model selection, so that the test evaluation is no longer independent. Examples include duplicates across splits, translated test items in training, and fitting a tokeniser on the test corpus. Applying a fixed preprocessing rule to test input is ordinary inference.
+</dd>
+<dt><span id="glossary-dative-case">Dative case</span></dt>
+<dd>
+A grammatical case marking the indirect object or goal of an action (e.g., “to the city”). Turkic dative suffixes take the form <em>-(y)a/-(y)e</em> in Turkish and <em>-ға/-ге/-қа/-ке</em> in Kazakh, with allomorphs selected by vowel harmony and by the stem-final consonant. <em>See also: <a href="#glossary-case-grammatical">Case (grammatical)</a>, <a href="#glossary-ablative-case">Ablative case</a>.</em>
+</dd>
+<dt><span id="glossary-dependency-parsing">Dependency parsing</span></dt>
+<dd>
+A syntactic analysis task that assigns a head word to each word in a sentence and labels the directed arc between them with a grammatical relation (subject, object, etc.). The Universal Dependencies framework provides a cross-linguistically consistent annotation scheme used across the Turkic UD treebanks. <em>See:</em> <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>.
+</dd>
+<dt><span id="glossary-derivational-morphology">Derivational morphology</span></dt>
+<dd>
+The branch of morphology concerned with forming new lexical items from existing ones, typically by adding derivational affixes that change the word’s part of speech or core meaning (e.g., Turkish <em>göz</em> ‘eye’ → <em>göz-lük</em> ‘glasses’). Turkic languages have extensive derivational morphology. <em>See also: <a href="#glossary-inflectional-morphology">Inflectional morphology</a>, <a href="#glossary-agglutination">Agglutination</a>.</em>
+</dd>
+<dt><span id="glossary-disambiguation-morphological">Disambiguation (morphological)</span></dt>
+<dd>
+The task of selecting the correct morphological analysis for a word form given its sentential context, when multiple analyses are possible. Agglutinative languages like Turkish and Kazakh frequently produce highly ambiguous surface forms, making disambiguation a non-trivial component of NLP pipelines. <em>See also: <a href="#glossary-morphological-analysis">Morphological analysis</a>, <a href="#glossary-fst-finite-state-transducer">FST (finite-state transducer)</a>.</em>
+</dd>
+<dt><span id="glossary-distribution-shift">Distribution shift</span></dt>
+<dd>
+A mismatch between the statistical distribution of the data used to train a model and the data it is applied to at inference time. For Turkic NLP, distribution shift is common when models trained on literary or news text are applied to social media, SMS, or spoken transcripts.
+</dd>
+<dt><span id="glossary-dropout">Dropout</span></dt>
+<dd>
+A regularisation technique for neural networks in which a random subset of activations is set to zero during training. It can reduce co-adaptation between units; its effect on generalisation must be evaluated.
+</dd>
+</dl>
+</section>
+<section id="e" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="e">E</h2>
+<dl>
+<dt><span id="glossary-embedding">Embedding</span></dt>
+<dd>
+A learned vector representation of a token, word, sentence or other object. Vectors of equal dimension need not be semantically aligned across languages.
+</dd>
+<dt><span id="glossary-encoder-decoder">Encoder-decoder</span></dt>
+<dd>
+A neural architecture consisting of an encoder that maps an input sequence to a latent representation and a decoder that generates an output sequence from that representation. The architecture is standard for sequence-to-sequence tasks including machine translation, text summarisation, and morphological generation. <em>See also: <a href="#glossary-attention-mechanism">Attention mechanism</a>, <a href="#glossary-masked-language-model-mlm">Masked language model (MLM)</a>.</em>
+</dd>
+<dt><span id="glossary-evidential">Evidential</span></dt>
+<dd>
+A grammatical category marking the source of information, such as indirect or reported knowledge. Turkish <em>-mIş</em> has evidential readings (UD <code>Evident=Nfh</code>); translation must choose how to render them. <em>See:</em> <a href="05-morphological-structure.html#sec-morpheme-inventory" class="quarto-xref"><span>Section 5.1</span></a>.
+</dd>
+</dl>
+</section>
+<section id="f" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="f">F</h2>
+<dl>
+<dt><span id="glossary-fertility-tokeniser">Fertility (tokeniser)</span></dt>
+<dd>
+The number of subword tokens divided by the number of words under a declared word definition and tokenisation protocol. Corpus-total ratios differ from averages of sentence ratios. Report whether words were encoded separately or as running text, and whether special tokens count. High fertility describes fragmentation; neither its cause nor the benefit of script conversion follows from it. <em>See also: <a href="#glossary-byte-pair-encoding-bpe">Byte-Pair Encoding (BPE)</a>, <a href="#glossary-subword-tokenisation">Subword tokenisation</a>.</em>
+</dd>
+<dt><span id="glossary-fine-tuning">Fine-tuning</span></dt>
+<dd>
+The process of continuing the training of a pretrained model on additional data for a task or language objective, with or without manual labels, updating all or a subset of model parameters. Fine-tuning is the dominant paradigm for adapting BERT-class models to downstream Turkic NLP tasks. <em>See also: <a href="#glossary-transfer-learning">Transfer learning</a>, LoRA, <a href="#glossary-parameter-efficient-fine-tuning-peft">Parameter-efficient fine-tuning (PEFT)</a>.</em>
+</dd>
+<dt><span id="glossary-fst-finite-state-transducer">FST (finite-state transducer)</span></dt>
+<dd>
+A computational device that maps one string to another through a finite set of states and transitions, with transitions that may consume or emit epsilon (the empty string). It can define multiple outputs per input and attach weights to paths. FSTs are the core technology of rule-based Turkic analysers such as the Apertium modules and TRmorph. <em>See:</em> <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a>.
+</dd>
+</dl>
+</section>
+<section id="g" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="g">G</h2>
+<dl>
+<dt><span id="glossary-genitive-case">Genitive case</span></dt>
+<dd>
+A grammatical case marking possession or modification. In Turkic languages, the genitive-possessive construction is a two-part structure: the possessor noun takes a genitive suffix and the possessed noun takes a possessive agreement suffix cross-referencing the possessor’s person and number. <em>See also: <a href="#glossary-case-grammatical">Case (grammatical)</a>.</em>
+</dd>
+<dt><span id="glossary-glotlid">GlotLID</span></dt>
+<dd>
+An open language identifier with more than 2,000 language-and-script labels, used by TurkicNLP <span class="citation" data-cites="kargaran-etal-2023-glotlid">(<a href="../references.html#ref-kargaran-etal-2023-glotlid" role="doc-biblioref">Kargaran et al. 2023</a>)</span>. It can confuse closely related languages, especially in short texts. Evaluate its accuracy for the intended languages and input lengths. <em>See:</em> <a href="03-scripts-orthography.html#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>.
+</dd>
+</dl>
+</section>
+<section id="i" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="i">I</h2>
+<dl>
+<dt><span id="glossary-inflectional-morphology">Inflectional morphology</span></dt>
+<dd>
+The branch of morphology concerned with grammatical forms of a lexical item, expressing categories such as tense, aspect, mood, number, person and case. The boundary between inflection and derivation depends partly on the analysis. Turkic languages have rich inflectional paradigms, particularly on verbs and nouns. <em>See also: <a href="#glossary-derivational-morphology">Derivational morphology</a>, <a href="#glossary-agglutination">Agglutination</a>.</em>
+</dd>
+<dt><span id="glossary-inter-annotator-agreement">Inter-annotator agreement</span></dt>
+<dd>
+The degree to which independent annotators produce consistent labels for the same data. <em>See: Annotator agreement (Kappa).</em>
+</dd>
+</dl>
+</section>
+<section id="l" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="l">L</h2>
+<dl>
+<dt><span id="glossary-labial-harmony-rounding-harmony">Labial harmony (rounding harmony)</span></dt>
+<dd>
+A subtype of vowel harmony in which the feature [round] spreads from a vowel to subsequent vowels in the word. Turkish rounds high suffix vowels; Kyrgyz also rounds low vowels and writes it, while Kazakh rounding is pronounced but not written (<a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a>). <em>See also: <a href="#glossary-vowel-harmony">Vowel harmony</a>, <a href="#glossary-palatal-harmony">Palatal harmony</a>.</em>
+</dd>
+<dt><span id="glossary-language-identification-lid">Language identification (LID)</span></dt>
+<dd>
+Automatically determining the language of a text. Closely related Turkic languages written in the same script are frequently confused with each other. <em>See:</em> <a href="03-scripts-orthography.html#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>.
+</dd>
+<dt><span id="glossary-lemma">Lemma</span></dt>
+<dd>
+The canonical dictionary form of a word, abstracting away from inflectional variation. The citation convention depends on the resource: a verbal stem and an infinitive may be different lemma conventions. Match the dataset’s scheme before scoring. <em>See also: <a href="#glossary-morphological-analysis">Morphological analysis</a>, <a href="#glossary-inflectional-morphology">Inflectional morphology</a>.</em>
+</dd>
+<dt><span id="glossary-light-verb-construction">Light-verb construction</span></dt>
+<dd>
+A complex predicate formed by a nominal and a semantically light verb, such as Turkish <em>yardım et-</em> ‘help’ (lit. ‘do help’). UD labels the relation <code>compound:lvc</code>, but released Turkic treebanks differ in which word is the head. <em>See:</em> <a href="08-syntax-ud.html#sec-ud-framework" class="quarto-xref"><span>Section 8.2</span></a>.
+</dd>
+<dt><span id="glossary-lora-low-rank-adaptation">LoRA (Low-Rank Adaptation)</span></dt>
+<dd>
+A parameter-efficient fine-tuning method that learns an additive weight update as the product of two smaller matrices while keeping the original weight matrix frozen. The chosen rank and adapted modules determine the number of trainable parameters. QLoRA combines it with a quantised base model. The book’s LoRA results are in <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a>. <em>See also: <a href="#glossary-parameter-efficient-fine-tuning-peft">Parameter-efficient fine-tuning (PEFT)</a>, <a href="#glossary-fine-tuning">Fine-tuning</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="m" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="m">M</h2>
+<dl>
+<dt><span id="glossary-macro-f1">Macro-F1</span></dt>
+<dd>
+The unweighted mean of per-class F1 scores, so that small classes count as much as large ones; micro-F1 pools all decisions instead. State which one is reported, and for NER whether spans are scored strictly. <em>See:</em> <a href="09-sequence-labeling.html#sec-ner" class="quarto-xref"><span>Section 9.2</span></a>.
+</dd>
+<dt><span id="glossary-masked-language-model-mlm">Masked language model (MLM)</span></dt>
+<dd>
+A pretraining objective in which selected input positions are prediction targets; depending on the recipe, they may be masked, replaced or left unchanged. The model predicts their original tokens. MLM is the pretraining objective of BERT-class models such as BERTurk, XLM-R and Glot500 (<a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a>). <em>See also: <a href="#glossary-contextual-embedding">Contextual embedding</a>, <a href="#glossary-fine-tuning">Fine-tuning</a>.</em>
+</dd>
+<dt><span id="glossary-morpheme">Morpheme</span></dt>
+<dd>
+The minimal unit of meaning or grammatical function. Roots and affixes are both morphemes. Turkic affixation is predominantly suffixal, and a single word may contain five or more morphemes. <em>See also: <a href="#glossary-agglutination">Agglutination</a>, <a href="#glossary-allomorph">Allomorph</a>.</em>
+</dd>
+<dt><span id="glossary-morphological-analysis">Morphological analysis</span></dt>
+<dd>
+Identifying a word form’s lemma, part of speech and morphological features, often with alternative readings. Some analysers also provide morpheme segmentation; a UD feature bundle does not itself specify morpheme boundaries. Explicit analysis can support downstream tasks, but end-to-end models need not call a separate analyser. <em>See also: <a href="#glossary-fst-finite-state-transducer">FST (finite-state transducer)</a>, <a href="#glossary-disambiguation-morphological">Disambiguation (morphological)</a>.</em>
+</dd>
+<dt><span id="glossary-morphological-generation">Morphological generation</span></dt>
+<dd>
+The inverse of morphological analysis: producing a surface word form from a lemma and a specification of morphological features. An explicit generator is useful in rule-based MT and controlled form production; neural MT and TTS need not contain a separate morphological generator. <em>See also: <a href="#glossary-encoder-decoder">Encoder-decoder</a>, <a href="#glossary-fst-finite-state-transducer">FST (finite-state transducer)</a>.</em>
+</dd>
+<dt><span id="glossary-multi-head-attention">Multi-head attention</span></dt>
+<dd>
+An extension of the attention mechanism in which multiple attention functions are computed in parallel on linearly projected versions of the input, allowing the model to attend to different aspects of the input simultaneously. The transformer’s self-attention layers use multi-head attention. <em>See also: <a href="#glossary-attention-mechanism">Attention mechanism</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="n" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="n">N</h2>
+<dl>
+<dt><span id="glossary-named-entity-recognition-ner">Named entity recognition (NER)</span></dt>
+<dd>
+A sequence labelling task that identifies and classifies mentions of named entities (persons, organisations, locations, etc.) in text. Turkic NER resources include KazNERD (Kazakh, 25 entity classes), KyrgyzNER and WikiANN (multilingual silver-standard NER). <em>See:</em> <a href="09-sequence-labeling.html#sec-ner" class="quarto-xref"><span>Section 9.2</span></a>.
+</dd>
+<dt><span id="glossary-nominative-case">Nominative case</span></dt>
+<dd>
+The default, unmarked case in Turkic noun paradigms, used for subjects of sentences and predicate nominals. Because the nominative is often zero-marked, it doubles as the citation form of nouns. <em>See also: <a href="#glossary-case-grammatical">Case (grammatical)</a>, <a href="#glossary-accusative-case">Accusative case</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="o" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="o">O</h2>
+<dl>
+<dt><span id="glossary-out-of-vocabulary-oov">Out-of-vocabulary (OOV)</span></dt>
+<dd>
+A word or other unit absent from a declared vocabulary. A surface form can be unseen even when its lemma is familiar. Productive morphology creates many possible forms, but observed OOV rates also depend on corpus size, domain and tokenisation. Distinguish unseen word forms from unknown subword tokens (<a href="15-evaluation-benchmarks.html#sec-eval-challenges" class="quarto-xref"><span>Section 15.2</span></a>). <em>See also: <a href="#glossary-subword-tokenisation">Subword tokenisation</a>, <a href="#glossary-fertility-tokeniser">Fertility (tokeniser)</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="p" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="p">P</h2>
+<dl>
+<dt><span id="glossary-palatal-harmony">Palatal harmony</span></dt>
+<dd>
+A subtype of vowel harmony in which the feature [back] (or [front]) spreads within a defined harmonic domain. Which vowels participate and which suffixes alternate depends on the language, construction and exceptions. Palatal harmony is the most pervasive form of vowel harmony in Turkic, present in Turkish, Kazakh, Kyrgyz, and most other members of the family. <em>See also: <a href="#glossary-vowel-harmony">Vowel harmony</a>, Labial harmony.</em>
+</dd>
+<dt><span id="glossary-parameter-efficient-fine-tuning-peft">Parameter-efficient fine-tuning (PEFT)</span></dt>
+<dd>
+A family of methods for adapting pretrained language models to new tasks or languages by updating only a small subset of parameters or adding a small number of new parameters, leaving the bulk of the pretrained weights frozen. They reduce the memory and storage needed to adapt large models; <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a> compares LoRA with full fine-tuning. <em>See also: LoRA, <a href="#glossary-fine-tuning">Fine-tuning</a>.</em>
+</dd>
+<dt><span id="glossary-participial-clause">Participial clause</span></dt>
+<dd>
+A clause built around a participial verb form, with a syntactic role that depends on the language and construction. Turkic languages commonly place participial relatives before a noun, alongside finite and other relative strategies. Participial clauses can also serve other functions. <em>See also: <a href="#glossary-converb">Converb</a>, <a href="#glossary-dependency-parsing">Dependency parsing</a>.</em>
+</dd>
+<dt><span id="glossary-pivot-translation">Pivot translation</span></dt>
+<dd>
+Translating through an intermediate language (source → pivot → target) when a direct system or data are lacking. Each leg must be supported, and errors can accumulate or be repaired along the way; compare it with direct translation on the same test set. <em>See:</em> <a href="10-machine-translation.html#sec-intra-family" class="quarto-xref"><span>Section 10.4</span></a>.
+</dd>
+<dt><span id="glossary-pos-tagging">POS tagging</span></dt>
+<dd>
+The task of assigning a part-of-speech label to each token in a text. Universal Dependencies defines a set of 17 universal POS tags (UPOS) used across all Turkic treebanks. <em>See also: <a href="#glossary-upos-universal-pos">UPOS (Universal POS)</a>, <a href="#glossary-dependency-parsing">Dependency parsing</a>, <a href="#glossary-bio-tagging">BIO tagging</a>.</em>
+</dd>
+<dt><span id="glossary-pro-drop">Pro-drop</span></dt>
+<dd>
+A grammatical property of languages in which overt pronoun subjects are omitted when they can be recovered from verb morphology or context. Null subjects are common in Turkic; their licensing depends on grammar and discourse. Person/number agreement can help identify a subject, but Turkic subject agreement does not encode grammatical gender. <em>See also: <a href="#glossary-sov">SOV</a>.</em>
+</dd>
+<dt><span id="glossary-productive-morphology">Productive morphology</span></dt>
+<dd>
+Morphological processes that apply freely to new or nonce words, generating valid forms according to the rules of the language. Turkic inflection and derivation can produce many forms absent from a training corpus. Productivity varies by process and does not mean that any suffix can attach to any stem. <em>See also: <a href="#glossary-agglutination">Agglutination</a>, <a href="#glossary-inflectional-morphology">Inflectional morphology</a>.</em>
+</dd>
+<dt><span id="glossary-proxy-language">Proxy language</span></dt>
+<dd>
+A language selected as a model routing code, language embedding or transfer source for a target with limited task supervision. This operational choice does not reveal an internal representation learned by the model. <em>See:</em> <a href="16-cross-lingual-transfer.html" class="quarto-xref"><span>Chapter 16</span></a>; also <a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a> and <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>.
+</dd>
+</dl>
+</section>
+<section id="r" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="r">R</h2>
+<dl>
+<dt><span id="glossary-retrieval-augmented-generation-rag">Retrieval-augmented generation (RAG)</span></dt>
+<dd>
+Generation conditioned on retrieved evidence. Evaluate retrieval relevance, answer correctness, citation support, language fidelity and abstention separately.
+</dd>
+<dt><span id="glossary-romanisation">Romanisation</span></dt>
+<dd>
+The representation of a text written in a non-Latin script using Latin characters. For Turkic NLP, transliteration arises in Cyrillic-to-Latin conversion (Kazakh, Uzbek) and Arabic-to-Latin conversion (Uyghur, Ottoman Turkish). <em>See:</em> <a href="03-scripts-orthography.html#sec-transliteration" class="quarto-xref"><span>Section 3.4</span></a>.
+</dd>
+<dt><span id="glossary-round-trip">Round trip (transliteration)</span></dt>
+<dd>
+Converting text into another script and back and checking whether the original is recovered. It tests reversibility, not correctness of the intermediate text: a lossy mapping fails it, and a consistent error can pass it. <em>See:</em> <a href="03-scripts-orthography.html#sec-transliteration" class="quarto-xref"><span>Section 3.4</span></a>.
+</dd>
+</dl>
+</section>
+<section id="s" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="s">S</h2>
+<dl>
+<dt><span id="glossary-scrambling-word-order">Scrambling (word order)</span></dt>
+<dd>
+The syntactic phenomenon in which arguments of a verb can appear in multiple linear orders without changing the basic propositional meaning, though information structure (topic, focus) typically changes. Turkic languages allow considerable word-order variation around an SOV base; this flexibility complicates dependency parsing and semantic role labelling. <em>See also: <a href="#glossary-sov">SOV</a>, <a href="#glossary-pro-drop">Pro-drop</a>.</em>
+</dd>
+<dt><span id="glossary-sentencepiece">SentencePiece</span></dt>
+<dd>
+A tokeniser framework supporting BPE and unigram language-model algorithms. It is not a synonym for the unigram algorithm. Record the algorithm and normalisation configuration.
+</dd>
+<dt><span id="glossary-silver-data">Silver data</span></dt>
+<dd>
+Automatically produced annotation, for example from a tagger or annotation projection. It may supplement manually checked gold data or be used where gold training data are unavailable. <em>See:</em> <a href="08-syntax-ud.html#sec-crosslingual" class="quarto-xref"><span>Section 8.5</span></a>.
+</dd>
+<dt><span id="glossary-sov">SOV</span></dt>
+<dd>
+Subject-Object-Verb: a typological label for languages in which the canonical order of major clause constituents places the subject first, the object second, and the verb last. SOV is the usual base order in Turkic, with contact-induced exceptions as well as discourse and construction effects (<a href="08-syntax-ud.html#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>). <em>See also:</em> <a href="#glossary-scrambling-word-order">Scrambling (word order)</a>.
+</dd>
+<dt><span id="glossary-subword-tokenisation">Subword tokenisation</span></dt>
+<dd>
+A tokenisation strategy whose vocabulary can contain whole words, word parts and individual characters or bytes, depending on the method. BPE, WordPiece and unigram language-model tokenisation can represent unseen words as sequences of known units. Unknown-token behaviour depends on character coverage and fallback rules. Subword tokenisation does not change whether a whole word was seen in training (<a href="15-evaluation-benchmarks.html#sec-eval-challenges" class="quarto-xref"><span>Section 15.2</span></a>). <em>See also: <a href="#glossary-byte-pair-encoding-bpe">Byte-Pair Encoding (BPE)</a>, <a href="#glossary-fertility-tokeniser">Fertility (tokeniser)</a>, <a href="#glossary-out-of-vocabulary-oov">Out-of-vocabulary (OOV)</a>.</em>
+</dd>
+<dt><span id="glossary-suffix-template">Suffix template</span></dt>
+<dd>
+The ordered slot-structure specifying the sequence of morphological categories that can be realised as suffixes on a word stem. A common Turkic verbal order is stem → derivation → voice → ability → negation → tense/aspect/mood → person agreement (<em>konuş-tur-a-ma-dı</em> ‘could not make speak’, <a href="02-computational-phenotype.html#sec-agglutination" class="quarto-xref"><span>Section 2.1</span></a>). Templates are construction-specific generalisations, not fixed slots in every word (<a href="05-morphological-structure.html#sec-morpheme-inventory" class="quarto-xref"><span>Section 5.1</span></a>). <em>See also: <a href="#glossary-agglutination">Agglutination</a>, <a href="#glossary-fst-finite-state-transducer">FST (finite-state transducer)</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="t" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="t">T</h2>
+<dl>
+<dt><span id="glossary-temperature-sampling">Temperature sampling</span></dt>
+<dd>
+Sampling training languages with probability proportional to <span class="math inline">\(n_i^{1/T}\)</span>, where <span class="math inline">\(n_i\)</span> is the data size of language <span class="math inline">\(i\)</span>. <span class="math inline">\(T=1\)</span> follows the data sizes, larger <span class="math inline">\(T\)</span> moves towards uniform; small languages then repeat their few examples more often. <em>See:</em> <a href="16-cross-lingual-transfer.html#sec-multilingual" class="quarto-xref"><span>Section 16.4</span></a>.
+</dd>
+<dt><span id="glossary-transfer-learning">Transfer learning</span></dt>
+<dd>
+A machine learning paradigm in which a model trained on one task or dataset is adapted to a different (often related) task or dataset, exploiting shared structure. In Turkic NLP, cross-lingual transfer from well-resourced languages (Turkish, Kazakh) to lower-resourced relatives (Kyrgyz, Uzbek) is a primary strategy for building systems with limited annotated data. <em>See also: <a href="#glossary-fine-tuning">Fine-tuning</a>, <a href="#glossary-zero-shot-transfer">Zero-shot transfer</a>.</em>
+</dd>
+<dt><span id="glossary-transliteration">Transliteration</span></dt>
+<dd>
+Conversion between writing systems under a declared mapping. Romanisation specifically targets Latin script. Mappings may be lossy or context-sensitive; preserve originals and offsets.
+</dd>
+<dt><span id="glossary-treebank">Treebank</span></dt>
+<dd>
+A corpus of sentences annotated with syntactic structure, such as constituency trees or dependency graphs. The release-specific inventory in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a> lists the Turkic UD resources, including the UD-Turkic parallel treebanks. <em>See also: <a href="#glossary-dependency-parsing">Dependency parsing</a>, <a href="#glossary-upos-universal-pos">UPOS (Universal POS)</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="u" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="u">U</h2>
+<dl>
+<dt><span id="glossary-upos-universal-pos">UPOS (Universal POS)</span></dt>
+<dd>
+The set of 17 coarse-grained, cross-linguistically applicable part-of-speech tags defined by the Universal Dependencies framework: <code>NOUN</code>, <code>VERB</code>, <code>ADJ</code>, <code>ADV</code>, <code>PRON</code>, <code>DET</code>, <code>ADP</code>, <code>AUX</code>, <code>CCONJ</code>, <code>SCONJ</code>, <code>PART</code>, <code>INTJ</code>, <code>NUM</code>, <code>PUNCT</code>, <code>SYM</code>, <code>X</code>, and <code>PROPN</code>. <em>See also: <a href="#glossary-pos-tagging">POS tagging</a>, <a href="#glossary-treebank">Treebank</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="v" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="v">V</h2>
+<dl>
+<dt><span id="glossary-vowel-harmony">Vowel harmony</span></dt>
+<dd>
+A phonological process in which participating vowels within a harmonic domain are constrained by one or more phonological features, most commonly frontness/backness (palatal harmony) and/or rounding (labial harmony). Harmony is widespread in Turkic, but its domains, strength, exceptions and spelling vary; standard written Uzbek has largely fixed suffix vowels (<a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a>). <em>See also: <a href="#glossary-palatal-harmony">Palatal harmony</a>, Labial harmony, <a href="#glossary-allomorph">Allomorph</a>.</em>
+</dd>
+</dl>
+</section>
+<section id="z" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="z">Z</h2>
+<dl>
+<dt><span id="glossary-zero-shot-transfer">Zero-shot transfer</span></dt>
+<dd>
+The application of a model trained on one language (or task) to a different language (or task) without any task-specific fine-tuning on the target language. The model may still have seen target-language text during pretraining (<a href="16-cross-lingual-transfer.html#sec-why-transfer" class="quarto-xref"><span>Section 16.1</span></a>); zero-shot here means no target task-labelled training. <em>See also: <a href="#glossary-transfer-learning">Transfer learning</a>, <a href="#glossary-fine-tuning">Fine-tuning</a>.</em>
+</dd>
+</dl>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-carroll2020care" class="csl-entry" role="listitem">
+Carroll, Stephanie Russo, Ibrahim Garba, Oscar L. Figueroa-Rodríguez, Jarita Holbrook, Raymond Lovett, Simeon Materechera, Mark Parsons, et al. 2020. <span>“The <span>CARE</span> Principles for Indigenous Data Governance.”</span> <em>Data Science Journal</em> 19: 43. <a href="https://doi.org/10.5334/dsj-2020-043">https://doi.org/10.5334/dsj-2020-043</a>.
+</div>
+<div id="ref-kargaran-etal-2023-glotlid" class="csl-entry" role="listitem">
+Kargaran, Amir Hossein, Ayyoob Imani, François Yvon, and Hinrich Schuetze. 2023. <span>“<span>G</span>lot<span>LID</span>: Language Identification for Low-Resource Languages.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>EMNLP</span> 2023</em>, 6155–6218. Singapore: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.findings-emnlp.410">https://doi.org/10.18653/v1/2023.findings-emnlp.410</a>.
+</div>
+<div id="ref-sennrich2016bpe" class="csl-entry" role="listitem">
+Sennrich, Rico, Barry Haddow, and Alexandra Birch. 2016. <span>“Neural Machine Translation of Rare Words with Subword Units.”</span> In <em>Proceedings of the 54th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1715–25. Berlin, Germany: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P16-1162">https://doi.org/10.18653/v1/P16-1162</a>.
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry" role="listitem">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> In <em>Advances in Neural Information Processing Systems 30 (<span>NIPS</span> 2017)</em>, 5998–6008.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/appendix-c.html" class="pagination-link" aria-label="Turkic Language Reference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

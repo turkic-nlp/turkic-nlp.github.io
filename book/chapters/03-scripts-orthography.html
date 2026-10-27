@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>3&nbsp; Scripts, Encoding, and Orthographic Engineering – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/04-corpora-at-scale.html" rel="next">
+<link href="../chapters/02-computational-phenotype.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-scripts-orthography.html">Writing Systems and Corpora</a></li><li class="breadcrumb-item"><a href="../chapters/03-scripts-orthography.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-script-map" id="toc-sec-script-map" class="nav-link active" data-scroll-target="#sec-script-map"><span class="header-section-number">3.1</span> A Map of Turkic Scripts</a>
+  <ul class="collapse">
+  <li><a href="#contemporary-scripts-and-historical-collections" id="toc-contemporary-scripts-and-historical-collections" class="nav-link" data-scroll-target="#contemporary-scripts-and-historical-collections"><span class="header-section-number">3.1.1</span> Contemporary Scripts and Historical Collections</a></li>
+  <li><a href="#language-to-script-mapping" id="toc-language-to-script-mapping" class="nav-link" data-scroll-target="#language-to-script-mapping"><span class="header-section-number">3.1.2</span> Language-to-Script Mapping</a></li>
+  <li><a href="#historical-scripts" id="toc-historical-scripts" class="nav-link" data-scroll-target="#historical-scripts"><span class="header-section-number">3.1.3</span> Historical Scripts</a></li>
+  </ul></li>
+  <li><a href="#sec-transitions" id="toc-sec-transitions" class="nav-link" data-scroll-target="#sec-transitions"><span class="header-section-number">3.2</span> The Active Transitions</a>
+  <ul class="collapse">
+  <li><a href="#kazakhstan-published-designs-and-implementation" id="toc-kazakhstan-published-designs-and-implementation" class="nav-link" data-scroll-target="#kazakhstan-published-designs-and-implementation"><span class="header-section-number">3.2.1</span> Kazakhstan: Published Designs and Implementation</a></li>
+  <li><a href="#uzbekistan-the-persistent-cyrillic" id="toc-uzbekistan-the-persistent-cyrillic" class="nav-link" data-scroll-target="#uzbekistan-the-persistent-cyrillic"><span class="header-section-number">3.2.2</span> Uzbekistan: The Persistent Cyrillic</a></li>
+  <li><a href="#corpus-implications" id="toc-corpus-implications" class="nav-link" data-scroll-target="#corpus-implications"><span class="header-section-number">3.2.3</span> Corpus Implications</a></li>
+  </ul></li>
+  <li><a href="#sec-unicode" id="toc-sec-unicode" class="nav-link" data-scroll-target="#sec-unicode"><span class="header-section-number">3.3</span> Unicode for Turkic Languages</a>
+  <ul class="collapse">
+  <li><a href="#relevant-unicode-blocks" id="toc-relevant-unicode-blocks" class="nav-link" data-scroll-target="#relevant-unicode-blocks"><span class="header-section-number">3.3.1</span> Relevant Unicode Blocks</a></li>
+  <li><a href="#the-turkish-ii-problem" id="toc-the-turkish-ii-problem" class="nav-link" data-scroll-target="#the-turkish-ii-problem"><span class="header-section-number">3.3.2</span> The Turkish İ/I Problem</a></li>
+  <li><a href="#cyrilliclatin-homoglyphs" id="toc-cyrilliclatin-homoglyphs" class="nav-link" data-scroll-target="#cyrilliclatin-homoglyphs"><span class="header-section-number">3.3.3</span> Cyrillic/Latin Homoglyphs</a></li>
+  <li><a href="#arabic-script-text-uyghur-and-ottoman" id="toc-arabic-script-text-uyghur-and-ottoman" class="nav-link" data-scroll-target="#arabic-script-text-uyghur-and-ottoman"><span class="header-section-number">3.3.4</span> Arabic-Script Text: Uyghur and Ottoman</a></li>
+  <li><a href="#unicode-normalisation-nfc-vs.-nfd" id="toc-unicode-normalisation-nfc-vs.-nfd" class="nav-link" data-scroll-target="#unicode-normalisation-nfc-vs.-nfd"><span class="header-section-number">3.3.5</span> Unicode Normalisation: NFC vs.&nbsp;NFD</a></li>
+  <li><a href="#encoding-display-order-and-visible-characters" id="toc-encoding-display-order-and-visible-characters" class="nav-link" data-scroll-target="#encoding-display-order-and-visible-characters"><span class="header-section-number">3.3.6</span> Encoding, Display Order and Visible Characters</a></li>
+  </ul></li>
+  <li><a href="#sec-transliteration" id="toc-sec-transliteration" class="nav-link" data-scroll-target="#sec-transliteration"><span class="header-section-number">3.4</span> Bidirectional Transliteration</a>
+  <ul class="collapse">
+  <li><a href="#why-transliteration-matters-computationally" id="toc-why-transliteration-matters-computationally" class="nav-link" data-scroll-target="#why-transliteration-matters-computationally"><span class="header-section-number">3.4.1</span> Why Transliteration Matters Computationally</a></li>
+  <li><a href="#the-greedy-longest-match-algorithm" id="toc-the-greedy-longest-match-algorithm" class="nav-link" data-scroll-target="#the-greedy-longest-match-algorithm"><span class="header-section-number">3.4.2</span> The Greedy Longest-Match Algorithm</a></li>
+  <li><a href="#code-example-script-detection-and-transliteration" id="toc-code-example-script-detection-and-transliteration" class="nav-link" data-scroll-target="#code-example-script-detection-and-transliteration"><span class="header-section-number">3.4.3</span> Code Example: Script Detection and Transliteration</a></li>
+  <li><a href="#hard-cases-and-limitations" id="toc-hard-cases-and-limitations" class="nav-link" data-scroll-target="#hard-cases-and-limitations"><span class="header-section-number">3.4.4</span> Hard Cases and Limitations</a></li>
+  </ul></li>
+  <li><a href="#sec-normalisation" id="toc-sec-normalisation" class="nav-link" data-scroll-target="#sec-normalisation"><span class="header-section-number">3.5</span> Text Normalisation for Turkic</a>
+  <ul class="collapse">
+  <li><a href="#spell-checking-in-agglutinative-languages" id="toc-spell-checking-in-agglutinative-languages" class="nav-link" data-scroll-target="#spell-checking-in-agglutinative-languages"><span class="header-section-number">3.5.1</span> Spell-Checking in Agglutinative Languages</a></li>
+  <li><a href="#orthographic-variation-in-web-crawled-text" id="toc-orthographic-variation-in-web-crawled-text" class="nav-link" data-scroll-target="#orthographic-variation-in-web-crawled-text"><span class="header-section-number">3.5.2</span> Orthographic Variation in Web-Crawled Text</a></li>
+  <li><a href="#diacritic-dropping" id="toc-diacritic-dropping" class="nav-link" data-scroll-target="#diacritic-dropping"><span class="header-section-number">3.5.3</span> Diacritic Dropping</a></li>
+  <li><a href="#ordering-the-pipeline" id="toc-ordering-the-pipeline" class="nav-link" data-scroll-target="#ordering-the-pipeline"><span class="header-section-number">3.5.4</span> Ordering the Pipeline</a></li>
+  </ul></li>
+  <li><a href="#sec-cts" id="toc-sec-cts" class="nav-link" data-scroll-target="#sec-cts"><span class="header-section-number">3.6</span> A Common Script as an Interoperability Layer</a>
+  <ul class="collapse">
+  <li><a href="#the-common-turkic-alphabet" id="toc-the-common-turkic-alphabet" class="nav-link" data-scroll-target="#the-common-turkic-alphabet"><span class="header-section-number">3.6.1</span> The Common Turkic Alphabet</a></li>
+  <li><a href="#how-script-conversion-changes-tokenisation-cost" id="toc-how-script-conversion-changes-tokenisation-cost" class="nav-link" data-scroll-target="#how-script-conversion-changes-tokenisation-cost"><span class="header-section-number">3.6.2</span> How Script Conversion Changes Tokenisation Cost</a></li>
+  </ul></li>
+  <li><a href="#sec-lid" id="toc-sec-lid" class="nav-link" data-scroll-target="#sec-lid"><span class="header-section-number">3.7</span> Language Identification and Corpus Construction</a>
+  <ul class="collapse">
+  <li><a href="#why-identification-is-hard-inside-the-family" id="toc-why-identification-is-hard-inside-the-family" class="nav-link" data-scroll-target="#why-identification-is-hard-inside-the-family"><span class="header-section-number">3.7.1</span> Why Identification Is Hard Inside the Family</a></li>
+  <li><a href="#from-single-texts-to-corpora" id="toc-from-single-texts-to-corpora" class="nav-link" data-scroll-target="#from-single-texts-to-corpora"><span class="header-section-number">3.7.2</span> From Single Texts to Corpora</a></li>
+  </ul></li>
+  <li><a href="#sec-ch03-hands-on" id="toc-sec-ch03-hands-on" class="nav-link" data-scroll-target="#sec-ch03-hands-on"><span class="header-section-number">3.8</span> Hands-On: Checking a Text Pipeline</a></li>
+  <li><a href="#sec-ch03-synthesis" id="toc-sec-ch03-synthesis" class="nav-link" data-scroll-target="#sec-ch03-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch03-further-reading" id="toc-sec-ch03-further-reading" class="nav-link" data-scroll-target="#sec-ch03-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch03-exercises" id="toc-sec-ch03-exercises" class="nav-link" data-scroll-target="#sec-ch03-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-scripts-orthography.html">Writing Systems and Corpora</a></li><li class="breadcrumb-item"><a href="../chapters/03-scripts-orthography.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-03-scripts-orthography" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Identify which script each major Turkic language uses and when transitions occurred</li>
+<li>Explain the specific Unicode challenges posed by Turkic scripts, including the Turkish İ/I problem and Cyrillic homoglyphs</li>
+<li>Implement table-driven transliteration with a greedy longest-match algorithm, and explain where context rules and lexicons are needed</li>
+<li>Diagnose encoding problems, and normalise informal Turkic text (diacritic dropping, apostrophe variants, homoglyphs) without destroying genuine content</li>
+<li>Design a preprocessing pipeline that keeps the original text, decides language and script before language-specific repairs, and records every derived view</li>
+<li>Measure how script conversion changes tokenisation cost, and use a common script as a technical interoperability layer</li>
+<li>Identify closely related Turkic languages automatically, including when to abstain, and build a corpus that records language, script, and orthography version</li>
+</ul>
+</div>
+</div>
+<p>A Turkic corpus may contain several scripts and spelling conventions for the same language. Historical collections add Old Turkic runic, Old Uyghur and earlier Perso-Arabic traditions <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, chap. 19</a>)</span>. Processing these texts requires a clear record of the input script, the orthography and any conversion applied.</p>
+<p>This chapter answers the practical question: given a corpus of Turkic text, what do you need to do before you can run any NLP tool on it?</p>
+<section id="sec-script-map" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-script-map"><span class="header-section-number">3.1</span> A Map of Turkic Scripts</h2>
+<section id="contemporary-scripts-and-historical-collections" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="contemporary-scripts-and-historical-collections"><span class="header-section-number">3.1.1</span> Contemporary Scripts and Historical Collections</h3>
+<p>Most contemporary Turkic text uses Latin, Cyrillic or Perso-Arabic script, with conventions that vary by language, region and period. Historical collections add Old Turkic runic, Old Uyghur and other scripts. A preprocessing system must distinguish the script family, the language’s alphabet and the orthographic reform on which a conversion table is based.</p>
+<p><strong>Latin.</strong> Contemporary Latin orthographies include Turkish, Azerbaijani, Uzbek, Turkmen, Crimean Tatar, Gagauz and Karakalpak. Several reflect reforms after the Soviet period; others have earlier histories <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 421–25</a>)</span>. Kazakhstan has published multiple Latin designs (<a href="#sec-transitions" class="quarto-xref"><span>Section 3.2</span></a>). A Latin script label alone is insufficient: Turkish <em>ş</em> and Uzbek <em>sh</em>, for example, require different conversion rules.</p>
+<p><strong>Cyrillic.</strong> Cyrillic-based orthographies are used for Kazakh, Kyrgyz, Tatar, Bashkir, Chuvash, Sakha and several South Siberian languages. Cyrillic alphabets were introduced for nearly all Turkic languages of the Soviet Union between 1937 and 1940, but Chuvash and Sakha have earlier Cyrillic histories <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 415–20</a>)</span>. Each orthography has its own additional letters and spelling conventions.</p>
+<p><strong>Perso-Arabic.</strong> This script family is used for Uyghur in Xinjiang, Azerbaijani in Iran, and Kazakh and Kyrgyz in China, as well as historical Ottoman and Chaghatay collections <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 411–13, 419, 423</a>)</span>. Modern Uyghur writes vowel qualities explicitly; this facilitates conversion but does not make its orthography a complete phonetic transcription.</p>
+</section>
+<section id="language-to-script-mapping" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="language-to-script-mapping"><span class="header-section-number">3.1.2</span> Language-to-Script Mapping</h3>
+<div id="tbl-script-dates" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-script-dates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Selected language–script relationships. Historical dates follow the cited accounts; script prevalence and current legal status are not inferred from them.
+</figcaption>
+<div aria-describedby="tbl-script-dates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Scripts and regional scope</th>
+<th>Historical or implementation note</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td>Latin; Perso-Arabic in Ottoman collections</td>
+<td>Reform ordained in 1928; the reference discusses implementation in 1929</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 411, 421</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Azerbaijani</td>
+<td>Latin in Azerbaijan; Perso-Arabic in Iran; Cyrillic in historical material</td>
+<td>An early Soviet Latin alphabet was adopted in 1922; this is not the date of exclusive use</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 421, 423</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Uzbek</td>
+<td>Latin and Cyrillic; Perso-Arabic in historical collections</td>
+<td>Latin reform enacted in 1993 and finalised in 1995; this does not measure corpus uptake</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 424</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Kazakh</td>
+<td>Cyrillic; Perso-Arabic in China; multiple Latin designs</td>
+<td>National designs and the 2026 commission recommendation are distinguished in the section on active transitions</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 413, 419, 422</a>)</span>; government and TDK sources in the section on active transitions</td>
+</tr>
+<tr class="odd">
+<td>Uyghur</td>
+<td>Perso-Arabic in Xinjiang; Cyrillic in Central Asia; Latin transliteration</td>
+<td>Johanson dates the pinyin-based script experiment to 1964–1983</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 413, 415, 422</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Turkmen</td>
+<td>Latin; Cyrillic in older material</td>
+<td>The source discusses successive post-Soviet designs; a single date would conceal revisions</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 422–23</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Kyrgyz</td>
+<td>Cyrillic in Kyrgyzstan; Perso-Arabic in Xinjiang</td>
+<td>A 2026 commission Latin proposal is documented in the section on active transitions, not treated as national enactment</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 419</a>)</span>; TDK source in the section on active transitions</td>
+</tr>
+<tr class="even">
+<td>Tatar</td>
+<td>Cyrillic; historical Perso-Arabic and Latin</td>
+<td>Soviet Latinisation and subsequent Cyrillic reform are separate stages</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 415–18, 422</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Bashkir</td>
+<td>Cyrillic; historical Perso-Arabic and Latin</td>
+<td>Its Cyrillic spelling differs from Tatar despite shared letters</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 418–19, 422</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Chuvash</td>
+<td>Cyrillic</td>
+<td>Yakovlev system introduced in 1871–1873; modified in 1938</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 415, 420</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Sakha</td>
+<td>Cyrillic; historical Latin-based systems</td>
+<td>Roman-based designs of 1917 and 1922–1923 precede the modern Cyrillic norm</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 415, 420–21</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Karakalpak</td>
+<td>Latin and Cyrillic</td>
+<td>Johanson records a 1997 Latin adoption; the toolkit implements a later 2016 mapping</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 425</a>)</span>; <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026, sec. 4.2</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Crimean Tatar</td>
+<td>Latin and Cyrillic; historical Perso-Arabic</td>
+<td>Distinguish historical Latinisation from the mapping used by a current converter</td>
+<td><span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 422</a>)</span>; <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The dates in <a href="#tbl-script-dates" class="quarto-xref">Table&nbsp;<span>3.1</span></a> refer to specific reforms or source accounts. Writers may change script at different times. Record legal adoption, alphabet publication, school implementation and corpus prevalence separately; one transition date cannot describe them all.</p>
+</section>
+<section id="historical-scripts" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="historical-scripts"><span class="header-section-number">3.1.3</span> Historical Scripts</h3>
+<p>Historical collections involve two further scripts and two Perso-Arabic literary traditions:</p>
+<ul>
+<li><strong>Old Turkic runic (Orkhon script)</strong>: used in inscriptions from the early eighth century onward in present-day Mongolia and the Yenisei Basin <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 159</a>)</span>; it has its own Unicode block</li>
+<li><strong>Old Uyghur script</strong> (not to be confused with modern Uyghur Perso-Arabic): an alphabet modelled on the Soghdian script, used for Old Uyghur manuscripts <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 410</a>)</span></li>
+<li><strong>Chaghatay</strong>: the Persian-influenced literary language of Central Asia from the fifteenth century on <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 162</a>)</span>, written with Perso-Arabic conventions; a language and literary tradition, not a separate script</li>
+<li><strong>Ottoman Turkish</strong>: written with Perso-Arabic conventions in literature and administration until the 1928 reform</li>
+</ul>
+<p>These historical scripts are relevant for heritage document digitisation and require specialised OCR (<a href="17-endangered-ethics.html#sec-heritage" class="quarto-xref"><span>Section 17.2.2</span></a>). For Ottoman Turkish, two UD treebanks exist (<a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>), and TurkicNLP converts Latin transcriptions into Perso-Arabic script and processes Ottoman text with a dedicated Stanza model <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>; Old Turkic runes can be converted to Latin transcription. An annotated Chaghatay manuscript corpus contains about 30,700 words <span class="citation" data-cites="steimel-etal-2020-fine">(<a href="../references.html#ref-steimel-etal-2020-fine" role="doc-biblioref">Steimel et al. 2020</a>)</span>.</p>
+</section>
+</section>
+<section id="sec-transitions" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-transitions"><span class="header-section-number">3.2</span> The Active Transitions</h2>
+<section id="kazakhstan-published-designs-and-implementation" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="kazakhstan-published-designs-and-implementation"><span class="header-section-number">3.2.1</span> Kazakhstan: Published Designs and Implementation</h3>
+<p>Kazakh corpus processing must distinguish several published Latin designs. The following milestones explain the mappings encountered in this book; they are not a legal-status register:</p>
+<ul>
+<li><p><strong>2017</strong>: A first version that marked the specifically Kazakh sounds with apostrophes after a base letter (e.g., <em>a’</em> for ә, <em>s’</em> for ш, <em>n’</em> for ң), while <em>қ</em> was already written <em>q</em> (<em>Qazaqstan</em>). Apostrophe-based letters are fragile in digital text: keyboard and typographic apostrophes are different Unicode characters, which breaks search and indexing.</p></li>
+<li><p><strong>2018</strong>: The revised alphabet used acute accents such as <em>á</em>, <em>ǵ</em> and <em>ń</em>, but wrote <em>ш</em> with the digraph <em>Sh sh</em>, not <em>ś</em>; see the <a href="https://qazlat.kz/ru/docs/ukaz637">reproduced appendix to Decree No.&nbsp;637 of 19 February 2018</a>.</p></li>
+<li><p><strong>2021</strong>: A further revision with Turkic-style diacritics, e.g.&nbsp;<em>ä</em> (ә), <em>ğ</em> (ғ), <em>ñ</em> (ң), <em>ö</em> (ө), <em>ş</em> (ш), <em>ū</em> (ұ), <em>ü</em> (ү), released as a <a href="https://www.gov.kz/memleket/entities/language/activities/20853">draft for public discussion</a>. The <a href="https://www.gov.kz/memleket/entities/kyzylorda-sayasat/press/article/details/206305?lang=ru">2023–2029 language-policy concept</a> makes the transition schedule depend on a further legal act. These documents show that a draft and a policy framework were published. The current legal status of any later alphabet has to be checked elsewhere.</p></li>
+<li><p><strong>2026</strong>: The Turkish Language Association <a href="https://tdk.gov.tr/icerik/basindan/turk-dunyasinda-tarihi-adim-ortak-turk-alfabesi-temelinde-kazak-ve-kirgiz-turkceleri-icin-alfabe-onerileri-ilk-kez-kamuoyuna-aciklandi/">reports</a> that the common-alphabet commission accepted Kazakh and Kyrgyz alphabet proposals as reference documents at its meeting on 15 June 2026. A commission recommendation is not national enactment. The toolkit mapping described below does not implement a newly inferred 2026 standard.</p></li>
+</ul>
+<p>For Kazakh-to-Latin conversion, this book uses the toolkit’s table based on the 2021 proposal. Record that mapping version with the corpus. It identifies how the text was converted, without implying national adoption or widespread use.</p>
+<p><strong>What this means for corpus building.</strong> A Kazakh corpus may contain: 1. Cyrillic 2. Latin text following one of the published Latin designs 3. Informal Latin, including ASCII approximations without diacritics (<em>a</em> for <em>ä</em>, <em>s</em> or <em>sh</em> for <em>ş</em>)</p>
+<p>A Kazakh pipeline can convert text to a shared script in a derived view, or train on the scripts it expects to encounter. Compare the two approaches on the intended task. Assuming a single spelling convention will leave mismatches in a mixed corpus.</p>
+</section>
+<section id="uzbekistan-the-persistent-cyrillic" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="uzbekistan-the-persistent-cyrillic"><span class="header-section-number">3.2.2</span> Uzbekistan: The Persistent Cyrillic</h3>
+<p>The transition to the Uzbek Latin alphabet was adopted in 1993 and revised in 1995 as a replacement for Cyrillic <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 424</a>)</span>. More than three decades later, both scripts are still in everyday use: the relevant corpus may include both Latin and Cyrillic documents. How widely writers in a given domain actually follow the legal standard is a separate, empirical question.</p>
+<p>This duality creates a potential distribution shift for a model trained in one script. Compare native-script processing, transliteration and mixed-script training on a held-out sample from the intended domain before choosing a pipeline.</p>
+</section>
+<section id="corpus-implications" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="corpus-implications"><span class="header-section-number">3.2.3</span> Corpus Implications</h3>
+<p>For any NLP practitioner working with Kazakh or Uzbek:</p>
+<ul>
+<li><strong>Detect the script</strong> of each document, and of each span in mixed documents, before processing (<a href="#sec-transliteration" class="quarto-xref"><span>Section 3.4</span></a> shows the toolkit functions)</li>
+<li><strong>Keep the original</strong> and create converted text only as a derived view, or train script-robust models</li>
+<li><strong>Test transliteration</strong> to use resources from one script variant for the other (<a href="#sec-transliteration" class="quarto-xref"><span>Section 3.4</span></a>)</li>
+<li><strong>Do not assume</strong> that a web-crawled corpus is monoscript; even within a single document, informal text mixes scripts. A change of script is not necessarily a change of language: record script and language as separate metadata</li>
+</ul>
+</section>
+</section>
+<section id="sec-unicode" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-unicode"><span class="header-section-number">3.3</span> Unicode for Turkic Languages</h2>
+<section id="relevant-unicode-blocks" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="relevant-unicode-blocks"><span class="header-section-number">3.3.1</span> Relevant Unicode Blocks</h3>
+<p>Each Turkic script family occupies specific Unicode code point ranges:</p>
+<div id="tbl-unicode-blocks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-unicode-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Unicode blocks relevant to Turkic language NLP. Only the most frequently encountered ranges are shown. Note that the Latin schwa is split across two blocks (capital Ə in Latin Extended-B, small ə in IPA Extensions), and that the Cyrillic Ә (U+04D8) is a different character that looks the same.
+</figcaption>
+<div aria-describedby="tbl-unicode-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 31%">
+<col style="width: 15%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Script</th>
+<th>Primary Block</th>
+<th>Range</th>
+<th>Key Characters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Latin</td>
+<td>Latin Extended-A</td>
+<td>U+0100–U+017F</td>
+<td>ğ (U+011F), ş (U+015F), ı (U+0131), İ (U+0130)</td>
+</tr>
+<tr class="even">
+<td>Latin</td>
+<td>Latin Extended-B</td>
+<td>U+0180–U+024F</td>
+<td>Ə (U+018F, capital schwa)</td>
+</tr>
+<tr class="odd">
+<td>Latin</td>
+<td>IPA Extensions</td>
+<td>U+0250–U+02AF</td>
+<td>ə (U+0259, small schwa)</td>
+</tr>
+<tr class="even">
+<td>Latin</td>
+<td>Spacing Modifier Letters</td>
+<td>U+02B0–U+02FF</td>
+<td>ʻ (U+02BB), ʼ (U+02BC), used in Uzbek</td>
+</tr>
+<tr class="odd">
+<td>Cyrillic</td>
+<td>Cyrillic</td>
+<td>U+0400–U+04FF</td>
+<td>Ә ә (U+04D8/U+04D9), Ң (U+04A2), Ғ (U+0492), Қ (U+049A)</td>
+</tr>
+<tr class="even">
+<td>Cyrillic</td>
+<td>Cyrillic Supplement</td>
+<td>U+0500–U+052F</td>
+<td>Additional characters for some languages</td>
+</tr>
+<tr class="odd">
+<td>Arabic/Perso-Arabic</td>
+<td>Arabic</td>
+<td>U+0600–U+06FF</td>
+<td>Core Arabic + Persian letters</td>
+</tr>
+<tr class="even">
+<td>Arabic</td>
+<td>Arabic Presentation Forms-A/B</td>
+<td>U+FB50–U+FDFF, U+FE70–U+FEFF</td>
+<td>Legacy contextual glyph forms; apply a selective compatibility policy (<a href="#sec-unicode" class="quarto-xref"><span>Section 3.3</span></a>)</td>
+</tr>
+<tr class="odd">
+<td>Old Turkic</td>
+<td>Old Turkic</td>
+<td>U+10C00–U+10C4F</td>
+<td>Orkhon and Yenisei runic characters</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="fig-unicode-blocks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Eight selected Unicode blocks with exact ranges and example code points, including a separate General Punctuation row for ZWNJ.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unicode-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-unicode-blocks/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Eight selected Unicode blocks with exact ranges and example code points, including a separate General Punctuation row for ZWNJ.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unicode-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Selected Unicode blocks used in Turkic text, following Unicode 17.0. Latin Ə/ə and Cyrillic Ә/ә occupy different blocks; the zero-width non-joiner is in General Punctuation. Band widths are schematic.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-turkish-ii-problem" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="the-turkish-ii-problem"><span class="header-section-number">3.3.2</span> The Turkish İ/I Problem</h3>
+<p>Turkish has <strong>four</strong> distinct characters where English has two:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 25%">
+<col style="width: 17%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Character</th>
+<th>Unicode</th>
+<th>Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>İ</code></td>
+<td>U+0130</td>
+<td>Latin Capital Letter I with Dot Above</td>
+<td><em>İstanbul</em></td>
+</tr>
+<tr class="even">
+<td><code>I</code></td>
+<td>U+0049</td>
+<td>Latin Capital Letter I (dotless)</td>
+<td><em>Isparta</em></td>
+</tr>
+<tr class="odd">
+<td><code>i</code></td>
+<td>U+0069</td>
+<td>Latin Small Letter I (dotted)</td>
+<td><em>istanbul</em> (lowercase of <em>İstanbul</em>)</td>
+</tr>
+<tr class="even">
+<td><code>ı</code></td>
+<td>U+0131</td>
+<td>Latin Small Letter Dotless I</td>
+<td><em>ısparta</em> (lowercase of <em>Isparta</em>)</td>
+</tr>
+</tbody>
+</table>
+<p>The pairs are: <code>İ</code> ↔︎ <code>i</code> (dotted I, both cases) and <code>I</code> ↔︎ <code>ı</code> (dotless I, both cases).</p>
+<p>Python’s <code>str.lower()</code> and <code>str.upper()</code> apply the language-independent Unicode case mappings. They are <strong>not</strong> locale-aware (unlike, e.g., Java’s <code>toLowerCase(Locale)</code>). For Turkish this gives two different errors:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"ISPARTA"</span>.lower()        <span class="co"># → "isparta"   WRONG: should be "ısparta" (I ↔ ı)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">"İstanbul"</span>.lower()       <span class="co"># → "i̇stanbul"  WRONG: 'i' + U+0307 COMBINING DOT ABOVE</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="st">"İ"</span>.lower())         <span class="co"># → 2  — the string even changes length</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">"istanbul"</span>.upper()       <span class="co"># → "ISTANBUL"  WRONG: should be "İSTANBUL"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A correct helper must also handle the decomposed spelling of <em>İ</em> (<code>I</code> followed by U+0307 COMBINING DOT ABOVE), which is canonically equivalent to U+0130. Normalising to NFC first takes care of it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unicodedata</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> turkish_lower_nfc(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Turkish/Azerbaijani lowercasing for ordinary text; returns an NFC view."""</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> unicodedata.normalize(<span class="st">"NFC"</span>, text)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans({<span class="st">"İ"</span>: <span class="st">"i"</span>, <span class="st">"I"</span>: <span class="st">"ı"</span>}))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> unicodedata.normalize(<span class="st">"NFC"</span>, text.lower())</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> turkish_upper_nfc(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Turkish/Azerbaijani uppercasing for ordinary text; returns an NFC view."""</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> unicodedata.normalize(<span class="st">"NFC"</span>, text)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans({<span class="st">"i"</span>: <span class="st">"İ"</span>, <span class="st">"ı"</span>: <span class="st">"I"</span>}))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> unicodedata.normalize(<span class="st">"NFC"</span>, text.upper())</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> turkish_lower_nfc(<span class="st">"ISPARTA"</span>) <span class="op">==</span> <span class="st">"ısparta"</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> turkish_lower_nfc(<span class="st">"İSTANBUL"</span>) <span class="op">==</span> <span class="st">"istanbul"</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> turkish_lower_nfc(<span class="st">"I</span><span class="ch">\u0307</span><span class="st">STANBUL"</span>) <span class="op">==</span> <span class="st">"istanbul"</span>      <span class="co"># decomposed İ</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> turkish_upper_nfc(<span class="st">"istanbul ısparta"</span>) <span class="op">==</span> <span class="st">"İSTANBUL ISPARTA"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># TurkicNLP ships the mapping step as a helper: it maps İ → i and I → ı</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.utils.unicode_utils <span class="im">import</span> normalize_turkish_i</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>normalize_turkish_i(<span class="st">"ISPARTA"</span>).lower()   <span class="co"># → "ısparta"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These helpers handle the ordinary Turkish dotted/dotless pairs and canonical normalisation. Unicode’s <a href="https://www.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt">SpecialCasing</a> includes further context-sensitive rules. Apply the helpers only after identifying the language: even English or Russian material within a Turkish corpus can contain <em>INFO</em>, which they turn into <em>ınfo</em>. Casing may also change string length, so offsets must identify the text view they refer to.</p>
+<p>The combining-dot result can be hard to spot: it survives into vocabularies and makes <code>"i̇stanbul" != "istanbul"</code>. The dotted/dotless distinction applies to Turkish, Azerbaijani, Crimean Tatar, Gagauz, Tatar Latin and the Kazakh Latin proposals. For these orthographies, calling <code>lower()</code> without an explicit mapping introduces systematic errors in case folding, vocabulary building and string comparison. Lowercasing itself is optional: cased models and annotation tasks often need the original case, so keep it unless the task requires folding.</p>
+</section>
+<section id="cyrilliclatin-homoglyphs" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="cyrilliclatin-homoglyphs"><span class="header-section-number">3.3.3</span> Cyrillic/Latin Homoglyphs</h3>
+<p>Several characters appear visually identical in Cyrillic and Latin but have different Unicode codepoints:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 33%">
+<col style="width: 30%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Character</th>
+<th>Cyrillic codepoint</th>
+<th>Latin codepoint</th>
+<th>Problem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>а</code></td>
+<td>U+0430</td>
+<td><code>a</code> U+0061</td>
+<td>Sort order, script detection</td>
+</tr>
+<tr class="even">
+<td><code>е</code></td>
+<td>U+0435</td>
+<td><code>e</code> U+0065</td>
+<td>Word matching</td>
+</tr>
+<tr class="odd">
+<td><code>о</code></td>
+<td>U+043E</td>
+<td><code>o</code> U+006F</td>
+<td>Vocabulary contamination</td>
+</tr>
+<tr class="even">
+<td><code>р</code></td>
+<td>U+0440</td>
+<td><code>p</code> U+0070</td>
+<td>Word matching</td>
+</tr>
+<tr class="odd">
+<td><code>ә</code></td>
+<td>U+04D9</td>
+<td><code>ə</code> U+0259</td>
+<td>Azerbaijani/Kazakh: the Cyrillic and Latin schwa look identical</td>
+</tr>
+<tr class="even">
+<td><code>і</code></td>
+<td>U+0456</td>
+<td><code>i</code> U+0069</td>
+<td>Kazakh <em>і</em> typed with a Latin <em>i</em></td>
+</tr>
+<tr class="odd">
+<td><code>һ</code></td>
+<td>U+04BB</td>
+<td><code>h</code> U+0068</td>
+<td>Kazakh, Tatar, Bashkir, Sakha</td>
+</tr>
+<tr class="even">
+<td><code>ј</code></td>
+<td>U+0458</td>
+<td><code>j</code> U+006A</td>
+<td>Old Azerbaijani Cyrillic</td>
+</tr>
+</tbody>
+</table>
+<p>These homoglyphs cause subtle failures:</p>
+<ul>
+<li>Mixing Cyrillic <code>а</code> and Latin <code>a</code> can change tokenisation and cause dictionary lookup failures</li>
+<li>Script detection based on character statistics may misclassify mixed-script text</li>
+<li>String comparison (<code>"alma" == "аlma"</code> is false: the second string starts with Cyrillic U+0430)</li>
+</ul>
+<p>Unicode normalisation does not help here: NFC and NFKC leave Latin <code>a</code> and Cyrillic <code>а</code> distinct, because they <em>are</em> different characters. To find them, inspect the characters themselves:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unicodedata</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ch <span class="kw">in</span> <span class="st">"аa әə"</span>:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> ch.isspace():</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="bu">repr</span>(ch), <span class="bu">hex</span>(<span class="bu">ord</span>(ch)), unicodedata.name(ch))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 'а' 0x430 CYRILLIC SMALL LETTER A</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 'a' 0x61 LATIN SMALL LETTER A</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 'ә' 0x4d9 CYRILLIC SMALL LETTER SCHWA</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 'ə' 0x259 LATIN SMALL LETTER SCHWA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For a general script test, use the Unicode Script and Script_Extensions properties (<a href="https://www.unicode.org/reports/tr24/">UAX #24</a>) rather than block ranges. Latin letters span several blocks. Many digits and punctuation marks have the Script value <code>Common</code>, and many combining marks have <code>Inherited</code>; others are script-specific. Script_Extensions records use across scripts. Character names, as above, are a teaching approximation. Repairing look-alikes is a separate, language-dependent decision (<a href="#sec-normalisation" class="quarto-xref"><span>Section 3.5</span></a>).</p>
+</section>
+<section id="arabic-script-text-uyghur-and-ottoman" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="arabic-script-text-uyghur-and-ottoman"><span class="header-section-number">3.3.4</span> Arabic-Script Text: Uyghur and Ottoman</h3>
+<p>Uyghur text in the Perso-Arabic script is written right-to-left (RTL). Three issues matter in practice:</p>
+<ol type="1">
+<li><strong>Presentation forms</strong>: older Uyghur web text and PDFs were often produced with fonts and converters that store contextual glyph shapes (Arabic Presentation Forms-A/B) instead of the base letters. Visually identical words then have different code points. NFKC normalisation maps them back to the base letters; NFC does not.</li>
+<li><strong>Letter variants</strong>: Uyghur-specific letters (ۆ ۈ ې ۋ) are in the basic Arabic block, but look-alike Persian, Arabic, and Kazakh/Kyrgyz Arabic letters (e.g., different yeh and kaf forms) occur in real text and need a mapping table.</li>
+<li><strong>Joiners and punctuation</strong>: zero-width joiners/non-joiners (U+200C/U+200D) and Arabic punctuation (، ؛ ؟) must be handled by the tokeniser; TurkicNLP uses a separate Arabic-script tokeniser for this reason <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</li>
+</ol>
+<p>Because the reformed Uyghur orthography marks vowels explicitly <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 413</a>)</span>, modern Uyghur does not have the same systematic missing-vowel problem as unvocalised Arabic or Persian. Missing vowels remain an issue for <strong>Ottoman Turkish</strong> and Chaghatay, whose Perso-Arabic orthography leaves many vowels unwritten.</p>
+</section>
+<section id="unicode-normalisation-nfc-vs.-nfd" class="level3" data-number="3.3.5">
+<h3 data-number="3.3.5" class="anchored" data-anchor-id="unicode-normalisation-nfc-vs.-nfd"><span class="header-section-number">3.3.5</span> Unicode Normalisation: NFC vs.&nbsp;NFD</h3>
+<p>Unicode allows characters to be represented in different ways. For example, the Turkish <code>ş</code> can be represented as:</p>
+<ul>
+<li><strong>Precomposed (NFC)</strong>: a single code point U+015F</li>
+<li><strong>Decomposed (NFD)</strong>: the base letter <code>s</code> (U+0073) followed by a combining cedilla (U+0327)</li>
+</ul>
+<p>Much modern text is in NFC, but text from some sources (older databases, some operating systems and input methods) can contain NFD. An NLP system that encounters both will treat <code>ş</code> (NFC) and <code>ş</code> (NFD) as different strings. The failure is silent and hard to debug.</p>
+<p><strong>Best practice</strong>: keep the original text, and apply <code>unicodedata.normalize('NFC', text)</code> as the first step in building the <em>processing view</em> of it. NFC makes canonically equivalent strings identical; it does not correct spelling, repair look-alike letters or decide the language (<a href="https://www.unicode.org/reports/tr15/">UAX #15</a>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unicodedata</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.utils.unicode_utils <span class="im">import</span> normalize_nfc, strip_diacritics</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize_unicode(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply NFC normalisation as the first preprocessing step."""</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> unicodedata.normalize(<span class="st">'NFC'</span>, text)     <span class="co"># same as normalize_nfc(text)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>strip_diacritics(<span class="st">"Türkçe"</span>)    <span class="co"># → "Turkce": a lossy view for a declared purpose; retain the original</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>When NFC is not enough</strong>: NFC leaves compatibility characters untouched: Arabic presentation forms, full-width Latin letters, ligatures such as <em>ﬁ</em>. NFKC folds them, but it also folds characters you may want to keep (superscripts, some punctuation), including in the Latin and symbol content embedded in an Arabic-script document. A practical recipe is NFC for all text, plus NFKC applied only to the characters in the Arabic Presentation Forms blocks, and an explicit, context-aware treatment of apostrophe variants (<a href="#sec-normalisation" class="quarto-xref"><span>Section 3.5</span></a>).</p>
+</section>
+<section id="encoding-display-order-and-visible-characters" class="level3" data-number="3.3.6">
+<h3 data-number="3.3.6" class="anchored" data-anchor-id="encoding-display-order-and-visible-characters"><span class="header-section-number">3.3.6</span> Encoding, Display Order and Visible Characters</h3>
+<p>Three further problems come before any of the above.</p>
+<p><strong>Wrong decoding.</strong> Text decoded with the wrong encoding (“mojibake”) is a different string, and no Unicode normalisation can repair it. Kazakh UTF-8 bytes read as Windows-1251 look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="st">"Қазақстан"</span>.encode(<span class="st">"utf-8"</span>).decode(<span class="st">"cp1251"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s)                                        <span class="co"># ТљР°Р·Р°Т›СЃС‚Р°РЅ</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s.encode(<span class="st">"cp1251"</span>).decode(<span class="st">"utf-8"</span>))       <span class="co"># Қазақстан  (reversible only if no byte was lost)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Decode with the known encoding, record failures instead of silently dropping bytes, and check samples of every source; a UTF-8 byte-order mark (U+FEFF) at the start of a file should be removed on decoding (<code>encoding="utf-8-sig"</code>).</p>
+<p><strong>Logical versus visual order.</strong> Uyghur Perso-Arabic text is stored in <em>logical</em> order (the order in which it is read) and displayed right to left; numbers and embedded Latin words are displayed left to right inside it, following the Unicode Bidirectional Algorithm (<a href="https://www.unicode.org/reports/tr9/">UAX #9</a>). The string <code>"ئۇيغۇرچە 2024-يىلى Python"</code> is stored with <em>ئۇيغۇرچە</em> first, whatever it looks like on screen. Never reverse stored strings for NLP; only display software applies the visual order.</p>
+<p><strong>Characters versus what the reader sees.</strong> <code>len()</code> counts code points, not visible characters: decomposed <em>ş</em> is two code points, and an Arabic letter with a combining mark is one visible unit. User-facing offsets and truncation should use grapheme clusters (<a href="https://www.unicode.org/reports/tr29/">UAX #29</a>; e.g.&nbsp;the <code>regex</code> module’s <code>\X</code>).</p>
+</section>
+</section>
+<section id="sec-transliteration" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-transliteration"><span class="header-section-number">3.4</span> Bidirectional Transliteration</h2>
+<section id="why-transliteration-matters-computationally" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="why-transliteration-matters-computationally"><span class="header-section-number">3.4.1</span> Why Transliteration Matters Computationally</h3>
+<p>Shared morphology and vocabulary offer little direct help to a model if unfamiliar spelling hides them. A multilingual or byte-level model can accept Kyrgyz Cyrillic, yet a model fine-tuned on Turkish Latin may still represent it poorly. Transliteration offers one possible remedy. Test it against the same model with native-script input.</p>
+<p>Transliteration maps one written representation to another; transcription, by contrast, aims to represent sounds. <em>Алматы</em> (Cyrillic) becomes <em>Almaty</em> (Latin). A good mapping preserves the information in the spelling, but some mappings are lossy: where two source letters map to one target letter, the distinction is gone (see the hard cases below).</p>
+<p>The TurkicNLP toolkit <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span> supports conversion for ten multi-script Turkic languages, following national standards or, for Kazakh, the 2021 proposal, plus conversion of 23 languages into the toolkit’s Common Turkic Script (CTS) (<a href="#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>). Two of the pairs (Ottoman Turkish, Old Turkic) work in one direction only:</p>
+<div id="tbl-translit-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-translit-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.3: Transliteration pairs and mapping standards in TurkicNLP 0.5.0. Ottoman Turkish (Latin transcription to Perso-Arabic) and Old Turkic (runes to Latin transcription) are one-way reconstructions, not reversible conversions.
+</figcaption>
+<div aria-describedby="tbl-translit-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 13%">
+<col style="width: 30%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>ISO</th>
+<th>Direction</th>
+<th>Standard</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kazakh</td>
+<td>kaz</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>2021 proposal (toolkit mapping)</td>
+</tr>
+<tr class="even">
+<td>Uzbek</td>
+<td>uzb</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>Official 1995</td>
+</tr>
+<tr class="odd">
+<td>Azerbaijani</td>
+<td>aze</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>Official 1991</td>
+</tr>
+<tr class="even">
+<td>Tatar</td>
+<td>tat</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>Zamanälif</td>
+</tr>
+<tr class="odd">
+<td>Turkmen</td>
+<td>tuk</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>Official 1993 (revised)</td>
+</tr>
+<tr class="even">
+<td>Karakalpak</td>
+<td>kaa</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>Official 2016</td>
+</tr>
+<tr class="odd">
+<td>Crimean Tatar</td>
+<td>crh</td>
+<td>Cyrl ↔︎ Latn</td>
+<td>Latin standard</td>
+</tr>
+<tr class="even">
+<td>Uyghur</td>
+<td>uig</td>
+<td>Arab ↔︎ Latn ↔︎ Cyrl</td>
+<td>ULY (Uyghur Latin Yéziqi), Uyghur Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Ottoman Turkish</td>
+<td>ota</td>
+<td>Latn → Arab</td>
+<td>Academic</td>
+</tr>
+<tr class="even">
+<td>Old Turkic</td>
+<td>otk</td>
+<td>Orkh → Latn</td>
+<td>Turkological convention</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="the-greedy-longest-match-algorithm" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="the-greedy-longest-match-algorithm"><span class="header-section-number">3.4.2</span> The Greedy Longest-Match Algorithm</h3>
+<p>The core of a table-driven converter fits in a few lines:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> longest_match(text: <span class="bu">str</span>, mapping: <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span>]) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Table lookup only: no case handling, context rules or restoration."""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">""</span> <span class="kw">in</span> mapping:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Mapping keys must be non-empty"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    keys <span class="op">=</span> <span class="bu">sorted</span>(mapping, key<span class="op">=</span><span class="bu">len</span>, reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    out, pos <span class="op">=</span> [], <span class="dv">0</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> pos <span class="op">&lt;</span> <span class="bu">len</span>(text):</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key <span class="kw">in</span> keys:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> text.startswith(key, pos):</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                out.append(mapping[key])<span class="op">;</span> pos <span class="op">+=</span> <span class="bu">len</span>(key)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            out.append(text[pos])<span class="op">;</span> pos <span class="op">+=</span> <span class="dv">1</span>          <span class="co"># unmatched: copied, and should be logged</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">""</span>.join(out)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># A small demonstration table, not a complete Uzbek converter</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>demo <span class="op">=</span> {<span class="st">"sh"</span>: <span class="st">"ш"</span>, <span class="st">"ch"</span>: <span class="st">"ч"</span>, <span class="st">"oʻ"</span>: <span class="st">"ў"</span>, <span class="st">"s"</span>: <span class="st">"с"</span>, <span class="st">"h"</span>: <span class="st">"ҳ"</span>, <span class="st">"o"</span>: <span class="st">"о"</span>, <span class="st">"a"</span>: <span class="st">"а"</span>, <span class="st">"q"</span>: <span class="st">"қ"</span>, <span class="st">"i"</span>: <span class="st">"и"</span>, <span class="st">"l"</span>: <span class="st">"л"</span>}</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>longest_match(<span class="st">"sh"</span>, demo)                        <span class="co"># 'ш'   (digraph matched as a unit)</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>longest_match(<span class="st">"sh"</span>, {<span class="st">"s"</span>: <span class="st">"с"</span>, <span class="st">"h"</span>: <span class="st">"ҳ"</span>})         <span class="co"># 'сҳ'  (without the digraph entry)</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>longest_match(<span class="st">"oʻqish"</span>, demo)                     <span class="co"># 'ўқиш'</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>longest_match(<span class="st">"Shahar"</span>, demo)                     <span class="co"># 'Sҳаҳаr'  (capitals and 'r' missing from the table)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>An empty key would consume no input and loop forever, so the code rejects it. With no mappings, it copies the input; with no input, it returns an empty string. A practical converter also needs capitalisation rules, a complete table and a record of characters copied unchanged. Those copies show where conversion fell back to the source. Some letters need context rules too: Uzbek Cyrillic <code>е</code> becomes <em>ye</em> initially and after a vowel, but <em>e</em> elsewhere.</p>
+<p>TurkicNLP extends this greedy longest-match algorithm. At each input position it tries the longest sequence first, up to four characters in this source version, then shortens the match. Uzbek <code>sh</code>, <code>ch</code> and <code>oʻ</code> can thus map as units to <code>ш</code>, <code>ч</code> and <code>ў</code>. Context rules handle position-dependent letters: Cyrillic <code>е</code> can be initial <em>ye</em> or elsewhere <em>e</em> in Uzbek, Turkmen and Tatar; Crimean Tatar <code>ё</code>/<code>ю</code> represent <em>ö</em>/<em>ü</em> after consonants <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</p>
+<div id="fig-transliteration-algorithm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Flowchart with a longest-match decision, mapped and unchanged-character branches, and a loop until the input is consumed.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transliteration-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-transliteration-algorithm/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Flowchart with a longest-match decision, mapped and unchanged-character branches, and a loop until the input is consumed.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transliteration-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Greedy longest-match lookup for a versioned transliteration mapping. At each position the longest matching non-empty key is consumed; otherwise one character is copied. The maximum key length comes from the mapping. Contextual spelling, normalisation and case policies are separate from this kernel.
+</figcaption>
+</figure>
+</div>
+<p>The algorithm handles capitalisation by checking whether the first character of the source sequence is upper-case and applying the same capitalisation to the output sequence; all-capital words are handled separately. Test any converter on title case, all capitals, digraphs versus separate letters (Uzbek <em>sh</em> versus <em>sʼh</em> in <em>Isʼhoq</em>), unknown characters, and decomposed input.</p>
+</section>
+<section id="code-example-script-detection-and-transliteration" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="code-example-script-detection-and-transliteration"><span class="header-section-number">3.4.3</span> Code Example: Script Detection and Transliteration</h3>
+<p>The following example demonstrates automatic script detection and Kazakh Cyrillic↔︎Latin transliteration using the TurkicNLP toolkit (adapted from the companion library):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts <span class="im">import</span> Script</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts.detector <span class="im">import</span> detect_script</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts.transliterator <span class="im">import</span> Transliterator</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Script Detection ---</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>cyrl_text <span class="op">=</span> <span class="st">"Мен Алматыда тұрамын."</span>  <span class="co"># Kazakh Cyrillic: "I live in Almaty."</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(detect_script(cyrl_text))       <span class="co"># Script.CYRILLIC</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Cyrillic → Latin (toolkit mapping based on the 2021 proposal) ---</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>t_cyrl_latn <span class="op">=</span> Transliterator(<span class="st">"kaz"</span>, Script.CYRILLIC, Script.LATIN)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>latin_text <span class="op">=</span> t_cyrl_latn.transliterate(cyrl_text)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(latin_text)   <span class="co"># Men Almatyda tūramyn.   (ұ → ū in the 2021 alphabet)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Latin → Cyrillic (reverse direction) ---</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>t_latn_cyrl <span class="op">=</span> Transliterator(<span class="st">"kaz"</span>, Script.LATIN, Script.CYRILLIC)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>restored <span class="op">=</span> t_latn_cyrl.transliterate(latin_text)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(restored)     <span class="co"># Мен Алматыда тұрамын.</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Script bridging inside a pipeline ---</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># The Kazakh models are trained on Cyrillic. For Latin input the pipeline</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># transliterates to Cyrillic, runs the models, and maps the results back:</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># word texts, lemmas and character offsets refer to the original Latin text.</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"kaz"</span>, script<span class="op">=</span><span class="st">"Latn"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"morph"</span>],</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>                       tokenize_backend<span class="op">=</span><span class="st">"rule"</span>, morph_backend<span class="op">=</span><span class="st">"apertium"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(<span class="st">"Men Almatyda tūramyn."</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(doc._model_text)          <span class="co"># Мен Алматыда тұрамын.  (what the models saw)</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w <span class="kw">in</span> doc.words:</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(w.text, w.lemma, w.upos, w.feats, w.start_char)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Men      men      PRON  Case=Nom|Number=Sing|Person=1|PronType=Prs  0</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Almatyda Almaty   PROPN Case=Loc                                     4</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># tūramyn  tūr      VERB  Aspect=Hab|Number=Sing|Person=1|Tense=Pres   13</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># .        .        PUNCT _                                            20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The same mechanism covers Uzbek in Cyrillic, which this toolkit configuration routes to Latin-script models: <code>turkicnlp.Pipeline("uzb", script="Cyrl")</code> analyses the text with the Latin-script models. The output above was reproduced with the local 0.5.0 source, the rule-based tokeniser, and the Apertium analyser.</p>
+</section>
+<section id="hard-cases-and-limitations" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="hard-cases-and-limitations"><span class="header-section-number">3.4.4</span> Hard Cases and Limitations</h3>
+<p><strong>Many-to-one mappings (Kazakh).</strong> In the 2021 Kazakh Latin proposal both Cyrillic <code>и</code> and <code>й</code> are written <code>i</code>, and Cyrillic <code>у</code> can stand for a vowel or a glide. Converting Latin back to Cyrillic therefore needs context rules or a lexicon, and Russian loanwords (with <code>ц</code>, <code>щ</code>, <code>ё</code>, <code>ъ</code>, <code>ь</code>) need exception lists.</p>
+<p><strong>Information lost in one direction (Crimean Tatar).</strong> Crimean Tatar Cyrillic writes word-initial <em>ö</em> and <em>ü</em> as <code>о</code> and <code>у</code>, so <em>ötmek</em> comes back from a Latin → Cyrillic → Latin round trip as <em>otmek</em>. In the TurkicNLP evaluation on its parallel sample, this is the only language whose round trip did not recover every word (97.6% of words, versus 100% for the other languages and pivots) <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. A perfect round trip on a sample shows that those inputs were recovered; it does not prove that a mapping is invertible on arbitrary text, nor that the converted spelling is the one a writer of the target script would use.</p>
+<p><strong>Perso-Arabic diacritics (harakat) in Ottoman Turkish.</strong> Ottoman Turkish texts sometimes include Arabic diacritics that provide vowel information absent from the base consonantal script. In TurkicNLP 0.5.0 the Ottoman converter runs only from Latin transcription to Perso-Arabic, so vowel diacritics in Perso-Arabic input are not used to recover Latin vowels.</p>
+<p><strong>Loanwords in the Latin→Cyrillic direction.</strong> For Uzbek, the Latin digraph <code>sh</code> maps unambiguously to Cyrillic <code>ш</code>, but Russian loanwords keep their Russian spelling in Cyrillic (<em>film</em> → <em>фильм</em>, with a soft sign the Latin form does not show). TurkicNLP’s Uzbek conversion agrees with the independent UzTransliterator on 99.4% of words (Cyrillic→Latin) and 98.4% (Latin→Cyrillic); the remaining differences are such loanwords <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. Agreement between two converters is not accuracy against checked spellings, since both can make the same mistake. Evaluate forward conversion, reverse conversion and round-trip recovery separately, on text with loanwords, names and mixed case. An exception lexicon or learned model may resolve some differences; check its output against independently verified spellings.</p>
+</section>
+</section>
+<section id="sec-normalisation" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-normalisation"><span class="header-section-number">3.5</span> Text Normalisation for Turkic</h2>
+<section id="spell-checking-in-agglutinative-languages" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="spell-checking-in-agglutinative-languages"><span class="header-section-number">3.5.1</span> Spell-Checking in Agglutinative Languages</h3>
+<p>A spell-checker that looks words up in a list of full word forms is impractical for Turkish or Kazakh: productive suffixation creates forms absent from a finite word list. Practical checkers therefore model morphology. Hunspell combines a stem list with affix rules, and <strong>morphological spell-checking</strong> accepts a word if a morphological analyser can parse it; Zemberek-NLP does this for Turkish, and Apertium transducers can be used the same way for other Turkic languages.</p>
+<p>Acceptance by the analyser is not the same as correctness, in either direction. A real-word error passes: Turkish <em>evde</em> ‘at home’ typed for <em>ev de</em> ‘the house too’ is a valid word, and only context shows the mistake. An unknown proper name or a new loanword fails, although it is spelled correctly, because it is missing from the lexicon. Correction candidates (all strings within edit distance 1 or 2 that the analyser accepts) must be ranked with context, typically by a language model.</p>
+</section>
+<section id="orthographic-variation-in-web-crawled-text" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="orthographic-variation-in-web-crawled-text"><span class="header-section-number">3.5.2</span> Orthographic Variation in Web-Crawled Text</h3>
+<p>Web-crawled corpora for Turkic languages contain significant orthographic variation:</p>
+<p><strong>Turkish apostrophe usage.</strong> Turkish orthography separates certain inflectional suffixes on proper names with an apostrophe, as in <em>Ankara’dan</em> (from Ankara), <em>Türkiye’de</em> (in Turkey). This is not a rule for every suffix or every named expression; derivation and institution names require separate treatment. In informal digital text, this apostrophe is frequently omitted (<em>Ankaradan</em>, <em>Türkiyede</em>), producing forms that a morphological analyser may not recognise as proper noun inflections.</p>
+<p><strong>Cyrillic/Latin mixing.</strong> Uzbek and Kazakh online text can mix scripts within a post or even within a sentence, for example Latin-script loanwords or technical terms in Cyrillic text. Script detection must operate at the word level, not just the document level, for such text.</p>
+<p><strong>Punctuation and whitespace.</strong> Arabic-script Uyghur text uses Arabic punctuation conventions (distinct comma, semicolon and question mark characters). Uyghur web text often mixes Arabic and ASCII punctuation, which can change punctuation attachment and token boundaries depending on the tokeniser.</p>
+</section>
+<section id="diacritic-dropping" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="diacritic-dropping"><span class="header-section-number">3.5.3</span> Diacritic Dropping</h3>
+<p>A frequent form of informal orthographic variation is <strong>diacritic dropping</strong>: omitting the diacritics that distinguish some characters from their base letters. Typical substitutions are:</p>
+<ul>
+<li><strong>Turkish</strong>: <code>ğ→g</code>, <code>ş→s</code>, <code>ç→c</code>, <code>ö→o</code>, <code>ü→u</code>, <code>ı→i</code> (the dotless I becomes a regular i)</li>
+<li><strong>Kazakh (2021 Latin)</strong>: <code>ä→a</code>, <code>ğ→g</code>, <code>ş→s</code>, <code>ñ→n</code>, <code>ū→u</code>, <code>ü→u</code>, <code>ö→o</code>; in Cyrillic, Kazakh-specific letters are replaced by their Russian look-alikes (<code>қ→к</code>, <code>ң→н</code>, <code>ү→у</code>, <code>ұ→у</code>, <code>ө→о</code>, <code>і→и</code>) on keyboards without a Kazakh layout</li>
+<li><strong>Uzbek</strong>: <code>oʻ→o</code>, <code>gʻ→g</code></li>
+</ul>
+<p><strong>The Uzbek apostrophe problem.</strong> The <a href="https://lex.uz/docs/1625271">official spelling rules</a> distinguish the letters <em>oʻ</em>, <em>gʻ</em> and the separating sign <em>tutuq belgisi</em> (<em>maʼno</em>), but do not prescribe Unicode code points. A common convention uses U+02BB (ʻ) for the letter mark and U+02BC (ʼ) for the separating sign. Toolkit output and some linguistic examples in this book retain ASCII U+0027.</p>
+<p>Real text also uses backticks, curly quotes and acute accents for these marks. Normalise them according to a documented corpus convention, using word and quotation context. A mark after <em>o</em> or <em>g</em> may belong to a letter, but a mark at a word boundary may be quotation punctuation. Global replacement can erase that distinction. TurkicNLP 0.5.0 uses ASCII apostrophes in Uzbek conversion; adapt its output if the corpus uses another convention.</p>
+<p>Diacritic-dropped text occurs where keyboards or habits make the special letters inconvenient. A morphological analyser built for correctly diacritised text may fail to parse such forms; measure how often on a sample of the target data.</p>
+<p><strong>Diacritic restoration</strong>, recovering the correct form from the dropped version, can be approached as a sequence-to-sequence task. For Turkish, vowel harmony provides strong constraints on the restored vowels. Kazakh also needs lexical and contextual evidence, because the dropped distinctions (<em>к/қ</em>, <em>у/ү/ұ</em>) are not all predictable from harmony.</p>
+</section>
+<section id="ordering-the-pipeline" class="level3" data-number="3.5.4">
+<h3 data-number="3.5.4" class="anchored" data-anchor-id="ordering-the-pipeline"><span class="header-section-number">3.5.4</span> Ordering the Pipeline</h3>
+<p>Preserve the original, diagnose its encoding, and build a conservative processing view. Then assess script and language. Turkish casing, Kazakh look-alike repairs and Uzbek apostrophe handling depend on those decisions. Each subsequent change should produce a view that can be inspected and traced back to its source.</p>
+<ol type="1">
+<li><strong>Preserve the source.</strong> Save the source identifier, acquisition date, licence information and the original bytes. Decode with the known encoding and record decoding failures.</li>
+<li><strong>Build an NFC view.</strong> Apply NFC; apply NFKC only to Arabic presentation-form characters. Keep the previous view.</li>
+<li><strong>Assess script and language.</strong> Detect scripts per span, and identify the language with an unrestricted label set or an explicit “unknown” option (<a href="#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>). Use source metadata as evidence (a Kazakh news site), and abstain when metadata and text disagree.</li>
+<li><strong>Split mixed content.</strong> Treat spans in different languages or scripts separately; protect URLs, code and quoted foreign text. Choose a language and orthography version only for spans the evidence supports.</li>
+<li><strong>Propose language-specific repairs.</strong> Casing, apostrophes and look-alike letters, as candidates with their positions. Keep uncertain cases for review, and re-run language identification if a repair changes the evidence it used.</li>
+<li><strong>Restore and convert.</strong> Apply a restoration model only in the representation it was trained on (a model trained on noisy and corrected Cyrillic expects Cyrillic). Convert to the downstream model’s script, if a task comparison supports conversion.</li>
+<li><strong>Tokenise</strong> with the downstream model’s tokeniser, keeping view and offset metadata, and evaluate on held-out original-language examples.</li>
+</ol>
+<p><strong>Restoration and transliteration.</strong> Suppose a writer types Kazakh <code>к</code> for <code>қ</code>. A Cyrillic-to-Latin converter produces <code>k</code>; recovering the intended <code>q</code> requires restoration. A model tolerant of noisy spelling may need neither repair. When restoration is useful, apply it in the representation the restoration model expects: before conversion for a model trained on Cyrillic, afterwards for one trained on Latin. A joint model may perform both operations.</p>
+<p><strong>Code Example: Script Spans and Look-Alike Letters</strong></p>
+<p>The toolkit’s <code>detect_script(text)</code> returns the dominant script of a whole text and raises <code>ValueError</code> if the text contains no characters recognised as letters in a supported script. <code>detect_script_segments(text)</code> returns <code>(text, script)</code> pairs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts.detector <span class="im">import</span> detect_script, detect_script_segments</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>detect_script(<span class="st">"Мен Алматыда тұрамын."</span>)                <span class="co"># Script.CYRILLIC</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>detect_script_segments(<span class="st">"Мен iPhone сатып алдым, бағасы 500 $."</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [('Мен ', CYRILLIC), ('iPhone ', LATIN), ('сатып алдым, бағасы 500 $.', CYRILLIC)]</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>detect_script_segments(<span class="st">"«Salom» — dedi u."</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [('Salom» — dedi u.', LATIN)]   the leading « is not in any segment</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Neither function gives character offsets, and leading neutral characters can be dropped, so the segments are not a complete map of the input. Do not reconstruct the original by joining them; retain the original and track offsets, including neutral characters, if annotations must be mapped back. <em>iPhone</em> is genuine Latin text in a Cyrillic sentence and must not be “repaired”.</p>
+<p>Look-alike letters inside a Cyrillic word are a different case. The function below only <em>suggests</em> a repair, and only when the repaired form is a known word; it never edits a document:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unicodedata</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>_LATIN_TO_CYRILLIC <span class="op">=</span> {<span class="st">"a"</span>: <span class="st">"а"</span>, <span class="st">"e"</span>: <span class="st">"е"</span>, <span class="st">"o"</span>: <span class="st">"о"</span>, <span class="st">"p"</span>: <span class="st">"р"</span>, <span class="st">"c"</span>: <span class="st">"с"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"x"</span>: <span class="st">"х"</span>, <span class="st">"y"</span>: <span class="st">"у"</span>, <span class="st">"i"</span>: <span class="st">"і"</span>, <span class="st">"h"</span>: <span class="st">"һ"</span>, <span class="st">"ə"</span>: <span class="st">"ә"</span>}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>_LATIN_TO_CYRILLIC.update({k.upper(): v.upper() <span class="cf">for</span> k, v <span class="kw">in</span> <span class="bu">list</span>(_LATIN_TO_CYRILLIC.items())})</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cyrillic(ch: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"CYRILLIC"</span> <span class="kw">in</span> unicodedata.name(ch, <span class="st">""</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> suggest_cyrillic_token(token: <span class="bu">str</span>, trusted_forms: <span class="bu">set</span>[<span class="bu">str</span>]) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Suggest a repair for a mixed-script token; never edits a document."""</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    token <span class="op">=</span> unicodedata.normalize(<span class="st">"NFC"</span>, token)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> token <span class="kw">or</span> <span class="kw">not</span> <span class="bu">all</span>(ch.isalpha() <span class="cf">for</span> ch <span class="kw">in</span> token):</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span>                                   <span class="co"># URLs, numbers, punctuation</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">any</span>(is_cyrillic(ch) <span class="cf">for</span> ch <span class="kw">in</span> token):</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span>                                   <span class="co"># all-Latin: a name, a loanword, English</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">any</span>(<span class="kw">not</span> is_cyrillic(ch) <span class="kw">and</span> ch <span class="kw">not</span> <span class="kw">in</span> _LATIN_TO_CYRILLIC <span class="cf">for</span> ch <span class="kw">in</span> token):</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span>                                   <span class="co"># a Latin letter without a look-alike</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    candidate <span class="op">=</span> <span class="st">""</span>.join(_LATIN_TO_CYRILLIC.get(ch, ch) <span class="cf">for</span> ch <span class="kw">in</span> token)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> candidate <span class="op">==</span> token:</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span>                                   <span class="co"># nothing to repair</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> candidate <span class="cf">if</span> candidate <span class="kw">in</span> trusted_forms <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>trusted <span class="op">=</span> {<span class="st">"Алматы"</span>, <span class="st">"Қара"</span>}                          <span class="co"># e.g. from a lexicon or the analyser</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> suggest_cyrillic_token(<span class="st">"Aлматы"</span>, trusted) <span class="op">==</span> <span class="st">"Алматы"</span>   <span class="co"># Latin A at the start</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> suggest_cyrillic_token(<span class="st">"Қapa"</span>, trusted) <span class="op">==</span> <span class="st">"Қара"</span>       <span class="co"># two Latin letters in a row</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> suggest_cyrillic_token(<span class="st">"Алматы"</span>, trusted) <span class="kw">is</span> <span class="va">None</span>       <span class="co"># already clean</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> suggest_cyrillic_token(<span class="st">"web"</span>, trusted) <span class="kw">is</span> <span class="va">None</span>          <span class="co"># genuine Latin word</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> suggest_cyrillic_token(<span class="st">"https://example.org"</span>, trusted) <span class="kw">is</span> <span class="va">None</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> suggest_cyrillic_token(<span class="st">"Қapa"</span>, <span class="bu">set</span>()) <span class="kw">is</span> <span class="va">None</span>           <span class="co"># unknown form: no suggestion</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The small confusable table proposes candidates for review. A known word can still be wrong in context, and an absent lexicon entry leaves the repair unsupported. Store each candidate’s offsets, replacement and acceptance decision. Apply accepted edits in a new view with a span map, so annotations such as NER spans can be traced back to the original.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Practice note.</strong> Synthetic pairs made by removing diacritics from clean text can train a restoration model. Test on real informal text as well: artificial corruption does not capture every typing error. Apply language-specific repair only after identifying the language.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-cts" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-cts"><span class="header-section-number">3.6</span> A Common Script as an Interoperability Layer</h2>
+<section id="the-common-turkic-alphabet" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="the-common-turkic-alphabet"><span class="header-section-number">3.6.1</span> The Common Turkic Alphabet</h3>
+<p>The <strong>Common Turkic Alphabet</strong> began as a 34-letter Latin proposal from a 1991 symposium in Istanbul <span class="citation" data-cites="istanbul_symposium_1991 akipress2024alphabet">(<a href="../references.html#ref-istanbul_symposium_1991" role="doc-biblioref">Devlet 1992</a>; <a href="../references.html#ref-akipress2024alphabet" role="doc-biblioref">AKIpress 2024</a>)</span>. In 2024 the Turkic World Common Alphabet Commission agreed on a revised version. Its <a href="https://www.turkicacademy.org/en/smi/declaration-common-turkic-alphabet">declaration</a> presents recommendations to member states rather than a binding orthography <span class="citation" data-cites="ots_alphabet_2024">(<a href="../references.html#ref-ots_alphabet_2024" role="doc-biblioref">Turkic World Common Alphabet Commission 2024</a>)</span>.</p>
+<p>The toolkit implements its own common-script representation, called <strong>CTS</strong> in this book. The local source snapshot reports version 0.5.0 and supplies CTS-target mappings for 23 languages <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. <a href="#tbl-cts-alphabet" class="quarto-xref">Table&nbsp;<span>3.4</span></a> lists the case pairs and code points. The accompanying snapshot also records the full source hash and mapping tables, since local changes can leave the package version unchanged. Keep this implementation distinct from both alphabet proposals.</p>
+<div id="tbl-cts-alphabet" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cts-alphabet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.4: CTS base alphabet and the additional Éé pair for Uyghur, from the frozen local TurkicNLP source identifying itself as 0.5.0 (13 October 2026). Source hash and all CTS mappings are recorded in <code>tables/tbl-cts-alphabet/source.json</code>; the package version alone does not identify this local source revision.
+</figcaption>
+<div aria-describedby="tbl-cts-alphabet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Letters</th>
+<th>Code points (upper / lower)</th>
+<th>Letters</th>
+<th>Code points (upper / lower)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aa</td>
+<td>U+0041 / U+0061</td>
+<td>Mm</td>
+<td>U+004D / U+006D</td>
+</tr>
+<tr class="even">
+<td>Ää</td>
+<td>U+00C4 / U+00E4</td>
+<td>Nn</td>
+<td>U+004E / U+006E</td>
+</tr>
+<tr class="odd">
+<td>Bb</td>
+<td>U+0042 / U+0062</td>
+<td>Ññ</td>
+<td>U+00D1 / U+00F1</td>
+</tr>
+<tr class="even">
+<td>Cc</td>
+<td>U+0043 / U+0063</td>
+<td>Oo</td>
+<td>U+004F / U+006F</td>
+</tr>
+<tr class="odd">
+<td>Çç</td>
+<td>U+00C7 / U+00E7</td>
+<td>Öö</td>
+<td>U+00D6 / U+00F6</td>
+</tr>
+<tr class="even">
+<td>Dd</td>
+<td>U+0044 / U+0064</td>
+<td>Pp</td>
+<td>U+0050 / U+0070</td>
+</tr>
+<tr class="odd">
+<td>Ee</td>
+<td>U+0045 / U+0065</td>
+<td>Rr</td>
+<td>U+0052 / U+0072</td>
+</tr>
+<tr class="even">
+<td>Ff</td>
+<td>U+0046 / U+0066</td>
+<td>Ss</td>
+<td>U+0053 / U+0073</td>
+</tr>
+<tr class="odd">
+<td>Gg</td>
+<td>U+0047 / U+0067</td>
+<td>Şş</td>
+<td>U+015E / U+015F</td>
+</tr>
+<tr class="even">
+<td>Ğğ</td>
+<td>U+011E / U+011F</td>
+<td>Tt</td>
+<td>U+0054 / U+0074</td>
+</tr>
+<tr class="odd">
+<td>Hh</td>
+<td>U+0048 / U+0068</td>
+<td>Uu</td>
+<td>U+0055 / U+0075</td>
+</tr>
+<tr class="even">
+<td>Xx</td>
+<td>U+0058 / U+0078</td>
+<td>Üü</td>
+<td>U+00DC / U+00FC</td>
+</tr>
+<tr class="odd">
+<td>Iı</td>
+<td>U+0049 / U+0131</td>
+<td>Vv</td>
+<td>U+0056 / U+0076</td>
+</tr>
+<tr class="even">
+<td>İi</td>
+<td>U+0130 / U+0069</td>
+<td>Ww</td>
+<td>U+0057 / U+0077</td>
+</tr>
+<tr class="odd">
+<td>Jj</td>
+<td>U+004A / U+006A</td>
+<td>Yy</td>
+<td>U+0059 / U+0079</td>
+</tr>
+<tr class="even">
+<td>Kk</td>
+<td>U+004B / U+006B</td>
+<td>Zz</td>
+<td>U+005A / U+007A</td>
+</tr>
+<tr class="odd">
+<td>Qq</td>
+<td>U+0051 / U+0071</td>
+<td>Éé</td>
+<td>U+00C9 / U+00E9</td>
+</tr>
+<tr class="even">
+<td>Ll</td>
+<td>U+004C / U+006C</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The implementation uses <em>ä</em> (U+00E4), not Azerbaijani <em>ə</em> (U+0259), and <em>ñ</em> (U+00F1), not <em>ŋ</em> (U+014B). It distinguishes dotless <em>ı</em> (U+0131) and dotted <em>i</em> (U+0069), with capitals <em>I</em> and <em>İ</em> (U+0130). Uyghur additionally uses <em>é</em> (U+00E9) to distinguish its closed vowel from <em>e</em>. Kazakh <em>ұ</em> maps to CTS <em>u</em>, while the national-2021 conversion uses <em>ū</em>; CTS also maps Kazakh <em>у</em> to <em>u</em>, so this conversion is lossy. These choices describe the toolkit’s implemented mapping; whether it conforms exactly to the 2024 commission’s recommendation has not been checked. Unsupported input is copied by the converter, so arbitrary output need not contain only letters from this alphabet.</p>
+<p>The mapping gives some corresponding letters a shared representation: Kazakh <em>Қазақстан</em> becomes <em>Qazaqstan</em>, Azerbaijani <em>Azərbaycan</em> becomes <em>Azärbaycan</em>, Turkmen <em>baý</em> becomes <em>bay</em>. This works only as far as the source spelling goes: phoneme inventories differ across the family, and a distinction a national orthography does not write (Kazakh rounding harmony, <a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a>) is not recovered by conversion.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts <span class="im">import</span> Script</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts.transliterator <span class="im">import</span> Transliterator</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Transliterator(<span class="st">"kaz"</span>, Script.CYRILLIC, Script.COMMON_TURKIC).transliterate(<span class="st">"Қазақстан"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 'Qazaqstan'</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Transliterator(<span class="st">"aze"</span>, Script.LATIN, Script.COMMON_TURKIC).transliterate(<span class="st">"Azərbaycan dili"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 'Azärbaycan dili'</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>Transliterator(<span class="st">"tuk"</span>, Script.LATIN, Script.COMMON_TURKIC).transliterate(<span class="st">"Türkmen dili baýdyr"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 'Türkmen dili baydır'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For the recurring sentences (<a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a>), TurkicNLP 0.5.0 gives these CTS views:</p>
+<pre><code>kaz  Qazaqstan osı öñirdegi beybitşilikti qoldaydı.
+kir  Menin maşinam bar.
+uzb  Toşkentda dzyudo böyiça Gran-pri musobaqasi bölib ötmoqda.
+uig  u şeher sirtidiki bir at harvisini köridu.</code></pre>
+<p>Two details matter for a pipeline. Only the Uyghur conversion has a reverse table in this version: CTS→Perso-Arabic restores the original exactly, while the Kazakh, Kyrgyz and Uzbek CTS views cannot be converted back with the toolkit, so the original must be stored. CTS is also not the treebank’s own romanisation: Uyghur-UDT transliterates the same sentence as <em>u sheher sirtidiki bir at harwisini köridu</em> (ULY), with <em>sh</em> and <em>w</em> where CTS has <em>ş</em> and <em>v</em>.</p>
+<p>CTS gives models and string-matching tools a common written input. Keep the original orthography, store CTS as a derived view and make conversion an explicit option. Community decisions about writing systems belong to speakers (<a href="17-endangered-ethics.html#sec-ethics" class="quarto-xref"><span>Section 17.4</span></a>).</p>
+</section>
+<section id="how-script-conversion-changes-tokenisation-cost" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="how-script-conversion-changes-tokenisation-cost"><span class="header-section-number">3.6.2</span> How Script Conversion Changes Tokenisation Cost</h3>
+<p><a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a> shows that multilingual LLM tokenisers need far more tokens per word for some Turkic languages than for others. Is that because of morphology? On a parallel sample, Turkish needs 1.95–2.33 tokens per word across four tokenisers while Uyghur needs 3.38–6.85. Latin-script languages with few resources, such as Crimean Tatar and Gagauz, are as cheap as Turkish; the expensive languages are those written in Cyrillic or Arabic script <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</p>
+<p>Converting the same sentences to CTS lets us compare their tokenisation cost under two written representations (<a href="#tbl-cts-fertility" class="quarto-xref">Table&nbsp;<span>3.5</span></a>). Conversion may lose distinctions: Kazakh <em>у</em> and <em>ұ</em>, for example, both become <em>u</em>. The comparison therefore says nothing by itself about meaning preservation.</p>
+<p>Fertility is the total token count divided by the number of Unicode alphanumeric runs. Python’s <code>re.findall(r"[^\W_]+", text)</code> extracts those runs from the concatenated sample, excluding underscores. Each run is tokenised separately, without special tokens. The word count is recomputed after conversion and may change if separators change; averages are macro-averages over languages.</p>
+<p>Across the 13 Cyrillic- and Arabic-script languages, fertility drops by 22–41%, depending on the tokeniser. The gap between Latin-script and non-Latin-script languages falls from 0.62–1.70 to at most 0.03 tokens per word. CTS has roughly the compactness of the national Latin orthographies. Under Qwen3.5 it uses fewer tokens than the 2021 Kazakh Latin alphabet (2.28 vs.&nbsp;2.48 per word), but slightly more than Uzbek Latin (2.30 vs.&nbsp;2.12).</p>
+<div id="tbl-cts-fertility" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cts-fertility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.5: Fertility on the parallel challenge sample of <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>. Group means use full-precision values, not the rounded displayed cells. The OpenAI column is the measured <code>o200k_base</code> encoding, not an inference-time model measurement.
+</figcaption>
+<div aria-describedby="tbl-cts-fertility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Script</th>
+<th>Qwen3.5 (native → CTS)</th>
+<th>LLaMA 3 (native → CTS)</th>
+<th>OLMo 3 (native → CTS)</th>
+<th>o200k_base (native → CTS)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kazakh</td>
+<td>Cyrl</td>
+<td>2.86 → 2.28</td>
+<td>3.51 → 2.32</td>
+<td>4.05 → 2.55</td>
+<td>2.37 → 2.29</td>
+</tr>
+<tr class="even">
+<td>Kyrgyz</td>
+<td>Cyrl</td>
+<td>2.84 → 2.16</td>
+<td>3.48 → 2.31</td>
+<td>3.80 → 2.59</td>
+<td>2.52 → 2.12</td>
+</tr>
+<tr class="odd">
+<td>Tatar</td>
+<td>Cyrl</td>
+<td>3.13 → 2.37</td>
+<td>4.13 → 2.59</td>
+<td>4.46 → 2.71</td>
+<td>2.51 → 2.40</td>
+</tr>
+<tr class="even">
+<td>Bashkir</td>
+<td>Cyrl</td>
+<td>3.35 → 2.33</td>
+<td>4.68 → 2.57</td>
+<td>5.00 → 2.68</td>
+<td>2.54 → 2.35</td>
+</tr>
+<tr class="odd">
+<td>Nogai</td>
+<td>Cyrl</td>
+<td>2.92 → 2.02</td>
+<td>3.08 → 2.08</td>
+<td>3.48 → 2.27</td>
+<td>2.65 → 1.98</td>
+</tr>
+<tr class="even">
+<td>Kumyk</td>
+<td>Cyrl</td>
+<td>2.76 → 2.10</td>
+<td>3.06 → 2.23</td>
+<td>3.61 → 2.42</td>
+<td>2.56 → 2.08</td>
+</tr>
+<tr class="odd">
+<td>Karachay-Balkar</td>
+<td>Cyrl</td>
+<td>2.25 → 1.85</td>
+<td>2.52 → 1.88</td>
+<td>2.94 → 2.01</td>
+<td>2.23 → 1.80</td>
+</tr>
+<tr class="even">
+<td>Uyghur</td>
+<td>Arab</td>
+<td>4.51 → 2.26</td>
+<td>5.62 → 2.38</td>
+<td>6.85 → 2.64</td>
+<td>3.38 → 2.26</td>
+</tr>
+<tr class="odd">
+<td>Sakha</td>
+<td>Cyrl</td>
+<td>3.65 → 2.35</td>
+<td>4.21 → 2.43</td>
+<td>4.78 → 2.63</td>
+<td>3.48 → 2.37</td>
+</tr>
+<tr class="even">
+<td>Altai</td>
+<td>Cyrl</td>
+<td>2.83 → 2.06</td>
+<td>3.08 → 2.18</td>
+<td>3.63 → 2.38</td>
+<td>2.63 → 1.97</td>
+</tr>
+<tr class="odd">
+<td>Tuvan</td>
+<td>Cyrl</td>
+<td>2.67 → 2.11</td>
+<td>3.09 → 2.18</td>
+<td>3.59 → 2.23</td>
+<td>2.44 → 2.02</td>
+</tr>
+<tr class="even">
+<td>Khakas</td>
+<td>Cyrl</td>
+<td>2.79 → 2.13</td>
+<td>3.16 → 2.16</td>
+<td>3.94 → 2.37</td>
+<td>2.67 → 2.10</td>
+</tr>
+<tr class="odd">
+<td>Chuvash</td>
+<td>Cyrl</td>
+<td>3.52 → 2.03</td>
+<td>3.66 → 2.18</td>
+<td>4.09 → 2.29</td>
+<td>3.42 → 2.03</td>
+</tr>
+<tr class="even">
+<td><strong>Average (13 languages)</strong></td>
+<td></td>
+<td><strong>3.08 → 2.16</strong></td>
+<td><strong>3.64 → 2.27</strong></td>
+<td><strong>4.17 → 2.45</strong></td>
+<td><strong>2.72 → 2.14</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The frozen full-precision results and a copy of the experiment method are stored beside the table. The historical run does not record tokeniser commit hashes or the mapping revision used at execution time, so these assets reproduce the reported table, not a byte-exact rerun of tokenisation. The measured OpenAI encoding is <code>o200k_base</code>; the table names the encoding directly.</p>
+<p>A common script can also expose cognates to string-based methods. Here, overlap is computed on each language’s concatenated sample: regex-extracted words are lowercased with ordinary Python <code>str.lower()</code> and joined with spaces; the character-trigram Dice score uses sets of trigrams, including those crossing word boundaries. Word overlap is Jaccard similarity of lowercased word sets. Cross-script summaries average unordered language pairs, not aligned sentence-level scores. For language pairs written in different national scripts, character-trigram overlap on the parallel sentences rises from 0 to 0.30 on average after conversion to CTS (Turkish–Kumyk: 0.42), and word-type overlap more than doubles <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</p>
+<div id="fig-cts-overlap" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Paired bar chart of character-trigram overlap with Turkish for 19 Turkic languages; Cyrillic and Arabic-script languages have zero overlap in their native script and between 0.13 and 0.42 after conversion to CTS.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cts-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-cts-overlap/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Paired bar chart of character-trigram overlap with Turkish for 19 Turkic languages; Cyrillic and Arabic-script languages have zero overlap in their native script and between 0.13 and 0.42 after conversion to CTS.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cts-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Character-trigram overlap (Dice coefficient) between each Turkic language and Turkish on parallel sentences, in the native script and after conversion to CTS. Every Cyrillic- and Arabic-script language starts at zero. Data: <code>figures/fig-cts-overlap/data.csv</code>, from <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-cts-overlap" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> shows written overlap after conversion. Gagauz has the highest overlap with Turkish (0.77), followed by Crimean Tatar (0.54) and Azerbaijani (0.46); Chuvash is lowest (0.13). This ordering is not a genealogy: the sample, shared vocabulary and conversion conventions all affect it.</p>
+<p>The sample contains only 20 sentences per language. What it shows is a change in token cost for the tested mappings and tokenisers. Separating the causal contributions of script and morphology would need a different design. Lower fertility also need not improve task accuracy: a model trained on native orthographies may handle CTS poorly.</p>
+<p>To test CTS for a new model, train native-script and converted conditions with matched data and splits. Keep all versions of a document in the same split, and report task quality alongside token cost (<a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a> and <a href="16-cross-lingual-transfer.html" class="quarto-xref"><span>Chapter 16</span></a>).</p>
+</section>
+</section>
+<section id="sec-lid" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="sec-lid"><span class="header-section-number">3.7</span> Language Identification and Corpus Construction</h2>
+<section id="why-identification-is-hard-inside-the-family" class="level3" data-number="3.7.1">
+<h3 data-number="3.7.1" class="anchored" data-anchor-id="why-identification-is-hard-inside-the-family"><span class="header-section-number">3.7.1</span> Why Identification Is Hard Inside the Family</h3>
+<p>Language identification is difficult when neighbouring languages share function words, suffixes and scripts. TurkicNLP wraps GlotLID <span class="citation" data-cites="kargaran-etal-2023-glotlid">(<a href="../references.html#ref-kargaran-etal-2023-glotlid" role="doc-biblioref">Kargaran et al. 2023</a>)</span>, which has more than 2,000 labels. By default, <code>LanguageDetection()</code> restricts predictions to the toolkit’s Turkic labels and renormalises their scores. Russian text, English text and boilerplate must then receive a Turkic label too. The score expresses a preference within that restricted set. Use it only for input already known to be Turkic; for a web crawl, start with the unrestricted model:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install "turkicnlp[lid]==0.5.0"   # GlotLID needs the lid extra (fastText + Hub download)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts.detector <span class="im">import</span> detect_script</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>lid <span class="op">=</span> turkicnlp.LanguageDetection()            <span class="co"># restricted to Turkic labels</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"salam, hemmelere!"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> identify_with_abstention(text, lid, <span class="op">*</span>, min_full_score, min_margin):</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Thresholds must be calibrated on labelled target-domain text."""</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    full_labels, full_probs <span class="op">=</span> lid.model.predict(text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>), k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    supported <span class="op">=</span> <span class="bu">set</span>(lid.available_labels())</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    accepted <span class="op">=</span> (<span class="bu">len</span>(full_labels) <span class="op">&gt;=</span> <span class="dv">2</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> full_labels[<span class="dv">0</span>] <span class="kw">in</span> supported</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> <span class="bu">float</span>(full_probs[<span class="dv">0</span>]) <span class="op">&gt;=</span> min_full_score</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> <span class="bu">float</span>(full_probs[<span class="dv">0</span>] <span class="op">-</span> full_probs[<span class="dv">1</span>]) <span class="op">&gt;=</span> min_margin)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> accepted:</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {<span class="st">"language"</span>: <span class="va">None</span>, <span class="st">"full_labels"</span>: full_labels, <span class="st">"full_scores"</span>: full_probs}</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    labels, probs <span class="op">=</span> lid.predict(text, k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"language"</span>: labels[<span class="dv">0</span>], <span class="st">"labels"</span>: labels, <span class="st">"restricted_scores"</span>: probs,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"full_labels"</span>: full_labels, <span class="st">"full_scores"</span>: full_probs}</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the unrestricted candidates before choosing thresholds.</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Invoke the function only with thresholds selected on held-out calibration data.</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lid.model.predict(text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>), k<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, keep the contact languages in the restricted label set,</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co"># so that Russian or Persian text is not forced into a Turkic label:</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>lid_contact <span class="op">=</span> turkicnlp.LanguageDetection(</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    languages<span class="op">=</span>lid.available_labels() <span class="op">+</span> [<span class="st">"__label__rus_Cyrl"</span>, <span class="st">"__label__pes_Arab"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On the sentences of the parallel UD Turkic test treebanks, GlotLID restricted to Turkic labels is correct for 85.7% of sentences; on the short parallel challenge sentences it reaches only 69.2% <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. The two figures come from test sets with different language compositions and sentence lengths, so they should not be read as a difference between “natural” and “artificial” text. Per-language results for the challenge sample appear in <a href="#fig-lid-accuracy" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>. The errors are systematic: smaller languages are absorbed by a close neighbour written in the same script (<a href="#fig-lid-accuracy" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>, <a href="#tbl-lid-confusions" class="quarto-xref">Table&nbsp;<span>3.6</span></a>).</p>
+<div id="fig-lid-accuracy" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Horizontal bar chart of language identification accuracy for 20 Turkic languages; Karakalpak, Gagauz and Kumyk are below 30 percent and are mostly labelled as Turkish or Karachay-Balkar.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lid-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-lid-accuracy/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Horizontal bar chart of language identification accuracy for 20 Turkic languages; Karakalpak, Gagauz and Kumyk are below 30 percent and are mostly labelled as Turkish or Karachay-Balkar.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lid-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: GlotLID accuracy (restricted to Turkic labels) on 20 parallel challenge sentences per language, with the most frequent wrong label for the weaker languages. Data: <code>figures/fig-lid-accuracy/data.csv</code>, from <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<div id="tbl-lid-confusions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lid-confusions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.6: Language identification for eight smaller Turkic languages: GlotLID restricted to Turkic labels, 20 parallel challenge sentences per language <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. Counts refer to the most frequent recorded wrong label, not all errors.
+</figcaption>
+<div aria-describedby="tbl-lid-confusions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Most frequent wrong label (sentences)</th>
+<th>Challenge-set accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gagauz</td>
+<td>Turkish (18/20)</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>Crimean Tatar</td>
+<td>Turkish (9/20)</td>
+<td>45%</td>
+</tr>
+<tr class="odd">
+<td>Karakalpak (2016 Latin)</td>
+<td>Turkish (11/20)</td>
+<td>0%</td>
+</tr>
+<tr class="even">
+<td>Nogai</td>
+<td>Kyrgyz (8/20)</td>
+<td>35%</td>
+</tr>
+<tr class="odd">
+<td>Altai</td>
+<td>Kyrgyz (8/20)</td>
+<td>55%</td>
+</tr>
+<tr class="even">
+<td>Tuvan</td>
+<td>Kyrgyz (6/20)</td>
+<td>45%</td>
+</tr>
+<tr class="odd">
+<td>Khakas</td>
+<td>Kazakh (9/20)</td>
+<td>35%</td>
+</tr>
+<tr class="even">
+<td>Kumyk</td>
+<td>Karachay-Balkar (7/20)</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Three practical lessons follow:</p>
+<ol type="1">
+<li><strong>Identify before you transliterate.</strong> On text that has been converted to another script, accuracy drops to 48.1% <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. Conversion changes the native-script letter sequences used by the identifier. This result does not isolate which individual cues caused the drop.</li>
+<li><strong>Restrict the label space only for text known to be Turkic.</strong> On the Turkic test sets, restricting GlotLID to Turkic labels gave small gains (+0.6 to +2.0 points) <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>, because it removes confusions with unrelated languages written in the same script. On a web crawl the same restriction mislabels every non-Turkic document. Establish the family first, keep the top-k candidates, allow abstention, and calibrate thresholds on labelled target-domain text that includes Russian and English distractors, short strings, names, boilerplate and code-switching.</li>
+<li><strong>Do not trust language labels in web corpora for the small languages.</strong> Large multilingual web corpora assign languages with identifiers of this kind, so a subset may contain another language, while genuine target-language text may be assigned elsewhere. These error rates require a corpus audit; the challenge set does not measure them. Inspect samples, and for the smaller languages prefer sources with language evidence at the document level (checked news articles, Wikipedia pages or digitised books); a national website may also publish in Russian or other languages.</li>
+</ol>
+</section>
+<section id="from-single-texts-to-corpora" class="level3" data-number="3.7.2">
+<h3 data-number="3.7.2" class="anchored" data-anchor-id="from-single-texts-to-corpora"><span class="header-section-number">3.7.2</span> From Single Texts to Corpora</h3>
+<p>These lessons apply to every document that enters a corpus. <a href="04-corpora-at-scale.html#sec-corpora-pipeline" class="quarto-xref"><span>Section 4.3</span></a> turns them into an ordered pipeline for building a corpus: provenance, NFC, language identification before transliteration, script and orthography metadata, quality filtering, deduplication across scripts, and conversion only in a derived copy.</p>
+</section>
+</section>
+<section id="sec-ch03-hands-on" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="sec-ch03-hands-on"><span class="header-section-number">3.8</span> Hands-On: Checking a Text Pipeline</h2>
+<p><strong>Question.</strong> Which text changes are justified, and what information do they lose?</p>
+<p><strong>Inputs.</strong> The Unicode and conversion examples above, with the declared toolkit mappings.</p>
+<p><strong>Compute.</strong> CPU; some exercises download language-identification models or task data.</p>
+<p><strong>Output.</strong> Original and derived strings, conversion failures and language-ID decisions.</p>
+<p><strong>Interpretation.</strong> Round trips and downstream scores answer different questions, so inspect each on its own.</p>
+<p><strong>Worked step.</strong> Replace the first Cyrillic <em>а</em> (U+0430) in the recurring Kazakh sentence (<a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a>) with a Latin <em>a</em> (U+0061), a common copy-and-paste corruption, and run the checks (output abridged):</p>
+<pre><code>clean      NFC unchanged: True; Latin letters: none
+           detect_script: Cyrl
+           CTS: Qazaqstan osı öñirdegi beybitşilikti qoldaydı.
+corrupted  NFC unchanged: True; Latin letters: ['a U+0061']
+           detect_script: Cyrl
+           segments: [('Қ', Cyrl), ('a', Latn), ('зақстан осы өңірдегі бейбітшілікті қолдайды.', Cyrl)]
+           CTS: Qazaqstan osı öñirdegi beybitşilikti qoldaydı.
+strings equal: False | CTS views equal: True</code></pre>
+<p>NFC normalisation and whole-text script detection both miss the corruption; only the per-segment check finds it. The CTS view hides it entirely, because Latin <em>a</em> and Cyrillic <em>а</em> map to the same letter. Run homoglyph checks on the original text, before any conversion, and keep the original.</p>
+<p><strong>Status: demonstration.</strong> The checks above are recorded output. Exercises 1–5 work through text handling; Exercises 6, 8 and 9 extend the comparison to language identification and tagging.</p>
+</section>
+<section id="sec-ch03-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch03-synthesis">What to Take Forward</h2>
+<p>A reliable text pipeline keeps the original and records every derived view, with the direction and convention of each conversion. Conversion can reduce token counts: for the 13 Cyrillic- and Arabic-script languages in the TurkicNLP measurements, CTS lowers tokeniser fertility by 22–41% <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. It can also lose information, which is why round trips and downstream scores are checked separately. Convert only when the task benefits and the loss is recorded, and let the language identifier abstain when it is uncertain. <a href="04-corpora-at-scale.html" class="quarto-xref"><span>Chapter 4</span></a> makes these decisions part of corpus metadata.</p>
+</section>
+<section id="sec-ch03-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch03-further-reading">Further Reading</h2>
+<ul>
+<li><strong>Script history</strong>: <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021, chap. 19</a>)</span> covers the history of Turkic writing systems from Old Turkic runic to the 20th century.</li>
+<li><strong>Unicode standard</strong>: The Unicode Consortium’s <em>The Unicode Standard</em> (current version) documents all relevant code blocks. Use the <a href="https://www.unicode.org/charts/PDF/U10C00.pdf">Old Turkic code chart</a> for character identities and code points.</li>
+<li><strong>Turkish casing</strong>: Unicode’s <a href="https://www.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt">SpecialCasing</a> file lists the language-specific dotted/dotless I mappings for Turkish and Azerbaijani; <span class="citation" data-cites="coltekin2022resources">Çöltekin, Doğruöz, and Çetinoğlu (<a href="../references.html#ref-coltekin2022resources" role="doc-biblioref">2023</a>)</span> surveys Turkish NLP resources more generally.</li>
+<li><strong>TurkicNLP toolkit</strong>: <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span> describes the transliteration, script detection, CTS conversion and language identification used in this chapter, with their evaluation.</li>
+<li><strong>Language identification</strong>: <span class="citation" data-cites="kargaran-etal-2023-glotlid">Kargaran et al. (<a href="../references.html#ref-kargaran-etal-2023-glotlid" role="doc-biblioref">2023</a>)</span> describes GlotLID.</li>
+<li><strong>Transliteration for transfer</strong>: <span class="citation" data-cites="muller2021unseen">Muller et al. (<a href="../references.html#ref-muller2021unseen" role="doc-biblioref">2021</a>)</span> show for Uyghur, among other languages, that transliterating an unseen script into Latin helps multilingual models.</li>
+<li><strong>Apertium transliteration</strong>: <span class="citation" data-cites="khanna2021apertium">Khanna et al. (<a href="../references.html#ref-khanna2021apertium" role="doc-biblioref">2021</a>)</span> covers the Apertium approach to script conversion as part of MT pipelines.</li>
+</ul>
+</section>
+<section id="sec-ch03-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch03-exercises">Exercises</h2>
+<ol type="1">
+<li><p><strong>Unicode investigation.</strong> Run <code>"İstanbul".lower()</code>, <code>"ISPARTA".lower()</code> and <code>turkish_lower_nfc("I\u0307STANBUL")</code> from <a href="#sec-unicode" class="quarto-xref"><span>Section 3.3</span></a>. Print <code>repr</code>, <code>len</code> and the code points of each result. Explain why the standard <code>str.lower()</code> is incorrect for Turkish, and why the helper normalises to NFC first.</p></li>
+<li><p><strong>Homoglyph detection.</strong> Write a Python function <code>detect_homoglyphs(text)</code> that returns a list of (position, character, codepoint) tuples where the character is a Cyrillic/Latin homoglyph (use the table in <a href="#sec-unicode" class="quarto-xref"><span>Section 3.3</span></a>). Test it on a string that mixes Cyrillic <code>а</code> (U+0430) and Latin <code>a</code> (U+0061).</p></li>
+<li><p><strong>Transliteration by hand.</strong> Using the toolkit’s Kazakh mapping (based on the 2021 proposal; print the table from <code>Transliterator("kaz", Script.CYRILLIC, Script.LATIN)</code>), convert <em>Алматы</em>, <em>Қазақстан</em>, <em>Астана</em> and <em>киім</em> (‘clothes’) by hand, then check your answers with the toolkit. Identify one mapping whose reverse is ambiguous and explain what additional information would be needed to convert back. Why does implementing a mapping say nothing about its legal status?</p></li>
+<li><p><strong>Pipeline ordering.</strong> You have Kazakh text in Cyrillic and Latin, some of it diacritic-dropped, and a restoration model trained on noisy Cyrillic paired with corrected Cyrillic. Design a pipeline that preserves the original and records the script of each span. Where can that restoration model be applied, and why? How would the design change if the restoration model had been trained on Latin text instead?</p></li>
+<li><p><strong>Round trips.</strong> Take 50 Uzbek sentences in Latin script (for example from FLORES-200, <code>uzn_Latn</code>). Convert them to Cyrillic and back with <code>Transliterator("uzb", …)</code>. Which sentences do not survive the round trip unchanged? Classify the differences (apostrophe variants for <em>oʻ</em>/<em>gʻ</em>, the tutuq belgisi, loanwords, capitalisation), and say which ones matter for a corpus.</p></li>
+<li><p><strong>Identify, then transliterate.</strong> Choose 20 Kyrgyz sentences. Run <code>turkicnlp.LanguageDetection()</code> on them as they are, then again after converting them to CTS. How does accuracy change, and which wrong labels appear? Relate the result to <a href="#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>.</p></li>
+<li><p><strong>Script transition implications.</strong> <em>In this hypothetical exercise</em>, a researcher has scraped Kazakh web text in which 60% of the documents are in Cyrillic and 40% in Latin (following the 2021 proposal plus informal variants). Describe three specific problems this mixed-script corpus will cause if used without preprocessing, and propose a concrete solution for each. Would your answer change if the 60/40 split counted words instead of documents?</p></li>
+<li><p><strong>Abstention in language identification.</strong> Build a sample of 100 short texts: 60 in Turkic languages, 20 in Russian, 10 in English and 10 mixed Kazakh–Russian. Run <code>LanguageDetection()</code> restricted to Turkic labels and the unrestricted model. For a range of thresholds, report precision for each Turkic language and the share of non-Turkic texts that are accepted. Which threshold and abstention rule would you choose for a crawl, and why?</p></li>
+<li><p><strong>Does conversion help the task?</strong> Choose a task with data in a Cyrillic-script Turkic language (for example POS tagging of Kazakh). Train and evaluate the same model on native-script and CTS versions of the same split. Report task accuracy and tokens per word for both. Is the conversion worth it?</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-akipress2024alphabet" class="csl-entry" role="listitem">
+AKIpress. 2024. <span>“Turkic Academy Publishes Declaration on Common <span>T</span>urkic Alphabet.”</span> AKIpress News Agency, 17 September 2024. <a href="https://akipress.com/news:796275:Turkic_Academy_publishes_Declaration_on_common_Turkic_alphabet/">https://akipress.com/news:796275:Turkic_Academy_publishes_Declaration_on_common_Turkic_alphabet/</a>.
+</div>
+<div id="ref-coltekin2022resources" class="csl-entry" role="listitem">
+Çöltekin, Çağrı, A. Seza Doğruöz, and Özlem Çetinoğlu. 2023. <span>“Resources for <span>Turkish</span> Natural Language Processing: A Critical Survey.”</span> <em>Language Resources and Evaluation</em> 57 (1): 449–88. <a href="https://doi.org/10.1007/s10579-022-09605-4">https://doi.org/10.1007/s10579-022-09605-4</a>.
+</div>
+<div id="ref-istanbul_symposium_1991" class="csl-entry" role="listitem">
+Devlet, Nadir, ed. 1992. <em>Milletlerarası Çağdaş <span>T</span>ürk Alfabeleri Sempozyumu, 18–20 Kasım 1991</em>. Marmara Üniversitesi Yayın No. 509; Türkiyat Araştırmaları Enstitüsü Yayın No. 1. Istanbul: Marmara Üniversitesi Türkiyat Araştırmaları Enstitüsü. <a href="https://mupress-source.marmara.edu.tr/1366-file-pdf-milletlerarasi-cagdas-turk-alfabeleri-sempozyumu-18-20-kasim-1991_1783668182.pdf">https://mupress-source.marmara.edu.tr/1366-file-pdf-milletlerarasi-cagdas-turk-alfabeleri-sempozyumu-18-20-kasim-1991_1783668182.pdf</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+<div id="ref-kargaran-etal-2023-glotlid" class="csl-entry" role="listitem">
+Kargaran, Amir Hossein, Ayyoob Imani, François Yvon, and Hinrich Schuetze. 2023. <span>“<span>G</span>lot<span>LID</span>: Language Identification for Low-Resource Languages.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>EMNLP</span> 2023</em>, 6155–6218. Singapore: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.findings-emnlp.410">https://doi.org/10.18653/v1/2023.findings-emnlp.410</a>.
+</div>
+<div id="ref-khanna2021apertium" class="csl-entry" role="listitem">
+Khanna, Tanmai, Jonathan N. Washington, Francis M. Tyers, Sevilay Bayatlı, Daniel G. Swanson, Tommi A. Pirinen, Irene Tang, and Hèctor Alòs i Font. 2021. <span>“Recent Advances in <span>Apertium</span>, a Free/Open-Source Rule-Based Machine Translation Platform for Low-Resource Languages.”</span> <em>Machine Translation</em> 35 (4): 475–502. <a href="https://doi.org/10.1007/s10590-021-09260-6">https://doi.org/10.1007/s10590-021-09260-6</a>.
+</div>
+<div id="ref-muller2021unseen" class="csl-entry" role="listitem">
+Muller, Benjamin, Antonios Anastasopoulos, Benoît Sagot, and Djamé Seddah. 2021. <span>“When Being Unseen from m<span>BERT</span> Is Just the Beginning: Handling New Languages with Multilingual Language Models.”</span> In <em>Proceedings of the 2021 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies</em>, 448–62. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.naacl-main.38">https://doi.org/10.18653/v1/2021.naacl-main.38</a>.
+</div>
+<div id="ref-steimel-etal-2020-fine" class="csl-entry" role="listitem">
+Steimel, Kenneth, Akbar Amat, Arienne Dwyer, and Sandra Kübler. 2020. <span>“Fine-Grained Morpho-Syntactic Analysis for the Under-Resourced Language <span>C</span>haghatay.”</span> In <em>Proceedings of the 19th International Workshop on Treebanks and Linguistic Theories</em>, 43–54. Düsseldorf, Germany: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.tlt-1.4">https://doi.org/10.18653/v1/2020.tlt-1.4</a>.
+</div>
+<div id="ref-ots_alphabet_2024" class="csl-entry" role="listitem">
+Turkic World Common Alphabet Commission. 2024. <span>“Declaration on Common <span>T</span>urkic Alphabet.”</span> Published by the International Turkic Academy, 16 September 2024. <a href="https://turkicacademy.org/en/smi/declaration-common-turkic-alphabet">https://turkicacademy.org/en/smi/declaration-common-turkic-alphabet</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/02-computational-phenotype.html" class="pagination-link" aria-label="The Computational Phenotype of Turkic Languages">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/04-corpora-at-scale.html" class="pagination-link" aria-label="Building Turkic Corpora at Scale">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

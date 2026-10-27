@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>9&nbsp; Sequence Labelling: POS Tagging, NER, and Chunking – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/10-machine-translation.html" rel="next">
+<link href="../chapters/08-syntax-ud.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html">Applications</a></li><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-pos-tagging" id="toc-sec-pos-tagging" class="nav-link active" data-scroll-target="#sec-pos-tagging"><span class="header-section-number">9.1</span> POS Tagging and Morphological Analysis</a>
+  <ul class="collapse">
+  <li><a href="#pos-tagging-and-morphological-disambiguation" id="toc-pos-tagging-and-morphological-disambiguation" class="nav-link" data-scroll-target="#pos-tagging-and-morphological-disambiguation"><span class="header-section-number">9.1.1</span> POS Tagging and Morphological Disambiguation</a></li>
+  <li><a href="#the-upos-set-for-turkic" id="toc-the-upos-set-for-turkic" class="nav-link" data-scroll-target="#the-upos-set-for-turkic"><span class="header-section-number">9.1.2</span> The UPOS Set for Turkic</a></li>
+  <li><a href="#evaluation-results-across-turkic-languages" id="toc-evaluation-results-across-turkic-languages" class="nav-link" data-scroll-target="#evaluation-results-across-turkic-languages"><span class="header-section-number">9.1.3</span> Evaluation Results Across Turkic Languages</a></li>
+  <li><a href="#cross-lingual-pos-tagging" id="toc-cross-lingual-pos-tagging" class="nav-link" data-scroll-target="#cross-lingual-pos-tagging"><span class="header-section-number">9.1.4</span> Cross-Lingual POS Tagging</a></li>
+  </ul></li>
+  <li><a href="#sec-ner" id="toc-sec-ner" class="nav-link" data-scroll-target="#sec-ner"><span class="header-section-number">9.2</span> Named Entity Recognition in Agglutinative Languages</a>
+  <ul class="collapse">
+  <li><a href="#the-case-suffix-problem" id="toc-the-case-suffix-problem" class="nav-link" data-scroll-target="#the-case-suffix-problem"><span class="header-section-number">9.2.1</span> The Case Suffix Problem</a></li>
+  <li><a href="#bio-tagging-strategies" id="toc-bio-tagging-strategies" class="nav-link" data-scroll-target="#bio-tagging-strategies"><span class="header-section-number">9.2.2</span> BIO Tagging Strategies</a></li>
+  <li><a href="#turkic-ner-datasets" id="toc-turkic-ner-datasets" class="nav-link" data-scroll-target="#turkic-ner-datasets"><span class="header-section-number">9.2.3</span> Turkic NER Datasets</a></li>
+  <li><a href="#neural-ner-architectures" id="toc-neural-ner-architectures" class="nav-link" data-scroll-target="#neural-ner-architectures"><span class="header-section-number">9.2.4</span> Neural NER Architectures</a></li>
+  </ul></li>
+  <li><a href="#sec-crosslingual-ner" id="toc-sec-crosslingual-ner" class="nav-link" data-scroll-target="#sec-crosslingual-ner"><span class="header-section-number">9.3</span> Cross-Lingual NER Transfer</a>
+  <ul class="collapse">
+  <li><a href="#encoder-coverage-task-language-and-script" id="toc-encoder-coverage-task-language-and-script" class="nav-link" data-scroll-target="#encoder-coverage-task-language-and-script"><span class="header-section-number">9.3.1</span> Encoder Coverage, Task Language and Script</a></li>
+  <li><a href="#entity-distribution-shift" id="toc-entity-distribution-shift" class="nav-link" data-scroll-target="#entity-distribution-shift"><span class="header-section-number">9.3.2</span> Entity Distribution Shift</a></li>
+  <li><a href="#label-schemes-and-domains" id="toc-label-schemes-and-domains" class="nav-link" data-scroll-target="#label-schemes-and-domains"><span class="header-section-number">9.3.3</span> Label Schemes and Domains</a></li>
+  <li><a href="#zero-shot-vs.-few-shot-ner" id="toc-zero-shot-vs.-few-shot-ner" class="nav-link" data-scroll-target="#zero-shot-vs.-few-shot-ner"><span class="header-section-number">9.3.4</span> Zero-Shot vs.&nbsp;Few-Shot NER</a></li>
+  </ul></li>
+  <li><a href="#sec-other-labeling" id="toc-sec-other-labeling" class="nav-link" data-scroll-target="#sec-other-labeling"><span class="header-section-number">9.4</span> Other Sequence Labelling Tasks</a>
+  <ul class="collapse">
+  <li><a href="#chunking" id="toc-chunking" class="nav-link" data-scroll-target="#chunking"><span class="header-section-number">9.4.1</span> Chunking</a></li>
+  <li><a href="#semantic-role-labelling" id="toc-semantic-role-labelling" class="nav-link" data-scroll-target="#semantic-role-labelling"><span class="header-section-number">9.4.2</span> Semantic Role Labelling</a></li>
+  </ul></li>
+  <li><a href="#sec-ner-toolkit" id="toc-sec-ner-toolkit" class="nav-link" data-scroll-target="#sec-ner-toolkit"><span class="header-section-number">9.5</span> Pretrained Taggers and Recognisers in TurkicNLP</a>
+  <ul class="collapse">
+  <li><a href="#measured-pretrained-kaznerd-baseline" id="toc-measured-pretrained-kaznerd-baseline" class="nav-link" data-scroll-target="#measured-pretrained-kaznerd-baseline"><span class="header-section-number">9.5.1</span> Measured pretrained KazNERD baseline</a></li>
+  </ul></li>
+  <li><a href="#sec-ch09-hands-on" id="toc-sec-ch09-hands-on" class="nav-link" data-scroll-target="#sec-ch09-hands-on"><span class="header-section-number">9.6</span> Hands-On: A Fine-Tuning Procedure for Kazakh NER with XLM-R</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">9.6.1</span> Setup</a></li>
+  <li><a href="#loading-kaznerd" id="toc-loading-kaznerd" class="nav-link" data-scroll-target="#loading-kaznerd"><span class="header-section-number">9.6.2</span> Loading KazNERD</a></li>
+  <li><a href="#tokenising-with-word-alignment" id="toc-tokenising-with-word-alignment" class="nav-link" data-scroll-target="#tokenising-with-word-alignment"><span class="header-section-number">9.6.3</span> Tokenising with Word Alignment</a></li>
+  <li><a href="#defining-the-evaluation-metric" id="toc-defining-the-evaluation-metric" class="nav-link" data-scroll-target="#defining-the-evaluation-metric"><span class="header-section-number">9.6.4</span> Defining the Evaluation Metric</a></li>
+  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning"><span class="header-section-number">9.6.5</span> Fine-Tuning</a></li>
+  <li><a href="#evaluating-on-the-test-set" id="toc-evaluating-on-the-test-set" class="nav-link" data-scroll-target="#evaluating-on-the-test-set"><span class="header-section-number">9.6.6</span> Evaluating on the Test Set</a></li>
+  <li><a href="#zero-shot-application-to-kyrgyz" id="toc-zero-shot-application-to-kyrgyz" class="nav-link" data-scroll-target="#zero-shot-application-to-kyrgyz"><span class="header-section-number">9.6.7</span> Zero-Shot Application to Kyrgyz</a></li>
+  </ul></li>
+  <li><a href="#sec-ch09-synthesis" id="toc-sec-ch09-synthesis" class="nav-link" data-scroll-target="#sec-ch09-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch09-further-reading" id="toc-sec-ch09-further-reading" class="nav-link" data-scroll-target="#sec-ch09-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch09-exercises" id="toc-sec-ch09-exercises" class="nav-link" data-scroll-target="#sec-ch09-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html">Applications</a></li><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-09-sequence-labeling" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Explain how POS tagging and morphological disambiguation interact in Turkic and when joint modelling is worth testing</li>
+<li>Describe the case suffix problem in Turkic NER, compare word-level and morpheme-level BIO tagging, and separate mention detection from name normalisation and entity linking</li>
+<li>Characterise the existing Turkic NER datasets (KazNERD, KyrgyzNER, Turkish datasets, WikiANN and others) as a dated inventory</li>
+<li>Prepare a reproducible NER fine-tuning procedure with XLM-R and the Hugging Face Trainer API, and name micro and macro F1 correctly when reporting results</li>
+<li>Design cross-lingual NER experiments that separate script, entity-distribution, domain and label-scheme effects</li>
+<li>Describe Turkish PropBank and distinguish overt-argument SRL from implicit-argument recovery in pro-drop languages</li>
+</ul>
+</div>
+</div>
+<p><strong>Sequence labelling</strong> assigns labels to tokens or spans. This chapter focuses on named entity recognition (NER): finding mentions such as people, organisations and places. It also covers POS tagging, phrase chunking and semantic role labelling.</p>
+<p>These tasks use different labels. POS tagging assigns grammatical categories to words. NER marks mention boundaries and types. Chunking groups words into shallow phrases. Semantic role labelling identifies a predicate’s arguments and their roles.</p>
+<p>Morphology matters in each task. Names can carry case suffixes, POS tags depend on the chosen word analysis, and omitted arguments require a separate treatment in semantic analysis. The examples below distinguish these linguistic issues from dataset-specific annotation rules.</p>
+<section id="sec-pos-tagging" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-pos-tagging"><span class="header-section-number">9.1</span> POS Tagging and Morphological Analysis</h2>
+<section id="pos-tagging-and-morphological-disambiguation" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="pos-tagging-and-morphological-disambiguation"><span class="header-section-number">9.1.1</span> POS Tagging and Morphological Disambiguation</h3>
+<p>POS tags capture some grammatical distinctions; morphological features supply others. This division applies to English as well as Turkic languages, and its details depend on the annotation scheme.</p>
+<p>Choosing a full analysis also chooses a POS tag: selecting <em>yüz+Num</em> assigns UPOS=NUM. The reverse does not hold. Turkish <em>evi</em> can mean ‘his/her house’ or ‘the house (ACC)’; both readings are nouns. Joint models such as TurkishDelightNLP <span class="citation" data-cites="alecakir2022turkishdelightnlp">(<a href="../references.html#ref-alecakir2022turkishdelightnlp" role="doc-biblioref">Alecakir, Bölücü, and Can 2022</a>)</span> share information between POS and morphological prediction.</p>
+<p>Compare joint prediction with a POS-only baseline on the same data. The neural morphology tutorial provides one joint tagging design (<a href="07-neural-morphology.html#sec-ch07-hands-on" class="quarto-xref"><span>Section 7.6</span></a>).</p>
+</section>
+<section id="the-upos-set-for-turkic" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="the-upos-set-for-turkic"><span class="header-section-number">9.1.2</span> The UPOS Set for Turkic</h3>
+<p>UD uses 17 universal POS categories. The following distinctions need attention in Turkic annotation.</p>
+<p><strong>VERB vs.&nbsp;AUX.</strong> Turkish light verb constructions include <em>yardım etmek</em> “to help”, literally “to do help”. The status of verbs such as <em>et-</em>, <em>yap-</em> and <em>ol-</em> depends on the construction and the treebank’s annotation policy. Inspect those guidelines before combining datasets (<a href="08-syntax-ud.html#sec-ud-framework" class="quarto-xref"><span>Section 8.2</span></a>). A disagreement between VERB and AUX can reflect an annotation mismatch; it can also be a model error within a consistently annotated dataset.</p>
+<p><strong>ADP.</strong> Postpositions are common in Turkic languages; both prepositions and postpositions are tagged ADP in UPOS. The postposition follows its complement nominal, so a strictly left-to-right model sees the postposition only after the nominal it relates to, the reverse of English order. Bidirectional encoders see both, so this matters mainly for incremental (left-to-right) taggers.</p>
+<p><strong>NOUN vs.&nbsp;PROPN.</strong> Proper names can take the same suffixes as common nouns, and a common noun can also be used as a name. Context helps distinguish them. Capitalisation and gazetteers provide additional evidence, but neither is required to be correct or complete.</p>
+<p><strong>PART.</strong> “Particle” is a linguistic description, not a guarantee of UPOS=PART. Turkish question <em>mı/mi/mu/mü</em> and additive <em>da/de</em> are written separately in standard orthography. Treebanks may assign different categories to them, including AUX for the question marker; inspect the selected treebank’s UPOS and dependency conventions rather than inferring them from a suffix-like pronunciation.</p>
+</section>
+<section id="evaluation-results-across-turkic-languages" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="evaluation-results-across-turkic-languages"><span class="header-section-number">9.1.3</span> Evaluation Results Across Turkic Languages</h3>
+<p><a href="08-syntax-ud.html#tbl-parsing-results" class="quarto-xref">Table&nbsp;<span>8.7</span></a> compares per-language Stanza models with a multilingual tagger. Its frozen manuscript snapshot reports higher UPOS for the multilingual system on Uzbek (71.8 → 87.6) and Kyrgyz (71.1 → 79.0). The scores cover matched words only, and the table includes gold and silver reference sets. Differences beyond multilingual training may contribute to the results; <a href="08-syntax-ud.html#sec-parsing" class="quarto-xref"><span>Section 8.4</span></a> gives the source and scoring conditions.</p>
+</section>
+<section id="cross-lingual-pos-tagging" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="cross-lingual-pos-tagging"><span class="header-section-number">9.1.4</span> Cross-Lingual POS Tagging</h3>
+<p>Zero-shot POS tagging applies a model to a language without task-specific training on that language. The small Karakalpak and Kumyk samples in <a href="08-syntax-ud.html#tbl-parsing-results" class="quarto-xref">Table&nbsp;<span>8.7</span></a> illustrate this setup with proxy-language embeddings. Report per-tag errors as well as the overall score; shared suffix patterns cannot predict which POS categories will transfer best.</p>
+</section>
+</section>
+<section id="sec-ner" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-ner"><span class="header-section-number">9.2</span> Named Entity Recognition in Agglutinative Languages</h2>
+<section id="the-case-suffix-problem" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="the-case-suffix-problem"><span class="header-section-number">9.2.1</span> The Case Suffix Problem</h3>
+<p>Inflected names raise two separate questions: can a system recognise an unfamiliar surface form, and where should the annotated mention end? The first concerns generalisation; the second depends on the dataset’s boundary policy.</p>
+<p><strong>Capitalisation helps, but entities need not be capitalised.</strong> Informal Latin- and Cyrillic-script text may omit capitals. Perso-Arabic writing, including Ottoman Turkish, has no upper/lowercase distinction. NER therefore also needs contextual and lexical evidence.</p>
+<p><strong>Entities inflect.</strong> Names take suffixes, but not every mention has an overt case marker. An unmarked form is not necessarily a subject. The Kazakh city name <em>Алматы</em> (Almaty) illustrates the surface variation:</p>
+<div id="tbl-almaty-cases" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-almaty-cases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.1: The Kazakh city name <em>Алматы</em> in six cases (the instrumental <em>Алматымен</em> ‘with Almaty’ is a seventh). A recogniser needs to detect mentions in these inflected forms; resolving their identity is a separate task. In Turkish, the apostrophe (<em>Almatı’ya</em>, <em>Almatı’dan</em>) separates the name from its suffix in formal writing, but is often omitted in informal text (<em>Almatıya</em>, <em>Almatıdan</em>).
+</figcaption>
+<div aria-describedby="tbl-almaty-cases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Case</th>
+<th>Kazakh form</th>
+<th>Gloss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nominative</td>
+<td><em>Алматы</em></td>
+<td>Almaty (unmarked)</td>
+</tr>
+<tr class="even">
+<td>Genitive</td>
+<td><em>Алматының</em></td>
+<td>of Almaty</td>
+</tr>
+<tr class="odd">
+<td>Dative</td>
+<td><em>Алматыға</em></td>
+<td>to Almaty</td>
+</tr>
+<tr class="even">
+<td>Locative</td>
+<td><em>Алматыда</em></td>
+<td>in Almaty</td>
+</tr>
+<tr class="odd">
+<td>Ablative</td>
+<td><em>Алматыдан</em></td>
+<td>from Almaty</td>
+</tr>
+<tr class="even">
+<td>Accusative</td>
+<td><em>Алматыны</em></td>
+<td>Almaty (object)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>A dictionary that matches only <em>Алматы</em> misses <em>Алматыдан</em>. A learned model may also struggle with inflected forms that are rare in its training data. Exercise 1 tests this by measuring the distribution of case forms and recall for each case.</p>
+<p><strong>Mention boundaries depend on annotation.</strong> Turkish <em>Ankara’da</em> contains the name <em>Ankara</em> and a locative suffix. A dataset may label the whole token or only the name. The apostrophe helps locate the suffix in formal Turkish, but informal <em>Ankarada</em> lacks it. Kazakh <em>Алматыдан</em> likewise has no separator. Follow the chosen annotation policy rather than assuming that every NER span must stop at the stem. The recurring Uzbek sentence (<a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a>) has the same choice to make for <em>Toshkentda</em> ‘in Tashkent’, while Kazakh <em>Қазақстан</em> appears unmarked.</p>
+</section>
+<section id="bio-tagging-strategies" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="bio-tagging-strategies"><span class="header-section-number">9.2.2</span> BIO Tagging Strategies</h3>
+<p>The standard BIO (Begin, Inside, Outside) tagging scheme labels each token as either the beginning of an entity span (B-TYPE), the continuation of a span (I-TYPE), or outside any span (O). Two possible labelling units are words and morphological segments:</p>
+<p><strong>Word-level BIO.</strong> Tag each word token with a BIO label, including the case suffix. <em>Алматыдан</em> → B-LOC. The entity boundary is the word boundary. This matches datasets whose mention spans include the suffix.</p>
+<p><strong>Morpheme-level BIO.</strong> Segment words into morphemes before tagging, then tag each morpheme. <em>Алматы-дан</em> → B-LOC, O. This example assumes a stem-only boundary policy. Possessive and derivational forms (<em>Алматылық</em> ‘from Almaty, Almaty-an’) need explicit rules. The cost is a morphological segmenter as a required upstream component, and the segmenter’s errors can affect mention boundaries (<a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a> and <a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
+<p>Neither strategy by itself produces a canonical name or an entity identity. Three outputs should be kept apart, as in this example:</p>
+<div id="tbl-ner-three-outputs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ner-three-outputs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.2: Three different outputs for one Kazakh mention. A stem-only span is not necessarily the canonical name (multiword names, aliases and inflected modifiers inside names need their own rules), and a canonical name is not yet an identity: ambiguous names need linking.
+</figcaption>
+<div aria-describedby="tbl-ner-three-outputs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 79%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Example for <em>Алматыдан келдім</em> ‘I came from Almaty’</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mention span in the original text</td>
+<td>zero-based span <code>[0, 9)</code>, <em>Алматыдан</em>, LOC</td>
+<td>NER (what datasets annotate)</td>
+</tr>
+<tr class="even">
+<td>Normalised name</td>
+<td><em>Алматы</em></td>
+<td>name normalisation (lemmatisation, rules for multiword and possessive names)</td>
+</tr>
+<tr class="odd">
+<td>Linked entity</td>
+<td>the city of Almaty, represented by an identifier in the chosen knowledge base, or <em>unresolved</em></td>
+<td>entity linking</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Score mention spans against each dataset’s own boundary policy, and evaluate normalisation and linking as separate tasks.</p>
+<p>KazNERD <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span> and WikiANN <span class="citation" data-cites="pan2017wikiann">(<a href="../references.html#ref-pan2017wikiann" role="doc-biblioref">Pan et al. 2017</a>)</span> supply token-level labels, so the tutorial uses word-level BIO. Yeniterzi’s Turkish CRF study represents a word as a root state followed by morphological-feature states, while constraining those states to preserve the word’s entity label. This is different from excluding suffixes from mention spans. Its morpheme-level and word-level scores were 88.94 and 88.71 F1; the difference was not significant <span class="citation" data-cites="yeniterzi2011exploiting">(<a href="../references.html#ref-yeniterzi2011exploiting" role="doc-biblioref">Yeniterzi 2011, 107–9</a>)</span>.</p>
+</section>
+<section id="turkic-ner-datasets" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="turkic-ner-datasets"><span class="header-section-number">9.2.3</span> Turkic NER Datasets</h3>
+<p><a href="#tbl-turkic-ner-resources" class="quarto-xref">Table&nbsp;<span>9.3</span></a> is a dated inventory of the resources identified in a survey for this chapter (October 2026). It separates human annotation from weak supervision and automatic projection, because they support different conclusions. Where the table says a field is “not stated”, the source we checked did not give it.</p>
+<div id="tbl-turkic-ner-resources" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-turkic-ner-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.3: Turkic NER resources identified in this survey (searched 2026-10-13; not exhaustive). Human annotation, weak supervision and automatic projection are kept apart; fields the source does not state are marked as such. WikiANN sizes are those of the commonly used Hugging Face splits.
+</figcaption>
+<div aria-describedby="tbl-turkic-ner-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language(s)</th>
+<th>Resource</th>
+<th>Annotation</th>
+<th>Labels</th>
+<th>Domain</th>
+<th>Size</th>
+<th>Access / licence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kazakh</td>
+<td>KazNERD <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span></td>
+<td>human</td>
+<td>25 classes (IOB2)</td>
+<td>TV news transcripts</td>
+<td>90,228 / 11,167 / 11,307 sentences (train/dev/test)</td>
+<td>CC BY 4.0; github.com/IS2AI/KazNERD; HF issai/kaznerd</td>
+</tr>
+<tr class="even">
+<td>Kyrgyz</td>
+<td>KyrgyzNER <span class="citation" data-cites="turatali2025kyrgyzner">(<a href="../references.html#ref-turatali2025kyrgyzner" role="doc-biblioref">Turatali et al. 2025</a>)</span></td>
+<td>human</td>
+<td>27 classes (25 occur in the release)</td>
+<td>news (24.kg, 2017–2022)</td>
+<td>10,900 sentences: 7,033 train / 3,867 test, no dev; 16,819 entity spans (the paper’s 39,075 “mentions” count entity-tagged tokens)</td>
+<td>Dataset CC BY-NC-SA 4.0; code and models MIT (README); github.com/Akyl-AI/KyrgyzNER</td>
+</tr>
+<tr class="odd">
+<td>Uzbek</td>
+<td>Uzbek Legal NER <span class="citation" data-cites="saidov2026uzbekner">(<a href="../references.html#ref-saidov2026uzbekner" role="doc-biblioref">Saidov et al. 2026</a>)</span></td>
+<td>semi-automatic candidates + staged human review; synthetic records for rare labels</td>
+<td>12 classes</td>
+<td>legal</td>
+<td>14,036 records; splits not reported</td>
+<td>CC BY 4.0; Zenodo 10.5281/zenodo.19682709</td>
+</tr>
+<tr class="even">
+<td>Azerbaijani</td>
+<td>LocalDoc azerbaijani-ner-dataset <span class="citation" data-cites="localdoc2024azner">(<a href="../references.html#ref-localdoc2024azner" role="doc-biblioref">LocalDoc, n.d.</a>)</span></td>
+<td>not stated on the dataset card</td>
+<td>includes PERSON, LOCATION, ORGANISATION (full list not checked)</td>
+<td>not stated on the dataset card</td>
+<td>99,545 examples, single split</td>
+<td>CC BY-NC 4.0; HF LocalDoc/azerbaijani-ner-dataset</td>
+</tr>
+<tr class="odd">
+<td>Uyghur</td>
+<td>Azmat et al. <span class="citation" data-cites="azmat2020uyghurner">(<a href="../references.html#ref-azmat2020uyghurner" role="doc-biblioref">Azmat et al. 2020</a>)</span></td>
+<td>automatic (tags projected from Chinese through MT)</td>
+<td>not stated in the abstract</td>
+<td>not stated in the abstract</td>
+<td>not stated in the abstract</td>
+<td>release not stated</td>
+</tr>
+<tr class="even">
+<td>Turkish</td>
+<td>several datasets <span class="citation" data-cites="safaya2022mukayese coltekin2022resources">(<a href="../references.html#ref-safaya2022mukayese" role="doc-biblioref">Safaya et al. 2022</a>; <a href="../references.html#ref-coltekin2022resources" role="doc-biblioref">Çöltekin, Doğruöz, and Çetinoğlu 2023</a>)</span></td>
+<td>human</td>
+<td>mostly PER, ORG, LOC (+MISC/DATE)</td>
+<td>news and other</td>
+<td>see sources</td>
+<td>see sources</td>
+</tr>
+<tr class="odd">
+<td>Turkish, Azerbaijani, Kazakh, Uzbek, Tatar, Kyrgyz, Uyghur, Turkmen, Sakha, Bashkir, Chuvash, Crimean Tatar</td>
+<td>WikiANN <span class="citation" data-cites="pan2017wikiann">(<a href="../references.html#ref-pan2017wikiann" role="doc-biblioref">Pan et al. 2017</a>)</span></td>
+<td>automatic (Wikipedia links)</td>
+<td>PER, ORG, LOC</td>
+<td>Wikipedia</td>
+<td>tr 20,000 / 10,000 / 10,000; az 10,000 / 1,000 / 1,000; kk, uz, tt 1,000 / 1,000 / 1,000; ky, ug, tk, sah, ba, cv, crh 100 / 100 / 100 sentences</td>
+<td>see the HF dataset card (unimelb-nlp/wikiann)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>KazNERD</strong> <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span> is a human-annotated Kazakh NER dataset. Built from transcripts of Kazakh television news, it contains 112,702 sentences with 136,333 entity annotations in 25 classes (the pinned release has 136,337 <code>B-</code> tags). The best model in the original paper, a fine-tuned XLM-R-large, reached an exact-match F1 of 97.22% on the test set, ahead of BERT (96.24), a BiLSTM-CNN-CRF (93.51) and a CRF (92.41). <a href="#tbl-kaznerd-types" class="quarto-xref">Table&nbsp;<span>9.4</span></a> lists the classes with mention counts computed from the authors’ release.</p>
+<div id="tbl-kaznerd-types" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-kaznerd-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.4: The 25 KazNERD entity classes <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span>, grouped for readability, with mention counts computed from the authors’ release (IOB2; 90,228 / 11,167 / 11,307 training / validation / test sentences; 109,346 / 13,483 / 13,508 mentions). Rare classes such as NON_HUMAN have too few test mentions for a meaningful per-class F1.
+</figcaption>
+<div aria-describedby="tbl-kaznerd-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Classes (training / test mentions)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>People and groups</td>
+<td>PERSON (10,893 / 1,332), NORP (2,972 / 372), POSITION (4,937 / 603)</td>
+</tr>
+<tr class="even">
+<td>Organisations and places</td>
+<td>ORGANISATION (6,093 / 735), GPE (14,108 / 1,742), LOCATION (1,759 / 212), FACILITY (1,752 / 198)</td>
+</tr>
+<tr class="odd">
+<td>Time</td>
+<td>DATE (20,226 / 2,611), TIME (1,874 / 230)</td>
+</tr>
+<tr class="even">
+<td>Numbers and measures</td>
+<td>CARDINAL (23,551 / 2,824), ORDINAL (3,105 / 386), QUANTITY (3,094 / 407), MONEY (3,678 / 441), PERCENTAGE (3,384 / 456)</td>
+</tr>
+<tr class="odd">
+<td>Other</td>
+<td>ADAGE (159 / 19), ART (1,953 / 229), CONTACT (161 / 20), DISEASE (1,032 / 123), EVENT (1,352 / 156), LANGUAGE (352 / 46), LAW (425 / 55), NON_HUMAN (6 / 1), PRODUCT (592 / 73), PROJECT (1,694 / 211), MISCELLANEOUS (194 / 26)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>TurkicNLP ships a Stanza NER model trained on KazNERD for Kazakh and one trained on the Starlang NER corpus for Turkish; these are the two pretrained NER models described for toolkit version 0.5.0 <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</p>
+<p><strong>Turkish NER.</strong> Several Turkish NER datasets exist, among them MilliyetNER and the Turkish part of WikiANN, which Mukayese uses for its NER benchmark <span class="citation" data-cites="safaya2022mukayese">(<a href="../references.html#ref-safaya2022mukayese" role="doc-biblioref">Safaya et al. 2022</a>)</span>, and those surveyed in <span class="citation" data-cites="coltekin2022resources">Çöltekin, Doğruöz, and Çetinoğlu (<a href="../references.html#ref-coltekin2022resources" role="doc-biblioref">2023</a>)</span>. Check each dataset’s label inventory and boundary rules before combining it with another.</p>
+<p>A practical challenge in Turkish NER is the apostrophe: formal Turkish writing separates proper names from their suffixes with an apostrophe (<em>İstanbul’a</em> “to Istanbul”), but informal text often omits it (<em>İstanbula</em>). A model trained on edited text may have lower recall on the apostrophe-less form; to check this, evaluate separately on mentions with and without the apostrophe.</p>
+<p><strong>Other languages.</strong> KyrgyzNER <span class="citation" data-cites="turatali2025kyrgyzner">(<a href="../references.html#ref-turatali2025kyrgyzner" role="doc-biblioref">Turatali et al. 2025</a>)</span> is a human-annotated news dataset with a 27-class scheme; 25 classes occur in the release. It provides training and test splits, with no development split. The paper’s count of 39,075 “entity mentions” counts entity-tagged tokens (<code>B-</code> plus <code>I-</code>); the release contains 16,819 spans. PERSON spans can include titles and positions, as in a whole <em>… орун басары Тожибек Норов</em> ‘deputy head … Tozhibek Norov’. KazNERD instead gives POSITION its own type.</p>
+<p>An Uzbek legal dataset combines semi-automatic candidates, staged human review and synthetic records for rare labels. Its authors call it human-reviewed, with further work needed for a final gold standard <span class="citation" data-cites="saidov2026uzbekner">(<a href="../references.html#ref-saidov2026uzbekner" role="doc-biblioref">Saidov et al. 2026</a>)</span>. A large Azerbaijani dataset on the Hugging Face Hub has a non-commercial licence, but its card leaves the annotation method unspecified <span class="citation" data-cites="localdoc2024azner">(<a href="../references.html#ref-localdoc2024azner" role="doc-biblioref">LocalDoc, n.d.</a>)</span>. For Uyghur, <span class="citation" data-cites="azmat2020uyghurner">Azmat et al. (<a href="../references.html#ref-azmat2020uyghurner" role="doc-biblioref">2020</a>)</span> projected training labels from Chinese through machine translation. Comparisons across these resources need a declared label mapping and an account of their different domains, boundaries and annotation methods.</p>
+<p><strong>WikiANN / PAN-X</strong> <span class="citation" data-cites="pan2017wikiann">(<a href="../references.html#ref-pan2017wikiann" role="doc-biblioref">Pan et al. 2017</a>)</span> derives NER labels from Wikipedia links in 282 languages, using PER, ORG and LOC. Its Turkic splits vary greatly in size (<a href="#tbl-turkic-ner-resources" class="quarto-xref">Table&nbsp;<span>9.3</span></a>). Turkish has 20,000 training sentences; Kyrgyz, Uyghur, Turkmen, Sakha, Bashkir, Chuvash and Crimean Tatar have 100 sentences per split. Link-derived labels can omit mentions or include noisy boundaries, and their coverage reflects Wikipedia’s entities. Scores describe performance on this automatically labelled material; evaluate on the intended domain before drawing conclusions about practical NER quality.</p>
+<p><strong>The gap.</strong> The October 2026 survey found human-annotated fine-grained datasets for Turkish, Kazakh and Kyrgyz, and human-reviewed legal data for Uzbek. It found no human-annotated NER resource for the other languages in the inventory, including Tatar, Bashkir, Turkmen and the Siberian Turkic languages. WikiANN supplies automatic labels for some of them. Check for newer or overlooked resources before starting an annotation project.</p>
+</section>
+<section id="neural-ner-architectures" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="neural-ner-architectures"><span class="header-section-number">9.2.4</span> Neural NER Architectures</h3>
+<p><strong>Character embedding + BiLSTM-CRF</strong> <span class="citation" data-cites="lample2016neural jurafsky2024slp">(<a href="../references.html#ref-lample2016neural" role="doc-biblioref">Lample et al. 2016</a>; <a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">Jurafsky and Martin 2024</a>, chapter “Sequence Labelling for Parts of Speech and Named Entities”)</span> was widely used before pretrained transformers. The character-level BiLSTM is useful for Turkic: it encodes the surface form of each word, including its suffix pattern, which can help with unseen inflections of known entity stems: a model that has seen <em>Алматы</em> in training shares the character prefix with <em>Алматыдан</em> at test time.</p>
+<p><strong>Transformer token classification</strong> is the architecture used in the tutorial. A pretrained encoder produces a contextual embedding for each subword; a linear head predicts the BIO label. The encoder may be monolingual (BERTurk for Turkish) or multilingual (XLM-R, which was pretrained on text in many languages including several Turkic ones). Self-attention uses context within the model’s input window; the tutorial checks that each sentence fits.</p>
+<p><strong>Span-based NER</strong> predicts entity boundaries and types directly. It can represent nested mentions, such as <em>Алматы</em> inside <em>Алматы облысының әкімдігі</em> ‘the Almaty Region administration’. A single BIO sequence can encode only one non-overlapping layer. The datasets in <a href="#tbl-turkic-ner-resources" class="quarto-xref">Table&nbsp;<span>9.3</span></a> use flat annotation, so they do not test this ability. Computation depends on the number of candidate spans and how the model selects them.</p>
+<p>For practical work on Turkic languages, <strong>XLM-R + token classification</strong> is a reasonable starting point: it starts from a multilingual encoder and is the architecture behind the best KazNERD result <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span>. How many annotated sentences a useful system needs depends on the label set, domain and acceptance criteria; measure it with a learning curve on a fixed test set rather than assuming a number. Exercise 3 draws one for Kyrgyz.</p>
+</section>
+</section>
+<section id="sec-crosslingual-ner" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-crosslingual-ner"><span class="header-section-number">9.3</span> Cross-Lingual NER Transfer</h2>
+<section id="encoder-coverage-task-language-and-script" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="encoder-coverage-task-language-and-script"><span class="header-section-number">9.3.1</span> Encoder Coverage, Task Language and Script</h3>
+<p>Separate <strong>pretraining coverage</strong>, <strong>NER training data</strong> and <strong>input script</strong>. XLM-R was pretrained on Kazakh and Kyrgyz Cyrillic text <span class="citation" data-cites="conneau2020xlmr">(<a href="../references.html#ref-conneau2020xlmr" role="doc-biblioref">Conneau et al. 2020</a>)</span>, so Turkish-only NER fine-tuning does not make Cyrillic input unknown to its encoder. But pretraining coverage does not guarantee accurate entity recognition: local names, context and label conventions still differ.</p>
+<p>A fair comparison uses the same annotated target sentences under three conditions:</p>
+<ol type="1">
+<li><strong>Native script:</strong> a multilingual model fine-tuned on source-language NER applied to the target text as written.</li>
+<li><strong>Transliterated:</strong> the same model applied to text converted to the source script (or to CTS), with predicted spans mapped back to the original string through a character-offset map. One-to-many letter changes shift offsets, so spans cannot be copied by position.</li>
+<li><strong>Target-language fine-tuning:</strong> the model fine-tuned on a small amount of annotated target-language data.</li>
+</ol>
+<p>Script conversion may help or hurt, and recognising the script is not the same as recognising the entities.</p>
+</section>
+<section id="entity-distribution-shift" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="entity-distribution-shift"><span class="header-section-number">9.3.2</span> Entity Distribution Shift</h3>
+<p>The <strong>entity distribution</strong> can also differ: people, organisations and places in one corpus need not appear in another. Measure this overlap instead of inferring it from language relatedness.</p>
+<p>The recorded Exercise 4 compares PERSON name-token types in KazNERD training data and Starlang Turkish NER data. After the documented stem extraction, CTS conversion and lowercasing, their Jaccard overlap is 0.016; character-trigram overlap is 0.315. The figures describe two corpora under one normalisation method. Kazakh and Turkish names in general may behave differently. Analyse errors separately for names seen and unseen during training.</p>
+</section>
+<section id="label-schemes-and-domains" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="label-schemes-and-domains"><span class="header-section-number">9.3.3</span> Label Schemes and Domains</h3>
+<p>KazNERD, WikiANN and KyrgyzNER use different label inventories and mention boundaries. Define a shared mapping before scoring. For example, collapsing GPE and LOCATION to LOC removes a distinction; mapping unsupported types to <code>O</code> excludes them from the task. Apply the same rules to gold and predictions, retain all tokens, and report the resulting label inventory and support. A label mapping does not fix boundary differences, such as whether a person’s title belongs inside the mention. Use one target test set for all systems and record its domain.</p>
+</section>
+<section id="zero-shot-vs.-few-shot-ner" class="level3" data-number="9.3.4">
+<h3 data-number="9.3.4" class="anchored" data-anchor-id="zero-shot-vs.-few-shot-ner"><span class="header-section-number">9.3.4</span> Zero-Shot vs.&nbsp;Few-Shot NER</h3>
+<p>The recorded Exercise 3 compares a pretrained Stanza KazNERD model with CRFs trained on KyrgyzNER, after mapping both datasets to PER, LOC and ORG. With gold words, zero-shot Stanza reaches 39.9 micro F1. The CRF averages 38.6 at 200 training sentences and 48.0 at 500 over three sampling seeds; one 200-sentence run reaches 42.1, above the zero-shot score. Training on all 7,033 sentences gives 62.6 in one run.</p>
+<p>The mean first exceeds the zero-shot score at the tested 500-sentence setting. No general annotation budget follows from it, since the systems, training data and domains differ. KyrgyzNER’s inclusion of titles in PERSON spans also affects exact-match scoring. The comparison does not isolate the cause of the gap. The results describe the released test split. For a new tuned experiment, reserve development data from the training split, fix the sampling sizes and model settings there, and evaluate the fixed learning curve on test without further adjustment.</p>
+</section>
+</section>
+<section id="sec-other-labeling" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sec-other-labeling"><span class="header-section-number">9.4</span> Other Sequence Labelling Tasks</h2>
+<section id="chunking" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="chunking"><span class="header-section-number">9.4.1</span> Chunking</h3>
+<p>Noun phrase chunking labels the beginning, continuation and outside of a phrase, for example B-NP, I-NP and O. Define the chunk first: a base noun phrase and a full phrase containing a relative clause are different targets.</p>
+<p>Turkish constituent chunking has been studied with CRFs <span class="citation" data-cites="aslan2018constituent">(<a href="../references.html#ref-aslan2018constituent" role="doc-biblioref">Aslan, Gunal, and Dincer 2018</a>)</span>. That study proposes an OE scheme that marks the final token of a chunk. Its reported advantage concerns the tested constituent-chunking setup; it would be a stretch to conclude that all Turkish phrase boundaries are easy to find. Prenominal modifiers and flexible word order still require explicit annotation rules (<a href="08-syntax-ud.html#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>).</p>
+</section>
+<section id="semantic-role-labelling" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="semantic-role-labelling"><span class="header-section-number">9.4.2</span> Semantic Role Labelling</h3>
+<p>Semantic role labelling (SRL) assigns predicate-argument roles to the participants of each event: who did what to whom, where, when, and how. In PropBank-style SRL, numbered roles are defined per predicate sense. ARG0 is typically the proto-agent and ARG1 the proto-patient; higher numbers depend on the frame. Roles do not map directly to grammatical relations: a passive subject need not be ARG0. Modifier roles such as ARGM-LOC (location) and ARGM-TMP (time) are shared across predicates.</p>
+<p>Turkish SRL resources follow the PropBank convention: each verb sense has a frame with numbered argument roles. A first Turkish PropBank annotated sentences of a Turkish dependency treebank, using framesets of root verbs <span class="citation" data-cites="sahin2018propbank">(<a href="../references.html#ref-sahin2018propbank" role="doc-biblioref">Şahin and Adalı 2018</a>)</span>; <strong>TRopBank</strong> extended the frame inventory to Turkish verb senses linked to the Turkish WordNet: its released frame file has 17,531 framesets <span class="citation" data-cites="kara2020tropbank">(<a href="../references.html#ref-kara2020tropbank" role="doc-biblioref">Kara et al. 2020</a>)</span>.</p>
+<p>Two issues from <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a> matter for the task definition and evaluation:</p>
+<p><strong>Pro-drop.</strong> Subjects are often unexpressed (<a href="08-syntax-ud.html#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>). Most SRL tasks annotate overt arguments only, so an unexpressed ARG0 should remain unlabelled under that policy. Recovering it requires a separate task definition and evaluation. Agreement can constrain person and number; identifying the referent also needs discourse evidence. In either task, follow the selected predicate frame’s role definitions.</p>
+<p><strong>Flexible word order.</strong> In a canonical English active transitive clause, the subject precedes the verb and the object follows it; their numbered roles still depend on the predicate frame. Turkic arguments can be reordered for discourse reasons. An SRL system therefore needs case, agreement and frame information as well as position. This is the same combination of signals as in dependency parsing (<a href="08-syntax-ud.html#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>).</p>
+<p>For languages other than Turkish, this survey identified no PropBank-style resource (searched October 2026; check for newer releases). Transfer from Turkish is one option, alongside multilingual models and target-language annotation. Cognate verbs may have similar frames, but light verbs and causative chains differ between languages, so transferred frames need language-specific checking.</p>
+</section>
+</section>
+<section id="sec-ner-toolkit" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="sec-ner-toolkit"><span class="header-section-number">9.5</span> Pretrained Taggers and Recognisers in TurkicNLP</h2>
+<p>TurkicNLP 0.5.0 provides Stanza and multilingual Glot500 POS backends, plus pretrained NER models for Turkish and Kazakh. Check the available processors and backends for each language rather than treating support as uniform across the toolkit.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install "turkicnlp[stanza]==0.5.0"   # Stanza POS/NER backend</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> lang, text <span class="kw">in</span> [(<span class="st">"tur"</span>, <span class="st">"Ali dün Ankara'ya gitti."</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   (<span class="st">"kaz"</span>, <span class="st">"Қасым-Жомарт Тоқаев кеше Астанада инвесторлармен кездесті."</span>)]:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    nlp <span class="op">=</span> turkicnlp.Pipeline(lang, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"pos"</span>, <span class="st">"ner"</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> nlp(text)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>([(w.text, w.upos, w.ner) <span class="cf">for</span> w <span class="kw">in</span> doc.words])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>([(e.text, e.<span class="bu">type</span>) <span class="cf">for</span> e <span class="kw">in</span> doc.entities])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Output (TurkicNLP 0.5.0, Stanza backend):</p>
+<pre><code>[('Ali', 'PROPN', 'O'), ('dün', 'NOUN', 'O'), ("Ankara'ya", 'PROPN', 'B-LOCATION'), ('gitti', 'VERB', 'O'), ('.', 'PUNCT', 'O')]
+[("Ankara'ya", 'LOCATION')]
+[('Қасым-Жомарт', 'PROPN', 'B-PERSON'), ('Тоқаев', 'PROPN', 'I-PERSON'), ('кеше', 'ADV', 'B-DATE'), ('Астанада', 'PROPN', 'B-GPE'), ('инвесторлармен', 'NOUN', 'O'), ('кездесті', 'VERB', 'O'), ('.', 'PUNCT', 'O')]
+[('Қасым-Жомарт Тоқаев', 'PERSON'), ('кеше', 'DATE'), ('Астанада', 'GPE')]</code></pre>
+<p>The outputs illustrate both annotation conventions and errors. Turkish uses Starlang labels such as <code>LOCATION</code>; Kazakh uses KazNERD’s finer inventory, including <code>GPE</code> and <code>DATE</code>. Both outputs include case suffixes in the mention. The Turkish model misses the person name <em>Ali</em>; its NOUN tag for <em>dün</em> ‘yesterday’ reflects a treebank choice for temporal words rather than a clear error, since treebanks differ on NOUN or ADV for such forms. The Kazakh model includes <em>кеше</em> ‘yesterday’ as DATE, following KazNERD’s inventory. Keep the printed predictions distinct from a manually checked reference.</p>
+<p>Lemmas may help normalise a name, but they do not solve multiword-name normalisation or entity linking (<a href="#tbl-ner-three-outputs" class="quarto-xref">Table&nbsp;<span>9.2</span></a>). The example does not request the <code>lemma</code> processor; add it if the application needs lemmas.</p>
+<p>For other languages, toolkit version 0.5.0 does not ship a pretrained NER model; this is not a claim that no model exists elsewhere. The toolkit can instead ask a large language model, through an OpenAI-compatible server (vLLM, Ollama), OpenAI, Claude, or a local Hugging Face model. The model labels the toolkit’s own tokens, and the toolkit checks its returned structure before storing it. A well-formed response can still carry wrong entity labels:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> turkicnlp.Pipeline(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"kir"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"ner"</span>], ner_backend<span class="op">=</span><span class="st">"llm"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ner_labels<span class="op">=</span>[<span class="st">"PER"</span>, <span class="st">"LOC"</span>, <span class="st">"ORG"</span>],</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    llm_model<span class="op">=</span><span class="st">"qwen2.5:7b"</span>, llm_base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, llm_api_key<span class="op">=</span><span class="st">"ollama"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(<span class="st">"Бишкекте Алмазбек Атамбаев менен жолугушуу өттү."</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>([(e.text, e.<span class="bu">type</span>) <span class="cf">for</span> e <span class="kw">in</span> doc.entities], doc._processor_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Measure exact span-and-type performance on an annotated sample before relying on the LLM backend (Exercise 6).</p>
+<section id="measured-pretrained-kaznerd-baseline" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="measured-pretrained-kaznerd-baseline"><span class="header-section-number">9.5.1</span> Measured pretrained KazNERD baseline</h3>
+<p>The cached Stanza KazNERD checkpoint was evaluated on all <strong>11,307 sentences and 129,824 words</strong> in the pinned KazNERD test split <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span>. Gold sentence and word boundaries are supplied. An entity is correct only when its complete span and type match; all 25 types contribute to micro-averaged precision, recall and F1. Stanza BIOES predictions are decoded to strict spans, and an independent rescore with Stanza’s own entity decoder reproduces the totals.</p>
+<div id="tbl-kaznerd-pretrained-probe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-kaznerd-pretrained-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.5: Measured cached Stanza KazNERD checkpoint on the complete pinned test split, with gold word/sentence boundaries and exact entity spans and types. No fine-tuning was performed. Source: <code>run_ner.py</code>; <span class="citation" data-cites="yeshpanov2022kaznerd">Yeshpanov, Khassanov, and Varol (<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">2022</a>)</span>.
+</figcaption>
+<div aria-describedby="tbl-kaznerd-pretrained-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test sentences</th>
+<th style="text-align: right;">Gold entities</th>
+<th style="text-align: right;">Predicted</th>
+<th style="text-align: right;">Correct</th>
+<th style="text-align: right;">P (%)</th>
+<th style="text-align: right;">R (%)</th>
+<th style="text-align: right;">F1 (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>11,307</td>
+<td style="text-align: right;">13508</td>
+<td style="text-align: right;">13501</td>
+<td style="text-align: right;">12821</td>
+<td style="text-align: right;">94.96</td>
+<td style="text-align: right;">94.91</td>
+<td style="text-align: right;">94.94</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="fig-kaznerd-type-probe" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Horizontal bar chart of exact span-and-type F1 for 25 KazNERD entity types: most types score above 90%, FACILITY, PRODUCT and LAW between about 60 and 75%, ADAGE about 37%, and NON_HUMAN (one test entity) zero." data-fig-height="7.4">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kaznerd-type-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-kaznerd-type-probe/output.png" class="img-fluid figure-img" data-fig-height="7.4" alt="Horizontal bar chart of exact span-and-type F1 for 25 KazNERD entity types: most types score above 90%, FACILITY, PRODUCT and LAW between about 60 and 75%, ADAGE about 37%, and NON_HUMAN (one test entity) zero.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kaznerd-type-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Measured exact span-and-type F1 for the pretrained Stanza KazNERD checkpoint. Each label shows the number of gold test entities for that type; small-support categories should not be interpreted as equally precise estimates.
+</figcaption>
+</figure>
+</div>
+<p>The pretrained Stanza checkpoint reaches <strong>94.94% F1</strong> with gold tokenisation on this test set. This baseline measures exact entity spans and types under those conditions; raw-text performance and cross-language transfer require separate evaluations. No independent contamination audit was performed. Predictions, per-type counts and model/input hashes accompany <code>run_ner.py</code>. The exercises use this checkpoint to measure case-stratified recall (Exercise 1) and zero-shot transfer to Kyrgyz (Exercise 3).</p>
+</section>
+</section>
+<section id="sec-ch09-hands-on" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-ch09-hands-on"><span class="header-section-number">9.6</span> Hands-On: A Fine-Tuning Procedure for Kazakh NER with XLM-R</h2>
+<p><strong>Question.</strong> How can a reproducible NER recipe align subwords and entity labels?</p>
+<p><strong>Inputs.</strong> KazNERD splits, XLM-R and the training script linked below.</p>
+<p><strong>Compute.</strong> A large checkpoint and substantial training memory; choose hardware and batch settings before the full run.</p>
+<p><strong>Output.</strong> A saved model, predictions and entity-level micro and macro F1.</p>
+<p><strong>Interpretation.</strong> Inspect suffix boundaries and label mappings, then compare a target-language transfer condition.</p>
+<p>This tutorial fine-tunes <code>xlm-roberta-large</code> for named entity recognition on KazNERD <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span> and then applies the model to Kyrgyz text as a zero-shot experiment. The code provides a training recipe; the book reports no fine-tuned score from it, and the measured pretrained Stanza baseline above is the reference point.</p>
+<section id="setup" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">9.6.1</span> Setup</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tested mechanics: transformers==5.3.0 datasets==4.6.1 seqeval==1.2.2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># torch==2.10.0 accelerate==1.12.0; install sentencepiece for the tokenizer.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Run from the book root, with the pinned KazNERD clone at KazNERD/.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Record the versions you used: they are saved with the model below.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json, random, sys, hashlib</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib.metadata <span class="im">import</span> version</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(Path(<span class="st">"code/ch09-ner"</span>).resolve()))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ner_utils <span class="im">import</span> read_iob2, valid_iob2, repair_training_iob2, align_batch, tag_sequences</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> transformers</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> Dataset, DatasetDict</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> (</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    AutoTokenizer,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    AutoModelForTokenClassification,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    TrainingArguments,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    Trainer,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    DataCollatorForTokenClassification,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> seqeval.metrics <span class="im">import</span> classification_report, f1_score</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> seqeval.scheme <span class="im">import</span> IOB2</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>random.seed(SEED)<span class="op">;</span> np.random.seed(SEED)<span class="op">;</span> torch.manual_seed(SEED)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="loading-kaznerd" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="loading-kaznerd"><span class="header-section-number">9.6.2</span> Loading KazNERD</h3>
+<p>The authoritative release is the authors’ repository (<code>github.com/IS2AI/KazNERD</code>, CC BY 4.0), which stores the three splits as two-column CoNLL files in IOB2. A Hugging Face copy also exists (<code>issai/kaznerd</code>, with the same 90,228 / 11,167 / 11,307 split sizes); if you use it, pin a revision with <code>load_dataset("issai/kaznerd", revision=...)</code> and check that the label list and counts below are reproduced. Here we read the release directly, validate it, and build the label map from the training split:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ROOT <span class="op">=</span> Path(<span class="st">"KazNERD/KazNERD"</span>)      <span class="co"># git clone https://github.com/IS2AI/KazNERD then git checkout bd4333d0f5952b9fafb2ef2ac2fefa0ad3c0333f</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> {split: read_iob2(ROOT <span class="op">/</span> <span class="ss">f"IOB2_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.txt"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> split, name <span class="kw">in</span> [(<span class="st">"train"</span>, <span class="st">"train"</span>), (<span class="st">"validation"</span>, <span class="st">"valid"</span>), (<span class="st">"test"</span>, <span class="st">"test"</span>)]}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>label_names <span class="op">=</span> [<span class="st">"O"</span>] <span class="op">+</span> <span class="bu">sorted</span>({t <span class="cf">for</span> _, tags <span class="kw">in</span> raw[<span class="st">"train"</span>] <span class="cf">for</span> t <span class="kw">in</span> tags} <span class="op">-</span> {<span class="st">"O"</span>})</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>label2id <span class="op">=</span> {label: i <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(label_names)}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>id2label <span class="op">=</span> {i: label <span class="cf">for</span> label, i <span class="kw">in</span> label2id.items()}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> split, sents <span class="kw">in</span> raw.items():</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    unseen <span class="op">=</span> {t <span class="cf">for</span> _, tags <span class="kw">in</span> sents <span class="cf">for</span> t <span class="kw">in</span> tags} <span class="op">-</span> <span class="bu">set</span>(label_names)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    invalid <span class="op">=</span> <span class="bu">sum</span>(<span class="kw">not</span> valid_iob2(tags) <span class="cf">for</span> _, tags <span class="kw">in</span> sents)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="kw">not</span> unseen, (split, unseen)          <span class="co"># every tag must be known from training</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>split<span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">len</span>(sents)<span class="sc">:&gt;6}</span><span class="ss"> sentences  longest </span><span class="sc">{</span><span class="bu">max</span>(<span class="bu">len</span>(t) <span class="cf">for</span> t, _ <span class="kw">in</span> sents)<span class="sc">}</span><span class="ss"> words"</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"  invalid IOB2: </span><span class="sc">{</span>invalid<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(label_names), <span class="st">"labels:"</span>, label_names[:<span class="dv">5</span>], <span class="st">"..."</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">any</span>(<span class="kw">not</span> valid_iob2(tags) <span class="cf">for</span> split <span class="kw">in</span> (<span class="st">"validation"</span>, <span class="st">"test"</span>) <span class="cf">for</span> _, tags <span class="kw">in</span> raw[split]):</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"malformed evaluation gold; resolve the source before scoring"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>raw[<span class="st">"train"</span>], training_repairs <span class="op">=</span> repair_training_iob2(raw[<span class="st">"train"</span>])</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> DatasetDict({</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    split: Dataset.from_dict({<span class="st">"tokens"</span>: [t <span class="cf">for</span> t, _ <span class="kw">in</span> sents],</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"ner_tags"</span>: [[label2id[x] <span class="cf">for</span> x <span class="kw">in</span> g] <span class="cf">for</span> _, g <span class="kw">in</span> sents]})</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> split, sents <span class="kw">in</span> raw.items()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Output (release commit <code>bd4333d</code>):</p>
+<pre><code>train       90228 sentences  longest 71 words  invalid IOB2: 14
+validation  11167 sentences  longest 51 words  invalid IOB2: 0
+test        11307 sentences  longest 70 words  invalid IOB2: 0
+51 labels: ['O', 'B-ADAGE', 'B-ART', 'B-CARDINAL', 'B-CONTACT'] ...</code></pre>
+<p>The 51 labels are B- and I- tags for the 25 types of <a href="#tbl-kaznerd-types" class="quarto-xref">Table&nbsp;<span>9.4</span></a> plus <code>O</code>. The release audit found 16 orphan <code>I-</code> tags across 14 training sentences. No malformed IOB2 sequences were found in the evaluation splits; this does not certify every annotation. This tutorial repairs orphan training tags (<code>I-X</code> → <code>B-X</code>) and saves each changed position; evaluation labels remain unchanged. The class-count table counts the original release’s B-tags, so its training total precedes this repair.</p>
+</section>
+<section id="tokenising-with-word-alignment" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="tokenising-with-word-alignment"><span class="header-section-number">9.6.3</span> Tokenising with Word Alignment</h3>
+<p>The same word-alignment strategy from <a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a> applies: only the first subword token of each word receives the NER label; subsequent tokens receive -100 (ignored by the loss). A word count does not bound subword length. The code tokenises every sentence without truncation and rejects any that exceed the model window, because truncation would drop trailing entities from both training and scoring. For longer documents, split them into overlapping windows, keep the original word index of every subword, and merge the per-word predictions before scoring.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> <span class="st">"FacebookAI/xlm-roberta-large"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>MODEL_REVISION <span class="op">=</span> <span class="st">"c23d21b0620b635a76227c604d44e43a9f0ee389"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(MODEL_NAME, revision<span class="op">=</span>MODEL_REVISION)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>MAX_LEN <span class="op">=</span> <span class="dv">512</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tokenise_and_align(examples):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> align_batch(examples, tokenizer, MAX_LEN)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>tokenised_dataset <span class="op">=</span> dataset.<span class="bu">map</span>(tokenise_and_align, batched<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                                remove_columns<span class="op">=</span>dataset[<span class="st">"train"</span>].column_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The complete tokeniser audit retained all 1,302,352 words. Maximum encoded lengths, including special tokens, were 139 / 91 / 108 for train / validation / test. These are measured values from <code>code/ch09-ner/audit_release.py</code>; they do not follow from the longest sentence’s word count.</p>
+</section>
+<section id="defining-the-evaluation-metric" class="level3" data-number="9.6.4">
+<h3 data-number="9.6.4" class="anchored" data-anchor-id="defining-the-evaluation-metric"><span class="header-section-number">9.6.4</span> Defining the Evaluation Metric</h3>
+<p>NER scoring requires both the predicted span and its type to match the gold annotation. With <code>seqeval</code>, specify the averaging method and treatment of malformed tag sequences. Its <code>f1_score</code> defaults to <strong>micro</strong> averaging, which gives every mention equal weight and lets frequent types dominate. <strong>Macro</strong> F1 averages the per-type scores. Report both and state which selects the checkpoint. For strict IOB2 scoring, set <code>mode="strict", scheme=IOB2</code>; the default mode accepts some ill-formed sequences.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> to_tag_sequences(predictions, labels):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tag_sequences(predictions, labels, id2label)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_metrics(eval_pred):</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    logits, labels <span class="op">=</span> eval_pred</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    true_tags, pred_tags <span class="op">=</span> to_tag_sequences(np.argmax(logits, axis<span class="op">=-</span><span class="dv">1</span>), labels)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"micro_f1"</span>: <span class="bu">float</span>(f1_score(true_tags, pred_tags, average<span class="op">=</span><span class="st">"micro"</span>, mode<span class="op">=</span><span class="st">"strict"</span>, scheme<span class="op">=</span>IOB2, zero_division<span class="op">=</span><span class="dv">0</span>)),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"macro_f1"</span>: <span class="bu">float</span>(f1_score(true_tags, pred_tags, average<span class="op">=</span><span class="st">"macro"</span>, mode<span class="op">=</span><span class="st">"strict"</span>, scheme<span class="op">=</span>IOB2, zero_division<span class="op">=</span><span class="dv">0</span>)),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="fine-tuning" class="level3" data-number="9.6.5">
+<h3 data-number="9.6.5" class="anchored" data-anchor-id="fine-tuning"><span class="header-section-number">9.6.5</span> Fine-Tuning</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    MODEL_NAME, revision<span class="op">=</span>MODEL_REVISION, num_labels<span class="op">=</span><span class="bu">len</span>(label_names), id2label<span class="op">=</span>id2label, label2id<span class="op">=</span>label2id)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>use_bf16 <span class="op">=</span> torch.cuda.is_available() <span class="kw">and</span> torch.cuda.is_bf16_supported()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>use_fp16 <span class="op">=</span> torch.cuda.is_available() <span class="kw">and</span> <span class="kw">not</span> use_bf16     <span class="co"># mixed precision only where supported</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>training_args <span class="op">=</span> TrainingArguments(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    output_dir<span class="op">=</span><span class="st">"xlmr-kaznerd"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    num_train_epochs<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    per_device_train_batch_size<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    per_device_eval_batch_size<span class="op">=</span><span class="dv">16</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    learning_rate<span class="op">=</span><span class="fl">1e-5</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    warmup_ratio<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    eval_strategy<span class="op">=</span><span class="st">"epoch"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    save_strategy<span class="op">=</span><span class="st">"epoch"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    load_best_model_at_end<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    metric_for_best_model<span class="op">=</span><span class="st">"micro_f1"</span>,       <span class="co"># the named development metric</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    bf16<span class="op">=</span>use_bf16,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    fp16<span class="op">=</span>use_fp16,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    seed<span class="op">=</span>SEED,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    report_to<span class="op">=</span><span class="st">"none"</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> Trainer(</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>model,</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    args<span class="op">=</span>training_args,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    train_dataset<span class="op">=</span>tokenised_dataset[<span class="st">"train"</span>],</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    eval_dataset<span class="op">=</span>tokenised_dataset[<span class="st">"validation"</span>],</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    processing_class<span class="op">=</span>tokenizer,             <span class="co"># `tokenizer=` in transformers &lt; 4.46</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    data_collator<span class="op">=</span>DataCollatorForTokenClassification(tokenizer),</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    compute_metrics<span class="op">=</span>compute_metrics,</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>trainer.train()</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Save everything needed to reproduce the predictions</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> Path(<span class="st">"xlmr-kaznerd/best"</span>)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>trainer.save_model(out)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>tokenizer.save_pretrained(out)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>(out <span class="op">/</span> <span class="st">"run_info.json"</span>).write_text(json.dumps({</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"labels"</span>: label_names, <span class="st">"seed"</span>: SEED, <span class="st">"kaznerd_commit"</span>: <span class="st">"bd4333d0f5952b9fafb2ef2ac2fefa0ad3c0333f"</span>,</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model_revision"</span>: MODEL_REVISION, <span class="st">"training_repairs"</span>: training_repairs,</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data_sha256"</span>: {p.name: hashlib.sha256(p.read_bytes()).hexdigest() <span class="cf">for</span> p <span class="kw">in</span> ROOT.glob(<span class="st">"IOB2_*.txt"</span>)},</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"scorer"</span>: {<span class="st">"mode"</span>: <span class="st">"strict"</span>, <span class="st">"scheme"</span>: <span class="st">"IOB2"</span>, <span class="st">"seqeval"</span>: version(<span class="st">"seqeval"</span>)},</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"dependencies"</span>: {name: version(name) <span class="cf">for</span> name <span class="kw">in</span> (<span class="st">"datasets"</span>, <span class="st">"accelerate"</span>, <span class="st">"numpy"</span>, <span class="st">"sentencepiece"</span>)},</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"versions"</span>: {<span class="st">"transformers"</span>: transformers.__version__, <span class="st">"torch"</span>: torch.__version__},</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>}, indent<span class="op">=</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Record the development scores and wall time from this experiment, together with the GPU type; no target score is guaranteed.</p>
+</section>
+<section id="evaluating-on-the-test-set" class="level3" data-number="9.6.6">
+<h3 data-number="9.6.6" class="anchored" data-anchor-id="evaluating-on-the-test-set"><span class="header-section-number">9.6.6</span> Evaluating on the Test Set</h3>
+<p>Evaluate the selected checkpoint once on the test set, with the same strict IOB2 scoring. Predicted orphan I-tags are left unchanged and scored under strict IOB2; report that policy rather than silently repairing predictions. Macro F1 averages entity types present in the gold/predicted span union, not a fixed inventory of 25 types. The report lists precision, recall, F1 and support (number of gold mentions) for each type:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pred <span class="op">=</span> trainer.predict(tokenised_dataset[<span class="st">"test"</span>])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>true_tags, pred_tags <span class="op">=</span> to_tag_sequences(np.argmax(pred.predictions, axis<span class="op">=-</span><span class="dv">1</span>), pred.label_ids)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(compute_metrics((pred.predictions, pred.label_ids)))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(true_tags, pred_tags, mode<span class="op">=</span><span class="st">"strict"</span>, scheme<span class="op">=</span>IOB2, digits<span class="op">=</span><span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every word of every test sentence is scored, because no sentence was truncated. Per-type scores for types with few test mentions are unstable: NON_HUMAN has a single test mention, and ADAGE and CONTACT have about twenty each (<a href="#tbl-kaznerd-types" class="quarto-xref">Table&nbsp;<span>9.4</span></a>). The original paper’s 97.22 is an exact-match F1 <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span>; compare with it only after confirming that its scorer and averaging match yours, and with the pretrained Stanza baseline (94.94, micro F1, strict spans) on the same test split.</p>
+</section>
+<section id="zero-shot-application-to-kyrgyz" class="level3" data-number="9.6.7">
+<h3 data-number="9.6.7" class="anchored" data-anchor-id="zero-shot-application-to-kyrgyz"><span class="header-section-number">9.6.7</span> Zero-Shot Application to Kyrgyz</h3>
+<p>The multilingual tokeniser accepts Kyrgyz text directly. The standard Kyrgyz and Kazakh scripts are both Cyrillic, but a shared script does not guarantee useful NER predictions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install "turkicnlp[stanza]==0.5.0"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>kir_tokenizer <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"kir"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>])   <span class="co"># Kyrgyz tokenizer</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ner_predict(text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">tuple</span>[<span class="bu">str</span>, <span class="bu">str</span>]]:</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Run NER on a string; return one (word, label) pair per word."""</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w.text <span class="cf">for</span> w <span class="kw">in</span> kir_tokenizer(text).words]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> words:</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> tokenizer(words, is_split_into_words<span class="op">=</span><span class="va">True</span>, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> inputs[<span class="st">"input_ids"</span>].shape[<span class="dv">1</span>] <span class="op">&gt;</span> MAX_LEN:</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"text too long for one window; split it into sentences first"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    word_ids <span class="op">=</span> inputs.word_ids()</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> {k: v.to(model.device) <span class="cf">for</span> k, v <span class="kw">in</span> inputs.items()}</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.inference_mode():</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        preds <span class="op">=</span> model(<span class="op">**</span>inputs).logits.argmax(<span class="op">-</span><span class="dv">1</span>)[<span class="dv">0</span>].tolist()</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    results, seen <span class="op">=</span> [], <span class="bu">set</span>()</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> wid, lid <span class="kw">in</span> <span class="bu">zip</span>(word_ids, preds):</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> wid <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="kw">and</span> wid <span class="kw">not</span> <span class="kw">in</span> seen:       <span class="co"># first subword of each word</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>            results.append((words[wid], id2label[lid]))</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>            seen.add(wid)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(results) <span class="op">==</span> <span class="bu">len</span>(words)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># "A meeting with Almazbek Atambayev took place in Bishkek."</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> token, label <span class="kw">in</span> ner_predict(<span class="st">"Бишкекте Алмазбек Атамбаев менен жолугушуу өттү."</span>):</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>token<span class="sc">:&lt;25}</span><span class="ss"> </span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For comparison, the pretrained Stanza KazNERD model recognises the person and place in this sentence when given the same seven words (Stanza 1.11.0). The output below comes from Stanza; the XLM-R model trained by the recipe would give its own:</p>
+<pre><code>Бишкекте                  B-GPE
+Алмазбек                  B-PERSON
+Атамбаев                  I-PERSON
+менен                     O
+жолугушуу                 O
+өттү                      O
+.                         O</code></pre>
+<p>(Stanza’s BIOES tags <code>S-GPE</code> and <code>E-PERSON</code> are shown as their IOB2 equivalents.) One sentence does not estimate transfer accuracy; Exercise 3 evaluates the same model on the KyrgyzNER test set.</p>
+<p>For a controlled script-conversion experiment, use the three conditions in <a href="#sec-crosslingual-ner" class="quarto-xref"><span>Section 9.3</span></a> and preserve offsets when mapping predictions back to the original text. The single-sentence illustration in <a href="16-cross-lingual-transfer.html" class="quarto-xref"><span>Chapter 16</span></a> does not measure a transfer gain.</p>
+<p><strong>Status: procedure only.</strong> The XLM-R fine-tuning run is not reported here. The pretrained baseline and the exercise experiments are separate results.</p>
+</section>
+</section>
+<section id="sec-ch09-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch09-synthesis">What to Take Forward</h2>
+<p>Sequence labelling starts with a label definition and an alignment policy. In Exercise 3, the CRF trained on 500 Kyrgyz sentences outperforms zero-shot transfer from the Kazakh model on average across three sampling seeds. This result suggests measuring a small learning curve before choosing between transfer and annotation; it does not set a general annotation budget. Preserve the label mappings and compare systems on the same evaluation items. <a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a> turns from labelling words to translating sentences between Turkic languages.</p>
+</section>
+<section id="sec-ch09-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch09-further-reading">Further Reading</h2>
+<p>The Kazakh NER dataset KazNERD, with its 25-entity-type scheme, is described in detail in <span class="citation" data-cites="yeshpanov2022kaznerd">Yeshpanov, Khassanov, and Varol (<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">2022</a>)</span>. For Turkish NER and the wider body of Turkish NLP work, including POS tagging, chunking, and semantic role labelling, <span class="citation" data-cites="oflazer2018turkish_nlp">Oflazer and Saraçlar (<a href="../references.html#ref-oflazer2018turkish_nlp" role="doc-biblioref">2018</a>)</span> is the standard reference, and <span class="citation" data-cites="coltekin2022resources">Çöltekin, Doğruöz, and Çetinoğlu (<a href="../references.html#ref-coltekin2022resources" role="doc-biblioref">2023</a>)</span> provides a critical survey of available resources through 2022. Mukayese <span class="citation" data-cites="safaya2022mukayese">(<a href="../references.html#ref-safaya2022mukayese" role="doc-biblioref">Safaya et al. 2022</a>)</span> is the primary multi-task Turkish NLP benchmark, covering NER among its eight tasks.</p>
+<p>WikiANN, which provides automatically derived NER data for several Turkic languages, is described in <span class="citation" data-cites="pan2017wikiann">Pan et al. (<a href="../references.html#ref-pan2017wikiann" role="doc-biblioref">2017</a>)</span>; KyrgyzNER is described in <span class="citation" data-cites="turatali2025kyrgyzner">Turatali et al. (<a href="../references.html#ref-turatali2025kyrgyzner" role="doc-biblioref">2025</a>)</span>. <span class="citation" data-cites="yeniterzi2011exploiting">Yeniterzi (<a href="../references.html#ref-yeniterzi2011exploiting" role="doc-biblioref">2011</a>)</span> compares word- and morpheme-level NER for Turkish, and <span class="citation" data-cites="aslan2018constituent">Aslan, Gunal, and Dincer (<a href="../references.html#ref-aslan2018constituent" role="doc-biblioref">2018</a>)</span> studies Turkish chunking schemes. Multilingual POS tagging across the Turkic family, including zero-shot languages, is evaluated in <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>.</p>
+<p>For the algorithmic foundations of sequence labelling (CRF, BiLSTM-CRF and BERT-based token classification), <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span> (chapter “Sequence Labelling for Parts of Speech and Named Entities”) provides an accessible treatment, and <span class="citation" data-cites="lample2016neural">Lample et al. (<a href="../references.html#ref-lample2016neural" role="doc-biblioref">2016</a>)</span> introduced the BiLSTM-CRF tagger for NER. The XLM-R encoder used in this chapter’s hands-on is described in <span class="citation" data-cites="conneau2020xlmr">Conneau et al. (<a href="../references.html#ref-conneau2020xlmr" role="doc-biblioref">2020</a>)</span>; TurkishDelightNLP <span class="citation" data-cites="alecakir2022turkishdelightnlp">(<a href="../references.html#ref-alecakir2022turkishdelightnlp" role="doc-biblioref">Alecakir, Bölücü, and Can 2022</a>)</span> provides a unified Turkish POS tagging, NER, and dependency parsing system. The <a href="https://github.com/chakki-works/seqeval"><code>seqeval</code> documentation</a> explains its averaging options and strict IOB2 mode.</p>
+</section>
+<section id="sec-ch09-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch09-exercises">Exercises</h2>
+<ol type="1">
+<li><p><strong>Case suffix analysis in NER.</strong> Take the KazNERD test set. For every GPE, LOCATION and PERSON mention, analyse the final word with the Apertium analyser in TurkicNLP and record its case. Keep three outcomes apart: a non-nominative case, nominative, and <em>unknown</em> (no analysis, or several readings with different cases). Do not count analyser failures as nominative. Manually check a random sample of 50 mentions and report the analyser’s error rate on it. What proportion of mentions of each type is inflected? Is a trained model’s recall (for example that of the pretrained Stanza KazNERD model) lower for some cases?</p></li>
+<li><p><strong>Vocabulary overlap and NER.</strong> Fine-tune two models on KazNERD: one using <code>xlm-roberta-base</code> and one using <code>dbmdz/bert-base-turkish-cased</code> (BERTurk). Compare their micro and macro F1 (strict IOB2) on the KazNERD test set. Then measure BERTurk’s tokeniser coverage on a declared Cyrillic Kazakh word list. Report both the fraction of words containing an unknown token and mean subwords per word; a fragmented word is not an unknown word. Is the vocabulary gap a plausible explanation for the F1 difference, and what experiment would test it beyond this single pair of models?</p></li>
+<li><p><strong>Few-shot NER for Kyrgyz.</strong> Use KyrgyzNER <span class="citation" data-cites="turatali2025kyrgyzner">(<a href="../references.html#ref-turatali2025kyrgyzner" role="doc-biblioref">Turatali et al. 2025</a>)</span>, after checking its splits and licence; WikiANN Kyrgyz has only 100 training sentences. Reserve a fixed development subset before drawing nested training samples, such as 50, 200, 500 and 2,000 sentences where the release permits. Train XLM-R or a CPU-based CRF with three seeds per size. Choose hyperparameters and checkpoints on development data. Once the recipe and sizes are fixed, plot test F1 without using the curve to retune.</p>
+<p>Compare with zero-shot transfer from the pretrained Stanza KazNERD model or your fine-tuned XLM-R. Before examining scores, map the 25 KazNERD and 27 KyrgyzNER types to a shared inventory. Map unsupported types to <code>O</code> in both gold and predictions, retain all tokens and score both systems on the same mapped test set.</p>
+<p>Document unresolved mention-boundary differences and the domain difference between TV news and a news portal. At what sampled training size does the Kyrgyz model overtake zero-shot transfer?</p></li>
+<li><p><strong>Entity distribution shift measurement.</strong> Extract all PERSON entity spans from the KazNERD training set and a Turkish NER training set (for example the Starlang Turkish NER data or MilliyetNER). Normalise both sets (lemmatise or strip case suffixes, and transliterate to a common script with a documented mapping), then compute the Jaccard overlap of the name tokens and of their character trigrams. Which normalised strings are shared and which are not? Do not infer a name’s etymology from string overlap alone. Stratify Exercise 3’s PERSON mentions by whether their normalised name strings occur in the source training data: are unseen names the main source of cross-lingual PERSON errors?</p></li>
+<li><p><strong>PropBank argument detection.</strong> Use sense-annotated Turkish PropBank sentences <span class="citation" data-cites="sahin2018propbank">(<a href="../references.html#ref-sahin2018propbank" role="doc-biblioref">Şahin and Adalı 2018</a>)</span> and read the selected predicates’ role definitions. Measure the position of overt ARG0 spans relative to the predicate. For examples without an overt ARG0, inspect the annotation policy and context before treating the argument as omitted. What does agreement tell you, and what discourse evidence is needed to recover a referent? If you use TRopBank frames with a UD treebank instead, treat subjects as syntactic observations: <code>nsubj</code> is not a gold ARG0 label. Manually establish predicate senses and roles before making an SRL claim. Evaluate overt-argument labelling and implicit-argument recovery separately.</p></li>
+<li><p><strong>An LLM as a recogniser.</strong> Annotate 50 Kyrgyz (or Tatar) news sentences with <code>PER</code>, <code>LOC</code> and <code>ORG</code> by hand. Run TurkicNLP with <code>ner_backend="llm"</code> and two models of different sizes, and compute entity-level F1 with <code>seqeval</code>. Then run the same LLM backend on 50 sentences of the KazNERD test set, where you can compare it with the trained Stanza model. Declare a mapping from KazNERD types to PER/LOC/ORG before scoring, use the same mention boundaries, and apply that mapping to both systems and gold. How large is the gap, and which entity types does the LLM miss?</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-alecakir2022turkishdelightnlp" class="csl-entry" role="listitem">
+Alecakir, Huseyin, Necva Bölücü, and Burcu Can. 2022. <span>“<span>T</span>urkish<span>D</span>elight<span>NLP</span>: A Neural <span>T</span>urkish <span>NLP</span> Toolkit.”</span> In <em>Proceedings of the 2022 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies: System Demonstrations</em>, 17–26. Hybrid: Seattle, Washington + Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.naacl-demo.3">https://doi.org/10.18653/v1/2022.naacl-demo.3</a>.
+</div>
+<div id="ref-aslan2018constituent" class="csl-entry" role="listitem">
+Aslan, Ozkan, Serkan Gunal, and Bekir Taner Dincer. 2018. <span>“On Constituent Chunking for <span>T</span>urkish.”</span> <em>Information Processing &amp; Management</em> 54 (6): 1262–76. <a href="https://doi.org/10.1016/j.ipm.2018.05.004">https://doi.org/10.1016/j.ipm.2018.05.004</a>.
+</div>
+<div id="ref-azmat2020uyghurner" class="csl-entry" role="listitem">
+Azmat, Anwar, Li Xiao, Yang Yating, Dong Rui, and Osman Turghun. 2020. <span>“Constructing <span>U</span>yghur Name Entity Recognition System Using Neural Machine Translation Tag Projection.”</span> In <em>Proceedings of the 19th <span>C</span>hinese National Conference on Computational Linguistics</em>, 1006–16. Haikou, China: Chinese Information Processing Society of China. <a href="https://aclanthology.org/2020.ccl-1.93/">https://aclanthology.org/2020.ccl-1.93/</a>.
+</div>
+<div id="ref-coltekin2022resources" class="csl-entry" role="listitem">
+Çöltekin, Çağrı, A. Seza Doğruöz, and Özlem Çetinoğlu. 2023. <span>“Resources for <span>Turkish</span> Natural Language Processing: A Critical Survey.”</span> <em>Language Resources and Evaluation</em> 57 (1): 449–88. <a href="https://doi.org/10.1007/s10579-022-09605-4">https://doi.org/10.1007/s10579-022-09605-4</a>.
+</div>
+<div id="ref-conneau2020xlmr" class="csl-entry" role="listitem">
+Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. 2020. <span>“Unsupervised Cross-Lingual Representation Learning at Scale.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 8440–51. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-main.747">https://doi.org/10.18653/v1/2020.acl-main.747</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-jurafsky2024slp" class="csl-entry" role="listitem">
+Jurafsky, Daniel, and James H. Martin. 2024. <em>Speech and Language Processing</em>. 3rd ed.
+</div>
+<div id="ref-kara2020tropbank" class="csl-entry" role="listitem">
+Kara, Neslihan, Deniz Baran Aslan, Büşra Marşan, Özge Bakay, Koray Ak, and Olcay Taner Yıldız. 2020. <span>“<span>TR</span>op<span>B</span>ank: <span>T</span>urkish <span>P</span>rop<span>B</span>ank <span>V</span>2.0.”</span> In <em>Proceedings of the Twelfth Language Resources and Evaluation Conference</em>, 2763–72. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2020.lrec-1.336/">https://aclanthology.org/2020.lrec-1.336/</a>.
+</div>
+<div id="ref-lample2016neural" class="csl-entry" role="listitem">
+Lample, Guillaume, Miguel Ballesteros, Sandeep Subramanian, Kazuya Kawakami, and Chris Dyer. 2016. <span>“Neural Architectures for Named Entity Recognition.”</span> In <em>Proceedings of the 2016 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies</em>, 260–70. San Diego, California: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/N16-1030">https://doi.org/10.18653/v1/N16-1030</a>.
+</div>
+<div id="ref-localdoc2024azner" class="csl-entry" role="listitem">
+LocalDoc. n.d. <span>“<span class="nocase">azerbaijani-ner-dataset</span>.”</span> Hugging Face dataset <code>LocalDoc/azerbaijani-ner-dataset</code>, CC BY-NC 4.0. <a href="https://huggingface.co/datasets/LocalDoc/azerbaijani-ner-dataset">https://huggingface.co/datasets/LocalDoc/azerbaijani-ner-dataset</a>.
+</div>
+<div id="ref-oflazer2018turkish_nlp" class="csl-entry" role="listitem">
+Oflazer, Kemal, and Murat Saraçlar, eds. 2018. <em>Turkish Natural Language Processing</em>. Theory and Applications of Natural Language Processing. Cham: Springer. <a href="https://doi.org/10.1007/978-3-319-90165-7">https://doi.org/10.1007/978-3-319-90165-7</a>.
+</div>
+<div id="ref-pan2017wikiann" class="csl-entry" role="listitem">
+Pan, Xiaoman, Boliang Zhang, Jonathan May, Joel Nothman, Kevin Knight, and Heng Ji. 2017. <span>“Cross-Lingual Name Tagging and Linking for 282 Languages.”</span> In <em>Proceedings of the 55th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1946–58. Vancouver, Canada: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P17-1178">https://doi.org/10.18653/v1/P17-1178</a>.
+</div>
+<div id="ref-safaya2022mukayese" class="csl-entry" role="listitem">
+Safaya, Ali, Emirhan Kurtuluş, Arda Goktogan, and Deniz Yuret. 2022. <span>“Mukayese: <span>T</span>urkish <span>NLP</span> Strikes Back.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>ACL</span> 2022</em>, 846–63. Dublin, Ireland: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.findings-acl.69">https://doi.org/10.18653/v1/2022.findings-acl.69</a>.
+</div>
+<div id="ref-sahin2018propbank" class="csl-entry" role="listitem">
+Şahin, Gözde Gül, and Eşref Adalı. 2018. <span>“Annotation of Semantic Roles for the <span>T</span>urkish <span>P</span>roposition <span>B</span>ank.”</span> <em>Language Resources and Evaluation</em> 52 (3): 673–706. <a href="https://doi.org/10.1007/s10579-017-9390-y">https://doi.org/10.1007/s10579-017-9390-y</a>.
+</div>
+<div id="ref-saidov2026uzbekner" class="csl-entry" role="listitem">
+Saidov, Bobur, Zilolakhon Ruzmetova, Umida Bazarova, Gulnoza Narkabilova, Nasiba Azizova, Feruzakhon Rustamova, and Firuza Halimova. 2026. <span>“Human-Reviewed <span>U</span>zbek Legal Named Entity Recognition Dataset.”</span> <em>F1000Research</em> 15: 909. <a href="https://doi.org/10.12688/f1000research.180408.2">https://doi.org/10.12688/f1000research.180408.2</a>.
+</div>
+<div id="ref-turatali2025kyrgyzner" class="csl-entry" role="listitem">
+Turatali, Timur, Anton Alekseev, Gulira Jumalieva, Gulnara Kabaeva, and Sergey Nikolenko. 2025. <span>“Human-Annotated <span>NER</span> Dataset for the <span>K</span>yrgyz Language.”</span> In <em>2025 10th International Conference on Computer Science and Engineering (UBMK)</em>, 1607–12. Istanbul, Turkey: IEEE. <a href="https://doi.org/10.1109/UBMK67458.2025.11206879">https://doi.org/10.1109/UBMK67458.2025.11206879</a>.
+</div>
+<div id="ref-yeniterzi2011exploiting" class="csl-entry" role="listitem">
+Yeniterzi, Reyyan. 2011. <span>“Exploiting Morphology in <span>T</span>urkish Named Entity Recognition System.”</span> In <em>Proceedings of the <span>ACL</span> 2011 Student Session</em>, 105–10. Portland, OR, USA: Association for Computational Linguistics. <a href="https://aclanthology.org/P11-3019/">https://aclanthology.org/P11-3019/</a>.
+</div>
+<div id="ref-yeshpanov2022kaznerd" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Yerbolat Khassanov, and Huseyin Atakan Varol. 2022. <span>“<span>K</span>az<span>NERD</span>: <span>K</span>azakh Named Entity Recognition Dataset.”</span> In <em>Proceedings of the Thirteenth Language Resources and Evaluation Conference</em>, 417–26. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2022.lrec-1.44/">https://aclanthology.org/2022.lrec-1.44/</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/08-syntax-ud.html" class="pagination-link" aria-label="Syntactic Structure and Universal Dependencies">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/10-machine-translation.html" class="pagination-link" aria-label="Machine Translation: Within and Beyond the Family">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

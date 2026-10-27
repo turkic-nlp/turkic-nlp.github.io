@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>Appendix A — Mathematical Foundations – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-b.html" rel="next">
+<link href="../references.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-a.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-appa-linear-algebra" id="toc-sec-appa-linear-algebra" class="nav-link active" data-scroll-target="#sec-appa-linear-algebra"><span class="header-section-number">A.1</span> Linear Algebra</a>
+  <ul class="collapse">
+  <li><a href="#vectors-and-matrices" id="toc-vectors-and-matrices" class="nav-link" data-scroll-target="#vectors-and-matrices"><span class="header-section-number">A.1.1</span> Vectors and Matrices</a></li>
+  <li><a href="#norms-and-distances" id="toc-norms-and-distances" class="nav-link" data-scroll-target="#norms-and-distances"><span class="header-section-number">A.1.2</span> Norms and Distances</a></li>
+  </ul></li>
+  <li><a href="#sec-appa-probability" id="toc-sec-appa-probability" class="nav-link" data-scroll-target="#sec-appa-probability"><span class="header-section-number">A.2</span> Probability and Information Theory</a>
+  <ul class="collapse">
+  <li><a href="#probability-basics" id="toc-probability-basics" class="nav-link" data-scroll-target="#probability-basics"><span class="header-section-number">A.2.1</span> Probability Basics</a></li>
+  <li><a href="#distributions" id="toc-distributions" class="nav-link" data-scroll-target="#distributions"><span class="header-section-number">A.2.2</span> Distributions</a></li>
+  <li><a href="#information-theory" id="toc-information-theory" class="nav-link" data-scroll-target="#information-theory"><span class="header-section-number">A.2.3</span> Information Theory</a></li>
+  </ul></li>
+  <li><a href="#sec-appa-optimisation" id="toc-sec-appa-optimisation" class="nav-link" data-scroll-target="#sec-appa-optimisation"><span class="header-section-number">A.3</span> Optimisation</a>
+  <ul class="collapse">
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent"><span class="header-section-number">A.3.1</span> Gradient Descent</a></li>
+  <li><a href="#regularisation" id="toc-regularisation" class="nav-link" data-scroll-target="#regularisation"><span class="header-section-number">A.3.2</span> Regularisation</a></li>
+  </ul></li>
+  <li><a href="#sec-appa-neural-networks" id="toc-sec-appa-neural-networks" class="nav-link" data-scroll-target="#sec-appa-neural-networks"><span class="header-section-number">A.4</span> Neural Network Basics</a>
+  <ul class="collapse">
+  <li><a href="#the-feedforward-layer" id="toc-the-feedforward-layer" class="nav-link" data-scroll-target="#the-feedforward-layer"><span class="header-section-number">A.4.1</span> The Feedforward Layer</a></li>
+  <li><a href="#the-attention-mechanism" id="toc-the-attention-mechanism" class="nav-link" data-scroll-target="#the-attention-mechanism"><span class="header-section-number">A.4.2</span> The Attention Mechanism</a></li>
+  <li><a href="#softmax-and-cross-entropy" id="toc-softmax-and-cross-entropy" class="nav-link" data-scroll-target="#softmax-and-cross-entropy"><span class="header-section-number">A.4.3</span> Softmax and Cross-Entropy</a></li>
+  <li><a href="#sequence-models" id="toc-sequence-models" class="nav-link" data-scroll-target="#sequence-models"><span class="header-section-number">A.4.4</span> Sequence Models</a></li>
+  </ul></li>
+  <li><a href="#sec-appa-further-reading" id="toc-sec-appa-further-reading" class="nav-link" data-scroll-target="#sec-appa-further-reading">Further Reading</a></li>
+  <li><a href="#sec-appa-worked-checks" id="toc-sec-appa-worked-checks" class="nav-link" data-scroll-target="#sec-appa-worked-checks">Worked Checks</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-a.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-appendix-a" class="quarto-section-identifier">Appendix A — Mathematical Foundations</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What This Appendix Covers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This appendix reviews the linear algebra, probability and machine-learning concepts used in the book. It defines the notation needed for tokenisation, morphology, parsing, retrieval and language modelling. Use it as a reference or a refresher alongside a fuller treatment of each subject.</p>
+</div>
+</div>
+<p>Four areas recur: vectors and similarity (embeddings and retrieval), probability and information theory (language models and evaluation), optimisation (fine-tuning) and the building blocks of neural architectures (attention and sequence models).</p>
+<section id="sec-appa-linear-algebra" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="sec-appa-linear-algebra"><span class="header-section-number">A.1</span> Linear Algebra</h2>
+<section id="vectors-and-matrices" class="level3" data-number="A.1.1">
+<h3 data-number="A.1.1" class="anchored" data-anchor-id="vectors-and-matrices"><span class="header-section-number">A.1.1</span> Vectors and Matrices</h3>
+<p>A <strong>vector</strong> <span class="math inline">\(\mathbf{v} \in \mathbb{R}^d\)</span> is an ordered sequence of <span class="math inline">\(d\)</span> real numbers, written as a column:</p>
+<p><span class="math display">\[\mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ \vdots \\ v_d \end{pmatrix}\]</span></p>
+<p>In NLP, <strong>embeddings</strong> represent tokens, words and sentences as vectors. Each vocabulary token has a fixed-dimensional vector: <span class="math inline">\(d\)</span> is 384 for the MiniLM sentence encoder, 768 for XLM-R base and Glot500, and 1,024 for the NLLB-200 600M encoder used here. The <strong>embedding matrix</strong> <span class="math inline">\(\mathbf{E} \in \mathbb{R}^{|V| \times d}\)</span> stores one vector per row for vocabulary <span class="math inline">\(V\)</span>. Looking up token <span class="math inline">\(i\)</span> retrieves row <span class="math inline">\(i\)</span> of <span class="math inline">\(\mathbf{E}\)</span>.</p>
+<p>The <strong>dot product</strong> of two vectors <span class="math inline">\(\mathbf{u}, \mathbf{v} \in \mathbb{R}^d\)</span> is the scalar:</p>
+<p><span class="math display">\[\mathbf{u} \cdot \mathbf{v} = \sum_{i=1}^{d} u_i v_i\]</span></p>
+<p>The dot product measures the component-wise alignment between two vectors. In attention mechanisms (<a href="#sec-appa-neural-networks" class="quarto-xref"><span>Section A.4</span></a>), dot products between query and key vectors determine how much attention is paid to each position.</p>
+<p>A <strong>matrix</strong> <span class="math inline">\(\mathbf{M} \in \mathbb{R}^{m \times n}\)</span> has <span class="math inline">\(m\)</span> rows and <span class="math inline">\(n\)</span> columns. The <strong>transpose</strong> <span class="math inline">\(\mathbf{M}^\top \in \mathbb{R}^{n \times m}\)</span> swaps rows and columns. <strong>Matrix multiplication</strong> <span class="math inline">\(\mathbf{A}\mathbf{B}\)</span> is defined when <span class="math inline">\(\mathbf{A} \in \mathbb{R}^{m \times k}\)</span> and <span class="math inline">\(\mathbf{B} \in \mathbb{R}^{k \times n}\)</span>, producing <span class="math inline">\(\mathbf{C} \in \mathbb{R}^{m \times n}\)</span> where <span class="math inline">\(C_{ij} = \sum_{l=1}^k A_{il} B_{lj}\)</span>.</p>
+</section>
+<section id="norms-and-distances" class="level3" data-number="A.1.2">
+<h3 data-number="A.1.2" class="anchored" data-anchor-id="norms-and-distances"><span class="header-section-number">A.1.2</span> Norms and Distances</h3>
+<p>The <strong>L2 norm</strong> (Euclidean norm) of a vector measures its length:</p>
+<p><span class="math display">\[\|\mathbf{v}\|_2 = \sqrt{\sum_{i=1}^{d} v_i^2}\]</span></p>
+<p>A vector is <strong>normalised</strong> when its L2 norm equals 1. The <strong>L1 norm</strong> sums absolute values: <span class="math inline">\(\|\mathbf{v}\|_1 = \sum_i |v_i|\)</span>.</p>
+<p><strong>Cosine similarity</strong> measures the angle between two vectors, ignoring their magnitudes:</p>
+<p><span class="math display">\[\text{sim}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \, \|\mathbf{v}\|_2}\]</span></p>
+<p>For nonzero vectors, cosine similarity ranges from <span class="math inline">\(-1\)</span> to <span class="math inline">\(1\)</span> and is invariant to their positive rescaling. Zero vectors need an explicit exclusion policy. On unit vectors, squared Euclidean distance is <span class="math inline">\(2-2\,\mathrm{sim}(\mathbf u,\mathbf v)\)</span>, so the rankings agree. Embedding norms are model-dependent; they are not universally word-frequency measures. For the analogy “Istanbul is to Turkey as Almaty is to ____”, the usual offset query is <span class="math inline">\(\mathbf v_{\mathrm{Turkey}}-\mathbf v_{\mathrm{Istanbul}}+\mathbf v_{\mathrm{Almaty}}\)</span>. Whether it retrieves Kazakhstan is an empirical property of the embedding.</p>
+</section>
+</section>
+<section id="sec-appa-probability" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="sec-appa-probability"><span class="header-section-number">A.2</span> Probability and Information Theory</h2>
+<section id="probability-basics" class="level3" data-number="A.2.1">
+<h3 data-number="A.2.1" class="anchored" data-anchor-id="probability-basics"><span class="header-section-number">A.2.1</span> Probability Basics</h3>
+<p>A <strong>probability distribution</strong> over a discrete set <span class="math inline">\(\mathcal{X}\)</span> assigns a non-negative value <span class="math inline">\(P(x)\)</span> to each outcome <span class="math inline">\(x \in \mathcal{X}\)</span> such that <span class="math inline">\(\sum_{x \in \mathcal{X}} P(x) = 1\)</span>.</p>
+<p><strong>Conditional probability</strong> defines the probability of event <span class="math inline">\(A\)</span> given that <span class="math inline">\(B\)</span> has occurred:</p>
+<p><span class="math display">\[P(A \mid B) = \frac{P(A, B)}{P(B)}\]</span></p>
+<p>where <span class="math inline">\(P(A, B)\)</span> is the joint probability and <span class="math inline">\(P(B)&gt;0\)</span>. <strong>Bayes’ theorem</strong> inverts the conditioning when <span class="math inline">\(P(A)&gt;0\)</span>:</p>
+<p><span class="math display">\[P(B \mid A) = \frac{P(A \mid B) \, P(B)}{P(A)}\]</span></p>
+<p>In NLP, Bayes’ theorem underlies naive Bayes classifiers for text categorisation: the prior <span class="math inline">\(P(B)\)</span> is the class prior and <span class="math inline">\(P(A \mid B)\)</span> is the likelihood of the observed features given the class. This framework appears in text classification and in the HMM formulation for morphological disambiguation (<a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
+<p>The <strong>chain rule of probability</strong> decomposes joint probabilities into a product of conditionals:</p>
+<p><span class="math display">\[P(x_1, x_2, \ldots, x_n) = \prod_{i=1}^{n} P(x_i \mid x_1, \ldots, x_{i-1})\]</span></p>
+<p>Autoregressive language models use this identity to factor a token sequence’s probability into next-token probabilities. The probability of a complete sentence also includes its end-of-sequence marker; otherwise the product describes a prefix.</p>
+</section>
+<section id="distributions" class="level3" data-number="A.2.2">
+<h3 data-number="A.2.2" class="anchored" data-anchor-id="distributions"><span class="header-section-number">A.2.2</span> Distributions</h3>
+<p>The <strong>categorical distribution</strong> is a generalisation of the Bernoulli distribution to <span class="math inline">\(k\)</span> outcomes. A random variable <span class="math inline">\(X\)</span> follows <span class="math inline">\(\text{Cat}(\boldsymbol{\pi})\)</span> if <span class="math inline">\(P(X = k) = \pi_k\)</span> where <span class="math inline">\(\sum_k \pi_k = 1\)</span>. Autoregressive language model outputs are categorical: at each position, the model produces a probability distribution over the entire vocabulary, and the next token is drawn (or selected via argmax) from this distribution.</p>
+</section>
+<section id="information-theory" class="level3" data-number="A.2.3">
+<h3 data-number="A.2.3" class="anchored" data-anchor-id="information-theory"><span class="header-section-number">A.2.3</span> Information Theory</h3>
+<p><strong>Entropy</strong> measures the average uncertainty of a distribution:</p>
+<p><span class="math display">\[H(X) = -\sum_{x \in \mathcal{X}} P(x) \log P(x)\]</span></p>
+<p>Here <span class="math inline">\(\log\)</span> is the natural logarithm, so entropy is in nats; use <span class="math inline">\(\log_2\)</span> for bits. Adopt <span class="math inline">\(0\log0=0\)</span>. On a fixed finite support, entropy is maximised by the uniform distribution and is zero for a point mass. Lower predictive entropy means greater concentration, not better calibration: a confidently wrong model can have very low entropy.</p>
+<p><strong>Cross-entropy</strong> measures how well a model distribution <span class="math inline">\(Q\)</span> approximates a true distribution <span class="math inline">\(P\)</span>:</p>
+<p><span class="math display">\[H(P, Q) = -\sum_{x} P(x) \log Q(x)\]</span></p>
+<p>Cross-entropy is the standard training objective for neural language models and classifiers: minimising <span class="math inline">\(H(P, Q)\)</span> encourages <span class="math inline">\(Q\)</span> to concentrate probability on the outcomes that <span class="math inline">\(P\)</span> assigns high probability. When <span class="math inline">\(P\)</span> is the one-hot encoding of the correct class (for classification) or the empirical distribution over the training corpus (for language modelling), cross-entropy reduces to the negative log-likelihood of the correct labels.</p>
+<p><strong>Perplexity</strong> converts cross-entropy to a more interpretable scale:</p>
+<p><span class="math display">\[\text{PPL} = \exp(H_{\mathrm{nats}}(P,Q)) = 2^{H_{\mathrm{bits}}(P,Q)}\]</span></p>
+<p>A uniform four-outcome distribution has entropy <span class="math inline">\(\ln4\)</span> nats or 2 bits, giving perplexity 4 under either consistent convention. Held-out language-model perplexity is exponentiated average negative log likelihood per declared prediction unit. Compare it only under compatible tokenisation, text and context policies. Cross-language differences cannot be attributed to morphology alone when these conditions differ.</p>
+<p><strong>KL divergence</strong> (Kullback-Leibler divergence) measures the information cost of using <span class="math inline">\(Q\)</span> to approximate <span class="math inline">\(P\)</span>:</p>
+<p><span class="math display">\[D_\text{KL}(P \| Q) = \sum_x P(x) \log \frac{P(x)}{Q(x)}\]</span></p>
+<p>If <span class="math inline">\(P(x)&gt;0\)</span> but <span class="math inline">\(Q(x)=0\)</span>, the divergence is infinite; zero-<span class="math inline">\(P\)</span> terms contribute zero. Use the same log base throughout the entropy identity. KL divergence is non-negative and equals zero only when <span class="math inline">\(P = Q\)</span>. It is asymmetric: <span class="math inline">\(D_\text{KL}(P \| Q) \neq D_\text{KL}(Q \| P)\)</span> in general. The cross-entropy decomposes as <span class="math inline">\(H(P, Q) = H(P) + D_\text{KL}(P \| Q)\)</span>, showing that minimising cross-entropy is equivalent to minimising KL divergence when the true distribution <span class="math inline">\(P\)</span> is fixed. KL divergence appears in variational inference and in preference-tuning objectives such as RLHF and DPO, which keep a tuned model close to a reference model; <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a> places preference tuning in the adaptation workflow.</p>
+</section>
+</section>
+<section id="sec-appa-optimisation" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="sec-appa-optimisation"><span class="header-section-number">A.3</span> Optimisation</h2>
+<section id="gradient-descent" class="level3" data-number="A.3.1">
+<h3 data-number="A.3.1" class="anchored" data-anchor-id="gradient-descent"><span class="header-section-number">A.3.1</span> Gradient Descent</h3>
+<p>Neural network training is an optimisation problem: find the parameter vector <span class="math inline">\(\boldsymbol{\theta}\)</span> that minimises a scalar loss function <span class="math inline">\(\mathcal{L}(\boldsymbol{\theta})\)</span> defined over the training data.</p>
+<p>The <strong>gradient</strong> <span class="math inline">\(\nabla_{\boldsymbol{\theta}} \mathcal{L}\)</span> is the vector of partial derivatives of the loss with respect to each parameter. It points in the direction of steepest ascent. <strong>Gradient descent</strong> takes a step in the opposite direction:</p>
+<p><span class="math display">\[\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} - \alpha \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta})\]</span></p>
+<p>where <span class="math inline">\(\alpha &gt; 0\)</span> is the <strong>learning rate</strong>. If <span class="math inline">\(\alpha\)</span> is too large, updates overshoot minima; if too small, convergence is slow.</p>
+<p>In practice, computing the gradient over the whole training set at every update is expensive. <strong>Stochastic Gradient Descent (SGD)</strong> estimates it from a randomly sampled <strong>minibatch</strong> of <span class="math inline">\(B\)</span> examples. Larger batches generally reduce sampling noise and use more memory per update. Their throughput depends on the model and hardware. An <strong>epoch</strong> is one pass through the training set.</p>
+<p><strong>Adam</strong> (Adaptive Moment Estimation) maintains running estimates of the first and second moments of the gradient to adaptively scale the learning rate for each parameter:</p>
+<p><span class="math display">\[m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t\]</span> <span class="math display">\[v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2\]</span> <span class="math display">\[\hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}\]</span> <span class="math display">\[\boldsymbol{\theta}_t = \boldsymbol{\theta}_{t-1} - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \varepsilon}\]</span></p>
+<p>where <span class="math inline">\(g_t\)</span> is the gradient at step <span class="math inline">\(t\)</span> and the vector operations are element-wise. Common defaults are <span class="math inline">\(\beta_1 = 0.9\)</span>, <span class="math inline">\(\beta_2 = 0.999\)</span> and <span class="math inline">\(\varepsilon = 10^{-8}\)</span>; the small positive <span class="math inline">\(\varepsilon\)</span> keeps the denominator nonzero. AdamW, with decoupled weight decay, is used in many of the book’s transformer examples; the equations above define Adam. Fine-tuning recipes often pair it with a learning-rate warmup followed by linear or cosine decay; record the schedule actually used, as the exercises do.</p>
+</section>
+<section id="regularisation" class="level3" data-number="A.3.2">
+<h3 data-number="A.3.2" class="anchored" data-anchor-id="regularisation"><span class="header-section-number">A.3.2</span> Regularisation</h3>
+<p>A model can fit the training data while performing poorly on new examples. Regularisation aims to reduce this overfitting. Three common techniques follow.</p>
+<p><strong>L2 regularisation</strong> adds <span class="math inline">\(\lambda\|\theta\|_2^2\)</span> to the loss. In plain SGD it corresponds to a shrinkage update with a matching coefficient. <strong>AdamW</strong> applies weight decay separately from the adaptive gradient update; adding an L2 penalty to Adam is not generally equivalent.</p>
+<p><strong>Dropout</strong> in PyTorch uses inverted dropout: with independent <span class="math inline">\(m_i\sim\mathrm{Bernoulli}(1-p)\)</span>, training uses <span class="math inline">\(y_i=m_ix_i/(1-p)\)</span> for <span class="math inline">\(0\le p&lt;1\)</span>. Evaluation uses <span class="math inline">\(y_i=x_i\)</span> with no further scaling. Call <code>model.eval()</code> for inference.</p>
+<p><strong>Early stopping</strong> monitors a declared development metric with a chosen patience and minimum improvement. Restore the best development checkpoint and use the reserved test set only after selection. A single noisy increase need not trigger stopping, and validation loss need not be the task’s selection metric.</p>
+</section>
+</section>
+<section id="sec-appa-neural-networks" class="level2" data-number="A.4">
+<h2 data-number="A.4" class="anchored" data-anchor-id="sec-appa-neural-networks"><span class="header-section-number">A.4</span> Neural Network Basics</h2>
+<section id="the-feedforward-layer" class="level3" data-number="A.4.1">
+<h3 data-number="A.4.1" class="anchored" data-anchor-id="the-feedforward-layer"><span class="header-section-number">A.4.1</span> The Feedforward Layer</h3>
+<p>The building block of neural networks is the <strong>feedforward (fully connected) layer</strong>:</p>
+<p><span class="math display">\[\mathbf{y} = \sigma(\mathbf{W}\mathbf{x} + \mathbf{b})\]</span></p>
+<p>where <span class="math inline">\(\mathbf{x} \in \mathbb{R}^{d_\text{in}}\)</span> is the input, <span class="math inline">\(\mathbf{W} \in \mathbb{R}^{d_\text{out} \times d_\text{in}}\)</span> is the weight matrix, <span class="math inline">\(\mathbf{b} \in \mathbb{R}^{d_\text{out}}\)</span> is the bias, and <span class="math inline">\(\sigma\)</span> is an element-wise nonlinear <strong>activation function</strong>.</p>
+<p>Stacking affine layers without nonlinear activations is equivalent to a single affine transformation. Nonlinear activations give deeper networks the ability to represent more complex functions.</p>
+</section>
+<section id="the-attention-mechanism" class="level3" data-number="A.4.2">
+<h3 data-number="A.4.2" class="anchored" data-anchor-id="the-attention-mechanism"><span class="header-section-number">A.4.2</span> The Attention Mechanism</h3>
+<p>The <strong>scaled dot-product attention</strong> mechanism <span class="citation" data-cites="jurafsky2024slp">(<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">Jurafsky and Martin 2024</a>, ch.&nbsp;9)</span> computes a weighted average of value vectors, where weights are determined by the compatibility between query and key vectors:</p>
+<p><span class="math display">\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}\right)\mathbf{V}\]</span></p>
+<p>Here <span class="math inline">\(\mathbf{Q} \in \mathbb{R}^{n \times d_k}\)</span> is the query matrix (one row per query position), <span class="math inline">\(\mathbf{K} \in \mathbb{R}^{m \times d_k}\)</span> is the key matrix, <span class="math inline">\(\mathbf{V} \in \mathbb{R}^{m \times d_v}\)</span> is the value matrix, and <span class="math inline">\(d_k\)</span> is the dimension of the query/key vectors. The division by <span class="math inline">\(\sqrt{d_k}\)</span> prevents the dot products from growing too large in magnitude as <span class="math inline">\(d_k\)</span> increases, which would push the softmax into regions of very small gradients.</p>
+<p><strong>Multi-head attention</strong> projects <span class="math inline">\(\mathbf{Q}\)</span>, <span class="math inline">\(\mathbf{K}\)</span>, <span class="math inline">\(\mathbf{V}\)</span> into <span class="math inline">\(h\)</span> separate lower-dimensional subspaces, computes attention independently in each head, and concatenates the results:</p>
+<p><span class="math display">\[\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\,\mathbf{W}^O\]</span> <span class="math display">\[\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)\]</span></p>
+<p>Multiple heads provide separate learned projections. Claims that particular heads track syntax, semantics or morphological agreement need a probe or intervention on the specific trained model; the architecture alone cannot show that they do.</p>
+</section>
+<section id="softmax-and-cross-entropy" class="level3" data-number="A.4.3">
+<h3 data-number="A.4.3" class="anchored" data-anchor-id="softmax-and-cross-entropy"><span class="header-section-number">A.4.3</span> Softmax and Cross-Entropy</h3>
+<p>The <strong>softmax</strong> function converts a vector of raw scores (logits) <span class="math inline">\(\mathbf{z} \in \mathbb{R}^k\)</span> to a probability distribution:</p>
+<p><span class="math display">\[\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^k e^{z_j}}\]</span></p>
+<p>Implement softmax and log-sum-exp stably by subtracting <span class="math inline">\(\max_j z_j\)</span> before exponentiation. The attention softmax is applied row-wise over permitted keys; padding and causal masks exclude prohibited positions. Softmax is used at the output layer of classifiers (morphological taggers, NER models, dependency parsers) and at every decoding step of a language model. The <strong>cross-entropy loss</strong> for a single example with correct class <span class="math inline">\(y\)</span> and predicted distribution <span class="math inline">\(\hat{\mathbf{p}} = \text{softmax}(\mathbf{z})\)</span> is:</p>
+<p><span class="math display">\[\mathcal{L} = -\log \hat{p}_y = -z_y + \log \sum_j e^{z_j}\]</span></p>
+<p>Minimising this loss encourages the model to assign high probability to the correct class. For sequence labelling (morphological tagging, NER), sum or average the loss over labelled, unmasked positions and state which reduction is used. Padding or ignored positions must not enter the denominator.</p>
+</section>
+<section id="sequence-models" class="level3" data-number="A.4.4">
+<h3 data-number="A.4.4" class="anchored" data-anchor-id="sequence-models"><span class="header-section-number">A.4.4</span> Sequence Models</h3>
+<p><strong>Recurrent Neural Networks (RNNs)</strong> process sequences by maintaining a hidden state <span class="math inline">\(\mathbf{h}_t\)</span> that is updated at each time step:</p>
+<p><span class="math display">\[\mathbf{h}_t = \sigma(\mathbf{W}_h \mathbf{h}_{t-1} + \mathbf{W}_x \mathbf{x}_t + \mathbf{b})\]</span></p>
+<p>RNNs can represent long dependencies, but learning them can be difficult. During backpropagation through time, repeated transformations can make gradients shrink (<strong>vanishing gradients</strong>) or grow (<strong>exploding gradients</strong>). The former weakens the training signal from distant positions.</p>
+<p><strong>LSTMs (Long Short-Term Memory)</strong> use a cell state and gates to help preserve information. In the equations below, <span class="math inline">\(\sigma\)</span> is the logistic sigmoid and <span class="math inline">\([\mathbf h;\mathbf x]\)</span> concatenates the two vectors. Three gates control information flow:</p>
+<ul>
+<li><strong>Forget gate</strong> <span class="math inline">\(\mathbf{f}_t = \sigma(\mathbf{W}_f [\mathbf{h}_{t-1}; \mathbf{x}_t] + \mathbf{b}_f)\)</span>: decides what to erase from the cell state</li>
+<li><strong>Input gate</strong> <span class="math inline">\(\mathbf{i}_t = \sigma(\mathbf{W}_i [\mathbf{h}_{t-1}; \mathbf{x}_t] + \mathbf{b}_i)\)</span>: decides what new information to write</li>
+<li><strong>Output gate</strong> <span class="math inline">\(\mathbf{o}_t = \sigma(\mathbf{W}_o [\mathbf{h}_{t-1}; \mathbf{x}_t] + \mathbf{b}_o)\)</span>: decides what to expose as the hidden state</li>
+</ul>
+<p>The candidate state is <span class="math inline">\(\tilde c_t=\tanh(W_c[h_{t-1};x_t]+b_c)\)</span>; the cell update is <span class="math inline">\(c_t=f_t\odot c_{t-1}+i_t\odot\tilde c_t\)</span> and the hidden state is <span class="math inline">\(h_t=o_t\odot\tanh(c_t)\)</span>. The additive path can mitigate vanishing gradients but does not guarantee perfect long-range memory. BiLSTM-CRF remains a useful sequence-labelling baseline to compare with transformers.</p>
+<p>Transformer training can compute representations in parallel across positions subject to attention masks; autoregressive generation remains sequential. Full self-attention has <span class="math inline">\(O(n^2d)\)</span> arithmetic for sequence length <span class="math inline">\(n\)</span> and total representation width <span class="math inline">\(d\)</span>. Explicit attention-score matrices use <span class="math inline">\(O(hn^2)\)</span> storage for <span class="math inline">\(h\)</span> heads, in addition to activations; efficient kernels can avoid materialising that matrix without eliminating the quadratic arithmetic of full attention. High fertility increases <span class="math inline">\(n\)</span> for a given text, motivating the context-budget checks in <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
+</section>
+</section>
+<section id="sec-appa-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-appa-further-reading">Further Reading</h2>
+<p>For a self-contained and pedagogically careful treatment of all the material in this appendix (probability for NLP, neural networks, backpropagation, the attention mechanism and language model evaluation), Chapters 5 to 10 of <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span> are the recommended starting point. The notation used throughout this book follows <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span> wherever possible.</p>
+<p>Stanford CS229’s online lecture notes and Goodfellow, Bengio and Courville’s <em>Deep Learning</em> cover linear algebra and optimisation for machine learning. Cover and Thomas’s <em>Elements of Information Theory</em> develops the information-theoretic foundations. For transformers, read the original architecture in <span class="citation" data-cites="vaswani2017attention">Vaswani et al. (<a href="../references.html#ref-vaswani2017attention" role="doc-biblioref">2017</a>)</span> alongside the explanation in <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span>.</p>
+</section>
+<section id="sec-appa-worked-checks" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-appa-worked-checks">Worked Checks</h2>
+<ol type="1">
+<li>Uniform four-way prediction: <span class="math inline">\(H=\ln4\)</span> nats, <span class="math inline">\(H=2\)</span> bits, perplexity 4.</li>
+<li>A confidently wrong binary prediction <span class="math inline">\(Q=(0.99,0.01)\)</span> for gold class 2 has low predictive entropy but loss <span class="math inline">\(-\ln0.01\)</span>; confidence and calibration are different things.</li>
+<li>Two orthogonal unit vectors have cosine 0 and squared Euclidean distance 2.</li>
+<li>For dropout rate 0.25, a retained activation of 3 becomes 4 during training and remains 3 at evaluation. Its expectation across masks is 3.</li>
+</ol>
+<p>These arithmetic identities, stable-softmax behaviour and loss masking are checked in <code>code/common/check.py</code>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-jurafsky2024slp" class="csl-entry" role="listitem">
+Jurafsky, Daniel, and James H. Martin. 2024. <em>Speech and Language Processing</em>. 3rd ed.
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry" role="listitem">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> In <em>Advances in Neural Information Processing Systems 30 (<span>NIPS</span> 2017)</em>, 5998–6008.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-b.html" class="pagination-link" aria-label="Computational Resources and Tools">
+        <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

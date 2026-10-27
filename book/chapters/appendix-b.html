@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>Appendix B — Computational Resources and Tools – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-c.html" rel="next">
+<link href="../chapters/appendix-a.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-b.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-appb-environment" id="toc-sec-appb-environment" class="nav-link active" data-scroll-target="#sec-appb-environment"><span class="header-section-number">B.1</span> Environment Setup</a>
+  <ul class="collapse">
+  <li><a href="#tested-profiles-and-installation" id="toc-tested-profiles-and-installation" class="nav-link" data-scroll-target="#tested-profiles-and-installation"><span class="header-section-number">B.1.1</span> Tested Profiles and Installation</a></li>
+  </ul></li>
+  <li><a href="#sec-appb-libraries" id="toc-sec-appb-libraries" class="nav-link" data-scroll-target="#sec-appb-libraries"><span class="header-section-number">B.2</span> Key Libraries and Frameworks</a>
+  <ul class="collapse">
+  <li><a href="#hugging-face-ecosystem" id="toc-hugging-face-ecosystem" class="nav-link" data-scroll-target="#hugging-face-ecosystem"><span class="header-section-number">B.2.1</span> Hugging Face Ecosystem</a></li>
+  <li><a href="#turkicnlp-toolkit" id="toc-turkicnlp-toolkit" class="nav-link" data-scroll-target="#turkicnlp-toolkit"><span class="header-section-number">B.2.2</span> TurkicNLP Toolkit</a></li>
+  <li><a href="#apertium" id="toc-apertium" class="nav-link" data-scroll-target="#apertium"><span class="header-section-number">B.2.3</span> Apertium</a></li>
+  <li><a href="#hfst-helsinki-finite-state-toolkit" id="toc-hfst-helsinki-finite-state-toolkit" class="nav-link" data-scroll-target="#hfst-helsinki-finite-state-toolkit"><span class="header-section-number">B.2.4</span> HFST (Helsinki Finite-State Toolkit)</a></li>
+  <li><a href="#stanza-stanford-nlp" id="toc-stanza-stanford-nlp" class="nav-link" data-scroll-target="#stanza-stanford-nlp"><span class="header-section-number">B.2.5</span> Stanza (Stanford NLP)</a></li>
+  <li><a href="#zemberek-nlp-turkish" id="toc-zemberek-nlp-turkish" class="nav-link" data-scroll-target="#zemberek-nlp-turkish"><span class="header-section-number">B.2.6</span> Zemberek-NLP (Turkish)</a></li>
+  </ul></li>
+  <li><a href="#sec-appb-datasets" id="toc-sec-appb-datasets" class="nav-link" data-scroll-target="#sec-appb-datasets"><span class="header-section-number">B.3</span> Datasets and Corpora</a>
+  <ul class="collapse">
+  <li><a href="#parallel-corpora" id="toc-parallel-corpora" class="nav-link" data-scroll-target="#parallel-corpora"><span class="header-section-number">B.3.1</span> Parallel Corpora</a></li>
+  <li><a href="#monolingual-corpora" id="toc-monolingual-corpora" class="nav-link" data-scroll-target="#monolingual-corpora"><span class="header-section-number">B.3.2</span> Monolingual Corpora</a></li>
+  <li><a href="#treebanks" id="toc-treebanks" class="nav-link" data-scroll-target="#treebanks"><span class="header-section-number">B.3.3</span> Treebanks</a></li>
+  <li><a href="#ner-datasets" id="toc-ner-datasets" class="nav-link" data-scroll-target="#ner-datasets"><span class="header-section-number">B.3.4</span> NER Datasets</a></li>
+  <li><a href="#benchmarks" id="toc-benchmarks" class="nav-link" data-scroll-target="#benchmarks"><span class="header-section-number">B.3.5</span> Benchmarks</a></li>
+  <li><a href="#speech-datasets" id="toc-speech-datasets" class="nav-link" data-scroll-target="#speech-datasets"><span class="header-section-number">B.3.6</span> Speech Datasets</a></li>
+  </ul></li>
+  <li><a href="#sec-appb-models" id="toc-sec-appb-models" class="nav-link" data-scroll-target="#sec-appb-models"><span class="header-section-number">B.4</span> Pretrained Models</a>
+  <ul class="collapse">
+  <li><a href="#verified-configurations" id="toc-verified-configurations" class="nav-link" data-scroll-target="#verified-configurations"><span class="header-section-number">B.4.1</span> Verified Configurations</a></li>
+  <li><a href="#additional-models" id="toc-additional-models" class="nav-link" data-scroll-target="#additional-models"><span class="header-section-number">B.4.2</span> Additional Models</a></li>
+  <li><a href="#speech-models" id="toc-speech-models" class="nav-link" data-scroll-target="#speech-models"><span class="header-section-number">B.4.3</span> Speech Models</a></li>
+  </ul></li>
+  <li><a href="#sec-appb-community" id="toc-sec-appb-community" class="nav-link" data-scroll-target="#sec-appb-community"><span class="header-section-number">B.5</span> Community and Infrastructure</a></li>
+  <li><a href="#sec-appb-reproducing" id="toc-sec-appb-reproducing" class="nav-link" data-scroll-target="#sec-appb-reproducing"><span class="header-section-number">B.6</span> Reproducing Results from This Book</a>
+  <ul class="collapse">
+  <li><a href="#local-reproduction-manifest" id="toc-local-reproduction-manifest" class="nav-link" data-scroll-target="#local-reproduction-manifest"><span class="header-section-number">B.6.1</span> Local Reproduction Manifest</a></li>
+  <li><a href="#setting-up-chapter-by-chapter" id="toc-setting-up-chapter-by-chapter" class="nav-link" data-scroll-target="#setting-up-chapter-by-chapter"><span class="header-section-number">B.6.2</span> Setting Up Chapter by Chapter</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-b.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-appendix-b" class="quarto-section-identifier">Appendix B — Computational Resources and Tools</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What This Appendix Covers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This appendix catalogues resources used in the book: environments and libraries (<a href="#sec-appb-environment" class="quarto-xref"><span>Section B.1</span></a>, <a href="#sec-appb-libraries" class="quarto-xref"><span>Section B.2</span></a>), datasets (<a href="#sec-appb-datasets" class="quarto-xref"><span>Section B.3</span></a>), pretrained models (<a href="#sec-appb-models" class="quarto-xref"><span>Section B.4</span></a>) and community infrastructure (<a href="#sec-appb-community" class="quarto-xref"><span>Section B.5</span></a>). Reproduction notes follow in <a href="#sec-appb-reproducing" class="quarto-xref"><span>Section B.6</span></a>. Entries refer to the sources and revisions checked; newer and unlisted resources need their own verification.</p>
+</div>
+</div>
+<p>The resources include rule-based tools from Apertium and HFST, corpora from OPUS and Common Voice, models from the Hugging Face Hub, and language-specific datasets from groups such as ISSAI and SIGTURK. This appendix gives starting points; the task chapters describe the relevant releases and limitations.</p>
+<section id="sec-appb-environment" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="sec-appb-environment"><span class="header-section-number">B.1</span> Environment Setup</h2>
+<section id="tested-profiles-and-installation" class="level3" data-number="B.1.1">
+<h3 data-number="B.1.1" class="anchored" data-anchor-id="tested-profiles-and-installation"><span class="header-section-number">B.1.1</span> Tested Profiles and Installation</h3>
+<p>Use separate environments for HFST/toolkit work, transformer experiments and Omnilingual ASR. The book’s runs used Python 3.11 to 3.13, with packages varying by chapter. Each run records Python and package versions and downloaded-file SHA-256 hashes. Reuse those records when reproducing a result, and check other platform or package combinations before relying on them.</p>
+<p>For a fresh environment, choose a supported Python/runtime and the platform-specific PyTorch installation from its official instructions, then install the pinned direct dependencies in <code>code/common/requirements-tested.txt</code>. That file records the checked package versions; it is not a complete cross-platform lock or evidence of a clean install on every OS. Save the resolved environment for a published experiment.</p>
+<p>Install only the toolkit extras needed by the chosen example. HFST availability and native dependencies differ by platform; a Windows environment may need WSL for those tools. The Omnilingual wrapper’s environment is separate from the Whisper recipe in <a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a>. Do not install conflicting speech stacks into an existing working text environment.</p>
+<p>Memory and runtime depend on the exact configuration, so measure them on the planned run; each exercise README records the runtime of the book’s run. The exercises run on a CPU; the procedure-only fine-tuning recipes are faster on a GPU.</p>
+</section>
+</section>
+<section id="sec-appb-libraries" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="sec-appb-libraries"><span class="header-section-number">B.2</span> Key Libraries and Frameworks</h2>
+<section id="hugging-face-ecosystem" class="level3" data-number="B.2.1">
+<h3 data-number="B.2.1" class="anchored" data-anchor-id="hugging-face-ecosystem"><span class="header-section-number">B.2.1</span> Hugging Face Ecosystem</h3>
+<p>The Hugging Face ecosystem is the primary software infrastructure used throughout this book. Four libraries are central.</p>
+<p><strong><code>transformers</code></strong> provides a unified API for loading, fine-tuning, and running pretrained models. Models are identified by a Hub ID string (e.g., <code>dbmdz/bert-base-turkish-cased</code>); the appropriate model class and input conventions depend on whether the task uses an encoder, a causal language model or a sequence-to-sequence model. Pin the revision of every checkpoint, as the exercises do; a newly added task head is random until trained.</p>
+<p><strong><code>datasets</code></strong> loads corpora and benchmarks from the Hugging Face Hub or from local files, with streaming for large datasets. The book’s exercises instead read most datasets from commit-pinned GitHub files and check their SHA-256 hashes (for KazNERD and KyrgyzNER, see <a href="09-sequence-labeling.html" class="quarto-xref"><span>Chapter 9</span></a>), so that a rerun uses exactly the same release.</p>
+<p><strong><code>peft</code></strong> implements parameter-efficient fine-tuning methods including LoRA and QLoRA, which reduce the memory needed to adapt large models. Use the complete XLM-R sequence-classification recipe in <a href="12-pretrained-lms.html#sec-ch12-hands-on" class="quarto-xref"><span>Section 12.5</span></a>. Target names are architecture-specific, and a new classifier head must be trainable and saved with its adapter. Copying <code>q_proj/v_proj</code> from a decoder into a BERT example is not a valid universal setup.</p>
+<p><strong><code>evaluate</code></strong> wraps standard metrics such as <code>seqeval</code> for BIO entity spans, <code>sacrebleu</code> and <code>chrf</code> for machine translation and <code>rouge</code> for summarisation. Feature and exact-bundle accuracy for morphology are computed by the book’s own code (<a href="15-evaluation-benchmarks.html" class="quarto-xref"><span>Chapter 15</span></a>); report the metric signature with every score.</p>
+<p>The Hugging Face Hub at <a href="https://huggingface.co">huggingface.co</a> hosts models, datasets and spaces relevant to Turkic NLP. Language tags (e.g.&nbsp;<code>kk</code> or <code>kaz</code> for Kazakh) are self-reported metadata: a tag search can miss resources and count copies, so record the query and date, as the resource audit in <a href="17-endangered-ethics.html#sec-ch17-hands-on" class="quarto-xref"><span>Section 17.6</span></a> does.</p>
+</section>
+<section id="turkicnlp-toolkit" class="level3" data-number="B.2.2">
+<h3 data-number="B.2.2" class="anchored" data-anchor-id="turkicnlp-toolkit"><span class="header-section-number">B.2.2</span> TurkicNLP Toolkit</h3>
+<p>The TurkicNLP toolkit <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span> provides one pipeline for 24 Turkic languages, with interchangeable rule-based, finite-state (Apertium), per-language neural (Stanza), and multilingual neural (Glot500) backends, plus script detection, transliteration, Common Turkic Script (CTS) conversion, language identification (GlotLID), morpheme segmentation, and NLLB-based embeddings and translation.</p>
+<ul>
+<li><strong>GitHub</strong>: <a href="https://github.com/turkic-nlp/turkicnlp">github.com/turkic-nlp/turkicnlp</a></li>
+<li><strong>Installation</strong>: <code>pip install turkicnlp</code> (extras such as <code>turkicnlp[hfst]</code> add heavier backends)</li>
+<li><strong>Languages</strong>: 24 (coverage per component differs; see the model catalogue)</li>
+<li><strong>Processors</strong>: <code>tokenize</code>, <code>mwt</code>, <code>morph</code>, <code>morph_neural</code>, <code>pos</code>, <code>feats</code>, <code>lemma</code>, <code>depparse</code>, <code>ner</code>, <code>embeddings</code>, <code>translate</code>, <code>sentiment</code>, <code>spellcheck</code>, <code>sp_tokenize</code>, <code>asr</code></li>
+<li><strong>Other entry points</strong>: <code>LanguageDetection</code>, <code>SpeechRecognizer</code>, <code>MorphemeTokenizer</code>, <code>Transliterator</code>, <code>turkicnlp.llm.ask</code>, <code>list_processors</code>, <code>list_asr_languages</code></li>
+<li><strong>LLM backends</strong>: <code>morph</code>, <code>ner</code>, <code>translate</code>, <code>sentiment</code> and <code>spellcheck</code> can use any LLM (vLLM, Ollama, OpenAI, Claude, or a local Hugging Face model) for all 24 languages</li>
+<li><strong>Licences</strong>: the library is Apache-2.0; Apertium transducers (GPL-3.0) and NLLB weights (CC-BY-NC-4.0) are downloaded separately</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install "turkicnlp[stanza]==0.5.0"   # list_processors works without it; loading Stanza models needs it</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sorted</span>(turkicnlp.list_processors(<span class="st">"kaz"</span>)))   <span class="co"># what the catalog offers for Kazakh</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>turkicnlp.download(<span class="st">"kaz"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"morph"</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>kz <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"kaz"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"morph"</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> kz(<span class="st">"Үйлерімізден өте алыс кеткенбіз."</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> doc.words:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(word.text, word.lemma, word.upos, word.feats)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(doc._processor_log)                          <span class="co"># which backend produced what</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(doc.to_conllu())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Three behaviours are worth knowing. <strong>Field ownership</strong>: when several processors provide the same field, the last one in the pipeline owns it, and the others’ values are kept in <code>word._provenance</code>. <strong>Script bridging</strong>: input in a script without models (Kazakh Latin, Uzbek Cyrillic) is transliterated, processed, and mapped back to the original text. <strong>Batching</strong>: <code>nlp.batch(texts, batch_size=32)</code> hands whole batches to the neural and LLM backends.</p>
+</section>
+<section id="apertium" class="level3" data-number="B.2.3">
+<h3 data-number="B.2.3" class="anchored" data-anchor-id="apertium"><span class="header-section-number">B.2.3</span> Apertium</h3>
+<p>Apertium <span class="citation" data-cites="forcada2011apertium khanna2021apertium">(<a href="../references.html#ref-forcada2011apertium" role="doc-biblioref">Forcada et al. 2011</a>; <a href="../references.html#ref-khanna2021apertium" role="doc-biblioref">Khanna et al. 2021</a>)</span> is an open-source rule-based machine translation and morphological analysis platform. For Turkic NLP, its primary value is the collection of finite-state morphological analysers for 20+ Turkic languages, whose coverage and ambiguity should be evaluated against independent gold data.</p>
+<ul>
+<li><strong>Website</strong>: <a href="https://apertium.org">apertium.org</a></li>
+<li><strong>GitHub</strong>: <a href="https://github.com/apertium">github.com/apertium</a></li>
+<li><strong>Turkic language modules</strong>: <a href="https://github.com/apertium/apertium-tur">github.com/apertium/apertium-tur</a> (Turkish), <a href="https://github.com/apertium/apertium-kaz">github.com/apertium/apertium-kaz</a> (Kazakh), and equivalents for other languages</li>
+</ul>
+<p><a href="10-machine-translation.html#sec-rbmt-apertium" class="quarto-xref"><span>Section 10.2</span></a> gives a dated inventory of Apertium translation pairs and their development stages. Check the selected pair’s release and supported direction before use; a repository listing does not guarantee support in both directions.</p>
+</section>
+<section id="hfst-helsinki-finite-state-toolkit" class="level3" data-number="B.2.4">
+<h3 data-number="B.2.4" class="anchored" data-anchor-id="hfst-helsinki-finite-state-toolkit"><span class="header-section-number">B.2.4</span> HFST (Helsinki Finite-State Toolkit)</h3>
+<p>HFST <span class="citation" data-cites="linden2011hfst">(<a href="../references.html#ref-linden2011hfst" role="doc-biblioref">Lindén et al. 2011</a>)</span> is a toolkit for compiling and running finite-state transducers. The Apertium Turkic analysers used in this book are compiled with HFST; Apertium also supports other finite-state toolchains.</p>
+<ul>
+<li><strong>Website</strong>: <a href="http://hfst.github.io">hfst.github.io</a></li>
+<li><strong>Installation</strong>: <code>pip install hfst</code> (Python bindings) or system packages</li>
+</ul>
+<p>HFST supports the standard finite-state operations (composition, intersection, minimisation); <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a> shows how to load and query the Apertium transducers with its Python bindings.</p>
+</section>
+<section id="stanza-stanford-nlp" class="level3" data-number="B.2.5">
+<h3 data-number="B.2.5" class="anchored" data-anchor-id="stanza-stanford-nlp"><span class="header-section-number">B.2.5</span> Stanza (Stanford NLP)</h3>
+<p>Stanza <span class="citation" data-cites="qi2020stanza">(<a href="../references.html#ref-qi2020stanza" role="doc-biblioref">Qi et al. 2020</a>)</span> provides neural NLP pipelines for tokenisation, POS tagging, morphological analysis, and dependency parsing. Its 1.11.0 model catalogue has models for five Turkic languages with UD data: Turkish, Kazakh, Kyrgyz, Uyghur and Ottoman Turkish (later catalogues add Uzbek; <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>); TurkicNLP adds Stanza models for Azerbaijani, Uzbek, Turkmen, Tatar, and Bashkir.</p>
+<p>TurkicNLP exposes Stanza backends through its pipeline (<a href="08-syntax-ud.html#sec-ch08-hands-on" class="quarto-xref"><span>Section 8.7</span></a>). Check the catalogue for the requested language and processor: a parsing model does not imply that a dedicated NER model is available.</p>
+<p>Use Stanza 1.11 (<code>pip install "turkicnlp[stanza]"</code> enforces <code>stanza&gt;=1.8,&lt;1.12</code>): the custom Azerbaijani, Uzbek, Turkmen, Tatar and Bashkir models were trained with it, and newer Stanza versions fail to load their parsers.</p>
+<p>The measured Stanza baselines, including the caveat on the Kazakh replay score, are in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>. For other languages, TurkicNLP’s multilingual Glot500 tagger and parser and its Apertium backend are the alternatives.</p>
+</section>
+<section id="zemberek-nlp-turkish" class="level3" data-number="B.2.6">
+<h3 data-number="B.2.6" class="anchored" data-anchor-id="zemberek-nlp-turkish"><span class="header-section-number">B.2.6</span> Zemberek-NLP (Turkish)</h3>
+<p>Zemberek <span class="citation" data-cites="akin2007zemberek">(<a href="../references.html#ref-akin2007zemberek" role="doc-biblioref">Akın and Akın 2007</a>)</span> is an open-source Java library for Turkish morphological analysis, disambiguation, tokenisation, spell-checking and normalisation (<a href="https://github.com/ahmetaa/zemberek-nlp">github.com/ahmetaa/zemberek-nlp</a>); community Python wrappers exist. Verify the maintained implementation and evaluate it on the intended domain.</p>
+</section>
+</section>
+<section id="sec-appb-datasets" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="sec-appb-datasets"><span class="header-section-number">B.3</span> Datasets and Corpora</h2>
+<section id="parallel-corpora" class="level3" data-number="B.3.1">
+<h3 data-number="B.3.1" class="anchored" data-anchor-id="parallel-corpora"><span class="header-section-number">B.3.1</span> Parallel Corpora</h3>
+<div id="tbl-parallel-corpora" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-parallel-corpora-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.1: Parallel corpora covering Turkic languages
+</figcaption>
+<div aria-describedby="tbl-parallel-corpora-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 36%">
+<col style="width: 20%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Corpus</th>
+<th>Languages</th>
+<th>Size</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TIL corpus</td>
+<td>22 Turkic languages</td>
+<td>release-specific totals and direction counts in <a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a></td>
+<td>github.com/turkic-interlingua/til-mt</td>
+</tr>
+<tr class="even">
+<td>OPUS</td>
+<td>Many, incl.&nbsp;all major Turkic</td>
+<td>Varies by subcorpus</td>
+<td>opus.nlpl.eu</td>
+</tr>
+<tr class="odd">
+<td>FLORES-200</td>
+<td>200 languages</td>
+<td>997 dev; 1,012 devtest sentences</td>
+<td>huggingface.co/datasets/facebook/flores</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The <strong>TIL corpus</strong> <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov et al. 2021</a>)</span> provides parallel data for 22 Turkic languages; release-specific counts, directions and split-overlap cautions are discussed in <a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a>. <strong>FLORES-200</strong> provides the same evaluation sentences for the eleven Turkic varieties in NLLB-200 and is one possible MT evaluation source, provided language coverage, contamination and domain fit are checked.</p>
+</section>
+<section id="monolingual-corpora" class="level3" data-number="B.3.2">
+<h3 data-number="B.3.2" class="anchored" data-anchor-id="monolingual-corpora"><span class="header-section-number">B.3.2</span> Monolingual Corpora</h3>
+<div id="tbl-mono-corpora" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mono-corpora-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.2: Monolingual corpora for Turkic languages
+</figcaption>
+<div aria-describedby="tbl-mono-corpora-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Corpus</th>
+<th>Language</th>
+<th style="text-align: center;">Approx. Size</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HPLT v3.0</td>
+<td>many, incl.&nbsp;11 Turkic subsets</td>
+<td style="text-align: center;">per-language sizes in <a href="04-corpora-at-scale.html#sec-corpora-inventory" class="quarto-xref"><span>Section 4.1</span></a></td>
+<td>hplt-project.org</td>
+</tr>
+<tr class="even">
+<td>FineWeb2</td>
+<td>many, incl.&nbsp;Turkic</td>
+<td style="text-align: center;">per-language sizes in <a href="04-corpora-at-scale.html#sec-corpora-inventory" class="quarto-xref"><span>Section 4.1</span></a></td>
+<td>huggingface.co/datasets/HuggingFaceFW/fineweb-2</td>
+</tr>
+<tr class="odd">
+<td>CulturaX</td>
+<td>167 languages</td>
+<td style="text-align: center;">per-language sizes in <a href="04-corpora-at-scale.html#sec-corpora-inventory" class="quarto-xref"><span>Section 4.1</span></a></td>
+<td>huggingface.co/datasets/uonlp/CulturaX</td>
+</tr>
+<tr class="even">
+<td>OSCAR</td>
+<td>160+ languages incl.&nbsp;Turkic</td>
+<td style="text-align: center;">release-specific</td>
+<td>huggingface.co/datasets/oscar-corpus/OSCAR-2301</td>
+</tr>
+<tr class="odd">
+<td>CC-100</td>
+<td>100 languages</td>
+<td style="text-align: center;">release-specific</td>
+<td>data.statmt.org/cc-100</td>
+</tr>
+<tr class="even">
+<td>Turkish National Corpus</td>
+<td>tur</td>
+<td style="text-align: center;">50M words (2012 description)</td>
+<td><a href="https://aclanthology.org/L12-1590/">Corpus description</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The <strong>Turkish National Corpus (TNC)</strong> <span class="citation" data-cites="aksan2012tnc">(<a href="../references.html#ref-aksan2012tnc" role="doc-biblioref">Aksan et al. 2012</a>)</span> was designed as a balanced, general-purpose corpus of 50 million words. This is the size reported in the 2012 description. <strong>HPLT</strong>, <strong>FineWeb2</strong> and <strong>CulturaX</strong> are automatically labelled web collections. Their per-language sizes differ substantially; <a href="04-corpora-at-scale.html" class="quarto-xref"><span>Chapter 4</span></a> compares their releases and explains how to audit a subset before use.</p>
+</section>
+<section id="treebanks" class="level3" data-number="B.3.3">
+<h3 data-number="B.3.3" class="anchored" data-anchor-id="treebanks"><span class="header-section-number">B.3.3</span> Treebanks</h3>
+<p>UD 2.17 has treebanks for Turkish, Ottoman Turkish, Kazakh, Kyrgyz, Uzbek, Uyghur, Tatar, Azerbaijani, Sakha (UD: Yakut) and Old Turkic (UD: Old Turkish), plus Turkish–German and Turkish–English code-switching treebanks (<a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>, <a href="08-syntax-ud.html#tbl-turkish-treebanks" class="quarto-xref">Table&nbsp;<span>8.5</span></a> and <a href="08-syntax-ud.html#tbl-other-treebanks" class="quarto-xref">Table&nbsp;<span>8.6</span></a>). They provide reference annotations for tokenisation, POS tagging, morphological features and dependency structure in CoNLL-U format. Annotation methods and quality vary by treebank; check the release documentation and the examples in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>.</p>
+<ul>
+<li><strong>Download</strong>: <a href="https://universaldependencies.org">universaldependencies.org</a> (all treebanks, versioned releases)</li>
+<li><strong>Parallel UD-Turkic sentences</strong>: <a href="https://github.com/ud-turkic/parallel">github.com/ud-turkic/parallel</a> <span class="citation" data-cites="eslami2025parallel">(<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">Akhundjanova et al. 2025</a>)</span></li>
+<li><strong>Format</strong>: CoNLL-U (tab-separated syntactic-word records, with additional records for multiword tokens and empty nodes)</li>
+<li><strong>Python loading</strong>: <code>pip install conllu</code></li>
+</ul>
+<p>In the audited official UD 2.17 inventory, languages without a dedicated released treebank include Turkmen, Bashkir, Chuvash, Crimean Tatar, Gagauz, Karakalpak, Kumyk, Nogai, Karachay-Balkar, and all Siberian Turkic languages except Sakha.</p>
+</section>
+<section id="ner-datasets" class="level3" data-number="B.3.4">
+<h3 data-number="B.3.4" class="anchored" data-anchor-id="ner-datasets"><span class="header-section-number">B.3.4</span> NER Datasets</h3>
+<div id="tbl-ner-datasets" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ner-datasets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.3: Named entity recognition datasets for Turkic languages
+</figcaption>
+<div aria-describedby="tbl-ner-datasets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 16%">
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Language</th>
+<th style="text-align: center;">Entity Types</th>
+<th>Source</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>KazNERD</td>
+<td>Kazakh</td>
+<td style="text-align: center;">25 classes; 112,702 sentences</td>
+<td>github.com/IS2AI/KazNERD</td>
+<td><span class="citation" data-cites="yeshpanov2022kaznerd">Yeshpanov, Khassanov, and Varol (<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">2022</a>)</span></td>
+</tr>
+<tr class="even">
+<td>KyrgyzNER</td>
+<td>Kyrgyz</td>
+<td style="text-align: center;">27 classes; 7,033 training and 3,867 test sentences</td>
+<td>github.com/Akyl-AI/KyrgyzNER</td>
+<td><span class="citation" data-cites="turatali2025kyrgyzner">Turatali et al. (<a href="../references.html#ref-turatali2025kyrgyzner" role="doc-biblioref">2025</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>WikiANN</td>
+<td>10+ Turkic</td>
+<td style="text-align: center;">PER, ORG, LOC</td>
+<td>Hub configuration per language</td>
+<td><span class="citation" data-cites="pan2017wikiann">Pan et al. (<a href="../references.html#ref-pan2017wikiann" role="doc-biblioref">2017</a>)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>KazNERD</strong> reports 112,702 sentences from Kazakh television news, with 136,333 annotations in 25 classes <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span>. It supplies the NER examples in <a href="09-sequence-labeling.html" class="quarto-xref"><span>Chapter 9</span></a>. <strong>WikiANN</strong> derives silver-standard annotations from Wikipedia in many languages. Its original publication and later releases differ in coverage; use the pinned configurations in that chapter and assess label quality for the chosen language and task.</p>
+</section>
+<section id="benchmarks" class="level3" data-number="B.3.5">
+<h3 data-number="B.3.5" class="anchored" data-anchor-id="benchmarks"><span class="header-section-number">B.3.5</span> Benchmarks</h3>
+<div id="tbl-benchmarks-appendix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-benchmarks-appendix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.4: Evaluation benchmarks for Turkic NLP
+</figcaption>
+<div aria-describedby="tbl-benchmarks-appendix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 17%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Benchmark</th>
+<th>Languages</th>
+<th>Tasks</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TUMLU</td>
+<td>9 listed; release caveat in <a href="15-evaluation-benchmarks.html#sec-benchmarks" class="quarto-xref"><span>Section 15.3</span></a></td>
+<td>Native MCQs</td>
+<td><span class="citation" data-cites="isbarov2025tumlu">Isbarov et al. (<a href="../references.html#ref-isbarov2025tumlu" role="doc-biblioref">2025</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Kardeş-NLU</td>
+<td>az, kk, ky, uz, ug</td>
+<td>Cross-lingual NLU</td>
+<td><span class="citation" data-cites="senel2024kardes">Senel et al. (<a href="../references.html#ref-senel2024kardes" role="doc-biblioref">2024</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Mukayese</td>
+<td>Turkish</td>
+<td>Multiple NLP tasks</td>
+<td><span class="citation" data-cites="safaya2022mukayese">Safaya et al. (<a href="../references.html#ref-safaya2022mukayese" role="doc-biblioref">2022</a>)</span></td>
+</tr>
+<tr class="even">
+<td>KazQAD</td>
+<td>Kazakh</td>
+<td>QA (reading comprehension)</td>
+<td><span class="citation" data-cites="yeshpanov2024kazqad">Yeshpanov et al. (<a href="../references.html#ref-yeshpanov2024kazqad" role="doc-biblioref">2024</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>X-WMT</td>
+<td>8 Turkic + en, ru</td>
+<td>MT (88 directions)</td>
+<td><span class="citation" data-cites="mirzakhalov2021large">Mirzakhalov et al. (<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">2021</a>)</span></td>
+</tr>
+<tr class="even">
+<td>KazMMLU</td>
+<td>Kazakh, Russian</td>
+<td>Native MCQs</td>
+<td><span class="citation" data-cites="togmanov2025kazmmlu">Togmanov et al. (<a href="../references.html#ref-togmanov2025kazmmlu" role="doc-biblioref">2025</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>FLORES-200 / SIB-200</td>
+<td>11 Turkic varieties</td>
+<td>MT / topic classification</td>
+<td><span class="citation" data-cites="costa2022nllb">NLLB Team et al. (<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">2024</a>)</span>; <span class="citation" data-cites="adelani2024sib">Adelani et al. (<a href="../references.html#ref-adelani2024sib" role="doc-biblioref">2024</a>)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>TUMLU</strong> <span class="citation" data-cites="isbarov2025tumlu">(<a href="../references.html#ref-isbarov2025tumlu" role="doc-biblioref">Isbarov et al. 2025</a>)</span> lists Azerbaijani, Crimean Tatar, Karakalpak, Kazakh, Kyrgyz, Tatar, Turkish, Uyghur and Uzbek, with school questions in 11 subjects; its conflicting language counts require release-specific checks (<a href="15-evaluation-benchmarks.html" class="quarto-xref"><span>Chapter 15</span></a>). <strong>Kardeş-NLU</strong> <span class="citation" data-cites="senel2024kardes">(<a href="../references.html#ref-senel2024kardes" role="doc-biblioref">Senel et al. 2024</a>)</span> evaluates cross-lingual NLU for five Turkic languages with Turkish as a high-resource relative. <strong>Mukayese</strong> <span class="citation" data-cites="safaya2022mukayese">(<a href="../references.html#ref-safaya2022mukayese" role="doc-biblioref">Safaya et al. 2022</a>)</span> is a multi-task benchmark suite for Turkish.</p>
+</section>
+<section id="speech-datasets" class="level3" data-number="B.3.6">
+<h3 data-number="B.3.6" class="anchored" data-anchor-id="speech-datasets"><span class="header-section-number">B.3.6</span> Speech Datasets</h3>
+<div id="tbl-speech-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-speech-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.5: Speech corpora for Turkic languages
+</figcaption>
+<div aria-describedby="tbl-speech-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 30%">
+<col style="width: 18%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Language</th>
+<th style="text-align: center;">Size</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>KSC2</td>
+<td>Kazakh</td>
+<td style="text-align: center;">&gt;1,000 hours</td>
+<td>issai.nu.edu.kz <span class="citation" data-cites="mussakhojayeva2022ksc2">(<a href="../references.html#ref-mussakhojayeva2022ksc2" role="doc-biblioref">Mussakhojayeva, Khassanov, and Varol 2022a</a>)</span></td>
+</tr>
+<tr class="even">
+<td>KazakhTTS2</td>
+<td>Kazakh</td>
+<td style="text-align: center;">~271 hours, 5 speakers</td>
+<td>issai.nu.edu.kz</td>
+</tr>
+<tr class="odd">
+<td>FLEURS</td>
+<td>tr, az, kk, ky, uz, …</td>
+<td style="text-align: center;">n-way parallel read speech</td>
+<td>google/fleurs</td>
+</tr>
+<tr class="even">
+<td>KazEmoTTS</td>
+<td>Kazakh</td>
+<td style="text-align: center;">Emotional speech</td>
+<td>issai.nu.edu.kz</td>
+</tr>
+<tr class="odd">
+<td>Common Voice</td>
+<td>Multiple Turkic</td>
+<td style="text-align: center;">Per release; validated and training hours differ</td>
+<td>Mozilla Data Collective; see <a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>ISSAI (Nazarbayev University) <span class="citation" data-cites="mussakhojayeva2023turkicasr mussakhojayeva2022kazakhtts2">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>; <a href="../references.html#ref-mussakhojayeva2022kazakhtts2" role="doc-biblioref">Mussakhojayeva, Khassanov, and Varol 2022b</a>)</span> has produced Kazakh speech resources including the KSC2 ASR corpus and the KazakhTTS2 synthesis corpus. <strong>Common Voice</strong> has datasets for several Turkic languages whose sizes depend on volunteer activity; check the current release statistics.</p>
+</section>
+</section>
+<section id="sec-appb-models" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="sec-appb-models"><span class="header-section-number">B.4</span> Pretrained Models</h2>
+<section id="verified-configurations" class="level3" data-number="B.4.1">
+<h3 data-number="B.4.1" class="anchored" data-anchor-id="verified-configurations"><span class="header-section-number">B.4.1</span> Verified Configurations</h3>
+<div id="tbl-verified-models" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-verified-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.6: Pinned configurations checked 15 October 2026. Counts are generated from <code>AutoModel</code> on the meta device, without pretrained weights; a task head changes the count. Availability is not a quality evaluation. Sources, revisions and licence metadata: <code>tables/tbl-verified-models/data.csv</code>.
+</figcaption>
+<div aria-describedby="tbl-verified-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Checkpoint</th>
+<th>Role</th>
+<th style="text-align: right;">Base parameters</th>
+<th>Loaded class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://huggingface.co/dbmdz/bert-base-turkish-cased/tree/b6e1de16c983e0f2c70664591ea3f22810072608">dbmdz/bert-base-turkish-cased</a></td>
+<td>Turkish encoder</td>
+<td style="text-align: right;">110,617,344</td>
+<td><code>BertModel</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://huggingface.co/FacebookAI/xlm-roberta-base/tree/e73636d4f797dec63c3081bb6ed5c7b0bb3f2089">FacebookAI/xlm-roberta-base</a></td>
+<td>Multilingual encoder</td>
+<td style="text-align: right;">278,043,648</td>
+<td><code>XLMRobertaModel</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://huggingface.co/google/mt5-base/tree/2eb15465c5dd7f72a8f7984306ad05ebc3dd1e1f">google/mt5-base</a></td>
+<td>Multilingual encoder-decoder</td>
+<td style="text-align: right;">390,315,264</td>
+<td><code>MT5Model</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://huggingface.co/openai/whisper-small/tree/973afd24965f72e36ca33b3055d56a652f456b4d">openai/whisper-small</a></td>
+<td>Speech encoder-decoder</td>
+<td style="text-align: right;">241,734,912</td>
+<td><code>WhisperModel</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://huggingface.co/facebook/mms-tts-chv/tree/0f0b3060bfd5d341265b4aaec6d75689ccbcf509">facebook/mms-tts-chv</a></td>
+<td>Chuvash TTS</td>
+<td style="text-align: right;">36,284,784</td>
+<td><code>VitsModel</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://huggingface.co/facebook/mms-tts-crh/tree/a805ba2fff7e83ed2f366d2392862a017fd4a892">facebook/mms-tts-crh</a></td>
+<td>Crimean Tatar TTS</td>
+<td style="text-align: right;">36,285,744</td>
+<td><code>VitsModel</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The table counts base-model parameters from pinned configurations on a meta device, without downloading weights. BERTurk vocabulary variants have different embedding sizes; XLM-R base is not the 125M-parameter monolingual RoBERTa base. A task head changes the count. The CSV preserves model class, source URL, revision and licence metadata.</p>
+</section>
+<section id="additional-models" class="level3" data-number="B.4.2">
+<h3 data-number="B.4.2" class="anchored" data-anchor-id="additional-models"><span class="header-section-number">B.4.2</span> Additional Models</h3>
+<p>Glot500, NLLB, BERTbek, TURNA, KAZ-LLM and Sherkala are discussed with their publications and task results in <a href="07-neural-morphology.html" class="quarto-xref"><span>Chapter 7</span></a>, <a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a> and <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a>. Use each experiment’s pinned checkpoint and verify any additional Hub release. Choose by measured performance and model purpose: NLLB is trained for translation, while base mT5 uses span-corruption pretraining. Instruction-following chat requires further adaptation or evaluation.</p>
+</section>
+<section id="speech-models" class="level3" data-number="B.4.3">
+<h3 data-number="B.4.3" class="anchored" data-anchor-id="speech-models"><span class="header-section-number">B.4.3</span> Speech Models</h3>
+<div id="tbl-speech-models" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-speech-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.7: Speech models for Turkic languages
+</figcaption>
+<div aria-describedby="tbl-speech-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Coverage</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Whisper large-v3</td>
+<td>100 language tokens, including seven Turkic languages</td>
+<td><a href="https://huggingface.co/openai/whisper-large-v3/blob/main/generation_config.json">openai/whisper-large-v3 configuration</a></td>
+</tr>
+<tr class="even">
+<td>TurkicASR</td>
+<td>10 Turkic languages</td>
+<td>github.com/IS2AI/TurkicASR</td>
+</tr>
+<tr class="odd">
+<td>TurkicTTS</td>
+<td>Kazakh-trained, zero-shot for other Turkic languages</td>
+<td>github.com/IS2AI/TurkicTTS</td>
+</tr>
+<tr class="even">
+<td>Söyle</td>
+<td>11 Turkic and other languages</td>
+<td>github.com/IS2AI/Soyle</td>
+</tr>
+<tr class="odd">
+<td>MMS</td>
+<td>1,100+ languages</td>
+<td>facebook/mms-1b-all</td>
+</tr>
+<tr class="even">
+<td>Omnilingual ASR</td>
+<td>20 Turkic languages through TurkicNLP</td>
+<td>via <code>turkicnlp[asr]</code>; see <a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>Whisper</strong> (OpenAI) covers seven Turkic languages (tr, az, uz, kk, tt, tk, ba) but not Kyrgyz or Uyghur. <strong>TurkicASR</strong> <span class="citation" data-cites="mussakhojayeva2023turkicasr">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>)</span> covers Azerbaijani, Bashkir, Chuvash, Kazakh, Kyrgyz, Sakha, Tatar, Turkish, Uyghur, and Uzbek; <strong>TurkicTTS</strong> <span class="citation" data-cites="yeshpanov2023turkictts">(<a href="../references.html#ref-yeshpanov2023turkictts" role="doc-biblioref">Yeshpanov, Mussakhojayeva, and Khassanov 2023</a>)</span> synthesises Turkic languages zero-shot from a Kazakh-trained model (<a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
+</section>
+</section>
+<section id="sec-appb-community" class="level2" data-number="B.5">
+<h2 data-number="B.5" class="anchored" data-anchor-id="sec-appb-community"><span class="header-section-number">B.5</span> Community and Infrastructure</h2>
+<p>The organisations behind most of these resources (Apertium, SIGTURK, ISSAI, Universal Dependencies, Turkic Interlingua, the UD-Turkic group, TurkLang and the Turkic Academy) are described in <a href="01-turkic-world.html#sec-institutions" class="quarto-xref"><span>Section 1.5</span></a>. Two practical points for contributors:</p>
+<ul>
+<li><strong>Universal Dependencies</strong> publishes two releases a year; new treebanks are submitted through the UD GitHub organisation, and language-specific guidelines are in the UD documentation. For a language without a treebank, see <a href="08-syntax-ud.html#sec-build-treebank" class="quarto-xref"><span>Section 8.6</span></a>.</li>
+<li><strong>Apertium</strong> modules are separate GitHub repositories (<code>apertium-kaz</code>, <code>apertium-kir</code>, <code>apertium-nog</code>, …) documented on <a href="https://wiki.apertium.org">wiki.apertium.org</a>; extending an existing module is the route described in <a href="17-endangered-ethics.html#sec-bootstrapping" class="quarto-xref"><span>Section 17.3</span></a>.</li>
+</ul>
+</section>
+<section id="sec-appb-reproducing" class="level2" data-number="B.6">
+<h2 data-number="B.6" class="anchored" data-anchor-id="sec-appb-reproducing"><span class="header-section-number">B.6</span> Reproducing Results from This Book</h2>
+<section id="local-reproduction-manifest" class="level3" data-number="B.6.1">
+<h3 data-number="B.6.1" class="anchored" data-anchor-id="local-reproduction-manifest"><span class="header-section-number">B.6.1</span> Local Reproduction Manifest</h3>
+<p>The code is organised by chapter: <code>code/ch04-corpus/</code>, <code>code/ch05-ambiguity/</code>, <code>code/ch06-toy-fst/</code>, <code>code/ch07-neural/</code>, <code>code/ch09-ner/</code>, <code>code/ch10-mt/</code>, <code>code/ch11-speech/</code>, <code>code/ch12-classify/</code>, <code>code/ch13-retrieval/</code>, <code>code/ch14-generation/</code>, <code>code/ch15-tumlu/</code>, <code>code/ch16-transfer/</code> and <code>code/ch17-resources/</code>. Shared helpers, the mechanical checks and the tested package versions are in <code>code/common/</code>, whose README documents inputs, commands, outputs and limits for classification, speech, TUMLU, corpus auditing, retrieval, transfer and resource observations. The exercise notebooks are in <code>exercises/</code>.</p>
+<p>Run <code>python code/common/check.py</code> in the recorded test environment. This checks fixtures, tiny models and artefact reload; it does not reproduce pretrained-model task accuracy. Full data/model downloads, dataset access conditions and independent human labels are separate prerequisites. Code-block extraction alone is not an adequate end-to-end reproduction test.</p>
+</section>
+<section id="setting-up-chapter-by-chapter" class="level3" data-number="B.6.2">
+<h3 data-number="B.6.2" class="anchored" data-anchor-id="setting-up-chapter-by-chapter"><span class="header-section-number">B.6.2</span> Setting Up Chapter by Chapter</h3>
+<p>The reading routes in the Preface give the order of chapters. Install only the extras a chapter uses, and keep the speech environment separate.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-adelani2024sib" class="csl-entry" role="listitem">
+Adelani, David Ifeoluwa, Hannah Liu, Xiaoyu Shen, Nikita Vassilyev, Jesujoba O. Alabi, Yanke Mao, Haonan Gao, and En-Shiun Annie Lee. 2024. <span>“<span>SIB</span>-200: A Simple, Inclusive, and Big Evaluation Dataset for Topic Classification in 200+ Languages and Dialects.”</span> In <em>Proceedings of the 18th Conference of the <span>E</span>uropean Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 226–45. St. Julian<span>’</span>s, Malta: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.eacl-long.14">https://doi.org/10.18653/v1/2024.eacl-long.14</a>.
+</div>
+<div id="ref-eslami2025parallel" class="csl-entry" role="listitem">
+Akhundjanova, Arofat, Furkan Akkurt, Bermet Chontaeva, Soudabeh Eslami, and Çağrı Çöltekin. 2025. <span>“Parallel <span>U</span>niversal <span>D</span>ependencies Treebanks for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the Eighth Workshop on <span>U</span>niversal <span>D</span>ependencies (<span>UDW</span>, <span>S</span>yntax<span>F</span>est 2025)</em>, 129–36. Ljubljana, Slovenia: Association for Computational Linguistics. <a href="https://aclanthology.org/2025.udw-1.14/">https://aclanthology.org/2025.udw-1.14/</a>.
+</div>
+<div id="ref-akin2007zemberek" class="csl-entry" role="listitem">
+Akın, Ahmet Afşin, and Mehmet Dündar Akın. 2007. <span>“Zemberek, an Open Source <span>NLP</span> Framework for <span>T</span>urkic Languages.”</span> Project white paper.
+</div>
+<div id="ref-aksan2012tnc" class="csl-entry" role="listitem">
+Aksan, Yeşim, Mustafa Aksan, Ahmet Koltuksuz, Taner Sezer, Ümit Mersinli, Umut Ufuk Demirhan, Hakan Yılmazer, et al. 2012. <span>“Construction of the <span>T</span>urkish National Corpus (<span>TNC</span>).”</span> In <em>Proceedings of the Eighth International Conference on Language Resources and Evaluation (<span>LREC</span>’12)</em>, 3223–27. Istanbul, Turkey: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L12-1590/">https://aclanthology.org/L12-1590/</a>.
+</div>
+<div id="ref-forcada2011apertium" class="csl-entry" role="listitem">
+Forcada, Mikel L., Mireia Ginestí-Rosell, Jacob Nordfalk, Jim O’Regan, Sergio Ortiz-Rojas, Juan Antonio Pérez-Ortiz, Felipe Sánchez-Martínez, Gema Ramírez-Sánchez, and Francis M. Tyers. 2011. <span>“Apertium: A Free/Open-Source Platform for Rule-Based Machine Translation.”</span> <em>Machine Translation</em> 25 (2): 127–44. <a href="https://doi.org/10.1007/s10590-011-9090-0">https://doi.org/10.1007/s10590-011-9090-0</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-isbarov2025tumlu" class="csl-entry" role="listitem">
+Isbarov, Jafar, Arofat Akhundjanova, Mammad Hajili, Kavsar Huseynova, Dmitry Gaynullin, Anar Rzayev, Osman Tursun, et al. 2025. <span>“<span>TUMLU</span>: A Unified and Native Language Understanding Benchmark for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 63rd Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 22816–38. Vienna, Austria: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2025.acl-long.1112">https://doi.org/10.18653/v1/2025.acl-long.1112</a>.
+</div>
+<div id="ref-khanna2021apertium" class="csl-entry" role="listitem">
+Khanna, Tanmai, Jonathan N. Washington, Francis M. Tyers, Sevilay Bayatlı, Daniel G. Swanson, Tommi A. Pirinen, Irene Tang, and Hèctor Alòs i Font. 2021. <span>“Recent Advances in <span>Apertium</span>, a Free/Open-Source Rule-Based Machine Translation Platform for Low-Resource Languages.”</span> <em>Machine Translation</em> 35 (4): 475–502. <a href="https://doi.org/10.1007/s10590-021-09260-6">https://doi.org/10.1007/s10590-021-09260-6</a>.
+</div>
+<div id="ref-linden2011hfst" class="csl-entry" role="listitem">
+Lindén, Krister, Erik Axelson, Sam Hardwick, Tommi A. Pirinen, and Miikka Silfverberg. 2011. <span>“<span>HFST</span>—Framework for Compiling and Applying Morphologies.”</span> In <em>Systems and Frameworks for Computational Morphology (<span>SFCM</span> 2011)</em>, 100:67–85. Communications in Computer and Information Science. Springer. <a href="https://doi.org/10.1007/978-3-642-23138-4_5">https://doi.org/10.1007/978-3-642-23138-4_5</a>.
+</div>
+<div id="ref-mirzakhalov2021large" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Duygu Ataman, Sherzod Kariev, Francis Tyers, Otabek Abduraufov, Mammad Hajili, et al. 2021. <span>“A Large-Scale Study of Machine Translation in <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing</em>, 5876–90. Online; Punta Cana, Dominican Republic: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.emnlp-main.475">https://doi.org/10.18653/v1/2021.emnlp-main.475</a>.
+</div>
+<div id="ref-mussakhojayeva2023turkicasr" class="csl-entry" role="listitem">
+Mussakhojayeva, Saida, Kaisar Dauletbek, Rustem Yeshpanov, and Huseyin Atakan Varol. 2023. <span>“Multilingual Speech Recognition for <span>Turkic</span> Languages.”</span> <em>Information</em> 14 (2): 74. <a href="https://doi.org/10.3390/info14020074">https://doi.org/10.3390/info14020074</a>.
+</div>
+<div id="ref-mussakhojayeva2022ksc2" class="csl-entry" role="listitem">
+Mussakhojayeva, Saida, Yerbolat Khassanov, and Huseyin Atakan Varol. 2022a. <span>“<span>KSC2</span>: An Industrial-Scale Open-Source <span>K</span>azakh Speech Corpus.”</span> In <em>Proceedings of Interspeech 2022</em>, 1367–71. ISCA. <a href="https://doi.org/10.21437/Interspeech.2022-421">https://doi.org/10.21437/Interspeech.2022-421</a>.
+</div>
+<div id="ref-mussakhojayeva2022kazakhtts2" class="csl-entry" role="listitem">
+———. 2022b. <span>“<span>K</span>azakh<span>TTS</span>2: Extending the Open-Source <span>K</span>azakh <span>TTS</span> Corpus with More Data, Speakers, and Topics.”</span> In <em>Proceedings of the Thirteenth Language Resources and Evaluation Conference</em>, 5404–11. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2022.lrec-1.578/">https://aclanthology.org/2022.lrec-1.578/</a>.
+</div>
+<div id="ref-costa2022nllb" class="csl-entry" role="listitem">
+NLLB Team, Marta R. Costa-jussà, James Cross, Onur Çelebi, Maha Elbayad, Kenneth Heafield, Kevin Heffernan, et al. 2024. <span>“Scaling Neural Machine Translation to 200 Languages.”</span> <em>Nature</em> 630 (8018): 841–46. <a href="https://doi.org/10.1038/s41586-024-07335-x">https://doi.org/10.1038/s41586-024-07335-x</a>.
+</div>
+<div id="ref-pan2017wikiann" class="csl-entry" role="listitem">
+Pan, Xiaoman, Boliang Zhang, Jonathan May, Joel Nothman, Kevin Knight, and Heng Ji. 2017. <span>“Cross-Lingual Name Tagging and Linking for 282 Languages.”</span> In <em>Proceedings of the 55th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1946–58. Vancouver, Canada: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P17-1178">https://doi.org/10.18653/v1/P17-1178</a>.
+</div>
+<div id="ref-qi2020stanza" class="csl-entry" role="listitem">
+Qi, Peng, Yuhao Zhang, Yuhui Zhang, Jason Bolton, and Christopher D. Manning. 2020. <span>“<span>S</span>tanza: A Python Natural Language Processing Toolkit for Many Human Languages.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: System Demonstrations</em>, 101–8. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-demos.14">https://doi.org/10.18653/v1/2020.acl-demos.14</a>.
+</div>
+<div id="ref-safaya2022mukayese" class="csl-entry" role="listitem">
+Safaya, Ali, Emirhan Kurtuluş, Arda Goktogan, and Deniz Yuret. 2022. <span>“Mukayese: <span>T</span>urkish <span>NLP</span> Strikes Back.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>ACL</span> 2022</em>, 846–63. Dublin, Ireland: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.findings-acl.69">https://doi.org/10.18653/v1/2022.findings-acl.69</a>.
+</div>
+<div id="ref-senel2024kardes" class="csl-entry" role="listitem">
+Senel, Lütfi Kerem, Benedikt Ebing, Konul Baghirova, Hinrich Schuetze, and Goran Glavaš. 2024. <span>“Kardeş-<span>NLU</span>: Transfer to Low-Resource Languages with the Help of a High-Resource Cousin <span>–</span> a Benchmark and Evaluation for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 18th Conference of the <span>E</span>uropean Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1672–88. St. Julian<span>’</span>s, Malta: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.eacl-long.100">https://doi.org/10.18653/v1/2024.eacl-long.100</a>.
+</div>
+<div id="ref-togmanov2025kazmmlu" class="csl-entry" role="listitem">
+Togmanov, Mukhammed, Nurdaulet Mukhituly, Diana Turmakhan, Jonibek Mansurov, Maiya Goloburda, Akhmed Sakip, Zhuohan Xie, et al. 2025. <span>“<span>K</span>az<span>MMLU</span>: Evaluating Language Models on <span>K</span>azakh, <span>R</span>ussian, and Regional Knowledge of <span>K</span>azakhstan.”</span> In <em>Proceedings of the 63rd Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 14403–16. Vienna, Austria: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2025.acl-long.701">https://doi.org/10.18653/v1/2025.acl-long.701</a>.
+</div>
+<div id="ref-turatali2025kyrgyzner" class="csl-entry" role="listitem">
+Turatali, Timur, Anton Alekseev, Gulira Jumalieva, Gulnara Kabaeva, and Sergey Nikolenko. 2025. <span>“Human-Annotated <span>NER</span> Dataset for the <span>K</span>yrgyz Language.”</span> In <em>2025 10th International Conference on Computer Science and Engineering (UBMK)</em>, 1607–12. Istanbul, Turkey: IEEE. <a href="https://doi.org/10.1109/UBMK67458.2025.11206879">https://doi.org/10.1109/UBMK67458.2025.11206879</a>.
+</div>
+<div id="ref-yeshpanov2024kazqad" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Pavel Efimov, Leonid Boytsov, Ardak Shalkarbayuli, and Pavel Braslavski. 2024. <span>“<span>K</span>az<span>QAD</span>: <span>K</span>azakh Open-Domain Question Answering Dataset.”</span> In <em>Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (<span>LREC</span>-<span>COLING</span> 2024)</em>, 9645–56. Torino, Italia: ELRA; ICCL. <a href="https://aclanthology.org/2024.lrec-main.843/">https://aclanthology.org/2024.lrec-main.843/</a>.
+</div>
+<div id="ref-yeshpanov2022kaznerd" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Yerbolat Khassanov, and Huseyin Atakan Varol. 2022. <span>“<span>K</span>az<span>NERD</span>: <span>K</span>azakh Named Entity Recognition Dataset.”</span> In <em>Proceedings of the Thirteenth Language Resources and Evaluation Conference</em>, 417–26. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2022.lrec-1.44/">https://aclanthology.org/2022.lrec-1.44/</a>.
+</div>
+<div id="ref-yeshpanov2023turkictts" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Saida Mussakhojayeva, and Yerbolat Khassanov. 2023. <span>“Multilingual Text-to-Speech Synthesis for <span>Turkic</span> Languages Using Transliteration.”</span> In <em>Proceedings of Interspeech 2023</em>, 5521–25. ISCA. <a href="https://doi.org/10.21437/Interspeech.2023-249">https://doi.org/10.21437/Interspeech.2023-249</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/appendix-a.html" class="pagination-link" aria-label="Mathematical Foundations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-c.html" class="pagination-link" aria-label="Turkic Language Reference">
+        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

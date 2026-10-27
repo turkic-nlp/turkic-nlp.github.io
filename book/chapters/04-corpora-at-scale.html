@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>4&nbsp; Building Turkic Corpora at Scale – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/05-morphological-structure.html" rel="next">
+<link href="../chapters/03-scripts-orthography.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-scripts-orthography.html">Writing Systems and Corpora</a></li><li class="breadcrumb-item"><a href="../chapters/04-corpora-at-scale.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-corpora-inventory" id="toc-sec-corpora-inventory" class="nav-link active" data-scroll-target="#sec-corpora-inventory"><span class="header-section-number">4.1</span> What Exists: Turkic Text in Multilingual Web Corpora</a>
+  <ul class="collapse">
+  <li><a href="#successive-web-corpus-releases" id="toc-successive-web-corpus-releases" class="nav-link" data-scroll-target="#successive-web-corpus-releases"><span class="header-section-number">4.1.1</span> Successive web-corpus releases</a></li>
+  <li><a href="#how-much-text-hplt-v3.0-as-a-worked-example" id="toc-how-much-text-hplt-v3.0-as-a-worked-example" class="nav-link" data-scroll-target="#how-much-text-hplt-v3.0-as-a-worked-example"><span class="header-section-number">4.1.2</span> How much text: HPLT v3.0 as a worked example</a></li>
+  <li><a href="#comparing-corpora-and-corpus-generations" id="toc-comparing-corpora-and-corpus-generations" class="nav-link" data-scroll-target="#comparing-corpora-and-corpus-generations"><span class="header-section-number">4.1.3</span> Comparing corpora and corpus generations</a></li>
+  <li><a href="#common-crawl-itself" id="toc-common-crawl-itself" class="nav-link" data-scroll-target="#common-crawl-itself"><span class="header-section-number">4.1.4</span> Common Crawl itself</a></li>
+  <li><a href="#national-and-curated-corpora" id="toc-national-and-curated-corpora" class="nav-link" data-scroll-target="#national-and-curated-corpora"><span class="header-section-number">4.1.5</span> National and curated corpora</a></li>
+  </ul></li>
+  <li><a href="#sec-corpora-audit" id="toc-sec-corpora-audit" class="nav-link" data-scroll-target="#sec-corpora-audit"><span class="header-section-number">4.2</span> What the Labels Hide: Auditing a Corpus</a>
+  <ul class="collapse">
+  <li><a href="#why-labels-fail-for-turkic-languages" id="toc-why-labels-fail-for-turkic-languages" class="nav-link" data-scroll-target="#why-labels-fail-for-turkic-languages"><span class="header-section-number">4.2.1</span> Why labels fail for Turkic languages</a></li>
+  <li><a href="#a-method-for-auditing" id="toc-a-method-for-auditing" class="nav-link" data-scroll-target="#a-method-for-auditing"><span class="header-section-number">4.2.2</span> A Method for Auditing</a></li>
+  <li><a href="#hplts-quality-bins" id="toc-hplts-quality-bins" class="nav-link" data-scroll-target="#hplts-quality-bins"><span class="header-section-number">4.2.3</span> HPLT’s quality bins</a></li>
+  </ul></li>
+  <li><a href="#sec-corpora-pipeline" id="toc-sec-corpora-pipeline" class="nav-link" data-scroll-target="#sec-corpora-pipeline"><span class="header-section-number">4.3</span> A Pipeline for Turkic Text</a>
+  <ul class="collapse">
+  <li><a href="#order-matters" id="toc-order-matters" class="nav-link" data-scroll-target="#order-matters"><span class="header-section-number">4.3.1</span> Order matters</a></li>
+  <li><a href="#adapting-english-derived-quality-filters" id="toc-adapting-english-derived-quality-filters" class="nav-link" data-scroll-target="#adapting-english-derived-quality-filters"><span class="header-section-number">4.3.2</span> Adapting English-Derived Quality Filters</a></li>
+  <li><a href="#a-source-aligned-orthographic-length-check" id="toc-a-source-aligned-orthographic-length-check" class="nav-link" data-scroll-target="#a-source-aligned-orthographic-length-check"><span class="header-section-number">4.3.3</span> A source-aligned orthographic-length check</a></li>
+  <li><a href="#deduplication-across-scripts" id="toc-deduplication-across-scripts" class="nav-link" data-scroll-target="#deduplication-across-scripts"><span class="header-section-number">4.3.4</span> Deduplication across scripts</a></li>
+  <li><a href="#personal-data" id="toc-personal-data" class="nav-link" data-scroll-target="#personal-data"><span class="header-section-number">4.3.5</span> Personal data</a></li>
+  </ul></li>
+  <li><a href="#sec-corpora-script" id="toc-sec-corpora-script" class="nav-link" data-scroll-target="#sec-corpora-script"><span class="header-section-number">4.4</span> Choosing a Script for the Corpus</a></li>
+  <li><a href="#sec-corpora-parallel" id="toc-sec-corpora-parallel" class="nav-link" data-scroll-target="#sec-corpora-parallel"><span class="header-section-number">4.5</span> Parallel and Comparable Data</a></li>
+  <li><a href="#sec-corpora-licensing" id="toc-sec-corpora-licensing" class="nav-link" data-scroll-target="#sec-corpora-licensing"><span class="header-section-number">4.6</span> Licensing, Provenance, and Sovereignty</a></li>
+  <li><a href="#sec-ch04-hands-on" id="toc-sec-ch04-hands-on" class="nav-link" data-scroll-target="#sec-ch04-hands-on"><span class="header-section-number">4.7</span> Hands-On: Auditing a Corpus Sample</a></li>
+  <li><a href="#sec-ch04-synthesis" id="toc-sec-ch04-synthesis" class="nav-link" data-scroll-target="#sec-ch04-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch04-further-reading" id="toc-sec-ch04-further-reading" class="nav-link" data-scroll-target="#sec-ch04-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch04-exercises" id="toc-sec-ch04-exercises" class="nav-link" data-scroll-target="#sec-ch04-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-scripts-orthography.html">Writing Systems and Corpora</a></li><li class="breadcrumb-item"><a href="../chapters/04-corpora-at-scale.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-04-corpora-at-scale" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Describe the large multilingual web corpora that contain Turkic text, and compare their coverage of the family</li>
+<li>Explain why a language label in a web corpus is a claim to be checked rather than a fact, and name the contamination types that are specific to Turkic text</li>
+<li>Audit a sample of a corpus for one Turkic language with language identification, script detection, and morphological-analyser coverage</li>
+<li>Design a cleaning pipeline for Turkic text, including normalisation and deduplication across scripts</li>
+<li>Decide how to store and release a corpus for a language written in more than one script</li>
+<li>Apply licensing and provenance rules when building a corpus for a small Turkic language</li>
+</ul>
+</div>
+</div>
+<p>A web-corpus label is an automatic prediction. This chapter shows how to compare corpus releases, check a sample and build a processing pipeline. The first checks are simple: is the text in the intended language, and which script does it use?</p>
+<p>The chapter has three parts. The first surveys what the large web corpora contain for each Turkic language and how much (<a href="#sec-corpora-inventory" class="quarto-xref"><span>Section 4.1</span></a>). The second shows how to check those claims by auditing a sample (<a href="#sec-corpora-audit" class="quarto-xref"><span>Section 4.2</span></a>). The third describes how to build and release a cleaner corpus: the processing pipeline, script choice, parallel data, and licensing (<a href="#sec-corpora-pipeline" class="quarto-xref"><span>Section 4.3</span></a> to <a href="#sec-corpora-licensing" class="quarto-xref"><span>Section 4.6</span></a>).</p>
+<section id="sec-corpora-inventory" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-corpora-inventory"><span class="header-section-number">4.1</span> What Exists: Turkic Text in Multilingual Web Corpora</h2>
+<section id="successive-web-corpus-releases" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="successive-web-corpus-releases"><span class="header-section-number">4.1.1</span> Successive web-corpus releases</h3>
+<p>The collections below draw on multilingual web archives, including Common Crawl. They differ in how they extract text, which language identifier they use, how they filter for quality, and how they remove duplicates:</p>
+<ul>
+<li><strong>CC-100</strong> <span class="citation" data-cites="conneau2020xlmr">(<a href="../references.html#ref-conneau2020xlmr" role="doc-biblioref">Conneau et al. 2020</a>)</span> was built to train XLM-R. It includes Turkish, Azerbaijani, Kazakh, Kyrgyz, Uzbek, and Uyghur, but not Tatar, Bashkir, Turkmen, Chuvash, or Sakha.</li>
+<li><strong>mC4</strong> <span class="citation" data-cites="xue2021mt5">(<a href="../references.html#ref-xue2021mt5" role="doc-biblioref">Xue et al. 2021</a>)</span> was built to train mT5. It has five Turkic languages: Turkish, Azerbaijani, Kazakh, Kyrgyz, and Uzbek.</li>
+<li><strong>CulturaX</strong> <span class="citation" data-cites="nguyen2024culturax">(<a href="../references.html#ref-nguyen2024culturax" role="doc-biblioref">Nguyen et al. 2024</a>)</span> combines and re-cleans mC4 and OSCAR, another Common Crawl corpus. It lists 14 Turkic languages; ten of them have fewer than 250,000 documents, and Tuvan has 23.</li>
+<li><strong>MADLAD-400</strong> <span class="citation" data-cites="kudugunta2023madlad">(<a href="../references.html#ref-kudugunta2023madlad" role="doc-biblioref">Kudugunta et al. 2023</a>)</span> covers more than 400 languages, and its authors audited samples of each language by hand.</li>
+<li><strong>HPLT</strong> is represented here by three releases: v1.2 <span class="citation" data-cites="degibert2024hplt">(<a href="../references.html#ref-degibert2024hplt" role="doc-biblioref">Gibert et al. 2024</a>)</span>, v2.0 <span class="citation" data-cites="burchell2025hplt">(<a href="../references.html#ref-burchell2025hplt" role="doc-biblioref">Burchell et al. 2025</a>)</span>, and v3.0 <span class="citation" data-cites="hplt2025v3 oepen2025hplt3">(<a href="../references.html#ref-hplt2025v3" role="doc-biblioref">HPLT Consortium 2025</a>; <a href="../references.html#ref-oepen2025hplt3" role="doc-biblioref">Oepen et al. 2026</a>)</span>. Each re-extracts text from web archives. The language identifier changed between releases: CLD2 for v1.2, a modified OpenLID <span class="citation" data-cites="burchell2023openlid">(<a href="../references.html#ref-burchell2023openlid" role="doc-biblioref">Burchell et al. 2023</a>)</span> for v2.0, and OpenLID-v2 for v3.0.</li>
+<li><strong>FineWeb2</strong> <span class="citation" data-cites="penedo2025fineweb2">(<a href="../references.html#ref-penedo2025fineweb2" role="doc-biblioref">Penedo et al. 2025</a>)</span> adapts its filtering pipeline to each language. Its language identifier, GlotLID <span class="citation" data-cites="kargaran-etal-2023-glotlid">(<a href="../references.html#ref-kargaran-etal-2023-glotlid" role="doc-biblioref">Kargaran et al. 2023</a>)</span>, has many more labels than OpenLID, and FineWeb2 provides the language/script subsets listed in the inventory below, several of them in more than one script.</li>
+</ul>
+</section>
+<section id="how-much-text-hplt-v3.0-as-a-worked-example" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="how-much-text-hplt-v3.0-as-a-worked-example"><span class="header-section-number">4.1.2</span> How much text: HPLT v3.0 as a worked example</h3>
+<p>HPLT v3.0 publishes a machine-readable manifest with the size of every language subset: documents, characters, and tokens under the Gemma 3 tokeniser. <a href="#tbl-hplt-v3" class="quarto-xref">Table&nbsp;<span>4.1</span></a> lists the Turkic subsets, and <a href="#fig-hplt-v3-size" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> shows their sizes on a logarithmic scale.</p>
+<div id="tbl-hplt-v3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hplt-v3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Turkic subsets of HPLT v3.0 (sizes as labelled by the corpus’s language identifier, not audited). Russian and English are shown for reference. Not present in HPLT v3.0: Gagauz, Ottoman Turkish, Karakalpak, Nogai, Kumyk, Karachay-Balkar, Sakha, Altai, Tuvan, Khakas, Chuvash, Khalaj, Old Turkic. Source: HPLT v3.0 manifest, accessed 12 October 2026.
+</figcaption>
+<div aria-describedby="tbl-hplt-v3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Subset</th>
+<th style="text-align: right;">Documents (M)</th>
+<th style="text-align: right;">Characters (B)</th>
+<th style="text-align: right;">Gemma 3 tokens (B)</th>
+<th style="text-align: right;">Characters per token</th>
+<th style="text-align: right;">Compressed-byte share in bins 8–10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td><code>tur_Latn</code></td>
+<td style="text-align: right;">159.47</td>
+<td style="text-align: right;">512.61</td>
+<td style="text-align: right;">149.98</td>
+<td style="text-align: right;">3.42</td>
+<td style="text-align: right;">56%</td>
+</tr>
+<tr class="even">
+<td>Azerbaijani (North)</td>
+<td><code>azj_Latn</code></td>
+<td style="text-align: right;">11.07</td>
+<td style="text-align: right;">41.26</td>
+<td style="text-align: right;">15.96</td>
+<td style="text-align: right;">2.59</td>
+<td style="text-align: right;">72%</td>
+</tr>
+<tr class="odd">
+<td>Kazakh</td>
+<td><code>kaz_Cyrl</code></td>
+<td style="text-align: right;">5.12</td>
+<td style="text-align: right;">17.21</td>
+<td style="text-align: right;">7.34</td>
+<td style="text-align: right;">2.35</td>
+<td style="text-align: right;">69%</td>
+</tr>
+<tr class="even">
+<td>Uzbek</td>
+<td><code>uzn_Latn</code></td>
+<td style="text-align: right;">1.88</td>
+<td style="text-align: right;">6.51</td>
+<td style="text-align: right;">2.34</td>
+<td style="text-align: right;">2.79</td>
+<td style="text-align: right;">62%</td>
+</tr>
+<tr class="odd">
+<td>Kyrgyz</td>
+<td><code>kir_Cyrl</code></td>
+<td style="text-align: right;">1.49</td>
+<td style="text-align: right;">3.80</td>
+<td style="text-align: right;">1.54</td>
+<td style="text-align: right;">2.48</td>
+<td style="text-align: right;">67%</td>
+</tr>
+<tr class="even">
+<td>Tatar</td>
+<td><code>tat_Cyrl</code></td>
+<td style="text-align: right;">1.26</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: right;">1.58</td>
+<td style="text-align: right;">2.33</td>
+<td style="text-align: right;">67%</td>
+</tr>
+<tr class="odd">
+<td>Uyghur</td>
+<td><code>uig_Arab</code></td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">2.16</td>
+<td style="text-align: right;">1.20</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">1%</td>
+</tr>
+<tr class="even">
+<td>Turkmen</td>
+<td><code>tuk_Latn</code></td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">2.44</td>
+<td style="text-align: right;">60%</td>
+</tr>
+<tr class="odd">
+<td>Bashkir</td>
+<td><code>bak_Cyrl</code></td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">2.04</td>
+<td style="text-align: right;">65%</td>
+</tr>
+<tr class="even">
+<td>Crimean Tatar</td>
+<td><code>crh_Latn</code></td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;">62%</td>
+</tr>
+<tr class="odd">
+<td>South Azerbaijani</td>
+<td><code>azb_Arab</code></td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">48%</td>
+</tr>
+<tr class="even">
+<td><em>Russian (reference)</em></td>
+<td><code>rus_Cyrl</code></td>
+<td style="text-align: right;">3,304.96</td>
+<td style="text-align: right;">15,950.00</td>
+<td style="text-align: right;">4,402.59</td>
+<td style="text-align: right;">3.62</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td><em>English (reference)</em></td>
+<td><code>eng_Latn</code></td>
+<td style="text-align: right;">18,057.79</td>
+<td style="text-align: right;">72,336.99</td>
+<td style="text-align: right;">16,280.22</td>
+<td style="text-align: right;">4.44</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="fig-hplt-v3-size" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Horizontal bar chart on a log scale: Turkish has about 513 billion characters, North Azerbaijani 41 billion, Kazakh 17 billion, and Crimean Tatar and South Azerbaijani about 0.3 billion each; several languages have no dedicated subset.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hplt-v3-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-hplt-v3-size/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Horizontal bar chart on a log scale: Turkish has about 513 billion characters, North Azerbaijani 41 billion, Kazakh 17 billion, and Crimean Tatar and South Azerbaijani about 0.3 billion each; several languages have no dedicated subset.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hplt-v3-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Size of the Turkic subsets of HPLT v3.0 in characters (logarithmic scale). Data: <a href="#tbl-hplt-v3" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.
+</figcaption>
+</figure>
+</div>
+<p>Three observations follow.</p>
+<p><strong>The sizes span more than three orders of magnitude.</strong> Turkish has about 1,600 times as many characters as Crimean Tatar and 1,700 times as many as South Azerbaijani. Kazakh has 3% of the Turkish total. Russian, the main contact language of Kazakh, Kyrgyz, Tatar and Bashkir, has about 900 (Kazakh) to 20,000 (Bashkir) times as many characters in the same release.</p>
+<p><strong>Count subsets before counting languages.</strong> The manifest separates North (<code>azj</code>) and South Azerbaijani (<code>azb</code>) and lists eleven Turkic subsets altogether. A language without its own subset may still have pages in the crawl, assigned another label, filtered out or left unclassified. Define the release-specific mapping from subsets to languages before reporting coverage.</p>
+<p><strong>Characters per token vary across the HPLT language subsets.</strong> Dividing character totals by Gemma 3 token totals gives 1.80 for Uyghur, 3.42 for Turkish and 4.44 for English (<a href="#fig-hplt-chars-per-token" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>). Latin and non-Latin ranges overlap. This measures text length per token in different corpora; it is not the tokens-per-word fertility measure of <a href="07-neural-morphology.html#sec-subword-tok" class="quarto-xref"><span>Section 7.1</span></a> and does not isolate a causal script effect. Corpus composition, orthographic conventions and tokeniser behaviour can all affect the ratio.</p>
+<div id="fig-hplt-chars-per-token" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Horizontal bars show HPLT characters per token, ranging from Uyghur at 1.80 to English at 4.44, coloured by script with reference languages in grey.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hplt-chars-per-token-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-hplt-chars-per-token/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Horizontal bars show HPLT characters per token, ranging from Uyghur at 1.80 to English at 4.44, coloured by script with reference languages in grey.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hplt-chars-per-token-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Characters per Gemma 3 token in HPLT v3: eleven primary Turkic language subsets plus English and Russian references <span class="citation" data-cites="hplt2025v3">(<a href="../references.html#ref-hplt2025v3" role="doc-biblioref">HPLT Consortium 2025</a>)</span>. Values are ratios of corpus totals, not averages of document ratios or estimates of word counts.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="comparing-corpora-and-corpus-generations" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="comparing-corpora-and-corpus-generations"><span class="header-section-number">4.1.3</span> Comparing corpora and corpus generations</h3>
+<p><a href="#tbl-corpus-availability" class="quarto-xref">Table&nbsp;<span>4.2</span></a> and <a href="#fig-corpus-availability" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> compare eight sources by document count, using pages for mC4 and articles for Wikipedia. Most sources report this unit, whereas their word and token counts use incompatible definitions. Document boundaries also vary: one corpus may split a page that another retains whole.</p>
+<div id="tbl-corpus-availability" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-corpus-availability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Documents per Turkic language in eight corpora (mC4: pages; Wikipedia: articles; CC-100 reports tokens only, so ✓ marks presence). HPLT v1.2 and v2.0: deduplicated releases; v3.0: sorted release. Sizes are as labelled by each corpus’s language identifier and not audited. FineWeb2 sums all script subsets (train split, after filtering). Absent from all eight: Khalaj, Old Turkic. Sources: HPLT v1.2/v2.0/v3.0 download pages and manifest, FineWeb2 language-distribution CSV, CulturaX dataset card, mT5 and XLM-R papers (Table 6 each), MediaWiki statistics API; all accessed 12 October 2026.
+</figcaption>
+<div aria-describedby="tbl-corpus-availability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Branch</th>
+<th style="text-align: right;">HPLT v1.2</th>
+<th style="text-align: right;">HPLT v2.0</th>
+<th style="text-align: right;">HPLT v3.0</th>
+<th style="text-align: right;">FineWeb2</th>
+<th style="text-align: right;">CulturaX</th>
+<th style="text-align: right;">mC4</th>
+<th style="text-align: right;">CC-100</th>
+<th style="text-align: right;">Wikipedia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td>Oghuz</td>
+<td style="text-align: right;">59.4M</td>
+<td style="text-align: right;">236.7M</td>
+<td style="text-align: right;">159.5M</td>
+<td style="text-align: right;">95.1M</td>
+<td style="text-align: right;">94.2M</td>
+<td style="text-align: right;">88.0M</td>
+<td style="text-align: right;">✓</td>
+<td style="text-align: right;">703k</td>
+</tr>
+<tr class="even">
+<td>Azerbaijani (North)</td>
+<td>Oghuz</td>
+<td style="text-align: right;">3.0M</td>
+<td style="text-align: right;">16.1M</td>
+<td style="text-align: right;">11.1M</td>
+<td style="text-align: right;">7.3M</td>
+<td style="text-align: right;">5.1M</td>
+<td style="text-align: right;">5.3M</td>
+<td style="text-align: right;">✓</td>
+<td style="text-align: right;">218k</td>
+</tr>
+<tr class="odd">
+<td>South Azerbaijani</td>
+<td>Oghuz</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">253k</td>
+<td style="text-align: right;">95k</td>
+<td style="text-align: right;">79k</td>
+<td style="text-align: right;">30k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">245k</td>
+</tr>
+<tr class="even">
+<td>Turkmen</td>
+<td>Oghuz</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">807k</td>
+<td style="text-align: right;">378k</td>
+<td style="text-align: right;">239k</td>
+<td style="text-align: right;">14k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">7k</td>
+</tr>
+<tr class="odd">
+<td>Gagauz</td>
+<td>Oghuz</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">7k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">3k</td>
+</tr>
+<tr class="even">
+<td>Ottoman Turkish</td>
+<td>Oghuz (historical)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>Kazakh</td>
+<td>Kipchak</td>
+<td style="text-align: right;">1.4M</td>
+<td style="text-align: right;">5.2M</td>
+<td style="text-align: right;">5.1M</td>
+<td style="text-align: right;">3.3M</td>
+<td style="text-align: right;">2.7M</td>
+<td style="text-align: right;">2.4M</td>
+<td style="text-align: right;">✓</td>
+<td style="text-align: right;">246k</td>
+</tr>
+<tr class="even">
+<td>Kyrgyz</td>
+<td>Kipchak</td>
+<td style="text-align: right;">188k</td>
+<td style="text-align: right;">1.6M</td>
+<td style="text-align: right;">1.5M</td>
+<td style="text-align: right;">1.1M</td>
+<td style="text-align: right;">571k</td>
+<td style="text-align: right;">1.0M</td>
+<td style="text-align: right;">✓</td>
+<td style="text-align: right;">77k</td>
+</tr>
+<tr class="odd">
+<td>Tatar</td>
+<td>Kipchak</td>
+<td style="text-align: right;">172k</td>
+<td style="text-align: right;">1.9M</td>
+<td style="text-align: right;">1.3M</td>
+<td style="text-align: right;">196k</td>
+<td style="text-align: right;">218k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">709k</td>
+</tr>
+<tr class="even">
+<td>Bashkir</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">778k</td>
+<td style="text-align: right;">276k</td>
+<td style="text-align: right;">183k</td>
+<td style="text-align: right;">72k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">64k</td>
+</tr>
+<tr class="odd">
+<td>Crimean Tatar</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2.9M</td>
+<td style="text-align: right;">120k</td>
+<td style="text-align: right;">34k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">30k</td>
+</tr>
+<tr class="even">
+<td>Karakalpak</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">14k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">16k</td>
+</tr>
+<tr class="odd">
+<td>Nogai</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>Kumyk</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">5k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>Karachay-Balkar</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">4k</td>
+<td style="text-align: right;">2k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">3k</td>
+</tr>
+<tr class="even">
+<td>Southern Altai</td>
+<td>Kipchak</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1k</td>
+</tr>
+<tr class="odd">
+<td>Uzbek</td>
+<td>Karluk</td>
+<td style="text-align: right;">633k</td>
+<td style="text-align: right;">9.8M</td>
+<td style="text-align: right;">1.9M</td>
+<td style="text-align: right;">2.6M</td>
+<td style="text-align: right;">87k</td>
+<td style="text-align: right;">800k</td>
+<td style="text-align: right;">✓</td>
+<td style="text-align: right;">368k</td>
+</tr>
+<tr class="even">
+<td>Uyghur</td>
+<td>Karluk</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1.1M</td>
+<td style="text-align: right;">645k</td>
+<td style="text-align: right;">204k</td>
+<td style="text-align: right;">47k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">✓</td>
+<td style="text-align: right;">10k</td>
+</tr>
+<tr class="odd">
+<td>Sakha</td>
+<td>Siberian</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">73k</td>
+<td style="text-align: right;">22k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">18k</td>
+</tr>
+<tr class="even">
+<td>Tuvan</td>
+<td>Siberian</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">16k</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">4k</td>
+</tr>
+<tr class="odd">
+<td>Khakas</td>
+<td>Siberian</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">575</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>Chuvash</td>
+<td>Oghur</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">81k</td>
+<td style="text-align: right;">23k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">59k</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="fig-corpus-availability" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Heat map of 24 Turkic languages by eight corpora. Turkish, Azerbaijani, Kazakh, Kyrgyz and Uzbek are present in all eight; most Siberian and North Caucasian languages appear only in FineWeb2 and Wikipedia; Khalaj and Old Turkic have no listed subset in any of these eight releases.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-corpus-availability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-corpus-availability/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Heat map of 24 Turkic languages by eight corpora. Turkish, Azerbaijani, Kazakh, Kyrgyz and Uzbek are present in all eight; most Siberian and North Caucasian languages appear only in FineWeb2 and Wikipedia; Khalaj and Old Turkic have no listed subset in any of these eight releases.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-corpus-availability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Documents per Turkic language in eight corpora (log scale). Grey cells: absent. Hatched: present in CC-100, which reports tokens but not documents. Data: <a href="#tbl-corpus-availability" class="quarto-xref">Table&nbsp;<span>4.2</span></a>.
+</figcaption>
+</figure>
+</div>
+<p><strong>Which languages appear depends on the language identifier.</strong> Five languages (Turkish, Azerbaijani, Kazakh, Kyrgyz, Uzbek) are in all eight sources. CC-100 and HPLT v1.2 each have six Turkic languages, mC4 five. FineWeb2, whose identifier has the largest label set, is the only one of these web corpora with Nogai, Kumyk, Khakas, Altai, Gagauz, and Karakalpak. Their subsets are small (575 documents for Khakas, 1,393 for Nogai), but they exist.</p>
+<p><strong>The same language differs by an order of magnitude between corpora.</strong> Uzbek has 9.8 million documents in the deduplicated HPLT v2.0 release, 2.6 million in FineWeb2, and 87,000 in CulturaX. Filtering, deduplication and language labels all differ between these corpora; the audit in <a href="#sec-corpora-audit" class="quarto-xref"><span>Section 4.2</span></a> is needed to tell how much each contributes.</p>
+<p><strong>Release stages change the comparison.</strong> <a href="#tbl-hplt-releases" class="quarto-xref">Table&nbsp;<span>4.3</span></a> follows eleven HPLT subsets across three releases. Crimean Tatar appears to shrink from 2.9 million documents (2.0 billion characters) in deduplicated v2.0 to 120,000 (0.3 billion) in v3.0. Yet the cleaned v2.0 release already contains just 123,000 Crimean Tatar documents. That cleaning stage filters low language-identification probabilities, low Web Docs Scorer values and other signals <span class="citation" data-cites="burchell2025hplt">(<a href="../references.html#ref-burchell2025hplt" role="doc-biblioref">Burchell et al. 2025, sec. 4.2</a>)</span>.</p>
+<p>Most of the apparent decline therefore occurred within v2.0. We have not established which filter removed those documents or what languages they contained. Against cleaned v2.0, every other Turkic subset grows in v3.0. Uzbek rises from 707,000 documents to 1.9 million.</p>
+<div id="tbl-hplt-releases" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hplt-releases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: The Turkic subsets across three HPLT releases: v1.2 deduplicated; v2.0 deduplicated (dedup.) and cleaned; v3.0 sorted (Web Docs Scorer bins 5–10 only). v2.0’s cleaned release drops, among others, documents with a language-identification probability below 0.5 or a Web Docs Scorer value below 5 <span class="citation" data-cites="burchell2025hplt">(<a href="../references.html#ref-burchell2025hplt" role="doc-biblioref">Burchell et al. 2025, sec. 4.2</a>)</span>. Because v3.0 also contains only bins 5–10, v2.0’s cleaned release is the closer comparison on that criterion; the other v3.0 filters were not checked here. v1.2 does not report characters. Sources: hplt-project.org/datasets/v1.2 and /v2.0, HPLT v3.0 manifest; accessed 12 October 2026.
+</figcaption>
+<div aria-describedby="tbl-hplt-releases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Subset</th>
+<th style="text-align: right;">Docs v1.2</th>
+<th style="text-align: right;">Docs v2.0 dedup.</th>
+<th style="text-align: right;">Docs v2.0 cleaned</th>
+<th style="text-align: right;">Docs v3.0</th>
+<th style="text-align: right;">Chars v2.0 dedup.</th>
+<th style="text-align: right;">Chars v2.0 cleaned</th>
+<th style="text-align: right;">Chars v3.0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td><code>tur_Latn</code></td>
+<td style="text-align: right;">59.4M</td>
+<td style="text-align: right;">236.7M</td>
+<td style="text-align: right;">116.6M</td>
+<td style="text-align: right;">159.5M</td>
+<td style="text-align: right;">544.0B</td>
+<td style="text-align: right;">389.8B</td>
+<td style="text-align: right;">512.6B</td>
+</tr>
+<tr class="even">
+<td>Azerbaijani (North)</td>
+<td><code>azj_Latn</code></td>
+<td style="text-align: right;">3.0M</td>
+<td style="text-align: right;">16.1M</td>
+<td style="text-align: right;">6.5M</td>
+<td style="text-align: right;">11.1M</td>
+<td style="text-align: right;">34.7B</td>
+<td style="text-align: right;">19.6B</td>
+<td style="text-align: right;">41.3B</td>
+</tr>
+<tr class="odd">
+<td>Kazakh</td>
+<td><code>kaz_Cyrl</code></td>
+<td style="text-align: right;">1.4M</td>
+<td style="text-align: right;">5.2M</td>
+<td style="text-align: right;">2.6M</td>
+<td style="text-align: right;">5.1M</td>
+<td style="text-align: right;">15.4B</td>
+<td style="text-align: right;">11.1B</td>
+<td style="text-align: right;">17.2B</td>
+</tr>
+<tr class="even">
+<td>Uzbek</td>
+<td><code>uzn_Latn</code></td>
+<td style="text-align: right;">633k</td>
+<td style="text-align: right;">9.8M</td>
+<td style="text-align: right;">707k</td>
+<td style="text-align: right;">1.9M</td>
+<td style="text-align: right;">10.3B</td>
+<td style="text-align: right;">2.8B</td>
+<td style="text-align: right;">6.5B</td>
+</tr>
+<tr class="odd">
+<td>Kyrgyz</td>
+<td><code>kir_Cyrl</code></td>
+<td style="text-align: right;">188k</td>
+<td style="text-align: right;">1.6M</td>
+<td style="text-align: right;">676k</td>
+<td style="text-align: right;">1.5M</td>
+<td style="text-align: right;">2.6B</td>
+<td style="text-align: right;">1.9B</td>
+<td style="text-align: right;">3.8B</td>
+</tr>
+<tr class="even">
+<td>Tatar</td>
+<td><code>tat_Cyrl</code></td>
+<td style="text-align: right;">172k</td>
+<td style="text-align: right;">1.9M</td>
+<td style="text-align: right;">631k</td>
+<td style="text-align: right;">1.3M</td>
+<td style="text-align: right;">3.2B</td>
+<td style="text-align: right;">2.2B</td>
+<td style="text-align: right;">3.7B</td>
+</tr>
+<tr class="odd">
+<td>Uyghur</td>
+<td><code>uig_Arab</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1.1M</td>
+<td style="text-align: right;">442k</td>
+<td style="text-align: right;">645k</td>
+<td style="text-align: right;">2.5B</td>
+<td style="text-align: right;">1.7B</td>
+<td style="text-align: right;">2.2B</td>
+</tr>
+<tr class="even">
+<td>Turkmen</td>
+<td><code>tuk_Latn</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">807k</td>
+<td style="text-align: right;">171k</td>
+<td style="text-align: right;">378k</td>
+<td style="text-align: right;">1.6B</td>
+<td style="text-align: right;">570.2M</td>
+<td style="text-align: right;">902.8M</td>
+</tr>
+<tr class="odd">
+<td>Bashkir</td>
+<td><code>bak_Cyrl</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">778k</td>
+<td style="text-align: right;">171k</td>
+<td style="text-align: right;">276k</td>
+<td style="text-align: right;">1.0B</td>
+<td style="text-align: right;">558.7M</td>
+<td style="text-align: right;">803.7M</td>
+</tr>
+<tr class="even">
+<td>Crimean Tatar</td>
+<td><code>crh_Latn</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2.9M</td>
+<td style="text-align: right;">123k</td>
+<td style="text-align: right;">120k</td>
+<td style="text-align: right;">2.0B</td>
+<td style="text-align: right;">281.2M</td>
+<td style="text-align: right;">315.9M</td>
+</tr>
+<tr class="odd">
+<td>South Azerbaijani</td>
+<td><code>azb_Arab</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">253k</td>
+<td style="text-align: right;">66k</td>
+<td style="text-align: right;">95k</td>
+<td style="text-align: right;">445.3M</td>
+<td style="text-align: right;">260.3M</td>
+<td style="text-align: right;">296.1M</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>Article counts tell only part of the story.</strong> Tatar Wikipedia has 709,000 articles, compared with 196,000 Tatar documents in FineWeb2. South Azerbaijani Wikipedia has 245,000 articles against 79,000 FineWeb2 documents. To compare running text, also measure article lengths and the share of automatically generated articles.</p>
+</section>
+<section id="common-crawl-itself" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="common-crawl-itself"><span class="header-section-number">4.1.4</span> Common Crawl itself</h3>
+<p>Common Crawl publishes, for every snapshot, the number of pages per primary language as detected by CLD2. <a href="#fig-cc-turkic-share" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> shows the Turkic shares in all 77 snapshots from August 2018 to September 2026.</p>
+<div id="fig-cc-turkic-share" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of nine Turkic languages from 2018 to 2026 on a log scale. Turkish is around one percent of all pages; Azerbaijani, Kazakh and Uzbek are between 0.03 and 0.06 percent; Kyrgyz and Tatar about 0.01 percent; Bashkir, Turkmen and Uyghur below 0.004 percent.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cc-turkic-share-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-cc-turkic-share/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Line chart of nine Turkic languages from 2018 to 2026 on a log scale. Turkish is around one percent of all pages; Azerbaijani, Kazakh and Uzbek are between 0.03 and 0.06 percent; Kyrgyz and Tatar about 0.01 percent; Bashkir, Turkmen and Uyghur below 0.004 percent.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cc-turkic-share-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Share of pages per Turkic language in each Common Crawl snapshot (CLD2 primary language, log scale). In the legend: the share in the latest snapshot, CC-MAIN-2026-39. Source: Common Crawl crawl statistics (<code>plots/languages.csv</code>), accessed 12 October 2026.
+</figcaption>
+</figure>
+</div>
+<p>Turkish makes up 1.28% of the pages in the latest snapshot. Every other Turkic language is below 0.1%: Azerbaijani 0.061%, Kazakh 0.043%, Uzbek 0.031%, and Uyghur 0.0016%. Russian, for comparison, has 6.7%. Between the first and the latest snapshot, the reported shares of Kazakh, Uzbek, and Kyrgyz roughly tripled, while Turkish grew by about half. The statistics report only nine Turkic CLD2 labels, so the rest of the family is invisible in them: those pages are counted under other labels or as unknown.</p>
+</section>
+<section id="national-and-curated-corpora" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="national-and-curated-corpora"><span class="header-section-number">4.1.5</span> National and curated corpora</h3>
+<p>Web corpora are not the only source. Several Turkic languages have national reference corpora, built by language institutes with documented sources and annotation. The Turkish National Corpus is one example <span class="citation" data-cites="aksan2012tnc">(<a href="../references.html#ref-aksan2012tnc" role="doc-biblioref">Aksan et al. 2012</a>)</span>. Wikipedia is another candidate source: its provenance is known, but language and quality still require checking, and its article counts (<a href="#tbl-corpus-availability" class="quarto-xref">Table&nbsp;<span>4.2</span></a>) do not measure running text.</p>
+</section>
+</section>
+<section id="sec-corpora-audit" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-corpora-audit"><span class="header-section-number">4.2</span> What the Labels Hide: Auditing a Corpus</h2>
+<section id="why-labels-fail-for-turkic-languages" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="why-labels-fail-for-turkic-languages"><span class="header-section-number">4.2.1</span> Why labels fail for Turkic languages</h3>
+<p>A language label in a web corpus is the output of an automatic classifier applied to each document. <span class="citation" data-cites="kreutzer2022quality">Kreutzer et al. (<a href="../references.html#ref-kreutzer2022quality" role="doc-biblioref">2022</a>)</span> audited samples of several multilingual corpora by hand and found that, for many low-resource languages, a large share of the text was in the wrong language or was not language at all. For Turkic languages, seven sources of error need checking:</p>
+<ol type="1">
+<li><strong>A close neighbour gets the label.</strong> Shared spellings can make related languages hard to distinguish. On a 20-sentence challenge set, GlotLID restricted to Turkic labels assigned Turkish to 18 of 20 Gagauz sentences; its most frequent wrong label was Karachay-Balkar for Kumyk and Kyrgyz for Nogai, Altai, and Tuvan (<a href="03-scripts-orthography.html#tbl-lid-confusions" class="quarto-xref">Table&nbsp;<span>3.6</span></a>, <a href="03-scripts-orthography.html#fig-lid-accuracy" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>).</li>
+<li><strong>Russian inside Cyrillic pages.</strong> Pages from Kazakhstan, Kyrgyzstan, Tatarstan, Bashkortostan, and Sakha can mix Russian and the Turkic language: bilingual navigation, comments, and quotations. A script detector sees only Cyrillic. Only a word- or sentence-level language check finds the Russian.</li>
+<li><strong>Several scripts and orthographies for one language.</strong> Uzbek is written in Latin and Cyrillic; Kazakh in Cyrillic and in Latin text that may follow different proposals or informal conventions; Uyghur in Arabic script, Latin, and Cyrillic; Azerbaijani in Latin and, in Iran, Arabic script (<a href="03-scripts-orthography.html#sec-transitions" class="quarto-xref"><span>Section 3.2</span></a>). A corpus may keep only one script, mix them silently, or split them into separate subsets.</li>
+<li><strong>Lookalike letters.</strong> Special letters such as Kazakh <em>ә ғ қ ң ө ұ ү һ і</em> or Bashkir <em>ҙ ҫ</em> can be replaced in web text by Latin lookalikes or other substitutes (<a href="03-scripts-orthography.html#sec-unicode" class="quarto-xref"><span>Section 3.3</span></a>).</li>
+<li><strong>Informal Latin typing.</strong> Text in a Cyrillic-script Turkic language may be typed in an ad hoc Latin transcription, and Turkish may be typed without its special letters.</li>
+<li><strong>Machine-translated and automatically generated text.</strong> Machine-translated pages and automatically generated articles can enter web subsets and Wikipedias. Their share in Turkic corpora has not been measured here.</li>
+<li><strong>Arabic-script confusion.</strong> South Azerbaijani, Uyghur, Persian, and Ottoman Turkish share a script.</li>
+</ol>
+</section>
+<section id="a-method-for-auditing" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="a-method-for-auditing"><span class="header-section-number">4.2.2</span> A Method for Auditing</h3>
+<p>Define the sampling unit (document), corpus revision, subset and complete population before sampling. Keep original IDs and raw text. A document sample estimates document shares, not token shares. Human labels from qualified evaluators are the reference; automatic scores are screening signals.</p>
+<p>The functions in <a href="../code/ch04-corpus/corpus.py">corpus.py</a> report script shares over letters, sentence-level target/Russian/other shares, and raw FST coverage over alphabetic word tokens. Empty denominators return <code>None</code>. A recognised word needs a finite, non-failure FST reading. A copied surface form, truthy lemma or nonempty UD field is insufficient. The helper also excludes <code>&lt;unk&gt;</code> guesses, such as the Bashkir analyser’s <code>Weezy&lt;np&gt;&lt;unk&gt;</code>. These choices define lookup coverage; analysis accuracy and language labels still need independent reference data.</p>
+<p>Construct the tokeniser, sentence splitter, unrestricted language identifier and target-language FST once and reuse them. Pass the exact expected label (for example <code>__label__kir_Cyrl</code>) rather than a prefix test. Rebuild all language-dependent objects when changing language; changing only a global <code>LANG</code> leaves the old analyser active. Newlines are not automatically sentence boundaries.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> corpus <span class="im">import</span> audit  <span class="co"># code/ch04-corpus on PYTHONPATH</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> audit_document(row, splitter, tokenize, lid_model, fst_lookup, target_label):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"id"</span>: row[<span class="st">"id"</span>], <span class="op">**</span>audit(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"text"</span>], splitter(row[<span class="st">"text"</span>]), target_label,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        predict_all<span class="op">=</span><span class="kw">lambda</span> s: lid_model.predict(s, k<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>][<span class="dv">0</span>],</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        lookup<span class="op">=</span>fst_lookup, words<span class="op">=</span>tokenize(row[<span class="st">"text"</span>]))}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>lid_model</code> here is the underlying unrestricted model, not a Turkic-only candidate wrapper. Otherwise Russian text is forced into a Turkic label and a target-share estimate becomes misleading. Save model/transducer revisions, segmentation policy, raw labels and denominators in the audit manifest. Compare signals on separately labelled development and test samples before choosing thresholds.</p>
+</section>
+<section id="hplts-quality-bins" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="hplts-quality-bins"><span class="header-section-number">4.2.3</span> HPLT’s quality bins</h3>
+<p>HPLT v3.0 sorts the documents of each language into Web Docs Scorer quality bins; the release contains bins 5 to 10, with higher bins for higher scores <span class="citation" data-cites="oepen2025hplt3">(<a href="../references.html#ref-oepen2025hplt3" role="doc-biblioref">Oepen et al. 2026</a>)</span>. <a href="#fig-hplt-v3-quality" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> shows how the data of each Turkic subset is distributed across the bins.</p>
+<div id="fig-hplt-v3-quality" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Stacked horizontal bars of quality-bin shares for eleven Turkic subsets; most have 56 to 72 percent of their data in bins 8 to 10, South Azerbaijani 48 percent, and Uyghur only 1 percent, almost all in bins 5 to 7.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hplt-v3-quality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-hplt-v3-quality/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Stacked horizontal bars of quality-bin shares for eleven Turkic subsets; most have 56 to 72 percent of their data in bins 8 to 10, South Azerbaijani 48 percent, and Uyghur only 1 percent, almost all in bins 5 to 7.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hplt-v3-quality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.5: Share of each Turkic subset of HPLT v3.0 (compressed bytes) per Web Docs Scorer quality bin, from 5 (lowest in the release) to 10 (highest).
+</figcaption>
+</figure>
+</div>
+<p>Nine of the eleven subsets place 56–72% of their compressed bytes in bins 8–10. South Azerbaijani has 48%. Uyghur has just 1%, with almost all its data in bins 5–7. Several explanations remain possible: scorer calibration on Arabic-script text, domain composition or extraction quality. If calibration is responsible, a strict threshold could discard useful Uyghur text. If the subset is noisier, more cleaning may help. Inspect samples to distinguish these cases. Compression ratios vary too, so the byte shares cannot be read as document or token shares.</p>
+</section>
+</section>
+<section id="sec-corpora-pipeline" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-corpora-pipeline"><span class="header-section-number">4.3</span> A Pipeline for Turkic Text</h2>
+<section id="order-matters" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="order-matters"><span class="header-section-number">4.3.1</span> Order matters</h3>
+<p>The steps of a corpus pipeline interact. The following order avoids most of the problems discussed here and in <a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>:</p>
+<ol type="1">
+<li><strong>Collect</strong> from sources whose language and orthography are documented, and keep the URL, date, licence or terms, and the original bytes.</li>
+<li><strong>Decode and normalise</strong> to a known encoding and create an NFC copy, with selective NFKC for Arabic presentation-form characters (<a href="03-scripts-orthography.html#sec-unicode" class="quarto-xref"><span>Section 3.3</span></a>). Keep the raw text; delay language-specific repairs (lookalike letters, apostrophes) until step 4.</li>
+<li><strong>Identify the language before any transliteration</strong>, at sentence or document level. An unrestricted model can predict Russian or English; it may still assign noise a language label. Add an explicit rejection policy and use a Turkic-only label set only for text already established as Turkic (<a href="03-scripts-orthography.html#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>). Record candidates and scores, and route uncertain text to an “unknown” bin. Conversion changes native-script cues: on converted text, GlotLID accuracy fell to 48.1% in the TurkicNLP evaluation <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</li>
+<li><strong>Detect the script per document and per span</strong>, and record the orthography version as metadata (for example Kazakh Cyrillic, 2018 Latin or 2021 Latin; Uzbek Cyrillic or Latin) rather than silently converting (<a href="#sec-corpora-script" class="quarto-xref"><span>Section 4.4</span></a>).</li>
+<li><strong>Handle mixed-language segments and boilerplate</strong> under the collection’s declared inclusion policy; Russian quotations are not automatically corrupt text.</li>
+<li><strong>Filter for quality</strong>, with thresholds set per language (below).</li>
+<li><strong>Deduplicate with a derived key</strong> that unifies apostrophe variants and, where needed, converts to one script, so that the same text in two variants counts once (below). Make the train/dev/test split at the level of duplicate clusters or sources, <em>before</em> creating script variants, so that a native and a converted copy cannot end up on opposite sides of the split.</li>
+<li><strong>Normalise orthography and convert scripts in a derived copy only</strong>: the Turkish <em>İ/ı</em> casing rules, the Uzbek apostrophe variants for <em>oʻ</em>, <em>gʻ</em> and the tutuq belgisi, and optionally conversion to a common script (<a href="03-scripts-orthography.html#sec-normalisation" class="quarto-xref"><span>Section 3.5</span></a>). The archival copy keeps the original.</li>
+<li><strong>Document permissions and personal data</strong>: record the licence or terms of each source, and remove or mask personal data before releasing a derived corpus (<a href="#sec-corpora-licensing" class="quarto-xref"><span>Section 4.6</span></a>).</li>
+</ol>
+</section>
+<section id="adapting-english-derived-quality-filters" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="adapting-english-derived-quality-filters"><span class="header-section-number">4.3.2</span> Adapting English-Derived Quality Filters</h3>
+<p>Some web-corpus filters use word length, common words, repetition and symbol counts. The Gopher rules <span class="citation" data-cites="rae2021gopher">(<a href="../references.html#ref-rae2021gopher" role="doc-biblioref">Rae et al. 2021</a>)</span>, as implemented in datatrove, include a mean word length of 3–10 characters and at least two words from an eight-word English list. These defaults need checking before use on Turkic text. FineWeb2 estimates language-specific thresholds <span class="citation" data-cites="penedo2025fineweb2">(<a href="../references.html#ref-penedo2025fineweb2" role="doc-biblioref">Penedo et al. 2025</a>)</span>.</p>
+<p>The aligned FLORES measurement below compares word lengths without mixing release and development treebanks. How many web documents a filter would reject is another matter. In particular, a rule requiring English stop words can reject valid Turkic text. FineWeb2 instead estimates thresholds and word lists per language (<a href="#tbl-filter-thresholds" class="quarto-xref">Table&nbsp;<span>4.4</span></a>).</p>
+<p>Some estimated stop-word lists suggest which domains to inspect. Among the first eight entries for Cyrillic Azerbaijani, Cyrillic Gagauz and Khakas are <em>јеһова</em> ‘Jehovah’, <em>иисус</em> ‘Jesus’ or <em>худай</em> ‘God’; Cyrillic Crimean Tatar includes <em>рабби</em> ‘Lord’. Kazakh, Bashkir and Chuvash lists contain words for ‘water’ and ‘river’ (<em>су</em>, <em>өзен</em>; <em>һыу</em>, <em>йылға</em>; <em>шыв</em>, <em>юханшыв</em>, respectively). They tell you where to sample; they say nothing about how large each domain is. FineWeb2 derived the lists from its own data; this chapter supplies no independent audit.</p>
+<div id="tbl-filter-thresholds" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-filter-thresholds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.4: Quality-filter thresholds that FineWeb2 estimated for the primary Turkic subsets, against the English defaults of the same datatrove filters. Avg word length: allowed range of a document’s mean word length; alpha words: minimum share of words containing a letter (called <code>max_non_alpha_words_ratio</code> in datatrove); line punct.: minimum share of lines ending in punctuation (off = disabled; a threshold of 0.0 has the same effect); dup. lines: maximum share of duplicated lines; top 2-gram: maximum share of characters in the most frequent word bigram (values above 1 disable the rule); LID score: minimum language-ID confidence; stop words: size of the list (a document needs at least 2 of them). Sources: github.com/huggingface/fineweb-2 <code>configs/*.yml</code> and datatrove filter defaults (main branch), accessed 12 October 2026.
+</figcaption>
+<div aria-describedby="tbl-filter-thresholds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Subset</th>
+<th style="text-align: center;">Avg word length</th>
+<th style="text-align: right;">Alpha words (min)</th>
+<th style="text-align: right;">Line punct.</th>
+<th style="text-align: right;">Dup. lines</th>
+<th style="text-align: right;">Top 2-gram</th>
+<th style="text-align: right;">LID score</th>
+<th style="text-align: right;">Stop words</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>English defaults</strong></td>
+<td style="text-align: center;">3–10</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td><code>rus_Cyrl</code></td>
+<td style="text-align: center;">3–11</td>
+<td style="text-align: right;">0.713</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">0.322</td>
+<td style="text-align: right;">0.184</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td><code>tur_Latn</code></td>
+<td style="text-align: center;">3–21</td>
+<td style="text-align: right;">0.773</td>
+<td style="text-align: right;">0.091</td>
+<td style="text-align: right;">0.272</td>
+<td style="text-align: right;">0.214</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td><code>azj_Latn</code></td>
+<td style="text-align: center;">3–13</td>
+<td style="text-align: right;">0.725</td>
+<td style="text-align: right;">0.188</td>
+<td style="text-align: right;">0.879</td>
+<td style="text-align: right;">0.514</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td><code>azb_Arab</code></td>
+<td style="text-align: center;">3–14</td>
+<td style="text-align: right;">0.719</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;">0.379</td>
+<td style="text-align: right;">0.403</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td><code>tuk_Latn</code></td>
+<td style="text-align: center;">1–24</td>
+<td style="text-align: right;">0.769</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.276</td>
+<td style="text-align: right;">0.406</td>
+<td style="text-align: right;">0.666</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td><code>gag_Latn</code></td>
+<td style="text-align: center;">2–24</td>
+<td style="text-align: right;">0.778</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.536</td>
+<td style="text-align: right;">0.628</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td><code>kaz_Cyrl</code></td>
+<td style="text-align: center;">3–12</td>
+<td style="text-align: right;">0.694</td>
+<td style="text-align: right;">0.176</td>
+<td style="text-align: right;">0.304</td>
+<td style="text-align: right;">0.172</td>
+<td style="text-align: right;">0.844</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td><code>kir_Cyrl</code></td>
+<td style="text-align: center;">4–12</td>
+<td style="text-align: right;">0.623</td>
+<td style="text-align: right;">0.133</td>
+<td style="text-align: right;">0.311</td>
+<td style="text-align: right;">0.247</td>
+<td style="text-align: right;">0.756</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="even">
+<td><code>tat_Cyrl</code></td>
+<td style="text-align: center;">3–11</td>
+<td style="text-align: right;">0.692</td>
+<td style="text-align: right;">0.333</td>
+<td style="text-align: right;">0.356</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td><code>bak_Cyrl</code></td>
+<td style="text-align: center;">3–11</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.222</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.221</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td><code>crh_Latn</code></td>
+<td style="text-align: center;">3–19</td>
+<td style="text-align: right;">0.679</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">0.774</td>
+<td style="text-align: right;">0.595</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td><code>kaa_Latn</code></td>
+<td style="text-align: center;">2–17</td>
+<td style="text-align: right;">0.714</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.275</td>
+<td style="text-align: right;">0.844</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td><code>nog_Cyrl</code></td>
+<td style="text-align: center;">3–13</td>
+<td style="text-align: right;">0.688</td>
+<td style="text-align: right;">off</td>
+<td style="text-align: right;">0.331</td>
+<td style="text-align: right;">0.783</td>
+<td style="text-align: right;">0.357</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td><code>kum_Cyrl</code></td>
+<td style="text-align: center;">3–11</td>
+<td style="text-align: right;">0.744</td>
+<td style="text-align: right;">off</td>
+<td style="text-align: right;">0.434</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td><code>krc_Cyrl</code></td>
+<td style="text-align: center;">2–11</td>
+<td style="text-align: right;">0.743</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.498</td>
+<td style="text-align: right;">0.578</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td><code>uzn_Latn</code></td>
+<td style="text-align: center;">3–13</td>
+<td style="text-align: right;">0.691</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">0.871</td>
+<td style="text-align: right;">0.631</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td><code>uig_Arab</code></td>
+<td style="text-align: center;">2–15</td>
+<td style="text-align: right;">0.782</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.293</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.874</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td><code>sah_Cyrl</code></td>
+<td style="text-align: center;">1–13</td>
+<td style="text-align: right;">0.711</td>
+<td style="text-align: right;">0.143</td>
+<td style="text-align: right;">0.401</td>
+<td style="text-align: right;">0.547</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td><code>alt_Cyrl</code></td>
+<td style="text-align: center;">4–9</td>
+<td style="text-align: right;">0.671</td>
+<td style="text-align: right;">0.286</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">1.337</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td><code>tyv_Cyrl</code></td>
+<td style="text-align: center;">2–11</td>
+<td style="text-align: right;">0.682</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">0.285</td>
+<td style="text-align: right;">0.327</td>
+<td style="text-align: right;">0.642</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td><code>kjh_Cyrl</code></td>
+<td style="text-align: center;">3–12</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">off</td>
+<td style="text-align: right;">0.594</td>
+<td style="text-align: right;">1.052</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="odd">
+<td><code>chv_Cyrl</code></td>
+<td style="text-align: center;">3–11</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.116</td>
+<td style="text-align: right;">0.243</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.732</td>
+<td style="text-align: right;">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="a-source-aligned-orthographic-length-check" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="a-source-aligned-orthographic-length-check"><span class="header-section-number">4.3.3</span> A source-aligned orthographic-length check</h3>
+<p>A complementary measurement uses all 1,012 aligned rows of <strong>original FLORES-200 devtest</strong> in eleven Turkic varieties, English and Russian <span class="citation" data-cites="costa2022nllb">(<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">NLLB Team et al. 2024</a>)</span>. The count covers Unicode letters in each whitespace-delimited unit containing at least one letter, after NFC normalisation. It averages units within each sentence and then weights sentences equally. This definition excludes punctuation from the length count; it does not segment morphemes.</p>
+<div id="fig-flores-word-length" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart of the difference from English in mean letters per whitespace unit for eleven Turkic varieties and Russian; most Turkic bars lie between about 1.4 and 2.1 letters, and South Azerbaijani is much larger with a wide interval.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flores-word-length-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-flores-word-length/output.png" class="img-fluid figure-img" alt="Bar chart of the difference from English in mean letters per whitespace unit for eleven Turkic varieties and Russian; most Turkic bars lie between about 1.4 and 2.1 letters, and South Azerbaijani is much larger with a wide interval.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flores-word-length-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.6: Measured difference from English in mean letters per orthographic unit on original FLORES-200 devtest. Bars use the same 1,012 aligned sentence rows in each variety. Intervals are the 2.5th and 97.5th percentiles of 2,000 paired sentence bootstrap samples (seed 20261017); English is the zero reference.
+</figcaption>
+</figure>
+</div>
+<p>Spacing anomalies dominate the South Azerbaijani bar: 83 of 1,012 rows contain only one whitespace unit, and 128 average more than 30 letters per unit (<code>audit_spacing.py</code>). Row 198, for example, has 227 letters without an internal space. The audit retains and lists these rows. The bar thus shows how formatting affects the measurement; it cannot serve as a language-level word-length estimate.</p>
+<p>Matching the translated source rows removes one source of content variation, but translations and orthographic conventions still differ. The intervals describe resampling these sentences, not uncertainty over the population of web documents; source-article clustering is not modelled. The saved results also include a contiguous-letter-run definition for sensitivity checking. Neither definition measures morphological complexity, and neither validates a quality filter. That requires independently labelled documents.</p>
+</section>
+<section id="deduplication-across-scripts" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="deduplication-across-scripts"><span class="header-section-number">4.3.4</span> Deduplication across scripts</h3>
+<p>Character-overlap methods can miss duplicates published in different scripts. An Uzbek story in Latin and Cyrillic may share little written text even when the content is the same. After both versions are converted to one script, the overlap can be measured. The same holds for Kazakh text in Cyrillic and in one of the Latin designs. <a href="03-scripts-orthography.html#fig-cts-overlap" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> showed the effect of conversion for related languages; its effect on duplicate detection for the same language in two scripts can be measured on labelled document pairs.</p>
+<p>After a versioned script conversion, a deduplication key can normalise Uzbek <em>o/g</em> letter marks with <code>uzbek_letter_apostrophes</code> in <a href="../code/ch04-corpus/corpus.py">corpus.py</a>. The helper maps apostrophe variants after <em>o</em> or <em>g</em> to U+02BB, while TurkicNLP uses U+0027 (<a href="03-scripts-orthography.html#sec-normalisation" class="quarto-xref"><span>Section 3.5</span></a>). Either convention can work if applied consistently. Keep tutuq signs and quotation punctuation distinct.</p>
+<p>MinHash requires further choices: character shingles, hash count and similarity threshold, tuned on labelled pairs. Since conversion can merge different originals, treat key matches as candidates and measure false merges. Build duplicate/source clusters before assigning train/dev/test splits.</p>
+</section>
+<section id="personal-data" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="personal-data"><span class="header-section-number">4.3.5</span> Personal data</h3>
+<p>Web text contains names, phone numbers, addresses, and identity numbers. Turkic-specific patterns include national identification numbers with fixed formats, such as the Turkish <em>T.C. kimlik numarası</em> and the Kazakh individual identification number (IIN). Remove or mask these before releasing any derived corpus.</p>
+</section>
+</section>
+<section id="sec-corpora-script" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-corpora-script"><span class="header-section-number">4.4</span> Choosing a Script for the Corpus</h2>
+<p>For a language written in more than one script, the corpus builder has to decide what to store and what to release. Three rules work well:</p>
+<ul>
+<li><strong>Keep the original.</strong> Store every document in the script it was published in, with the detected script and orthography version as metadata. Conversion can lose information: in the toolkit’s CTS mapping, for example, Kazakh <em>у</em> and <em>ұ</em> both become <em>u</em> (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>), so the original cannot always be recovered from the converted text.</li>
+<li><strong>Release conversions as derived data.</strong> A version in a common script, such as the toolkit’s CTS mapping (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>) or an official Latin alphabet, is useful for training. Release it next to the original, not instead of it.</li>
+<li><strong>Say what was merged.</strong> If Uzbek Latin and Cyrillic are merged into one training set, or Kazakh text in several Latin designs is normalised to the 2021 design, document the conversion and the mapping version.</li>
+</ul>
+</section>
+<section id="sec-corpora-parallel" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-corpora-parallel"><span class="header-section-number">4.5</span> Parallel and Comparable Data</h2>
+<p>Parallel text expresses corresponding content in two languages. It provides supervision for machine translation (<a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a>) and cross-lingual sentence embeddings (<a href="13-meaning-retrieval.html#sec-meaning-encoders" class="quarto-xref"><span>Section 13.3</span></a>), though both also have methods that learn without sentence-aligned data. For Turkic languages, useful sources include:</p>
+<ul>
+<li><strong>Curated collections</strong>: OPUS <span class="citation" data-cites="tiedemann2012opus">(<a href="../references.html#ref-tiedemann2012opus" role="doc-biblioref">Tiedemann 2012</a>)</span>, the TIL corpus with its X-WMT test sets <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov et al. 2021</a>)</span>, and FLORES-200 <span class="citation" data-cites="costa2022nllb">(<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">NLLB Team et al. 2024</a>)</span>.</li>
+<li><strong>Bilingual institutional websites</strong>: governments and news agencies that publish in a Turkic language and in Russian or English.</li>
+<li><strong>Religious texts</strong>: translated texts are one possible source; FineWeb2’s word lists suggest checking for them in some subsets (<a href="#tbl-filter-thresholds" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). Check their licences before including them.</li>
+<li><strong>Comparable text</strong>, such as Wikipedia articles on the same topic, from which parallel sentences can be mined.</li>
+</ul>
+<p>Mining parallel sentences usually relies on multilingual sentence embeddings such as LaBSE or LASER <span class="citation" data-cites="feng2022labse heffernan2022laser3">(<a href="../references.html#ref-feng2022labse" role="doc-biblioref">Feng et al. 2022</a>; <a href="../references.html#ref-heffernan2022laser3" role="doc-biblioref">Heffernan, Çelebi, and Schwenk 2022</a>)</span>, scored with a margin criterion <span class="citation" data-cites="artetxe2019margin">(<a href="../references.html#ref-artetxe2019margin" role="doc-biblioref">Artetxe and Schwenk 2019</a>)</span>. For very close pairs, such as Turkish–Gagauz or Kazakh–Kyrgyz, string similarity after conversion to a common script (<a href="03-scripts-orthography.html#fig-cts-overlap" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>) is a candidate retrieval signal or extra filter; its precision has to be checked by hand (Exercise 3).</p>
+</section>
+<section id="sec-corpora-licensing" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="sec-corpora-licensing"><span class="header-section-number">4.6</span> Licensing, Provenance, and Sovereignty</h2>
+<p>Check the terms for both the corpus release and its source material. A licence on the compilation may not cover redistribution of every source page.</p>
+<ul>
+<li><strong>Prefer releasing IDs and labels.</strong> When an audit or a filtered subset is shared, consider sharing document identifiers, scores and labels when the text cannot be redistributed. It does not remove rights or privacy obligations.</li>
+<li><strong>Check religious and literary texts individually.</strong> A text that is free to read online may come with terms that forbid text and data mining or redistribution.</li>
+<li><strong>National law differs.</strong> Copyright exceptions for text and data mining differ between the countries where Turkic languages are spoken.</li>
+<li><strong>Document the corpus.</strong> A datasheet records sources, collection dates, filters, known problems, and intended uses. For a small language, record the community’s position on its use as well (<a href="17-endangered-ethics.html#sec-ethics" class="quarto-xref"><span>Section 17.4</span></a>).</li>
+</ul>
+</section>
+<section id="sec-ch04-hands-on" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="sec-ch04-hands-on"><span class="header-section-number">4.7</span> Hands-On: Auditing a Corpus Sample</h2>
+<p><strong>Question.</strong> What kinds of unwanted text do the audit signals detect?</p>
+<p><strong>Inputs.</strong> A documented sample, unrestricted language identification, script checks and an analyser.</p>
+<p><strong>Compute.</strong> CPU inference and resource downloads; size the sample before processing a full corpus.</p>
+<p><strong>Output.</strong> Per-document signals, reviewed errors and a provenance manifest.</p>
+<p><strong>Interpretation.</strong> Calibrate decisions against reviewed documents before selecting thresholds.</p>
+<p><strong>Worked step.</strong> Exercise 1 first runs the audit on documents of known composition: five-sentence X-WMT documents in Kyrgyz, in its neighbour Kazakh, in Russian, mixed (three Kyrgyz and two Russian sentences), and Kyrgyz converted to CTS, 20 of each. The recorded output uses GlotLID v3 and the Apertium Kyrgyz analyser; the illustrative “kept” rule requires a target share and an analyser coverage of at least 0.6.</p>
+<pre><code>document type           target  Russian  FST cov.  Cyrillic   kept
+target                    1.00     0.00      0.83      0.98  20/20
+neighbour                 0.00     0.00      0.28      0.97   0/20
+Russian                   0.00     1.00      0.09      0.97   0/20
+target 3 + Russian 2      0.60     0.40      0.52      0.97   4/20
+target in CTS             0.00     0.00      0.00      0.00   0/20</code></pre>
+<p>Language identification separates whole documents cleanly, and analyser coverage agrees with it. Mixed documents are the hard case: the rule keeps only 4 of 20, although 60% of their sentences are Kyrgyz. Kyrgyz in CTS is lost entirely: GlotLID labels it mostly as Turkish or Gagauz, and the Cyrillic analyser rejects it. Audit before converting. These are constructed documents; a real corpus needs a hand-labelled sample to set thresholds.</p>
+<p><strong>Status: demonstration.</strong> The table is recorded output of Exercise 1 on constructed documents; an audit of a real web corpus is a procedure to run on its own sample.</p>
+</section>
+<section id="sec-ch04-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch04-synthesis">What to Take Forward</h2>
+<p>Start an audit from the corpus label, then inspect what it contains. The Uzbek counts in <a href="#sec-corpora-inventory" class="quarto-xref"><span>Section 4.1</span></a> show how widely collections can differ. Sample documents for the intended task, preserve their provenance through processing, and check permissions before release. <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a> introduces the word analyses used in later text-processing methods.</p>
+</section>
+<section id="sec-ch04-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch04-further-reading">Further Reading</h2>
+<ul>
+<li><span class="citation" data-cites="kreutzer2022quality">Kreutzer et al. (<a href="../references.html#ref-kreutzer2022quality" role="doc-biblioref">2022</a>)</span> is the reference audit of multilingual web corpora and the model for <a href="#sec-corpora-audit" class="quarto-xref"><span>Section 4.2</span></a>.</li>
+<li>The corpus papers describe their pipelines and language identifiers: CC-100 <span class="citation" data-cites="conneau2020xlmr">(<a href="../references.html#ref-conneau2020xlmr" role="doc-biblioref">Conneau et al. 2020</a>)</span>, mC4 <span class="citation" data-cites="xue2021mt5">(<a href="../references.html#ref-xue2021mt5" role="doc-biblioref">Xue et al. 2021</a>)</span>, CulturaX <span class="citation" data-cites="nguyen2024culturax">(<a href="../references.html#ref-nguyen2024culturax" role="doc-biblioref">Nguyen et al. 2024</a>)</span>, MADLAD-400 <span class="citation" data-cites="kudugunta2023madlad">(<a href="../references.html#ref-kudugunta2023madlad" role="doc-biblioref">Kudugunta et al. 2023</a>)</span>, HPLT <span class="citation" data-cites="degibert2024hplt burchell2025hplt oepen2025hplt3">(<a href="../references.html#ref-degibert2024hplt" role="doc-biblioref">Gibert et al. 2024</a>; <a href="../references.html#ref-burchell2025hplt" role="doc-biblioref">Burchell et al. 2025</a>; <a href="../references.html#ref-oepen2025hplt3" role="doc-biblioref">Oepen et al. 2026</a>)</span>, and FineWeb2 <span class="citation" data-cites="penedo2025fineweb2">(<a href="../references.html#ref-penedo2025fineweb2" role="doc-biblioref">Penedo et al. 2025</a>)</span>.</li>
+<li>GlotLID <span class="citation" data-cites="kargaran-etal-2023-glotlid">(<a href="../references.html#ref-kargaran-etal-2023-glotlid" role="doc-biblioref">Kargaran et al. 2023</a>)</span> and OpenLID <span class="citation" data-cites="burchell2023openlid">(<a href="../references.html#ref-burchell2023openlid" role="doc-biblioref">Burchell et al. 2023</a>)</span> are used by the corpora discussed here.</li>
+<li>Glot500 <span class="citation" data-cites="imanigooghari-etal-2023-glot500">(<a href="../references.html#ref-imanigooghari-etal-2023-glot500" role="doc-biblioref">Imani et al. 2023</a>)</span> built a corpus and a model for more than 500 languages; its language list shows which smaller Turkic languages it covers.</li>
+</ul>
+</section>
+<section id="sec-ch04-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch04-exercises">Exercises</h2>
+<ol type="1">
+<li><strong>Audit another language.</strong> Use the method in <a href="#sec-corpora-audit" class="quarto-xref"><span>Section 4.2</span></a> to audit samples for two Turkic languages in the same corpus. Which contamination type dominates in each, and how do they compare?</li>
+<li><strong>Lookalike letters.</strong> For Kazakh or Bashkir, count the tokens in a corpus sample that mix Latin and Cyrillic letters. Build a repair table for the 20 most frequent substitutions, and measure how much the repair raises analyser coverage.</li>
+<li><strong>Mining with a shared script.</strong> Mine Kazakh–Kyrgyz sentence pairs from comparable Wikipedia articles in two ways: character overlap after conversion to CTS, and LaBSE similarity. Check 100 pairs from each method by hand. Which is more precise, and where does each fail?</li>
+<li><strong>Absent languages.</strong> Choose one language that is absent from HPLT v3.0 (<a href="#tbl-hplt-v3" class="quarto-xref">Table&nbsp;<span>4.1</span></a>). Find three web sources for it, estimate how much text they hold, and run GlotLID on a sample. Under which labels would this text end up in a web corpus?</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-aksan2012tnc" class="csl-entry" role="listitem">
+Aksan, Yeşim, Mustafa Aksan, Ahmet Koltuksuz, Taner Sezer, Ümit Mersinli, Umut Ufuk Demirhan, Hakan Yılmazer, et al. 2012. <span>“Construction of the <span>T</span>urkish National Corpus (<span>TNC</span>).”</span> In <em>Proceedings of the Eighth International Conference on Language Resources and Evaluation (<span>LREC</span>’12)</em>, 3223–27. Istanbul, Turkey: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L12-1590/">https://aclanthology.org/L12-1590/</a>.
+</div>
+<div id="ref-artetxe2019margin" class="csl-entry" role="listitem">
+Artetxe, Mikel, and Holger Schwenk. 2019. <span>“Margin-Based Parallel Corpus Mining with Multilingual Sentence Embeddings.”</span> In <em>Proceedings of the 57th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 3197–3203. Florence, Italy: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P19-1309">https://doi.org/10.18653/v1/P19-1309</a>.
+</div>
+<div id="ref-burchell2023openlid" class="csl-entry" role="listitem">
+Burchell, Laurie, Alexandra Birch, Nikolay Bogoychev, and Kenneth Heafield. 2023. <span>“An Open Dataset and Model for Language Identification.”</span> In <em>Proceedings of the 61st Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 2: Short Papers)</em>, 865–79. Toronto, Canada: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.acl-short.75">https://doi.org/10.18653/v1/2023.acl-short.75</a>.
+</div>
+<div id="ref-burchell2025hplt" class="csl-entry" role="listitem">
+Burchell, Laurie, Ona de Gibert, Nikolay Arefyev, Mikko Aulamo, Marta Bañón, Pinzhen Chen, Mariia Fedorova, et al. 2025. <span>“An Expanded Massive Multilingual Dataset for High-Performance Language Technologies (<span>HPLT</span>).”</span> In <em>Proceedings of the 63rd Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 17452–85. Vienna, Austria: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2025.acl-long.854">https://doi.org/10.18653/v1/2025.acl-long.854</a>.
+</div>
+<div id="ref-conneau2020xlmr" class="csl-entry" role="listitem">
+Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. 2020. <span>“Unsupervised Cross-Lingual Representation Learning at Scale.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 8440–51. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-main.747">https://doi.org/10.18653/v1/2020.acl-main.747</a>.
+</div>
+<div id="ref-feng2022labse" class="csl-entry" role="listitem">
+Feng, Fangxiaoyu, Yinfei Yang, Daniel Cer, Naveen Arivazhagan, and Wei Wang. 2022. <span>“Language-Agnostic <span>BERT</span> Sentence Embedding.”</span> In <em>Proceedings of the 60th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 878–91. Dublin, Ireland: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.acl-long.62">https://doi.org/10.18653/v1/2022.acl-long.62</a>.
+</div>
+<div id="ref-degibert2024hplt" class="csl-entry" role="listitem">
+Gibert, Ona de, Graeme Nail, Nikolay Arefyev, Marta Bañón, Jelmer van der Linde, Shaoxiong Ji, Jaume Zaragoza-Bernabeu, et al. 2024. <span>“A New Massive Multilingual Dataset for High-Performance Language Technologies.”</span> In <em>Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (<span>LREC</span>-<span>COLING</span> 2024)</em>, 1116–28. Torino, Italia: ELRA; ICCL. <a href="https://aclanthology.org/2024.lrec-main.100/">https://aclanthology.org/2024.lrec-main.100/</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-heffernan2022laser3" class="csl-entry" role="listitem">
+Heffernan, Kevin, Onur Çelebi, and Holger Schwenk. 2022. <span>“Bitext Mining Using Distilled Sentence Representations for Low-Resource Languages.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>EMNLP</span> 2022</em>, 2101–12. Abu Dhabi, United Arab Emirates: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.findings-emnlp.154">https://doi.org/10.18653/v1/2022.findings-emnlp.154</a>.
+</div>
+<div id="ref-hplt2025v3" class="csl-entry" role="listitem">
+HPLT Consortium. 2025. <span>“<span>HPLT</span> Monolingual Datasets <span class="nocase">v3.0</span>.”</span> <a href="https://hplt-project.org/datasets/v3.0" class="uri">https://hplt-project.org/datasets/v3.0</a>.
+</div>
+<div id="ref-imanigooghari-etal-2023-glot500" class="csl-entry" role="listitem">
+Imani, Ayyoob, Peiqin Lin, Amir Hossein Kargaran, Silvia Severini, Masoud Jalili Sabet, Nora Kassner, Chunlan Ma, et al. 2023. <span>“<span>G</span>lot500: Scaling Multilingual Corpora and Language Models to 500 Languages.”</span> In <em>Proceedings of the 61st Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1082–1117. Toronto, Canada: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.acl-long.61">https://doi.org/10.18653/v1/2023.acl-long.61</a>.
+</div>
+<div id="ref-kargaran-etal-2023-glotlid" class="csl-entry" role="listitem">
+Kargaran, Amir Hossein, Ayyoob Imani, François Yvon, and Hinrich Schuetze. 2023. <span>“<span>G</span>lot<span>LID</span>: Language Identification for Low-Resource Languages.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>EMNLP</span> 2023</em>, 6155–6218. Singapore: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.findings-emnlp.410">https://doi.org/10.18653/v1/2023.findings-emnlp.410</a>.
+</div>
+<div id="ref-kreutzer2022quality" class="csl-entry" role="listitem">
+Kreutzer, Julia, Isaac Caswell, Lisa Wang, Ahsan Wahab, Daan van Esch, Nasanbayar Ulzii-Orshikh, Allahsera Tapo, et al. 2022. <span>“Quality at a Glance: An Audit of Web-Crawled Multilingual Datasets.”</span> <em>Transactions of the Association for Computational Linguistics</em> 10: 50–72. <a href="https://doi.org/10.1162/tacl_a_00447">https://doi.org/10.1162/tacl_a_00447</a>.
+</div>
+<div id="ref-kudugunta2023madlad" class="csl-entry" role="listitem">
+Kudugunta, Sneha, Isaac Caswell, Biao Zhang, Xavier Garcia, Derrick Xin, Aditya Kusupati, Romi Stella, Ankur Bapna, and Orhan Firat. 2023. <span>“<span>MADLAD-400</span>: A Multilingual and Document-Level Large Audited Dataset.”</span> In <em>Advances in Neural Information Processing Systems 36 (<span>NeurIPS</span> 2023), Datasets and Benchmarks Track</em>.
+</div>
+<div id="ref-mirzakhalov2021large" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Duygu Ataman, Sherzod Kariev, Francis Tyers, Otabek Abduraufov, Mammad Hajili, et al. 2021. <span>“A Large-Scale Study of Machine Translation in <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing</em>, 5876–90. Online; Punta Cana, Dominican Republic: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.emnlp-main.475">https://doi.org/10.18653/v1/2021.emnlp-main.475</a>.
+</div>
+<div id="ref-nguyen2024culturax" class="csl-entry" role="listitem">
+Nguyen, Thuat, Chien Van Nguyen, Viet Dac Lai, Hieu Man, Nghia Trung Ngo, Franck Dernoncourt, Ryan A. Rossi, and Thien Huu Nguyen. 2024. <span>“<span>C</span>ultura<span>X</span>: A Cleaned, Enormous, and Multilingual Dataset for Large Language Models in 167 Languages.”</span> In <em>Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (<span>LREC</span>-<span>COLING</span> 2024)</em>, 4226–37. Torino, Italia: ELRA; ICCL. <a href="https://aclanthology.org/2024.lrec-main.377/">https://aclanthology.org/2024.lrec-main.377/</a>.
+</div>
+<div id="ref-costa2022nllb" class="csl-entry" role="listitem">
+NLLB Team, Marta R. Costa-jussà, James Cross, Onur Çelebi, Maha Elbayad, Kenneth Heafield, Kevin Heffernan, et al. 2024. <span>“Scaling Neural Machine Translation to 200 Languages.”</span> <em>Nature</em> 630 (8018): 841–46. <a href="https://doi.org/10.1038/s41586-024-07335-x">https://doi.org/10.1038/s41586-024-07335-x</a>.
+</div>
+<div id="ref-oepen2025hplt3" class="csl-entry" role="listitem">
+Oepen, Stephan, Nikolay Arefyev, Mikko Aulamo, Marta Bañón, Maja Buljan, Laurie V. Burchell, Lucas Georges Gabriel Charpentier, et al. 2026. <span>“<span>HPLT</span> 3.0: Very Large-Scale Multilingual Resources for <span>LLM</span>s and <span>MT</span>. Mono- and Bi-Lingual Data, Multilingual Evaluation, and Pre-Trained Models.”</span> In <em>Proceedings of the Fifteenth Language Resources and Evaluation Conference</em>, 1409–34. Palma de Mallorca, Spain: ELRA Language Resource Association. <a href="https://doi.org/10.63317/25xbdofco9od">https://doi.org/10.63317/25xbdofco9od</a>.
+</div>
+<div id="ref-penedo2025fineweb2" class="csl-entry" role="listitem">
+Penedo, Guilherme, Hynek Kydlíček, Vinko Sabolčec, Bettina Messmer, Negar Foroutan, Amir Hossein Kargaran, Colin Raffel, Martin Jaggi, Leandro von Werra, and Thomas Wolf. 2025. <span>“<span>FineWeb2</span>: One Pipeline to Scale Them All – Adapting Pre-Training Data Processing to Every Language.”</span> arXiv preprint arXiv:2506.20920. <a href="https://arxiv.org/abs/2506.20920">https://arxiv.org/abs/2506.20920</a>.
+</div>
+<div id="ref-rae2021gopher" class="csl-entry" role="listitem">
+Rae, Jack W., Sebastian Borgeaud, Trevor Cai, Katie Millican, Jordan Hoffmann, et al. 2021. <span>“Scaling Language Models: Methods, Analysis &amp; Insights from Training <span>Gopher</span>.”</span> <a href="https://arxiv.org/abs/2112.11446">https://arxiv.org/abs/2112.11446</a>.
+</div>
+<div id="ref-tiedemann2012opus" class="csl-entry" role="listitem">
+Tiedemann, Jörg. 2012. <span>“Parallel Data, Tools and Interfaces in <span>OPUS</span>.”</span> In <em>Proceedings of the Eighth International Conference on Language Resources and Evaluation (<span>LREC</span>’12)</em>, 2214–18. Istanbul, Turkey: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L12-1246/">https://aclanthology.org/L12-1246/</a>.
+</div>
+<div id="ref-xue2021mt5" class="csl-entry" role="listitem">
+Xue, Linting, Noah Constant, Adam Roberts, Mihir Kale, Rami Al-Rfou, Aditya Siddhant, Aditya Barua, and Colin Raffel. 2021. <span>“M<span>T</span>5: A Massively Multilingual Pre-Trained Text-to-Text Transformer.”</span> In <em>Proceedings of the 2021 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies</em>, 483–98. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.naacl-main.41">https://doi.org/10.18653/v1/2021.naacl-main.41</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/03-scripts-orthography.html" class="pagination-link" aria-label="Scripts, Encoding, and Orthographic Engineering">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/05-morphological-structure.html" class="pagination-link" aria-label="Morphological Structure: A Linguistic Foundation">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

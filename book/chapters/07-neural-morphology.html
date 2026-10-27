@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>7&nbsp; Neural Morphology and the Tokenisation Problem – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/08-syntax-ud.html" rel="next">
+<link href="../chapters/06-finite-state-morphology.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-morphological-structure.html">Morphology</a></li><li class="breadcrumb-item"><a href="../chapters/07-neural-morphology.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-subword-tok" id="toc-sec-subword-tok" class="nav-link active" data-scroll-target="#sec-subword-tok"><span class="header-section-number">7.1</span> Subword Tokenisation in Agglutinative Languages</a>
+  <ul class="collapse">
+  <li><a href="#three-algorithms" id="toc-three-algorithms" class="nav-link" data-scroll-target="#three-algorithms"><span class="header-section-number">7.1.1</span> Three Algorithms</a></li>
+  <li><a href="#the-fertility-metric" id="toc-the-fertility-metric" class="nav-link" data-scroll-target="#the-fertility-metric"><span class="header-section-number">7.1.2</span> The Fertility Metric</a></li>
+  <li><a href="#token-cost-and-morphological-boundaries" id="toc-token-cost-and-morphological-boundaries" class="nav-link" data-scroll-target="#token-cost-and-morphological-boundaries"><span class="header-section-number">7.1.3</span> Token Cost and Morphological Boundaries</a></li>
+  </ul></li>
+  <li><a href="#sec-morph-aware-tok" id="toc-sec-morph-aware-tok" class="nav-link" data-scroll-target="#sec-morph-aware-tok"><span class="header-section-number">7.2</span> Morpheme-Aware Tokenisation</a>
+  <ul class="collapse">
+  <li><a href="#morphological-pre-segmentation" id="toc-morphological-pre-segmentation" class="nav-link" data-scroll-target="#morphological-pre-segmentation"><span class="header-section-number">7.2.1</span> Morphological Pre-Segmentation</a></li>
+  <li><a href="#vocabulary-size-as-a-lever" id="toc-vocabulary-size-as-a-lever" class="nav-link" data-scroll-target="#vocabulary-size-as-a-lever"><span class="header-section-number">7.2.2</span> Vocabulary Size as a Lever</a></li>
+  <li><a href="#designing-and-evaluating-a-turkic-tokeniser" id="toc-designing-and-evaluating-a-turkic-tokeniser" class="nav-link" data-scroll-target="#designing-and-evaluating-a-turkic-tokeniser"><span class="header-section-number">7.2.3</span> Designing and Evaluating a Turkic Tokeniser</a></li>
+  <li><a href="#choosing-a-use-case" id="toc-choosing-a-use-case" class="nav-link" data-scroll-target="#choosing-a-use-case"><span class="header-section-number">7.2.4</span> Choosing a Use Case</a></li>
+  </ul></li>
+  <li><a href="#sec-neural-morph" id="toc-sec-neural-morph" class="nav-link" data-scroll-target="#sec-neural-morph"><span class="header-section-number">7.3</span> Neural Morphological Analysis</a>
+  <ul class="collapse">
+  <li><a href="#the-task-and-the-trade-off" id="toc-the-task-and-the-trade-off" class="nav-link" data-scroll-target="#the-task-and-the-trade-off"><span class="header-section-number">7.3.1</span> The Task and the Trade-Off</a></li>
+  <li><a href="#character-level-sequence-to-sequence-analysis" id="toc-character-level-sequence-to-sequence-analysis" class="nav-link" data-scroll-target="#character-level-sequence-to-sequence-analysis"><span class="header-section-number">7.3.2</span> Character-Level Sequence-to-Sequence Analysis</a></li>
+  <li><a href="#bert-based-morphological-tagging" id="toc-bert-based-morphological-tagging" class="nav-link" data-scroll-target="#bert-based-morphological-tagging"><span class="header-section-number">7.3.3</span> BERT-Based Morphological Tagging</a></li>
+  <li><a href="#error-types-of-neural-morphological-analysers" id="toc-error-types-of-neural-morphological-analysers" class="nav-link" data-scroll-target="#error-types-of-neural-morphological-analysers"><span class="header-section-number">7.3.4</span> Error Types of Neural Morphological Analysers</a></li>
+  <li><a href="#hybrid-fst-constrained-analysis" id="toc-hybrid-fst-constrained-analysis" class="nav-link" data-scroll-target="#hybrid-fst-constrained-analysis"><span class="header-section-number">7.3.5</span> Hybrid FST-Constrained Analysis</a></li>
+  <li><a href="#a-multilingual-neural-analyser-for-the-family" id="toc-a-multilingual-neural-analyser-for-the-family" class="nav-link" data-scroll-target="#a-multilingual-neural-analyser-for-the-family"><span class="header-section-number">7.3.6</span> A Multilingual Neural Analyser for the Family</a></li>
+  </ul></li>
+  <li><a href="#sec-disambiguation" id="toc-sec-disambiguation" class="nav-link" data-scroll-target="#sec-disambiguation"><span class="header-section-number">7.4</span> Morphological Disambiguation</a>
+  <ul class="collapse">
+  <li><a href="#the-task" id="toc-the-task" class="nav-link" data-scroll-target="#the-task"><span class="header-section-number">7.4.1</span> The Task</a></li>
+  <li><a href="#classical-approaches" id="toc-classical-approaches" class="nav-link" data-scroll-target="#classical-approaches"><span class="header-section-number">7.4.2</span> Classical Approaches</a></li>
+  <li><a href="#neural-approaches" id="toc-neural-approaches" class="nav-link" data-scroll-target="#neural-approaches"><span class="header-section-number">7.4.3</span> Neural Approaches</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">7.4.4</span> Evaluation</a></li>
+  </ul></li>
+  <li><a href="#sec-zero-shot" id="toc-sec-zero-shot" class="nav-link" data-scroll-target="#sec-zero-shot"><span class="header-section-number">7.5</span> Zero-Shot Morphological Tagging for Unseen Languages</a>
+  <ul class="collapse">
+  <li><a href="#setup-and-motivation" id="toc-setup-and-motivation" class="nav-link" data-scroll-target="#setup-and-motivation"><span class="header-section-number">7.5.1</span> Setup and Motivation</a></li>
+  <li><a href="#the-script-barrier" id="toc-the-script-barrier" class="nav-link" data-scroll-target="#the-script-barrier"><span class="header-section-number">7.5.2</span> The Script Barrier</a></li>
+  <li><a href="#questions-for-a-transfer-evaluation" id="toc-questions-for-a-transfer-evaluation" class="nav-link" data-scroll-target="#questions-for-a-transfer-evaluation"><span class="header-section-number">7.5.3</span> Questions for a Transfer Evaluation</a></li>
+  <li><a href="#what-requires-language-specific-annotation" id="toc-what-requires-language-specific-annotation" class="nav-link" data-scroll-target="#what-requires-language-specific-annotation"><span class="header-section-number">7.5.4</span> What Requires Language-Specific Annotation</a></li>
+  </ul></li>
+  <li><a href="#sec-ch07-hands-on" id="toc-sec-ch07-hands-on" class="nav-link" data-scroll-target="#sec-ch07-hands-on"><span class="header-section-number">7.6</span> Hands-On: A Fine-Tuning Procedure for Morphological Tagging with BERTurk</a>
+  <ul class="collapse">
+  <li><a href="#setup-and-data" id="toc-setup-and-data" class="nav-link" data-scroll-target="#setup-and-data"><span class="header-section-number">7.6.1</span> Setup and Data</a></li>
+  <li><a href="#tokenising-without-losing-words" id="toc-tokenising-without-losing-words" class="nav-link" data-scroll-target="#tokenising-without-losing-words"><span class="header-section-number">7.6.2</span> Tokenising without Losing Words</a></li>
+  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning"><span class="header-section-number">7.6.3</span> Fine-Tuning</a></li>
+  <li><a href="#inference-scoring-and-export" id="toc-inference-scoring-and-export" class="nav-link" data-scroll-target="#inference-scoring-and-export"><span class="header-section-number">7.6.4</span> Inference, Scoring and Export</a></li>
+  </ul></li>
+  <li><a href="#sec-ch07-synthesis" id="toc-sec-ch07-synthesis" class="nav-link" data-scroll-target="#sec-ch07-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch07-further-reading" id="toc-sec-ch07-further-reading" class="nav-link" data-scroll-target="#sec-ch07-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch07-exercises" id="toc-sec-ch07-exercises" class="nav-link" data-scroll-target="#sec-ch07-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-morphological-structure.html">Morphology</a></li><li class="breadcrumb-item"><a href="../chapters/07-neural-morphology.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-07-neural-morphology" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Interpret tokeniser fertility under a stated sampling convention and explain its implications for model input length</li>
+<li>Compare BPE, WordPiece, and Unigram tokenisation algorithms and reason about their suitability for Turkic text</li>
+<li>Describe morpheme-aware tokenisation and design a comparison with a subword baseline</li>
+<li>Contrast character-level, classifier-based, and hybrid FST-constrained neural morphological analysers</li>
+<li>Explain the morphological disambiguation task and compare HMM, CRF, and transformer-based solutions</li>
+<li>Design an evaluation of zero-shot morphological transfer across the Turkic family, including native-script and transliterated conditions</li>
+</ul>
+</div>
+</div>
+<p>Neural morphology involves two related tasks: representing word forms and choosing their analyses in context. This chapter first examines subword tokenisation, then neural tagging, disambiguation and transfer to languages without task-labelled training data.</p>
+<section id="sec-subword-tok" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-subword-tok"><span class="header-section-number">7.1</span> Subword Tokenisation in Agglutinative Languages</h2>
+<section id="three-algorithms" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="three-algorithms"><span class="header-section-number">7.1.1</span> Three Algorithms</h3>
+<p>Many neural NLP models operate on <strong>subword tokens</strong> learned from training text. An individual token may represent a whole word, part of a word, a character or bytes; character- and byte-level models also exist. Three common subword algorithms are described here.</p>
+<p><strong>Byte-Pair Encoding (BPE)</strong> <span class="citation" data-cites="sennrich2016bpe">(<a href="../references.html#ref-sennrich2016bpe" role="doc-biblioref">Sennrich, Haddow, and Birch 2016</a>)</span> begins with a character-level vocabulary and iteratively merges the most frequent adjacent pair of symbols. After a fixed number of merge operations, the resulting vocabulary covers frequent word forms as single tokens and decomposes rare forms into shorter pieces. BPE and its byte-level variants are used by many generative LLMs, among them the GPT model series and LLaMA 3.</p>
+<p><strong>WordPiece</strong> learns a vocabulary of reusable pieces. At inference, BERT tokenisers apply greedy longest-match segmentation within pretokenised words, using continuation markers such as <code>##</code>; this differs from applying a ranked BPE merge list (<a href="https://github.com/google-research/bert/blob/master/tokenization.py">BERT implementation</a>). WordPiece is the tokeniser underlying BERT and its derivatives <span class="citation" data-cites="devlin2019bert">(<a href="../references.html#ref-devlin2019bert" role="doc-biblioref">Devlin et al. 2019</a>)</span>, including BERTurk <span class="citation" data-cites="schweter2020berturk">(<a href="../references.html#ref-schweter2020berturk" role="doc-biblioref">Schweter 2020</a>)</span>.</p>
+<p><strong>Unigram</strong> reverses the direction: it starts with a large initial vocabulary and iteratively <em>removes</em> the tokens whose removal hurts corpus likelihood least. <strong>SentencePiece</strong> <span class="citation" data-cites="kudo2018sentencepiece">(<a href="../references.html#ref-kudo2018sentencepiece" role="doc-biblioref">Kudo and Richardson 2018</a>)</span> is the library that popularised it; it implements both Unigram and BPE and operates on raw text without pre-tokenisation. mT5 and XLM-R <span class="citation" data-cites="conneau2020xlmr">(<a href="../references.html#ref-conneau2020xlmr" role="doc-biblioref">Conneau et al. 2020</a>)</span> use SentencePiece Unigram models, as does Glot500, which extends the XLM-R vocabulary; the SentencePiece model distributed with NLLB-200 is a BPE model (its <code>model_type</code>, checked 19 October 2026). LLaMA 1 and 2 used SentencePiece BPE, while LLaMA 3 switched to a byte-level BPE tokeniser of the tiktoken family.</p>
+<p>All three algorithms can split rare, long suffix-chain forms into many pieces. Training data, sampling and vocabulary size determine the learned inventory. An English-heavy inventory reflects those choices, rather than an inherent property of the algorithm; monolingual Turkish tokenisers illustrate the difference. <strong>Fertility</strong> measures the extent of this splitting.</p>
+</section>
+<section id="the-fertility-metric" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="the-fertility-metric"><span class="header-section-number">7.1.2</span> The Fertility Metric</h3>
+<p><strong>Fertility</strong> is the mean number of subword tokens per input word. It equals 1.0 when a tokeniser assigns one token to each word, and the average word length for a character-level tokeniser. Two other measures help describe tokenisation: the share of words split into several tokens, and the 95th percentile of tokens per word. The latter captures the upper tail without relying on a single maximum. Here, words are Unicode alphanumeric runs matched by <code>[^\W_]+</code>, encoded separately without special tokens. This follows the protocol in <a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>; it differs from counting whitespace-separated words.</p>
+<p><a href="#tbl-fertility" class="quarto-xref">Table&nbsp;<span>7.1</span></a> and <a href="#fig-tokenizer-fertility" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> show measured fertility for four widely used LLM tokenisers on the same 20 parallel sentences in 20 Turkic languages and English <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. All four tokenisers segment English at 1.08–1.09 tokens per word. Turkish needs between 1.95 (Qwen3.5 and <code>o200k_base</code>) and 2.33 (OLMo 3). For other languages the cost is considerably higher, although these languages share Turkish’s productive suffixation: 3.38 (<code>o200k_base</code>) to 6.85 (OLMo 3) for Uyghur, 3.48 to 4.78 for Sakha, and 2.54 to 5.00 for Bashkir. The 95th percentile reaches 11 tokens per word for Uyghur and Tatar under OLMo 3, compared with 2 for English under every tokeniser. Averaged over the 20 Turkic languages, <code>o200k_base</code> is the most efficient tokeniser (2.51), followed by Qwen3.5 (2.75), LLaMA 3 (3.16), and OLMo 3 (3.58).</p>
+<div id="tbl-fertility" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fertility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.1: Tokeniser fertility (mean tokens per word) of four LLM tokenisers on the 20 parallel challenge sentences of <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>, each word tokenised separately. Small samples (61–88 words per language): read the table as a diagnostic, not a benchmark.
+</figcaption>
+<div aria-describedby="tbl-fertility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>Branch</th>
+<th style="text-align: center;">Script</th>
+<th style="text-align: center;">Qwen3.5</th>
+<th style="text-align: center;">LLaMA 3</th>
+<th style="text-align: center;">OLMo 3</th>
+<th style="text-align: center;">o200k_base</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>English (reference)</td>
+<td>—</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">1.09</td>
+<td style="text-align: center;">1.09</td>
+<td style="text-align: center;">1.09</td>
+<td style="text-align: center;">1.08</td>
+</tr>
+<tr class="even">
+<td>Turkish</td>
+<td>Oghuz</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">1.95</td>
+<td style="text-align: center;">2.03</td>
+<td style="text-align: center;">2.33</td>
+<td style="text-align: center;">1.95</td>
+</tr>
+<tr class="odd">
+<td>Azerbaijani</td>
+<td>Oghuz</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">2.56</td>
+<td style="text-align: center;">3.05</td>
+<td style="text-align: center;">3.25</td>
+<td style="text-align: center;">2.42</td>
+</tr>
+<tr class="even">
+<td>Turkmen</td>
+<td>Oghuz</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">2.21</td>
+<td style="text-align: center;">2.35</td>
+<td style="text-align: center;">2.50</td>
+<td style="text-align: center;">2.16</td>
+</tr>
+<tr class="odd">
+<td>Gagauz</td>
+<td>Oghuz</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">2.03</td>
+<td style="text-align: center;">2.12</td>
+<td style="text-align: center;">2.34</td>
+<td style="text-align: center;">2.03</td>
+</tr>
+<tr class="even">
+<td>Kazakh</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.86</td>
+<td style="text-align: center;">3.51</td>
+<td style="text-align: center;">4.05</td>
+<td style="text-align: center;">2.37</td>
+</tr>
+<tr class="odd">
+<td>Kyrgyz</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.84</td>
+<td style="text-align: center;">3.48</td>
+<td style="text-align: center;">3.80</td>
+<td style="text-align: center;">2.52</td>
+</tr>
+<tr class="even">
+<td>Tatar</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">3.13</td>
+<td style="text-align: center;">4.13</td>
+<td style="text-align: center;">4.46</td>
+<td style="text-align: center;">2.51</td>
+</tr>
+<tr class="odd">
+<td>Bashkir</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">3.35</td>
+<td style="text-align: center;">4.68</td>
+<td style="text-align: center;">5.00</td>
+<td style="text-align: center;">2.54</td>
+</tr>
+<tr class="even">
+<td>Crimean Tatar</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">1.98</td>
+<td style="text-align: center;">2.03</td>
+<td style="text-align: center;">2.30</td>
+<td style="text-align: center;">1.98</td>
+</tr>
+<tr class="odd">
+<td>Karakalpak</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">2.08</td>
+<td style="text-align: center;">2.21</td>
+<td style="text-align: center;">2.38</td>
+<td style="text-align: center;">2.08</td>
+</tr>
+<tr class="even">
+<td>Nogai</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.92</td>
+<td style="text-align: center;">3.08</td>
+<td style="text-align: center;">3.48</td>
+<td style="text-align: center;">2.65</td>
+</tr>
+<tr class="odd">
+<td>Kumyk</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.76</td>
+<td style="text-align: center;">3.06</td>
+<td style="text-align: center;">3.61</td>
+<td style="text-align: center;">2.56</td>
+</tr>
+<tr class="even">
+<td>Karachay-Balkar</td>
+<td>Kipchak</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.25</td>
+<td style="text-align: center;">2.52</td>
+<td style="text-align: center;">2.94</td>
+<td style="text-align: center;">2.23</td>
+</tr>
+<tr class="odd">
+<td>Uzbek</td>
+<td>Karluk</td>
+<td style="text-align: center;">Latn</td>
+<td style="text-align: center;">2.12</td>
+<td style="text-align: center;">2.18</td>
+<td style="text-align: center;">2.18</td>
+<td style="text-align: center;">2.11</td>
+</tr>
+<tr class="even">
+<td>Uyghur</td>
+<td>Karluk</td>
+<td style="text-align: center;">Arab</td>
+<td style="text-align: center;">4.51</td>
+<td style="text-align: center;">5.62</td>
+<td style="text-align: center;">6.85</td>
+<td style="text-align: center;">3.38</td>
+</tr>
+<tr class="odd">
+<td>Sakha</td>
+<td>Siberian</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">3.65</td>
+<td style="text-align: center;">4.21</td>
+<td style="text-align: center;">4.78</td>
+<td style="text-align: center;">3.48</td>
+</tr>
+<tr class="even">
+<td>Altai</td>
+<td>Siberian</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.83</td>
+<td style="text-align: center;">3.08</td>
+<td style="text-align: center;">3.63</td>
+<td style="text-align: center;">2.63</td>
+</tr>
+<tr class="odd">
+<td>Tuvan</td>
+<td>Siberian</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.67</td>
+<td style="text-align: center;">3.09</td>
+<td style="text-align: center;">3.59</td>
+<td style="text-align: center;">2.44</td>
+</tr>
+<tr class="even">
+<td>Khakas</td>
+<td>Siberian</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">2.79</td>
+<td style="text-align: center;">3.16</td>
+<td style="text-align: center;">3.94</td>
+<td style="text-align: center;">2.67</td>
+</tr>
+<tr class="odd">
+<td>Chuvash</td>
+<td>Oghur</td>
+<td style="text-align: center;">Cyrl</td>
+<td style="text-align: center;">3.52</td>
+<td style="text-align: center;">3.66</td>
+<td style="text-align: center;">4.09</td>
+<td style="text-align: center;">3.42</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The source files called the OpenAI column “GPT-5.2”, but the script measured the <code>o200k_base</code> encoding. The table uses the encoding name; it does not test a live model’s tokeniser (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>).</p>
+<div id="fig-tokenizer-fertility" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Grouped bar chart of tokens per word for four tokenisers across 20 Turkic languages and English; Cyrillic- and Arabic-script languages have the highest values.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tokenizer-fertility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-tokenizer-fertility/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Grouped bar chart of tokens per word for four tokenisers across 20 Turkic languages and English; Cyrillic- and Arabic-script languages have the highest values.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tokenizer-fertility-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: Measured fertility of four LLM tokenisers on the parallel challenge sentences, sorted by worst-case fertility; non-Latin-script languages in bold. Data: <a href="#tbl-fertility" class="quarto-xref">Table&nbsp;<span>7.1</span></a>.
+</figcaption>
+</figure>
+</div>
+<p><strong>Script conversion changes the measured cost.</strong> Latin-script Crimean Tatar and Gagauz have fertility close to Turkish on this sample. Converting the Cyrillic- and Perso-Arabic-script samples to CTS substantially reduces the average gap (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>). This comparison concerns 20 short sentences per language and the tested mappings. Script and tokeniser training exposure remain confounded, and downstream gains are untested. Tokenising words in isolation also gives different counts from tokenising running text.</p>
+</section>
+<section id="token-cost-and-morphological-boundaries" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="token-cost-and-morphological-boundaries"><span class="header-section-number">7.1.3</span> Token Cost and Morphological Boundaries</h3>
+<p>Token counts affect context capacity and computation. Boundary alignment raises a separate question about how explicitly the input represents morphology.</p>
+<p><strong>1. Context window depletion.</strong> Transformer models operate within a fixed context length measured in tokens, not words. Under OLMo 3, the least efficient of the four tokenisers, a 2,048-token window holds about 1,880 English words (1.09 tokens per word), about 880 Turkish words (2.33) and only about 300 Uyghur words (6.85) (<a href="12-pretrained-lms.html#tbl-context-window" class="quarto-xref">Table&nbsp;<span>12.2</span></a> in <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a> gives more values). These divisions are illustrative capacity estimates: running-text tokenisation, punctuation and special tokens change the actual number of words that fit.</p>
+<p><strong>2. Split morphemes.</strong> Frequency-based subwords are not designed to follow morpheme boundaries. A form such as Turkish <em>geldiklerinden</em> (“because they came”, <em>gel-dik-ler-i-n-den</em>) might be segmented as <code>gel</code> <code>##dik</code> <code>##ler</code> <code>##inden</code>, which cuts correctly after the plural but lumps the possessive, the pronominal <em>n</em> and the ablative into one piece; other tokenisers cut through the middle of a suffix. The model must then reconstruct morphological structure from fragments that do not align with it. (The segmentation shown is illustrative; Exercise 2 measures real boundary agreement.)</p>
+<p>The recurring sentences give a measured case. XLM-R splits Kazakh <em>бейбітшілікті</em> ‘peace-ACC’ into <code>▁бей</code> <code>біт</code> <code>шілік</code> <code>ті</code>, with the accusative as its own piece, while Llama 3 splits it into eight byte-level pieces of one or two letters. For Uyghur <em>ھارۋىسىنى</em> ‘its cart (ACC)’, Llama 3 produces eight pieces, two of which are partial bytes of the letter ۋ. Converting to CTS changes the counts in opposite directions for the two tokenisers (<a href="#tbl-recurring-tokens" class="quarto-xref">Table&nbsp;<span>7.2</span></a>).</p>
+<div id="tbl-recurring-tokens" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recurring-tokens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.2: Tokens for the recurring sentences (<a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a>) in the native script and in CTS, including punctuation and without special tokens; words are whitespace-separated.
+</figcaption>
+<div aria-describedby="tbl-recurring-tokens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sentence</th>
+<th style="text-align: right;">Words</th>
+<th style="text-align: right;">Llama 3, native</th>
+<th style="text-align: right;">Llama 3, CTS</th>
+<th style="text-align: right;">XLM-R, native</th>
+<th style="text-align: right;">XLM-R, CTS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kazakh</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td>Kyrgyz</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td>Uzbek</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td>Uyghur</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">14</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Llama 3 needs fewer tokens after conversion for three of the four sentences. XLM-R, whose vocabulary was learned from native-script text, needs more for Kazakh and Kyrgyz. Four sentences show the mechanism; <a href="#tbl-fertility" class="quarto-xref">Table&nbsp;<span>7.1</span></a> measures it on a larger sample.</p>
+<p><strong>3. Inconsistent units across related forms.</strong> Frequency-based merges can segment the same suffix differently after different stems. Allomorphs such as <em>-lar</em> and <em>-ler</em> may also receive different token sequences. The model has to learn the grammatical connection between these sequences.</p>
+<p><strong>4. Inference latency and cost.</strong> More input tokens increase prefill work and consume context capacity; ordinary autoregressive generation then takes one decoding step per <em>output</em> token. Input tokens are not each separate decoding steps. At a fixed per-token price, twice as many billed tokens cost twice as much, but latency also depends on batching, caching, hardware and sequence length. Isolated-word fertility alone does not measure runtime or running-text billing.</p>
+</section>
+</section>
+<section id="sec-morph-aware-tok" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sec-morph-aware-tok"><span class="header-section-number">7.2</span> Morpheme-Aware Tokenisation</h2>
+<section id="morphological-pre-segmentation" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="morphological-pre-segmentation"><span class="header-section-number">7.2.1</span> Morphological Pre-Segmentation</h3>
+<p>One way to preserve morph boundaries is to segment words <em>before</em> applying the standard tokeniser. An FST (<a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a>), neural segmenter or hybrid supplies the morphs: for example, <em>evlerimizden</em> → <code>ev</code> <code>ler</code> <code>imiz</code> <code>den</code>. BPE or Unigram then learns a vocabulary over these units, with a constraint that prevents tokens from crossing the supplied boundaries.</p>
+<p>Pre-segmentation protects the supplied morph boundaries; it does not necessarily reduce token counts. With a fixed vocabulary, forbidding pieces that cross a boundary cannot lower the minimum possible count. Separately trained tokenisers learn different vocabularies, so their fertility must be measured.</p>
+<p>A morph may still need several tokens, and a wrong boundary remains an error. Turkish studies report competitive results for morphology-level tokenisation <span class="citation" data-cites="toraman2023tokenization">(<a href="../references.html#ref-toraman2023tokenization" role="doc-biblioref">Toraman et al. 2023</a>)</span>, but whether large generative models benefit in the same way is still open.</p>
+</section>
+<section id="vocabulary-size-as-a-lever" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="vocabulary-size-as-a-lever"><span class="header-section-number">7.2.2</span> Vocabulary Size as a Lever</h3>
+<p>Increasing vocabulary size can reduce fertility by storing more word forms as single tokens. BERTurk <span class="citation" data-cites="schweter2020berturk">(<a href="../references.html#ref-schweter2020berturk" role="doc-biblioref">Schweter 2020</a>)</span> was released with 32K and 128K vocabularies. At a fixed embedding dimension, more entries require more embedding parameters. Compare token counts and downstream scores rather than assuming that a larger vocabulary is better. Exercise 1 measures tokenisation for the two BERTurk vocabularies.</p>
+</section>
+<section id="designing-and-evaluating-a-turkic-tokeniser" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="designing-and-evaluating-a-turkic-tokeniser"><span class="header-section-number">7.2.3</span> Designing and Evaluating a Turkic Tokeniser</h3>
+<p>Designing a tokeniser for a new Turkic model involves three choices. Test each against the intended task.</p>
+<ol type="1">
+<li><strong>Script.</strong> Train on the native script(s), or on a shared representation such as the toolkit’s Common Turkic Script (CTS) (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>)? For a multilingual Turkic tokeniser, a shared script lets cognate stems and suffixes share vocabulary entries; the cost is a conversion step at input and output time and a representation whose pretraining coverage needs checking.</li>
+<li><strong>Segmentation constraint.</strong> Unconstrained BPE/Unigram, morph-pre-segmented training as above, or a hybrid in which morph boundaries are preferred but not enforced.</li>
+<li><strong>Vocabulary and sampling.</strong> A monolingual vocabulary (BERTurk’s base model, for comparison, has 32K entries) or one multilingual vocabulary; for the latter, temperature sampling over languages (<a href="16-cross-lingual-transfer.html#sec-multilingual" class="quarto-xref"><span>Section 16.4</span></a>) can reduce the imbalance in training exposure.</li>
+</ol>
+<p>TurkicNLP’s <code>MorphemeTokenizer</code> supplies surface segments. The strict example below uses the same word-level segmenter for corpus preparation and inference. Run from the book root, with a supported TurkicNLP backend installed; <code>load()</code> may acquire neural resources. Record which backends loaded, rather than assuming an HFST-only run. The helpers in <code>code/ch07-neural/boundary_tokenizer.py</code> reject changed surface forms and reserved markers, and check decoding of token IDs, including byte fallback. Their whitespace sidecar preserves the original spacing; the point is to demonstrate boundaries, and the result is not a complete LM input format.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sentencepiece <span class="im">as</span> spm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.processors.morpheme_tokenizer <span class="im">import</span> MorphemeTokenizer</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"code/ch07-neural"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> boundary_tokenizer <span class="im">import</span> BOUNDARY, training_lines, encode_text, decode_text</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>segmenter <span class="op">=</span> MorphemeTokenizer(lang<span class="op">=</span><span class="st">"kaz"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>segmenter.load()  <span class="co"># loads available HFST/neural backends; record which succeeded</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>segment_word <span class="op">=</span> <span class="kw">lambda</span> word: segmenter.segment(word).segments</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> Path(<span class="st">"kaz.txt"</span>).read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Path(<span class="st">"kaz.seg.txt"</span>).write_text(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(training_lines(text, segment_word)) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>spm.SentencePieceTrainer.train(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"kaz.seg.txt"</span>, model_prefix<span class="op">=</span><span class="st">"kaz_morph"</span>, vocab_size<span class="op">=</span><span class="dv">16000</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    model_type<span class="op">=</span><span class="st">"unigram"</span>, character_coverage<span class="op">=</span><span class="fl">1.0</span>, hard_vocab_limit<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    user_defined_symbols<span class="op">=</span>[BOUNDARY], byte_fallback<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    normalization_rule_name<span class="op">=</span><span class="st">"identity"</span>, remove_extra_whitespaces<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    add_dummy_prefix<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> spm.SentencePieceProcessor(model_file<span class="op">=</span><span class="st">"kaz_morph.model"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> <span class="st">"Мен мектептерімізде оқыдым"</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>encoded <span class="op">=</span> encode_text(sample, sp, segment_word)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> decode_text(encoded, sp) <span class="op">==</span> sample</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(encoded)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A user-defined <code>│</code> marker is encoded separately. Identity normalisation prevents compatibility rewriting, while byte fallback covers characters absent from the training alphabet. Literal <code>│</code> and SentencePiece’s <code>▁</code> in source words are rejected; an application needing them must define and test an escape convention. No piece may span the supplied boundary and decoding must reproduce the segmented surface. The <a href="https://github.com/google/sentencepiece/blob/master/doc/options.md">SentencePiece training options</a> document these settings.</p>
+<p>The model needs a vocabulary large enough for its byte entries, characters and special symbols; increase the budget if training reports that it is too small. Report fertility including and excluding the inserted boundary tokens, and specify the whitespace representation. Preserve the model, training-data hashes, segmenter source and transducer hashes together. Toolkit corpus and pipeline wrappers can have different cleaning, pretokenisation or fallback behaviour; do not assume their output matches this contract without testing it. <code>python code/ch07-neural/check_examples.py</code> exercises the contract with a tiny trained SentencePiece model, synthetic boundaries, unseen Unicode characters and repeated whitespace. It checks mechanics; expert boundary accuracy is a separate evaluation (M2).</p>
+<p>Evaluate any candidate tokeniser on held-out text with at least:</p>
+<div id="tbl-tokeniser-eval" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tokeniser-eval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.3: A minimal evaluation suite for Turkic tokenisers.
+</figcaption>
+<div aria-describedby="tbl-tokeniser-eval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>What it measures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fertility and split rate</td>
+<td>Cost and context capacity (<a href="#sec-subword-tok" class="quarto-xref"><span>Section 7.1</span></a>)</td>
+</tr>
+<tr class="even">
+<td>95th-percentile tokens per word</td>
+<td>Upper-tail fragmentation of long forms</td>
+</tr>
+<tr class="odd">
+<td>Boundary precision/recall</td>
+<td>Agreement with manually checked morph boundaries; unreviewed analyser output measures agreement with that analyser</td>
+</tr>
+<tr class="even">
+<td>Cross-lingual token overlap</td>
+<td>Share of tokens used by more than one Turkic language (for multilingual tokenisers)</td>
+</tr>
+<tr class="odd">
+<td>Downstream score</td>
+<td>The task you actually care about — evaluated alongside cost and error types</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="choosing-a-use-case" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="choosing-a-use-case"><span class="header-section-number">7.2.4</span> Choosing a Use Case</h3>
+<p>Morphological tagging and dependency parsing are useful tasks for testing pre-segmentation because their labels can depend on suffixes. Compare matched models with and without the segmentation step; supplied boundaries can be wrong, and more tokens can increase computation.</p>
+<p>For an existing language model, replacing the tokeniser also changes its input vocabulary. Vocabulary extension is one adaptation option (<a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a>). For a new model, compare tokenisation designs using <a href="#tbl-tokeniser-eval" class="quarto-xref">Table&nbsp;<span>7.3</span></a>. Where the segmenter has poor coverage, report its fallback behaviour and errors alongside downstream scores.</p>
+</section>
+</section>
+<section id="sec-neural-morph" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="sec-neural-morph"><span class="header-section-number">7.3</span> Neural Morphological Analysis</h2>
+<section id="the-task-and-the-trade-off" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="the-task-and-the-trade-off"><span class="header-section-number">7.3.1</span> The Task and the Trade-Off</h3>
+<p>Morphological analysis predicts a lemma, part of speech and morphological features, as described in <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a>. FSTs use an explicit lexicon and rules (<a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a>). Neural models learn from data and can generalise to forms absent from an FST lexicon; contextual models also use the surrounding sentence. Supervised training needs annotated examples, which may come from another language in a transfer setting. Both approaches can return wrong lemmas or features.</p>
+<p>Two neural paradigms are currently in use, with a third hybrid approach combining their respective advantages.</p>
+</section>
+<section id="character-level-sequence-to-sequence-analysis" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="character-level-sequence-to-sequence-analysis"><span class="header-section-number">7.3.2</span> Character-Level Sequence-to-Sequence Analysis</h3>
+<p>A character-based neural approach treats morphological analysis as a <strong>string transduction</strong> problem: the input is the character sequence of the surface form, and the output is the analysis string (lemma plus morphological tag sequence). An encoder-decoder architecture (an LSTM or a transformer, for example) learns this transduction from annotated data.</p>
+<p>For example, the input character sequence <code>g-e-l-d-i-k-l-e-r-i-n-d-e-n</code> is transduced to an analysis string such as <code>gel+VERB+VerbForm=Part|Number[psor]=Plur|Person[psor]=3+Case=Abl</code> (one of its readings, <a href="05-morphological-structure.html#sec-analysis" class="quarto-xref"><span>Section 5.3</span></a>). The model must learn to identify the stem (<em>gel-</em> “come”), to strip and identify each suffix layer, and to emit the correct tag sequence in the right format.</p>
+<p>Character-level models can combine familiar stems and suffix patterns. A model trained on <em>gittikleri</em> and <em>geldim</em>, for example, may be able to analyse <em>geldikleri</em>. Both its stem and participial suffix pattern are familiar. But some surface forms allow several readings. A word-only model lacks the surrounding sentence needed to choose between them and may learn a preference that differs from the most frequent reading.</p>
+</section>
+<section id="bert-based-morphological-tagging" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="bert-based-morphological-tagging"><span class="header-section-number">7.3.3</span> BERT-Based Morphological Tagging</h3>
+<p>A contextual tagger treats morphological analysis as <strong>sequence labelling</strong>. BERT-style embeddings let it use the surrounding sentence when choosing an analysis.</p>
+<p>A standard token classifier first splits each word into subwords. It takes the first subword’s contextual BERT embedding as the word representation, then uses a linear head to predict a morphological feature bundle. Fine-tuning requires a morphologically annotated corpus, typically a Universal Dependencies treebank with complete features in the FEATS column.</p>
+<p>The Hands-On section implements this BERT-style architecture. TurkishDelightNLP is a different neural design: its morphology/syntax model uses stacked LSTMs, and its morphological tagger combines character and word-context encoders <span class="citation" data-cites="alecakir2022turkishdelightnlp">(<a href="../references.html#ref-alecakir2022turkishdelightnlp" role="doc-biblioref">Alecakir, Bölücü, and Can 2022, 19–21</a>)</span>. It should not be cited as a BERTurk token classifier.</p>
+</section>
+<section id="error-types-of-neural-morphological-analysers" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="error-types-of-neural-morphological-analysers"><span class="header-section-number">7.3.4</span> Error Types of Neural Morphological Analysers</h3>
+<p>Evaluation should distinguish the following errors in neural and rule-based systems:</p>
+<ul>
+<li><strong>Wrong contextual reading</strong>: a licensed analysis, but not the one the sentence requires (<em>evi</em> as possessive where the accusative is meant)</li>
+<li><strong>Incompatible feature combination</strong>: a predicted bundle not licensed for the word’s category and construction. Check the annotation scheme: stacked voice markers and underspecified values can legitimately produce multiple values.</li>
+<li><strong>Wrong lemma</strong>: a lemma that does not match the word, for example a stem cut at the wrong place</li>
+<li><strong>Missing gold candidate</strong> (for FST-based systems): the correct analysis is not among the candidates at all</li>
+</ul>
+<p>A lemma missing from a dictionary is not necessarily an error: it can be a valid new word. These errors can be invisible to surface-level evaluation, because a plausible but wrong analysis still looks like a valid analysis string.</p>
+</section>
+<section id="hybrid-fst-constrained-analysis" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="hybrid-fst-constrained-analysis"><span class="header-section-number">7.3.5</span> Hybrid FST-Constrained Analysis</h3>
+<p>In a hybrid system, the FST supplies a <strong>candidate set</strong> of analyses for each word. A neural model <strong>reranks</strong> them using the surrounding sentence. It can select only from this set. The FST may overgenerate or omit the correct reading, so report candidate recall before reranker accuracy: how often does the set contain the gold analysis?</p>
+<p>TurkicNLP’s rule-based backend follows this pattern in a simple form: Apertium FSTs provide candidates for 20 languages, and transducer weights plus heuristic scores (syntactic position, part-of-speech priority, question particles) select among them <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. A learned reranker is a natural extension: fine-tune a model to score each (word-in-context, FST-candidate) pair and select the highest-scoring candidate, combining the grammar’s constraints with the model’s contextual sensitivity.</p>
+<p>Which side should lead depends on the transducer. Where the FST is mature, it should generate the candidates; where it is a prototype with a small lexicon, a neural analyser may assign analyses to more words, whose correctness still needs checking (<a href="06-finite-state-morphology.html#tbl-apertium-quality" class="quarto-xref">Table&nbsp;<span>6.1</span></a>), and the FST is better used as a validator for the words it does know.</p>
+</section>
+<section id="a-multilingual-neural-analyser-for-the-family" class="level3" data-number="7.3.6">
+<h3 data-number="7.3.6" class="anchored" data-anchor-id="a-multilingual-neural-analyser-for-the-family"><span class="header-section-number">7.3.6</span> A Multilingual Neural Analyser for the Family</h3>
+<p>TurkicNLP uses one neural morphological analyser for 22 languages <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. It fine-tunes the top three layers of Glot500 <span class="citation" data-cites="imanigooghari-etal-2023-glot500">(<a href="../references.html#ref-imanigooghari-etal-2023-glot500" role="doc-biblioref">Imani et al. 2023</a>)</span> and adds script-specific adapters (Latin, Cyrillic, Arabic), a language embedding and a shared two-layer BiLSTM. The outputs are UPOS, 69 UD feature–value pairs and lemmas represented as edit scripts.</p>
+<p>Training draws on UD-format treebanks for ten languages (including silver treebanks for Azerbaijani, Turkmen and Bashkir), UniMorph paradigms for 13 languages (≈1.9 million entries) and Wiktionary paradigms for 20 languages (≈4.8 million forms). Temperature sampling (<span class="math inline">\(T=2\)</span>) reduces the imbalance in language exposure. Paradigm tables provide supervision for languages that lack annotated running text.</p>
+<p>Languages without a treebank use a related <em>proxy</em> language’s embedding: Turkish for Crimean Tatar, Gagauz and Khalaj; Bashkir for Sakha, Tuvan, Khakas, Altai and Chuvash; and Tatar for Kumyk. Their paradigm data also adapts the shared layers. Three further languages receive purely zero-shot coverage: Karakalpak uses Uzbek as its proxy, while Karachay-Balkar and Nogai use Tatar.</p>
+</section>
+</section>
+<section id="sec-disambiguation" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-disambiguation"><span class="header-section-number">7.4</span> Morphological Disambiguation</h2>
+<section id="the-task" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="the-task"><span class="header-section-number">7.4.1</span> The Task</h3>
+<p>Morphological disambiguation is the problem that motivates the hybrid approach. As established in <a href="05-morphological-structure.html#sec-analysis" class="quarto-xref"><span>Section 5.3</span></a>, a single Turkic surface form may have several valid morphological analyses, because morphological categories overlap at the surface. In context, usually one analysis is intended, though genuine ambiguity and alternative annotation conventions also occur. Selecting the analysis is useful for parsing, NER and other downstream tasks, whether done explicitly or implicitly by the model.</p>
+<p>On the UD 2.17 test samples and denominator defined in <a href="05-morphological-structure.html#sec-analysis" class="quarto-xref"><span>Section 5.3</span></a>, 399/730 Turkish TueCL tokens (55%) and 5,071/7,667 Kazakh-KTB tokens (66%) have multiple readings even after removing all <code>+</code> continuations. The excluded continuation class is broader than copular readings. Exact counts and per-token outputs are in <code>code/ch05-ambiguity/</code>.</p>
+<p>A representative example: among the readings of the Turkish form <em>yüz</em> are these three (the table illustrates selected readings, not all lexical senses):</p>
+<div id="tbl-yuz-ambiguity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-yuz-ambiguity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.4: Three readings of the Turkish form <em>yüz</em>, as the Apertium Turkish transducer returns them (it also returns substantivised and copular variants). Context selects among them.
+</figcaption>
+<div aria-describedby="tbl-yuz-ambiguity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Analysis</th>
+<th>Part of speech</th>
+<th>Lemma</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>yüz&lt;n&gt;&lt;nom&gt;</code></td>
+<td>N</td>
+<td><em>yüz</em></td>
+<td>face</td>
+</tr>
+<tr class="even">
+<td><code>yüz&lt;num&gt;</code></td>
+<td>NUM</td>
+<td><em>yüz</em></td>
+<td>one hundred</td>
+</tr>
+<tr class="odd">
+<td><code>yüz&lt;v&gt;&lt;iv&gt;&lt;imp&gt;&lt;p2&gt;&lt;sg&gt;</code></td>
+<td>V</td>
+<td><em>yüz-</em></td>
+<td>swim! (2sg imperative)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The same form <em>yüz</em> occurs in all three contexts: <em>yüz metre</em> (“one hundred metres”) selects the numeral; <em>Havuzda yüz!</em> (“Swim in the pool!”) selects the verb; <em>güzel bir yüz</em> (“a beautiful face”) selects the noun. Nothing inside the word itself resolves the ambiguity.</p>
+</section>
+<section id="classical-approaches" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="classical-approaches"><span class="header-section-number">7.4.2</span> Classical Approaches</h3>
+<p><strong>Hidden Markov Models (HMM)</strong> model the joint probability of a morphological tag sequence and the observed words:</p>
+<p><span class="math display">\[P(\mathbf{t}, \mathbf{w}) = \prod_{i=1}^{n} P(t_i \mid t_{i-1}) \cdot P(w_i \mid t_i)\]</span></p>
+<p>where <span class="math inline">\(t_i\)</span> is the morphological tag at position <span class="math inline">\(i\)</span> and <span class="math inline">\(w_i\)</span> is the observed word. This is a first-order (bigram) model; the Viterbi algorithm recovers the most probable tag sequence in <span class="math inline">\(O(n \cdot |T|^2)\)</span> time. Second-order (trigram) models condition on two previous tags. For Turkish, <span class="citation" data-cites="hakkanitur2000disambiguation">Hakkani-Tür, Oflazer, and Tür (<a href="../references.html#ref-hakkanitur2000disambiguation" role="doc-biblioref">2000</a>)</span> disambiguate with statistical models of this kind over sequences of inflectional groups. A separately documented statistical approach for Kazakh uses a voted perceptron with Viterbi decoding <span class="citation" data-cites="tolegen2020voted">(<a href="../references.html#ref-tolegen2020voted" role="doc-biblioref">Tolegen, Toleu, and Mussabayev 2020</a>)</span>; it should not be labelled an HMM.</p>
+<p>The limitation is the short history: the probability of tag <span class="math inline">\(t_i\)</span> depends only on the previous one or two tags. In Turkic sentences, agreement and case government can disambiguate a form several words away.</p>
+<p><strong>Conditional Random Fields (CRF)</strong> model the conditional distribution <span class="math inline">\(P(\mathbf{t} \mid \mathbf{w})\)</span> directly. A linear-chain CRF can use features of the <em>whole input</em> sequence (character n-grams of the current word to capture suffix patterns, surrounding words), while the dependence between <em>output labels</em> stays limited to neighbouring tags. These are two different axes: broad input context, local output structure.</p>
+</section>
+<section id="neural-approaches" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="neural-approaches"><span class="header-section-number">7.4.3</span> Neural Approaches</h3>
+<p><strong>BiLSTM-CRF</strong> replaces hand-crafted features with learned representations from a bidirectional LSTM, while retaining a CRF output layer for structured prediction over the tag sequence. The character-level BiLSTM is particularly valuable for Turkic: it encodes the morphological form of each word (vowel sequences, suffix patterns) as an implicit feature, allowing the model to generalise to unseen surface forms.</p>
+<p><strong>Transformer-based disambiguation</strong> uses a fine-tuned BERT model as the encoder. For each word in a sentence, the word’s contextual BERT embedding is passed through a linear classification head predicting the full morphological feature bundle. The Hands-On section uses this closed-bundle classifier; TurkishDelightNLP instead uses LSTM encoders and a tag decoder (<a href="#sec-neural-morph" class="quarto-xref"><span>Section 7.3</span></a>). Both BiLSTMs and transformers can use context on either side of a word. Attention provides direct interactions within the input window; whether this improves disambiguation must be measured on the same data.</p>
+</section>
+<section id="evaluation" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="evaluation"><span class="header-section-number">7.4.4</span> Evaluation</h3>
+<p>Morphological disambiguation is evaluated at two granularities, and the distinction is consequential.</p>
+<p><strong>Per-feature accuracy</strong> measures individual categories, such as case or tense. State how absent features and extra predictions are counted.</p>
+<p><strong>Full-bundle accuracy</strong> requires every feature on a word to match. It reveals errors hidden by individual feature scores, but excludes lemma and POS unless those are explicitly included.</p>
+<p>The <a href="https://universaldependencies.org/conll18/evaluation.html">official UD evaluator</a> reports <code>UFeats</code> for feature-bundle agreement and <code>AllTags</code> for joint UPOS, XPOS and feature agreement. Per-feature scores require a separate calculation. Report both bundle and per-feature results, with the scorer version and word-alignment policy. Which errors matter for a parser or another application only downstream evaluation can tell.</p>
+</section>
+</section>
+<section id="sec-zero-shot" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-zero-shot"><span class="header-section-number">7.5</span> Zero-Shot Morphological Tagging for Unseen Languages</h2>
+<section id="setup-and-motivation" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="setup-and-motivation"><span class="header-section-number">7.5.1</span> Setup and Motivation</h3>
+<p>For a target language without task-labelled training data, zero-shot transfer offers a baseline. Check treebanks and paradigm resources separately before asserting that a language has no morphological annotation. Shared categories such as case, number, person and tense motivate transfer from Turkish or Kazakh. Their forms, ordering and annotation still differ across languages, so transfer quality needs testing (<a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a>).</p>
+<p>The zero-shot morphological transfer setup is:</p>
+<ol type="1">
+<li>Train a morphological tagger (BERT-based or BiLSTM) on a language with annotated data (typically Turkish or Kazakh)</li>
+<li>Apply the tagger to a related language with no annotated data, without fine-tuning</li>
+</ol>
+<p>Shared morphological patterns motivate testing transfer within the Turkic family against transfer across families. Two findings are relevant, though they concern different tasks. Kardeş-NLU reports improved sentence-level transfer to Azerbaijani, Kazakh, Kyrgyz, Uzbek and Uyghur when Turkish serves as a high-resource relative <span class="citation" data-cites="senel2024kardes">(<a href="../references.html#ref-senel2024kardes" role="doc-biblioref">Senel et al. 2024</a>)</span>.</p>
+<p>For morphology, TurkicNLP’s multilingual analyser covers three languages without task-labelled or paradigm training data. On the parallel challenge set, it detects the target feature in 50% of Karakalpak sentences, 55% of Nogai sentences and 70% of Karachay-Balkar sentences. It assigns some feature to 86–97% of their content words <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>. Those coverage figures count non-empty bundles, including potentially incorrect ones. Here, <em>zero-shot</em> refers to the absence of target-language task-labelled training data; Glot500’s pretraining text may still contain these languages.</p>
+</section>
+<section id="the-script-barrier" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="the-script-barrier"><span class="header-section-number">7.5.2</span> The Script Barrier</h3>
+<p>Before applying a monolingual model such as BERTurk to Cyrillic Kyrgyz, check its tokenisation and task performance: the scripts share little of its subword vocabulary. A multilingual encoder pretrained on both scripts can support cross-script transfer, as the Glot500-based analyser above illustrates. Transliteration offers another option (<a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>). Converting Kyrgyz Cyrillic into CTS with the specified toolkit mapping increases shared spelling, but changes the input relative to the model’s pretraining text.</p>
+<p>Compare, rather than assume:</p>
+<blockquote class="blockquote">
+<p>Compare native-script multilingual transfer with a specified transliteration pipeline. Shared spelling can increase token overlap, yet more overlap and lower fertility need not translate into better tagging.</p>
+</blockquote>
+<p>Evaluate the same target test items with native-script multilingual input, transliterated input and a target-supervised model. Treat the supervised model as a baseline whose advantage also needs to be measured.</p>
+</section>
+<section id="questions-for-a-transfer-evaluation" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="questions-for-a-transfer-evaluation"><span class="header-section-number">7.5.3</span> Questions for a Transfer Evaluation</h3>
+<p><a href="#tbl-transfer-reliability" class="quarto-xref">Table&nbsp;<span>7.5</span></a> turns the linguistic comparisons into evaluation questions. Shared categories motivate testing transfer; they do not predict its accuracy. Exercise 6 tests these questions.</p>
+<div id="tbl-transfer-reliability" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-transfer-reliability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.5: Questions for evaluating cross-lingual transfer of morphological features. Annotation-schema compatibility (whether source and target treebanks annotate the same features the same way) is a separate question from linguistic similarity.
+</figcaption>
+<div aria-describedby="tbl-transfer-reliability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 54%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Question</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Noun case (Nom, Acc, Dat, Loc, Abl, Gen)</td>
+<td>Does accuracy differ for shared and target-specific cases?</td>
+<td>Cognate affixes in most languages; Sakha lacks the genitive and has partitive, comitative and comparative forms <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 463, 477–78</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Number (Sing / Plur)</td>
+<td>Does the model recognise different plural markers?</td>
+<td><em>-lAr</em> or cognates in many languages; Chuvash <em>-сем</em> is a counterexample <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 453</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Verbal person agreement</td>
+<td>Which agreement forms transfer?</td>
+<td>Cognate agreement suffixes, two paradigms (<a href="05-morphological-structure.html#sec-morpheme-inventory" class="quarto-xref"><span>Section 5.1</span></a>)</td>
+</tr>
+<tr class="even">
+<td>Tense and aspect</td>
+<td>How are auxiliary constructions handled?</td>
+<td>Core categories shared; analytic aspect constructions differ</td>
+</tr>
+<tr class="odd">
+<td>Voice (passive, causative, reflexive)</td>
+<td>Which suffix patterns cause errors?</td>
+<td>Present in all branches; formation varies</td>
+</tr>
+<tr class="even">
+<td>Derivational categories</td>
+<td>Does the source label inventory cover the target?</td>
+<td>Productivity and lexicalisation vary</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="what-requires-language-specific-annotation" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="what-requires-language-specific-annotation"><span class="header-section-number">7.5.4</span> What Requires Language-Specific Annotation</h3>
+<p>A closed classifier can only emit labels included in its output inventory, regardless of script normalisation.</p>
+<p><strong>Language-specific grammatical categories.</strong> A closed classifier cannot emit labels absent from its output inventory. A Turkish-only case inventory, for example, omits Sakha’s partitive, comitative and comparative cases <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 477–78</a>)</span>. Chuvash’s possessive–plural order presents a different problem: the model must handle a different sequence of markers, even when the output labels are familiar (<a href="05-morphological-structure.html#sec-chuvash" class="quarto-xref"><span>Section 5.4.5</span></a>).</p>
+<p><strong>Uzbek surface forms.</strong> Uzbek suffix vowels are largely fixed (<a href="02-computational-phenotype.html#sec-vowel-harmony" class="quarto-xref"><span>Section 2.2</span></a>), so Uzbek has <em>-da</em> and <em>-lar</em> where Turkish alternates <em>-da/-de</em>, <em>-lar/-ler</em>. UD labels do not encode allomorphs, but the changed input strings can still affect a Turkish-trained tagger. They also matter for surface generation.</p>
+<p><strong>Language-specific derivational productivity.</strong> Some derivational morphemes are highly productive in one language but lexicalised (non-compositional) in another. A tagger trained on Turkish cannot infer from its training data which derivational morphemes are productive in Kyrgyz.</p>
+<p>Zero-shot transfer can supply an initial analysis of the shared inflectional patterns, useful, for example, for pre-annotating text before human correction. Measure its quality separately for each language. To adapt the model to language-specific features, consider paradigm tables from UniMorph or Wiktionary and a small amount of annotated running text.</p>
+</section>
+</section>
+<section id="sec-ch07-hands-on" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-ch07-hands-on"><span class="header-section-number">7.6</span> Hands-On: A Fine-Tuning Procedure for Morphological Tagging with BERTurk</h2>
+<p><strong>Question.</strong> Can a word-level classifier predict UPOS and complete feature bundles?</p>
+<p><strong>Inputs.</strong> Official Turkish UD splits, BERTurk and the training recipe below.</p>
+<p><strong>Compute.</strong> Model downloads and training memory are required; a GPU is useful for the full fine-tuning run.</p>
+<p><strong>Output.</strong> A saved tagger, per-word predictions, unseen-bundle counts and development/test scores.</p>
+<p><strong>Interpretation.</strong> Compare against the supplied analysers on the same words and retain unseen labels in the denominator.</p>
+<p>This tutorial fine-tunes BERTurk for morphological feature prediction on Turkish UD data. Morphological tagging is framed as token classification: for each word, predict one composite label combining UPOS and the full feature bundle. A closed label set has a consequence the tutorial makes explicit: a bundle that never occurs in training cannot be predicted, and such words must still be scored as errors.</p>
+<section id="setup-and-data" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="setup-and-data"><span class="header-section-number">7.6.1</span> Setup and Data</h3>
+<p>Run from the book root. Use the official train/dev/test files of <strong>UD 2.17 Turkish-IMST</strong> without reshuffling sentences. Set <code>UD_IMST_DIR</code> to that release’s <code>UD_Turkish-IMST</code> directory. The encoder and tokeniser are pinned to the same Hugging Face revision. The complete code is also in <code>code/ch07-neural/fine_tune.py</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install "transformers==5.3.0" "torch==2.10.0" "accelerate==1.12.0"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib, importlib.metadata, json, os, sys</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> (AutoTokenizer, AutoModelForTokenClassification, TrainingArguments,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                          Trainer, DataCollatorForTokenClassification, set_seed)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"code/ch07-neural"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph_tagging <span class="im">import</span> (load_conllu, training_rows, predict_words,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                          score_predictions, export_conllu)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>SEED, MAX_LEN <span class="op">=</span> <span class="dv">13</span>, <span class="dv">512</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>set_seed(SEED)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> <span class="st">"dbmdz/bert-base-turkish-cased"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>MODEL_REVISION <span class="op">=</span> <span class="st">"b6e1de16c983e0f2c70664591ea3f22810072608"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> Path(os.environ[<span class="st">"UD_IMST_DIR"</span>])</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>paths <span class="op">=</span> {split: data_dir <span class="op">/</span> <span class="ss">f"tr_imst-ud-</span><span class="sc">{</span>split<span class="sc">}</span><span class="ss">.conllu"</span> <span class="cf">for</span> split <span class="kw">in</span> [<span class="st">"train"</span>, <span class="st">"dev"</span>, <span class="st">"test"</span>]}</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>train_sents, train_labels <span class="op">=</span> load_conllu(paths[<span class="st">"train"</span>])</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>dev_sents, dev_labels <span class="op">=</span> load_conllu(paths[<span class="st">"dev"</span>])</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>test_sents, test_labels <span class="op">=</span> load_conllu(paths[<span class="st">"test"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The reader uses integer-ID syntactic words, skipping multiword-token headers and empty nodes. Feature attributes and multivalued features are sorted before constructing a label, so equivalent FEATS strings have the same class. Punctuation remains in this evaluation’s denominator, unlike the ambiguity diagnostic in <a href="05-morphological-structure.html#sec-analysis" class="quarto-xref"><span>Section 5.3</span></a>.</p>
+</section>
+<section id="tokenising-without-losing-words" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="tokenising-without-losing-words"><span class="header-section-number">7.6.2</span> Tokenising without Losing Words</h3>
+<p>Only the first subword of each word receives a training label. Special tokens and continuation pieces receive <code>-100</code>. The label vocabulary comes from training data alone. Long sentences are partitioned into non-overlapping chunks at <strong>whole-word boundaries</strong>, with special tokens included in the length check. Every word appears exactly once; a word too long to fit by itself raises an error. This loses context across chunk boundaries, which should be reported, but does not silently discard evaluation words.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(MODEL_NAME, revision<span class="op">=</span>MODEL_REVISION, use_fast<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>all_labels <span class="op">=</span> <span class="bu">sorted</span>({label <span class="cf">for</span> sent <span class="kw">in</span> train_labels <span class="cf">for</span> label <span class="kw">in</span> sent})</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>label2id <span class="op">=</span> {label: i <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(all_labels)}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>id2label <span class="op">=</span> {i: label <span class="cf">for</span> label, i <span class="kw">in</span> label2id.items()}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> training_rows(train_sents, train_labels, tokenizer, label2id, MAX_LEN)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">sum</span>(<span class="bu">sum</span>(label <span class="op">!=</span> <span class="op">-</span><span class="dv">100</span> <span class="cf">for</span> label <span class="kw">in</span> row[<span class="st">"labels"</span>]) <span class="cf">for</span> row <span class="kw">in</span> train_dataset) <span class="op">==</span> <span class="bu">sum</span>(<span class="bu">map</span>(<span class="bu">len</span>, train_sents))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"training sentences: </span><span class="sc">{</span><span class="bu">len</span>(train_sents)<span class="sc">}</span><span class="ss">; chunks: </span><span class="sc">{</span><span class="bu">len</span>(train_dataset)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="fine-tuning" class="level3" data-number="7.6.3">
+<h3 data-number="7.6.3" class="anchored" data-anchor-id="fine-tuning"><span class="header-section-number">7.6.3</span> Fine-Tuning</h3>
+<p>This baseline uses a fixed five-epoch budget and saves the final checkpoint. Development data are scored with the same all-word metric as test data; they are not passed through a loss that masks unknown gold classes. This avoids undefined losses on batches containing only unseen bundles. To select a checkpoint or tune hyperparameters, use development accuracy and freeze the choice before opening test results.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    MODEL_NAME, revision<span class="op">=</span>MODEL_REVISION, num_labels<span class="op">=</span><span class="bu">len</span>(label2id),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    id2label<span class="op">=</span>id2label, label2id<span class="op">=</span>label2id)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>training_args <span class="op">=</span> TrainingArguments(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    output_dir<span class="op">=</span><span class="st">"berturk-morph-tagger"</span>, num_train_epochs<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span>SEED,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    per_device_train_batch_size<span class="op">=</span><span class="dv">16</span>, learning_rate<span class="op">=</span><span class="fl">2e-5</span>, warmup_ratio<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    eval_strategy<span class="op">=</span><span class="st">"no"</span>, save_strategy<span class="op">=</span><span class="st">"no"</span>, report_to<span class="op">=</span><span class="st">"none"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> Trainer(model<span class="op">=</span>model, args<span class="op">=</span>training_args, train_dataset<span class="op">=</span>train_dataset,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                  processing_class<span class="op">=</span>tokenizer,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                  data_collator<span class="op">=</span>DataCollatorForTokenClassification(tokenizer))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>trainer.train()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>trainer.save_model(<span class="st">"berturk-morph-tagger/final"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>tokenizer.save_pretrained(<span class="st">"berturk-morph-tagger/final"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="inference-scoring-and-export" class="level3" data-number="7.6.4">
+<h3 data-number="7.6.4" class="anchored" data-anchor-id="inference-scoring-and-export"><span class="header-section-number">7.6.4</span> Inference, Scoring and Export</h3>
+<p>Inference uses the same chunking function, the model’s actual device and evaluation mode. The scorer checks sentence and word counts instead of silently shortening mismatched lists with <code>zip</code>. Every gold word contributes: a class absent from training necessarily counts as an error.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> {}</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> split, sents, labels <span class="kw">in</span> [(<span class="st">"dev"</span>, dev_sents, dev_labels), (<span class="st">"test"</span>, test_sents, test_labels)]:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> [predict_words(words, model, tokenizer, id2label, MAX_LEN) <span class="cf">for</span> words <span class="kw">in</span> sents]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    results[split] <span class="op">=</span> score_predictions(predictions, labels, label2id)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    export_conllu(paths[split], predictions, <span class="ss">f"berturk-morph-tagger/</span><span class="sc">{</span>split<span class="sc">}</span><span class="ss">.conllu"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(split, results[split])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>manifest <span class="op">=</span> {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ud_release"</span>: <span class="st">"2.17"</span>, <span class="st">"model"</span>: MODEL_NAME, <span class="st">"revision"</span>: MODEL_REVISION,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"seed"</span>: SEED, <span class="st">"max_length"</span>: MAX_LEN, <span class="st">"epochs"</span>: <span class="dv">5</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"checkpoint_policy"</span>: <span class="st">"fixed final epoch; no selection on test"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data_sha256"</span>: {split: hashlib.sha256(path.read_bytes()).hexdigest() <span class="cf">for</span> split, path <span class="kw">in</span> paths.items()},</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"versions"</span>: {name: importlib.metadata.version(name) <span class="cf">for</span> name <span class="kw">in</span> [<span class="st">"torch"</span>, <span class="st">"transformers"</span>, <span class="st">"accelerate"</span>]},</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"training_sentences"</span>: <span class="bu">len</span>(train_sents), <span class="st">"training_chunks"</span>: <span class="bu">len</span>(train_dataset),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"scores"</span>: results,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>Path(<span class="st">"berturk-morph-tagger/run.json"</span>).write_text(json.dumps(manifest, indent<span class="op">=</span><span class="dv">2</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The score is exact UPOS+FEATS agreement, excluding lemma and XPOS. The export preserves CoNLL-U comments, multiword-token rows and empty nodes, replacing only UPOS/FEATS on integer-ID rows. Its other fields remain source annotations, so use the official UD evaluator’s UPOS and UFeats scores; do not report its lemma, parsing or AllTags outputs as this model’s predictions.</p>
+<p>The pinned tokeniser was also checked on the local UD 2.17 IMST release: all 37,522 training, 10,542 development and 10,032 test words retain alignment. There are 981 training labels, with 79 development and 112 test words whose gold composite labels are absent from training (<code>code/ch07-neural/ud-alignment.json</code>). No sentence in this release exceeds 512 tokens; synthetic long sentences exercise the overflow branch. These counts describe the release snapshot and are not tagging scores.</p>
+<p>The helper checks exercise loss masking, word-preserving overflow, a tiny random BERT training step, inference, unseen labels and CoNLL-U export. For the full tutorial, fix a training budget, save the complete manifest and report development and test scores.</p>
+<p>Compare the fine-tuned tagger with the two analysers that TurkicNLP ships, the Apertium transducer and the multilingual Glot500 analyser:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> proc <span class="kw">in</span> [<span class="st">"morph"</span>, <span class="st">"morph_neural"</span>]:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    nlp <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"tur"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, proc], tokenize_backend<span class="op">=</span><span class="st">"rule"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> nlp(<span class="st">"Ali kitabı dün okudu."</span>).words:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>proc<span class="sc">:&lt;13}</span><span class="ss"> </span><span class="sc">{</span>w<span class="sc">.</span>text<span class="sc">:&lt;8}</span><span class="ss"> </span><span class="sc">{</span>w<span class="sc">.</span>upos <span class="kw">or</span> <span class="st">'_'</span><span class="sc">:&lt;6}</span><span class="ss"> </span><span class="sc">{</span>w<span class="sc">.</span>feats <span class="kw">or</span> <span class="st">'_'</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This model can then be applied without further training to Azerbaijani or other Latin-script Oghuz languages as a zero-shot morphological tagger (<a href="#sec-zero-shot" class="quarto-xref"><span>Section 7.5</span></a>); Exercise 6 asks you to measure how well that works.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Extending to Kazakh
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To tag Kazakh text with the same architecture, substitute <code>dbmdz/bert-base-turkish-cased</code> with a Kazakh or multilingual encoder and train only on the Kazakh KTB training split. Keep its test set out of training and model selection (<a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>). For zero-shot transfer to Kyrgyz or Uzbek, compare native-script input to a multilingual encoder with transliterated input (<a href="#sec-zero-shot" class="quarto-xref"><span>Section 7.5</span></a>); do not assume that either is better.</p>
+</div>
+</div>
+<p><strong>Status: procedure only.</strong> The full BERTurk fine-tuning run is not reported here; the mechanics checks and the separate exercise baselines are described above.</p>
+</section>
+</section>
+<section id="sec-ch07-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch07-synthesis">What to Take Forward</h2>
+<p>Subword tokenisation sets a model’s input units; morphological analysis predicts linguistic structure. The fertility comparison in <a href="#tbl-fertility" class="quarto-xref">Table&nbsp;<span>7.1</span></a> shows how token counts vary across the sampled languages and tokenisers. Use fertility and boundary agreement as diagnostics, then choose a tokeniser using downstream performance, context use and computational cost. Evaluate an analyser’s overall performance and report unseen bundles separately. <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a> moves from the word to the sentence, where morphology and position together signal dependency structure.</p>
+</section>
+<section id="sec-ch07-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch07-further-reading">Further Reading</h2>
+<p>Tokeniser fertility is measured across 20 Turkic languages and four LLM tokenisers, in native scripts and in CTS, by <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>. <span class="citation" data-cites="rust2021tokenizer">Rust et al. (<a href="../references.html#ref-rust2021tokenizer" role="doc-biblioref">2021</a>)</span> and <span class="citation" data-cites="petrov2023unfairness">Petrov et al. (<a href="../references.html#ref-petrov2023unfairness" role="doc-biblioref">2023</a>)</span> analyse tokeniser quality and the resulting cost disparities across languages more generally; <span class="citation" data-cites="toraman2023tokenization">Toraman et al. (<a href="../references.html#ref-toraman2023tokenization" role="doc-biblioref">2023</a>)</span> compare tokenisation granularities for Turkish language models. <span class="citation" data-cites="schweter2020berturk">Schweter (<a href="../references.html#ref-schweter2020berturk" role="doc-biblioref">2020</a>)</span> describes BERTurk and its 32K and 128K vocabularies.</p>
+<p>The SentencePiece paper <span class="citation" data-cites="kudo2018sentencepiece">(<a href="../references.html#ref-kudo2018sentencepiece" role="doc-biblioref">Kudo and Richardson 2018</a>)</span> describes the library; the Unigram algorithm it implements was introduced by <span class="citation" data-cites="kudo2018subword">Kudo (<a href="../references.html#ref-kudo2018subword" role="doc-biblioref">2018</a>)</span>. For Turkish NLP more broadly, <span class="citation" data-cites="oflazer2018turkish_nlp">Oflazer and Saraçlar (<a href="../references.html#ref-oflazer2018turkish_nlp" role="doc-biblioref">2018</a>)</span> covers morphological analysis and disambiguation (chapters 2–3), parsing and language modelling. The TurkishDelightNLP system <span class="citation" data-cites="alecakir2022turkishdelightnlp">(<a href="../references.html#ref-alecakir2022turkishdelightnlp" role="doc-biblioref">Alecakir, Bölücü, and Can 2022</a>)</span> demonstrates joint LSTM-based morphological and syntactic processing for Turkish.</p>
+<p>For multilingual morphological analysis across the family, including zero-shot languages, see <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>; Glot500 is described by <span class="citation" data-cites="imanigooghari-etal-2023-glot500">Imani et al. (<a href="../references.html#ref-imanigooghari-etal-2023-glot500" role="doc-biblioref">2023</a>)</span>. For sentence-level transfer with Turkish as a high-resource relative, see Kardeş-NLU <span class="citation" data-cites="senel2024kardes">(<a href="../references.html#ref-senel2024kardes" role="doc-biblioref">Senel et al. 2024</a>)</span>. <a href="16-cross-lingual-transfer.html" class="quarto-xref"><span>Chapter 16</span></a> extends the treatment to the full cross-lingual transfer methodology.</p>
+</section>
+<section id="sec-ch07-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch07-exercises">Exercises</h2>
+<ol type="1">
+<li><p><strong>Fertility audit.</strong> Take a Turkish news article of at least 500 words and tokenise it with <code>dbmdz/bert-base-turkish-cased</code> (32K), <code>dbmdz/bert-base-turkish-128k-cased</code> (128K) and <code>xlm-roberta-base</code>, without special tokens. Compute fertility twice: words tokenised one at a time, and running text (tokens of the whole text divided by its words). State how you count words and punctuation. What proportion of words are single tokens? What is the 95th-percentile tokens per word?</p></li>
+<li><p><strong>Boundary agreement.</strong> For a Turkish word, obtain morph boundaries (from the TurkicNLP segmenter or Zemberek) and token boundaries (from a tokeniser), both as character offsets. Automatically supplied morph boundaries measure agreement with that analyser; manually check them before treating them as gold. Count two different errors separately: a <em>token that spans a morph boundary</em> (a morph boundary falls inside a token), and a <em>morph split by a token boundary</em> (a token boundary falls inside a morph). Apply the script to the 100 most frequent nouns of a corpus and report both rates for each tokeniser.</p></li>
+<li><p><strong>Disambiguation in context.</strong> The Turkish form <em>yüz</em> has three readings in <a href="#tbl-yuz-ambiguity" class="quarto-xref">Table&nbsp;<span>7.4</span></a>. Collect at least 60 sentences per reading containing the bare form <em>yüz</em> (from several documents), and split them by document into 40 training, 10 development and 10 test sentences per reading. Fine-tune a Turkish BERT classifier. What accuracy does it achieve on the test set? Which contextual cues (a following noun, a preceding adjective, sentence-final position) signal each reading?</p></li>
+<li><p><strong>Constrained FST reranking.</strong> Implement the hybrid FST-constrained neural approach described in <a href="#sec-neural-morph" class="quarto-xref"><span>Section 7.3</span></a>. For a Turkish sentence, retrieve the Apertium FST candidates for each word (with <code>analyser.lookup(word)</code> on the transducer that TurkicNLP downloads, as in <a href="06-finite-state-morphology.html#sec-apertium" class="quarto-xref"><span>Section 6.3</span></a>). For each candidate, embed the tag string as a character sequence and concatenate with the word’s BERT contextual embedding. Train a linear classifier to select among candidates. First report candidate recall (how often the gold analysis is among the candidates), then compare full-bundle accuracy against (a) always taking the FST’s first analysis, and (b) the unconstrained BERT tagger from the Hands-On section.</p></li>
+<li><p><strong>Glot500 as a baseline.</strong> Compare TurkicNLP’s <code>morph_neural</code> analyser and the BERTurk tagger on the IMST test set. Supply the same gold word boundaries where supported; otherwise use an explicit alignment policy and report segmentation errors and unmatched words. Score UPOS and the full feature bundle under the same convention. How does a multilingual analyser serving 22 languages compare with the monolingual tagger? On which features does each win?</p></li>
+<li><p><strong>Zero-shot transfer evaluation.</strong> Apply the BERTurk tagger from the Hands-On section to the whole Azerbaijani TueCL UD test set <span class="citation" data-cites="eslami2025parallel">(<a href="../references.html#ref-eslami2025parallel" role="doc-biblioref">Akhundjanova et al. 2025</a>)</span>, which translates the same sentences as the Turkish TueCL set; note whether any of those Turkish sentences were used during development. Report full-bundle accuracy and per-feature accuracy by category, and check whether the two treebanks annotate the same features in the same way. Which categories transfer best? What do the results show for the questions in <a href="#tbl-transfer-reliability" class="quarto-xref">Table&nbsp;<span>7.5</span></a>?</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-eslami2025parallel" class="csl-entry" role="listitem">
+Akhundjanova, Arofat, Furkan Akkurt, Bermet Chontaeva, Soudabeh Eslami, and Çağrı Çöltekin. 2025. <span>“Parallel <span>U</span>niversal <span>D</span>ependencies Treebanks for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the Eighth Workshop on <span>U</span>niversal <span>D</span>ependencies (<span>UDW</span>, <span>S</span>yntax<span>F</span>est 2025)</em>, 129–36. Ljubljana, Slovenia: Association for Computational Linguistics. <a href="https://aclanthology.org/2025.udw-1.14/">https://aclanthology.org/2025.udw-1.14/</a>.
+</div>
+<div id="ref-alecakir2022turkishdelightnlp" class="csl-entry" role="listitem">
+Alecakir, Huseyin, Necva Bölücü, and Burcu Can. 2022. <span>“<span>T</span>urkish<span>D</span>elight<span>NLP</span>: A Neural <span>T</span>urkish <span>NLP</span> Toolkit.”</span> In <em>Proceedings of the 2022 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies: System Demonstrations</em>, 17–26. Hybrid: Seattle, Washington + Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.naacl-demo.3">https://doi.org/10.18653/v1/2022.naacl-demo.3</a>.
+</div>
+<div id="ref-conneau2020xlmr" class="csl-entry" role="listitem">
+Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. 2020. <span>“Unsupervised Cross-Lingual Representation Learning at Scale.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 8440–51. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-main.747">https://doi.org/10.18653/v1/2020.acl-main.747</a>.
+</div>
+<div id="ref-devlin2019bert" class="csl-entry" role="listitem">
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> In <em>Proceedings of the 2019 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</em>, 4171–86. Minneapolis, Minnesota: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/N19-1423">https://doi.org/10.18653/v1/N19-1423</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-hakkanitur2000disambiguation" class="csl-entry" role="listitem">
+Hakkani-Tür, Dilek Z., Kemal Oflazer, and Gökhan Tür. 2000. <span>“Statistical Morphological Disambiguation for Agglutinative Languages.”</span> In <em><span>COLING</span> 2000 Volume 1: The 18th International Conference on Computational Linguistics</em>. <a href="https://aclanthology.org/C00-1042/">https://aclanthology.org/C00-1042/</a>.
+</div>
+<div id="ref-imanigooghari-etal-2023-glot500" class="csl-entry" role="listitem">
+Imani, Ayyoob, Peiqin Lin, Amir Hossein Kargaran, Silvia Severini, Masoud Jalili Sabet, Nora Kassner, Chunlan Ma, et al. 2023. <span>“<span>G</span>lot500: Scaling Multilingual Corpora and Language Models to 500 Languages.”</span> In <em>Proceedings of the 61st Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1082–1117. Toronto, Canada: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.acl-long.61">https://doi.org/10.18653/v1/2023.acl-long.61</a>.
+</div>
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+<div id="ref-kudo2018subword" class="csl-entry" role="listitem">
+Kudo, Taku. 2018. <span>“Subword Regularization: Improving Neural Network Translation Models with Multiple Subword Candidates.”</span> In <em>Proceedings of the 56th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 66–75. Melbourne, Australia: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P18-1007">https://doi.org/10.18653/v1/P18-1007</a>.
+</div>
+<div id="ref-kudo2018sentencepiece" class="csl-entry" role="listitem">
+Kudo, Taku, and John Richardson. 2018. <span>“<span>S</span>entence<span>P</span>iece: A Simple and Language Independent Subword Tokenizer and Detokenizer for Neural Text Processing.”</span> In <em>Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing: System Demonstrations</em>, 66–71. Brussels, Belgium: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D18-2012">https://doi.org/10.18653/v1/D18-2012</a>.
+</div>
+<div id="ref-oflazer2018turkish_nlp" class="csl-entry" role="listitem">
+Oflazer, Kemal, and Murat Saraçlar, eds. 2018. <em>Turkish Natural Language Processing</em>. Theory and Applications of Natural Language Processing. Cham: Springer. <a href="https://doi.org/10.1007/978-3-319-90165-7">https://doi.org/10.1007/978-3-319-90165-7</a>.
+</div>
+<div id="ref-petrov2023unfairness" class="csl-entry" role="listitem">
+Petrov, Aleksandar, Emanuele La Malfa, Philip H. S. Torr, and Adel Bibi. 2023. <span>“Language Model Tokenizers Introduce Unfairness Between Languages.”</span> In <em>Advances in Neural Information Processing Systems 36 (<span>NeurIPS</span> 2023)</em>.
+</div>
+<div id="ref-rust2021tokenizer" class="csl-entry" role="listitem">
+Rust, Phillip, Jonas Pfeiffer, Ivan Vulić, Sebastian Ruder, and Iryna Gurevych. 2021. <span>“How Good Is Your Tokenizer? On the Monolingual Performance of Multilingual Language Models.”</span> In <em>Proceedings of the 59th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)</em>, 3118–35. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.acl-long.243">https://doi.org/10.18653/v1/2021.acl-long.243</a>.
+</div>
+<div id="ref-schweter2020berturk" class="csl-entry" role="listitem">
+Schweter, Stefan. 2020. <span>“<span>BERTurk</span> – <span>BERT</span> Models for <span>Turkish</span>.”</span> <a href="https://doi.org/10.5281/zenodo.3770924">https://doi.org/10.5281/zenodo.3770924</a>.
+</div>
+<div id="ref-senel2024kardes" class="csl-entry" role="listitem">
+Senel, Lütfi Kerem, Benedikt Ebing, Konul Baghirova, Hinrich Schuetze, and Goran Glavaš. 2024. <span>“Kardeş-<span>NLU</span>: Transfer to Low-Resource Languages with the Help of a High-Resource Cousin <span>–</span> a Benchmark and Evaluation for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 18th Conference of the <span>E</span>uropean Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1672–88. St. Julian<span>’</span>s, Malta: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.eacl-long.100">https://doi.org/10.18653/v1/2024.eacl-long.100</a>.
+</div>
+<div id="ref-sennrich2016bpe" class="csl-entry" role="listitem">
+Sennrich, Rico, Barry Haddow, and Alexandra Birch. 2016. <span>“Neural Machine Translation of Rare Words with Subword Units.”</span> In <em>Proceedings of the 54th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1715–25. Berlin, Germany: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P16-1162">https://doi.org/10.18653/v1/P16-1162</a>.
+</div>
+<div id="ref-tolegen2020voted" class="csl-entry" role="listitem">
+Tolegen, Gulmira, Alymzhan Toleu, and Rustam Mussabayev. 2020. <span>“Voted-Perceptron Approach for <span>K</span>azakh Morphological Disambiguation.”</span> In <em>Proceedings of the 1st Joint Workshop on Spoken Language Technologies for Under-Resourced Languages (<span>SLTU</span>) and Collaboration and Computing for Under-Resourced Languages (<span>CCURL</span>)</em>, 258–64. Marseille, France: European Language Resources association. <a href="https://aclanthology.org/2020.sltu-1.36/">https://aclanthology.org/2020.sltu-1.36/</a>.
+</div>
+<div id="ref-toraman2023tokenization" class="csl-entry" role="listitem">
+Toraman, Cagri, Eyup Halit Yilmaz, Furkan Şahinuç, and Oguzhan Ozcelik. 2023. <span>“Impact of Tokenization on Language Models: An Analysis for <span>T</span>urkish.”</span> <em>ACM Transactions on Asian and Low-Resource Language Information Processing</em> 22 (4): 1–21. <a href="https://doi.org/10.1145/3578707">https://doi.org/10.1145/3578707</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/06-finite-state-morphology.html" class="pagination-link" aria-label="Finite-State Morphology: The Rule-Based Approach">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/08-syntax-ud.html" class="pagination-link" aria-label="Syntactic Structure and Universal Dependencies">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

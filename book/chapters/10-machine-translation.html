@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>10&nbsp; Machine Translation: Within and Beyond the Family – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/11-speech-technologies.html" rel="next">
+<link href="../chapters/09-sequence-labeling.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html">Applications</a></li><li class="breadcrumb-item"><a href="../chapters/10-machine-translation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-mt-challenges" id="toc-sec-mt-challenges" class="nav-link active" data-scroll-target="#sec-mt-challenges"><span class="header-section-number">10.1</span> The Challenges of Turkic MT</a>
+  <ul class="collapse">
+  <li><a href="#target-side-morphological-richness" id="toc-target-side-morphological-richness" class="nav-link" data-scroll-target="#target-side-morphological-richness"><span class="header-section-number">10.1.1</span> Target-Side Morphological Richness</a></li>
+  <li><a href="#sovsvo-reordering" id="toc-sovsvo-reordering" class="nav-link" data-scroll-target="#sovsvo-reordering"><span class="header-section-number">10.1.2</span> SOV–SVO Reordering</a></li>
+  <li><a href="#data-scarcity" id="toc-data-scarcity" class="nav-link" data-scroll-target="#data-scarcity"><span class="header-section-number">10.1.3</span> Data Scarcity</a></li>
+  <li><a href="#script-mismatch-within-the-family" id="toc-script-mismatch-within-the-family" class="nav-link" data-scroll-target="#script-mismatch-within-the-family"><span class="header-section-number">10.1.4</span> Script Mismatch Within the Family</a></li>
+  </ul></li>
+  <li><a href="#sec-rbmt-apertium" id="toc-sec-rbmt-apertium" class="nav-link" data-scroll-target="#sec-rbmt-apertium"><span class="header-section-number">10.2</span> Rule-Based MT: Apertium</a>
+  <ul class="collapse">
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture"><span class="header-section-number">10.2.1</span> Architecture</a></li>
+  <li><a href="#turkic-pairs-in-apertium" id="toc-turkic-pairs-in-apertium" class="nav-link" data-scroll-target="#turkic-pairs-in-apertium"><span class="header-section-number">10.2.2</span> Turkic Pairs in Apertium</a></li>
+  <li><a href="#strengths-and-limitations" id="toc-strengths-and-limitations" class="nav-link" data-scroll-target="#strengths-and-limitations"><span class="header-section-number">10.2.3</span> Strengths and Limitations</a></li>
+  </ul></li>
+  <li><a href="#sec-neural-mt" id="toc-sec-neural-mt" class="nav-link" data-scroll-target="#sec-neural-mt"><span class="header-section-number">10.3</span> Neural MT for Turkic Languages</a>
+  <ul class="collapse">
+  <li><a href="#the-til-corpus" id="toc-the-til-corpus" class="nav-link" data-scroll-target="#the-til-corpus"><span class="header-section-number">10.3.1</span> The TIL Corpus</a></li>
+  <li><a href="#nllb-200" id="toc-nllb-200" class="nav-link" data-scroll-target="#nllb-200"><span class="header-section-number">10.3.2</span> NLLB-200</a></li>
+  <li><a href="#evaluation-metrics" id="toc-evaluation-metrics" class="nav-link" data-scroll-target="#evaluation-metrics"><span class="header-section-number">10.3.3</span> Evaluation Metrics</a></li>
+  <li><a href="#measured-greedy-translation-baseline" id="toc-measured-greedy-translation-baseline" class="nav-link" data-scroll-target="#measured-greedy-translation-baseline"><span class="header-section-number">10.3.4</span> Measured greedy translation baseline</a></li>
+  <li><a href="#issai-tilmash" id="toc-issai-tilmash" class="nav-link" data-scroll-target="#issai-tilmash"><span class="header-section-number">10.3.5</span> ISSAI Tilmash</a></li>
+  <li><a href="#general-purpose-llms-as-translators" id="toc-general-purpose-llms-as-translators" class="nav-link" data-scroll-target="#general-purpose-llms-as-translators"><span class="header-section-number">10.3.6</span> General-Purpose LLMs as Translators</a></li>
+  </ul></li>
+  <li><a href="#sec-intra-family" id="toc-sec-intra-family" class="nav-link" data-scroll-target="#sec-intra-family"><span class="header-section-number">10.4</span> Intra-Family Translation</a>
+  <ul class="collapse">
+  <li><a href="#closely-related-pairs" id="toc-closely-related-pairs" class="nav-link" data-scroll-target="#closely-related-pairs"><span class="header-section-number">10.4.1</span> Closely Related Pairs</a></li>
+  <li><a href="#pivot-strategies" id="toc-pivot-strategies" class="nav-link" data-scroll-target="#pivot-strategies"><span class="header-section-number">10.4.2</span> Pivot Strategies</a></li>
+  <li><a href="#multilingual-nmt" id="toc-multilingual-nmt" class="nav-link" data-scroll-target="#multilingual-nmt"><span class="header-section-number">10.4.3</span> Multilingual NMT</a></li>
+  <li><a href="#zero-shot-intra-family-transfer" id="toc-zero-shot-intra-family-transfer" class="nav-link" data-scroll-target="#zero-shot-intra-family-transfer"><span class="header-section-number">10.4.4</span> Zero-Shot Intra-Family Transfer</a></li>
+  </ul></li>
+  <li><a href="#sec-low-resource-mt" id="toc-sec-low-resource-mt" class="nav-link" data-scroll-target="#sec-low-resource-mt"><span class="header-section-number">10.5</span> Low-Resource Neural MT Strategies</a>
+  <ul class="collapse">
+  <li><a href="#back-translation" id="toc-back-translation" class="nav-link" data-scroll-target="#back-translation"><span class="header-section-number">10.5.1</span> Back-Translation</a></li>
+  <li><a href="#fine-tuning-nllb-200" id="toc-fine-tuning-nllb-200" class="nav-link" data-scroll-target="#fine-tuning-nllb-200"><span class="header-section-number">10.5.2</span> Fine-Tuning NLLB-200</a></li>
+  <li><a href="#transfer-learning-from-turkish" id="toc-transfer-learning-from-turkish" class="nav-link" data-scroll-target="#transfer-learning-from-turkish"><span class="header-section-number">10.5.3</span> Transfer Learning from Turkish</a></li>
+  <li><a href="#synthetic-data-from-apertium" id="toc-synthetic-data-from-apertium" class="nav-link" data-scroll-target="#synthetic-data-from-apertium"><span class="header-section-number">10.5.4</span> Synthetic Data from Apertium</a></li>
+  </ul></li>
+  <li><a href="#sec-ch10-hands-on" id="toc-sec-ch10-hands-on" class="nav-link" data-scroll-target="#sec-ch10-hands-on"><span class="header-section-number">10.6</span> Hands-On: A Fine-Tuning Procedure for Kazakh–Kyrgyz Translation with NLLB-200</a>
+  <ul class="collapse">
+  <li><a href="#prepare-independent-splits" id="toc-prepare-independent-splits" class="nav-link" data-scroll-target="#prepare-independent-splits"><span class="header-section-number">10.6.1</span> Prepare independent splits</a></li>
+  <li><a href="#set-and-verify-both-language-tokens" id="toc-set-and-verify-both-language-tokens" class="nav-link" data-scroll-target="#set-and-verify-both-language-tokens"><span class="header-section-number">10.6.2</span> Set and verify both language tokens</a></li>
+  <li><a href="#use-the-same-decoding-policy-throughout" id="toc-use-the-same-decoding-policy-throughout" class="nav-link" data-scroll-target="#use-the-same-decoding-policy-throughout"><span class="header-section-number">10.6.3</span> Use the same decoding policy throughout</a></li>
+  <li><a href="#score-original-references-and-retain-outputs" id="toc-score-original-references-and-retain-outputs" class="nav-link" data-scroll-target="#score-original-references-and-retain-outputs"><span class="header-section-number">10.6.4</span> Score original references and retain outputs</a></li>
+  </ul></li>
+  <li><a href="#sec-ch10-synthesis" id="toc-sec-ch10-synthesis" class="nav-link" data-scroll-target="#sec-ch10-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch10-further-reading" id="toc-sec-ch10-further-reading" class="nav-link" data-scroll-target="#sec-ch10-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch10-exercises" id="toc-sec-ch10-exercises" class="nav-link" data-scroll-target="#sec-ch10-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html">Applications</a></li><li class="breadcrumb-item"><a href="../chapters/10-machine-translation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-10-machine-translation" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Explain how morphology, constituent order and data availability affect translation into Turkic languages</li>
+<li>Describe the Apertium rule-based MT architecture and distinguish released language pairs from measured translation quality</li>
+<li>Characterise the TIL corpus and NLLB-200’s coverage of Turkic languages, including data sizes and quality variation</li>
+<li>Compare the signals and limitations of BLEU, chrF and COMET for morphologically rich targets</li>
+<li>Describe intra-family translation strategies (pivot routing, multilingual NMT and zero-shot transfer) and reason about when each is appropriate</li>
+<li>Choose and compare low-resource strategies (back-translation, NLLB-200 fine-tuning, transfer from Turkish) for a new or under-resourced Turkic language pair</li>
+</ul>
+</div>
+</div>
+<p>Machine translation brings together morphological generation, syntactic reordering, lexical choice and discourse interpretation. English→Turkish translation must interpret the English source and generate Turkish with appropriate inflection and constituent order. Translation between Turkic languages can exploit related vocabulary and constructions, but must still handle language-specific meanings, scripts and unequal resources.</p>
+<p>The chapter covers Apertium’s rule-based pipeline (<a href="#sec-rbmt-apertium" class="quarto-xref"><span>Section 10.2</span></a>), multilingual neural models and evaluation (<a href="#sec-neural-mt" class="quarto-xref"><span>Section 10.3</span></a>), direct and pivot translation (<a href="#sec-intra-family" class="quarto-xref"><span>Section 10.4</span></a>), and low-resource adaptation (<a href="#sec-low-resource-mt" class="quarto-xref"><span>Section 10.5</span></a>). The hands-on provides a Kazakh→Kyrgyz fine-tuning recipe.</p>
+<section id="sec-mt-challenges" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-mt-challenges"><span class="header-section-number">10.1</span> The Challenges of Turkic MT</h2>
+<section id="target-side-morphological-richness" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="target-side-morphological-richness"><span class="header-section-number">10.1.1</span> Target-Side Morphological Richness</h3>
+<p>Translation maps between different grammatical distinctions. English “she came” can be translated as Turkish <em>geldi</em>: the verb marks past tense and third-person singular agreement, while the subject’s gender is not encoded. Related forms such as <em>gelmedi</em> “did not come”, <em>gelmiş</em> (an indirect/evidential reading in context), <em>gelecek</em> “will come”, and <em>geldiler</em> “they came” illustrate choices a translator must make. Features need not each have an independent overt suffix.</p>
+<p>Russian also has rich inflection. Translation must map between grammatical systems with different distinctions and forms. An incorrect case or agreement marker can change the meaning even when most characters match the reference.</p>
+</section>
+<section id="sovsvo-reordering" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="sovsvo-reordering"><span class="header-section-number">10.1.2</span> SOV–SVO Reordering</h3>
+<p>English has a relatively fixed SVO order, while Russian permits substantial reordering. Turkic languages commonly have SOV order, prenominal modifiers and postpositions, with variation across constructions and languages <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, secs. 56.3–56.4</a>)</span>. English→Turkish translation may therefore require moving whole constituents.</p>
+<p>Relative clauses illustrate the reordering. English commonly places them after the noun, sometimes with an overt marker: <em>the book that I read yesterday</em>. Turkish places a participial clause before it: <em>dün okuduğum kitap</em>, literally “yesterday-read-my book”. Translation must produce the correct participial form and make the clause modify the intended noun. Both deserve checking even when the output reads fluently.</p>
+</section>
+<section id="data-scarcity" class="level3" data-number="10.1.3">
+<h3 data-number="10.1.3" class="anchored" data-anchor-id="data-scarcity"><span class="header-section-number">10.1.3</span> Data Scarcity</h3>
+<p>The TIL corpus <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov, Babu, Ataman, et al. 2021</a>)</span> contains sharply unequal amounts of training data across pairs. The following table is generated from a frozen release README; its counts are training sentence pairs, not the aggregate language totals in the paper.</p>
+<div id="tbl-til-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-til-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.1: Training-set sizes for selected language pairs in the TIL corpus release <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov, Babu, Ataman, et al. 2021</a>)</span>; counts from the release README (til-mt, commit 7d988cc), not the paper’s appendix table, which gives different totals for some pairs. English–Turkish has about 370 times more training data than English–Uyghur. Karachay-Balkar, Khakas and Tuvan are covered, but with small pair sizes; Nogai is not covered.
+</figcaption>
+<div aria-describedby="tbl-til-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Language pair</th>
+<th>Training sentence pairs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>English–Turkish</td>
+<td>35.9 M</td>
+</tr>
+<tr class="even">
+<td>Russian–Turkish</td>
+<td>15.1 M</td>
+</tr>
+<tr class="odd">
+<td>Kazakh–Russian</td>
+<td>4.4 M</td>
+</tr>
+<tr class="even">
+<td>English–Kazakh</td>
+<td>564.8 K</td>
+</tr>
+<tr class="odd">
+<td>English–Azerbaijani</td>
+<td>548.9 K</td>
+</tr>
+<tr class="even">
+<td>English–Uzbek</td>
+<td>529.6 K</td>
+</tr>
+<tr class="odd">
+<td>English–Kyrgyz</td>
+<td>312.6 K</td>
+</tr>
+<tr class="even">
+<td>English–Uyghur</td>
+<td>96.9 K</td>
+</tr>
+<tr class="odd">
+<td>Turkish–Azerbaijani</td>
+<td>410.1 K</td>
+</tr>
+<tr class="even">
+<td>Kazakh–Kyrgyz</td>
+<td>12.2 K</td>
+</tr>
+<tr class="odd">
+<td>Russian–Khakas</td>
+<td>60.3 K</td>
+</tr>
+<tr class="even">
+<td>English–Tuvan</td>
+<td>11.5 K</td>
+</tr>
+<tr class="odd">
+<td>English–Karachay-Balkar</td>
+<td>8.2 K</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Karachay-Balkar, Khakas and Tuvan are included in this release. Nogai is outside its coverage; other parallel resources may still exist. Corpus size alone cannot define a universal threshold for usable MT: domain, duplication, alignment quality, pretraining and the evaluation criterion all matter. The TIL paper reports merging the original Tatoeba training, development and test portions during corpus construction <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov, Babu, Ataman, et al. 2021, sec. 3.1</a>)</span>. Audit overlap with any intended evaluation set before using the corpus for training.</p>
+</section>
+<section id="script-mismatch-within-the-family" class="level3" data-number="10.1.4">
+<h3 data-number="10.1.4" class="anchored" data-anchor-id="script-mismatch-within-the-family"><span class="header-section-number">10.1.4</span> Script Mismatch Within the Family</h3>
+<p>Intra-family MT must identify the scripts actually present in each corpus. Uzbek occurs in both Latin and Cyrillic; Kazakh script reform does not imply that a corpus has already switched scripts. Uyghur also has more than one writing tradition (<a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>). Compare native-script training with a documented conversion if useful, retain the original text, and audit lossy mappings. Translation does not require script conversion. Whether to convert is an experimental choice.</p>
+</section>
+</section>
+<section id="sec-rbmt-apertium" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="sec-rbmt-apertium"><span class="header-section-number">10.2</span> Rule-Based MT: Apertium</h2>
+<section id="architecture" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="architecture"><span class="header-section-number">10.2.1</span> Architecture</h3>
+<p>Apertium is an open-source rule-based machine translation platform originally designed for related language pairs <span class="citation" data-cites="forcada2011apertium khanna2021apertium">(<a href="../references.html#ref-forcada2011apertium" role="doc-biblioref">Forcada et al. 2011</a>; <a href="../references.html#ref-khanna2021apertium" role="doc-biblioref">Khanna et al. 2021</a>)</span>. Its pipeline for a Turkic source–target pair can be understood through five stages (the precise modules depend on the pair):</p>
+<ol type="1">
+<li><strong>Morphological analysis</strong>: the source-side text is processed by the source language’s FST analyser (<a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a>), producing candidate lemma and morphological-feature analyses for each recognised word.</li>
+<li><strong>Disambiguation and selection</strong>: choose among competing source morphological readings in context; pair-specific lexical-selection modules may also select among translation candidates.</li>
+<li><strong>Lexical transfer</strong>: the source lemma is mapped to the corresponding target lemma using a bilingual dictionary. Morphological features are passed through unchanged where they apply; category-specific transfer rules handle feature mismatches between languages.</li>
+<li><strong>Structural transfer</strong>: chunk-level reordering rules handle systematic constituent order differences. For a Turkish–English system, relative-clause placement and verb order are examples of differences that transfer rules would need to address; coverage depends on the implemented pair.</li>
+<li><strong>Morphological generation</strong>: the target lemma and morphological feature bundle are passed to the target language’s FST generator, which produces a surface form licensed by the grammar.</li>
+</ol>
+<p>The generator restricts output to forms licensed by its transducer. Errors can still enter through an incomplete lexicon or grammar, a wrong source analysis or a mistaken target choice. Define how the system handles unknown words and failed generation.</p>
+</section>
+<section id="turkic-pairs-in-apertium" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="turkic-pairs-in-apertium"><span class="header-section-number">10.2.2</span> Turkic Pairs in Apertium</h3>
+<p>Apertium has released Turkic pairs as well as development repositories <span class="citation" data-cites="khanna2021apertium">(<a href="../references.html#ref-khanna2021apertium" role="doc-biblioref">Khanna et al. 2021</a>)</span>. The wiki groups pairs by development stage; this is not a quality ranking:</p>
+<div id="tbl-apertium-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-apertium-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.2: Apertium MT pairs with a Turkic language, by the release stage in Apertium’s <a href="https://wiki.apertium.org/wiki/List_of_language_pairs">list of language pairs</a> (checked October 2026). The page was generated in April 2020, and its arrows describe planned directions. Check each repository’s release and supported directions before installation; a trunk listing is no guarantee of current support in both directions.
+</figcaption>
+<div aria-describedby="tbl-apertium-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 48%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pair</th>
+<th>Relationship</th>
+<th>Wiki stage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kazakh ↔︎ Tatar</td>
+<td>Both Kipchak</td>
+<td>Trunk</td>
+</tr>
+<tr class="even">
+<td>Crimean Tatar ↔︎ Turkish</td>
+<td>Kipchak ↔︎ Oghuz</td>
+<td>Trunk</td>
+</tr>
+<tr class="odd">
+<td>Kazakh ↔︎ Russian, English ↔︎ Kazakh</td>
+<td>Cross-family</td>
+<td>Trunk</td>
+</tr>
+<tr class="even">
+<td>Kazakh ↔︎ Kyrgyz, Tatar ↔︎ Bashkir, Turkish → Azerbaijani, Turkish ↔︎ Kyrgyz, Turkish ↔︎ Tatar, Turkish ↔︎ Uzbek, Kazakh → Kumyk</td>
+<td>Within the family</td>
+<td>In development (nursery)</td>
+</tr>
+<tr class="odd">
+<td>Further pairs with Chuvash, Kyrgyz, Karakalpak, Sakha, Tuvan, Uyghur, Uzbek and others</td>
+<td>—</td>
+<td>Early development (incubator)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Shared vocabulary and morphology can reduce dictionary and transfer-rule work, while leaving ambiguity to resolve. Evaluate translation in the intended domain for both within-branch and cross-branch pairs; genealogy is no guarantee of quality.</p>
+</section>
+<section id="strengths-and-limitations" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="strengths-and-limitations"><span class="header-section-number">10.2.3</span> Strengths and Limitations</h3>
+<p>Apertium provides inspectable intermediate analyses and can be built without a sentence-aligned training corpus, though it requires dictionaries, rules and linguistic work. Errors may arise in analysis, disambiguation, lexical selection, transfer or generation. Trace the entire pipeline before deciding which component to repair.</p>
+<p>Missing lexical entries require unknown-word handling: depending on the pipeline, a word may be copied or marked rather than translated. Even a well-formed generated word can have the wrong meaning if the chosen analysis or target lemma is wrong. Domain-specific accuracy claims require a held-out comparison.</p>
+<p>Apertium output can also supply synthetic parallel data for a neural system; <a href="#sec-low-resource-mt" class="quarto-xref"><span>Section 10.5</span></a> discusses how to test its contribution.</p>
+</section>
+</section>
+<section id="sec-neural-mt" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="sec-neural-mt"><span class="header-section-number">10.3</span> Neural MT for Turkic Languages</h2>
+<section id="the-til-corpus" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="the-til-corpus"><span class="header-section-number">10.3.1</span> The TIL Corpus</h3>
+<p>The Turkic Interlingua (TIL) corpus <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov, Babu, Ataman, et al. 2021</a>)</span> is a broad parallel resource for the Turkic family. It covers 22 Turkic languages and more than 400 translation directions, with English and Russian included as hub languages (<a href="#tbl-til-data" class="quarto-xref">Table&nbsp;<span>10.1</span></a>). The corpus was assembled from publicly available parallel data and cleaned and deduplicated for each language pair.</p>
+<p>The TIL release includes the <strong>X-WMT evaluation sets</strong>: human-post-edited test sets of at least 300 sentences for 88 translation directions among eight Turkic languages (Azerbaijani, Bashkir, Karakalpak, Kazakh, Kyrgyz, Sakha, Turkish and Uzbek) plus English and Russian. X-WMT supports comparison on common sentence content. The corpus paper reports bilingual baselines <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov, Babu, Ataman, et al. 2021</a>)</span>; the separate multilingual study evaluates multiway systems <span class="citation" data-cites="mirzakhalov-etal-2021-evaluating">(<a href="../references.html#ref-mirzakhalov-etal-2021-evaluating" role="doc-biblioref">Mirzakhalov, Babu, Kunafin, et al. 2021</a>)</span>. Do not attribute the multilingual experiment to the corpus paper or treat every release split as independent of every training collection.</p>
+</section>
+<section id="nllb-200" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="nllb-200"><span class="header-section-number">10.3.2</span> NLLB-200</h3>
+<p>Meta’s No Language Left Behind (NLLB-200) model <span class="citation" data-cites="costa2022nllb">(<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">NLLB Team et al. 2024</a>)</span> is a multilingual sequence-to-sequence model covering 200 languages and built with both human-translated and automatically constructed parallel data. It covers eleven Turkic language/script varieties, including separate North and South Azerbaijani entries. FLORES-200 codes combine an ISO 639-3 code with a script subtag:</p>
+<div id="tbl-nllb-codes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nllb-codes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.3: Turkic varieties in NLLB-200 and their language/script codes. Note <code>uzn_Latn</code> and <code>azj_Latn</code>, not <code>uzb_Latn</code> or <code>aze_Latn</code>.
+</figcaption>
+<div aria-describedby="tbl-nllb-codes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>NLLB code</th>
+<th>Language</th>
+<th>NLLB code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td><code>tur_Latn</code></td>
+<td>Kyrgyz</td>
+<td><code>kir_Cyrl</code></td>
+</tr>
+<tr class="even">
+<td>North Azerbaijani</td>
+<td><code>azj_Latn</code></td>
+<td>Tatar</td>
+<td><code>tat_Cyrl</code></td>
+</tr>
+<tr class="odd">
+<td>South Azerbaijani</td>
+<td><code>azb_Arab</code></td>
+<td>Bashkir</td>
+<td><code>bak_Cyrl</code></td>
+</tr>
+<tr class="even">
+<td>Northern Uzbek</td>
+<td><code>uzn_Latn</code></td>
+<td>Crimean Tatar</td>
+<td><code>crh_Latn</code></td>
+</tr>
+<tr class="odd">
+<td>Kazakh</td>
+<td><code>kaz_Cyrl</code></td>
+<td>Turkmen</td>
+<td><code>tuk_Latn</code></td>
+</tr>
+<tr class="even">
+<td>Uyghur</td>
+<td><code>uig_Arab</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>NLLB’s language list excludes Karakalpak, Gagauz, Chuvash and Sakha. For Karakalpak, <span class="citation" data-cites="mamasaidov-shopulatov-2024-open">Mamasaidov and Shopulatov (<a href="../references.html#ref-mamasaidov-shopulatov-2024-open" role="doc-biblioref">2024</a>)</span> created a FLORES+ devtest translation and 100,000-pair parallel corpora with Uzbek, Russian and English for the WMT 2024 Open Language Data Initiative, then fine-tuned NLLB-200.</p>
+<p>For supported varieties, specify the full language code, including its script subtag. The target-language token controls what the model generates: a wrong valid code requests a different language, while an unsupported code can fail during tokenisation or generation. Test quality for each direction and domain. TurkicNLP’s <code>translate</code> and <code>embeddings</code> processors wrap the distilled 600M-parameter model <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>, whose <a href="https://huggingface.co/facebook/nllb-200-distilled-600M">model card</a> specifies a CC BY-NC 4.0 licence.</p>
+</section>
+<section id="evaluation-metrics" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="evaluation-metrics"><span class="header-section-number">10.3.3</span> Evaluation Metrics</h3>
+<p>Use complementary metrics, state their configurations and inspect linguistic errors. <strong>BLEU</strong> <span class="citation" data-cites="papineni2002bleu">(<a href="../references.html#ref-papineni2002bleu" role="doc-biblioref">Papineni et al. 2002</a>)</span> measures word n-gram overlap with references and is sensitive to tokenisation and alternative word forms. A correct paraphrase can receive less credit, but a wrong case or tense can also change meaning: it should not automatically be excused as a morphological variant.</p>
+<p><strong>chrF</strong> <span class="citation" data-cites="popovic2015chrf">(<a href="../references.html#ref-popovic2015chrf" role="doc-biblioref">Popović 2015</a>)</span> measures character n-gram overlap. It gives partial credit to shared stems and suffixes, but can also reward a fluent or closely spelled mistranslation. <strong>chrF++</strong> <span class="citation" data-cites="popovic2017chrfpp">(<a href="../references.html#ref-popovic2017chrfpp" role="doc-biblioref">Popović 2017</a>)</span> adds word n-grams; the tutorial uses <code>CHRF(word_order=2)</code>. Its score is not numerically comparable with BLEU even though both are conventionally reported on a 0–100 scale.</p>
+<p><strong>COMET</strong> <span class="citation" data-cites="rei2020comet">(<a href="../references.html#ref-rei2020comet" role="doc-biblioref">Rei et al. 2020</a>)</span> is a learned metric; reference-based checkpoints use the source, hypothesis and reference. Reliability depends on the checkpoint, training distribution, language and domain. That a language is covered by the encoder tells us nothing about how well the metric correlates with human judgements in it. Record the exact checkpoint and validate it against human judgements when using it to support quality claims.</p>
+<div id="tbl-mt-metrics" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mt-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.4: Complementary MT evaluation signals; no universal language-specific correlation ranking is assumed.
+</figcaption>
+<div aria-describedby="tbl-mt-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Signal</th>
+<th>Limitation to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BLEU</td>
+<td>Word n-gram overlap</td>
+<td>Tokenisation and legitimate alternative wording</td>
+</tr>
+<tr class="even">
+<td>chrF / chrF++</td>
+<td>Character overlap / character plus word overlap</td>
+<td>High overlap despite wrong inflection or meaning</td>
+</tr>
+<tr class="odd">
+<td>COMET</td>
+<td>Learned quality estimate</td>
+<td>Language/domain shift and checkpoint-specific behaviour</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Report corpus BLEU and chrF++ with <a href="https://github.com/mjpost/sacrebleu">SacreBLEU signatures</a> <span class="citation" data-cites="post2018sacrebleu">(<a href="../references.html#ref-post2018sacrebleu" role="doc-biblioref">Post 2018</a>)</span>, the test-set revision and sentence count, and human error analysis where possible. Compare systems using the same metric and references.</p>
+</section>
+<section id="measured-greedy-translation-baseline" class="level3" data-number="10.3.4">
+<h3 data-number="10.3.4" class="anchored" data-anchor-id="measured-greedy-translation-baseline"><span class="header-section-number">10.3.4</span> Measured greedy translation baseline</h3>
+<p>The October suite runs the pinned <strong>NLLB-200 distilled 600M</strong> checkpoint in both Turkish–Kazakh directions on all 1,012 original FLORES-200 devtest rows <span class="citation" data-cites="costa2022nllb">(<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">NLLB Team et al. 2024</a>)</span>. Source and target language tokens are explicit. Decoding is greedy (one beam, no sampling), with a 256-token generation ceiling and no source truncation. This fixed pretrained baseline does not reproduce the published NLLB beam-search configuration.</p>
+<div id="tbl-nllb-pretrained-probe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nllb-pretrained-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.5: Measured NLLB-200 distilled 600M greedy translation on original FLORES-200 devtest. No fine-tuning or input truncation; explicit target language token, one beam and a 256-token generation ceiling. Exact SacreBLEU signatures and output audits are retained. Source: <code>run_translation.py</code>; <span class="citation" data-cites="costa2022nllb">NLLB Team et al. (<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">2024</a>)</span>.
+</figcaption>
+<div aria-describedby="tbl-nllb-pretrained-probe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Direction</th>
+<th style="text-align: right;">Sentences</th>
+<th style="text-align: right;">BLEU-13a</th>
+<th style="text-align: right;">chrF</th>
+<th style="text-align: right;">chrF++</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish → Kazakh</td>
+<td style="text-align: right;">1012</td>
+<td style="text-align: right;">9.48</td>
+<td style="text-align: right;">41.97</td>
+<td style="text-align: right;">37.55</td>
+</tr>
+<tr class="even">
+<td>Kazakh → Turkish</td>
+<td style="text-align: right;">1012</td>
+<td style="text-align: right;">12.02</td>
+<td style="text-align: right;">45.25</td>
+<td style="text-align: right;">41.04</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Corpus BLEU uses SacreBLEU’s <code>13a</code> tokeniser. chrF uses character order six and <span class="math inline">\(\beta=2\)</span>; chrF++ additionally uses word order two. The suite saves exact SacreBLEU signatures, every translation, input/model hashes and end-of-sequence audits. <strong>One output in each direction reaches the generation ceiling without a terminating EOS token; none is empty.</strong> Those outputs remain in the corpus scores and are not silently excluded. These automatic scores do not substitute for a human adequacy and morphology review. There is no fine-tuning or independent pretraining-overlap audit.</p>
+</section>
+<section id="issai-tilmash" class="level3" data-number="10.3.5">
+<h3 data-number="10.3.5" class="anchored" data-anchor-id="issai-tilmash"><span class="header-section-number">10.3.5</span> ISSAI Tilmash</h3>
+<p>The <a href="https://huggingface.co/issai/tilmash">ISSAI Tilmash model card</a> describes a system fine-tuned from NLLB-200 (distilled 1.3B) for Kazakh, Russian, English and Turkish, using Kazakh-centred parallel data including KazParC <span class="citation" data-cites="yeshpanov2024kazparc">(<a href="../references.html#ref-yeshpanov2024kazparc" role="doc-biblioref">Yeshpanov, Polonskaya, and Varol 2024</a>)</span>. The model is gated: access requires agreeing to share contact information. The page lists FLORES in its dataset metadata and reports FLORES test scores, but does not identify the training split there. This leaves overlap unresolved; verify the training records before treating those scores as an independent comparison with NLLB. The existence of a release is not a benchmark result for every direction.</p>
+</section>
+<section id="general-purpose-llms-as-translators" class="level3" data-number="10.3.6">
+<h3 data-number="10.3.6" class="anchored" data-anchor-id="general-purpose-llms-as-translators"><span class="header-section-number">10.3.6</span> General-Purpose LLMs as Translators</h3>
+<p>General-purpose LLMs can also be tested as translators. Evaluate the intended language and domain, and check whether the output is in the requested language. Unrestricted language-ID predictions (<a href="03-scripts-orthography.html#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>) can flag possible mistakes, but need manual checking. A classifier restricted to Turkic labels cannot reject an English answer. Higher token fertility increases token usage for a fixed text; runtime and cost also depend on the model and output length (<a href="07-neural-morphology.html#sec-subword-tok" class="quarto-xref"><span>Section 7.1</span></a>).</p>
+<p>TurkicNLP puts both kinds of system behind the same <code>translate</code> processor: NLLB-200 for the varieties above, and an LLM backend that accepts all 24 toolkit language labels. A label that the model accepts may still produce poor translations. The following example compares outputs and language-ID predictions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>lid <span class="op">=</span> turkicnlp.LanguageDetection()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Алматы — Қазақстанның ең ірі қаласы."</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>nllb <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"kaz"</span>, processors<span class="op">=</span>[<span class="st">"translate"</span>], translate_tgt_lang<span class="op">=</span><span class="st">"kir"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"kaz"</span>, processors<span class="op">=</span>[<span class="st">"tokenize"</span>, <span class="st">"translate"</span>], translate_backend<span class="op">=</span><span class="st">"llm"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                         translate_tgt_lang<span class="op">=</span><span class="st">"kir"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                         llm_model<span class="op">=</span><span class="st">"qwen2.5:7b"</span>, llm_base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                         llm_api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, nlp <span class="kw">in</span> [(<span class="st">"NLLB"</span>, nllb), (<span class="st">"LLM"</span>, llm)]:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> nlp(text).translation</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, out, lid.model.predict(out.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>), k<span class="op">=</span><span class="dv">3</span>))  <span class="co"># unrestricted labels</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Expected language is kir_Cyrl; these scores are diagnostics, not proof of correctness.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>translate_tgt_lang</code> accepts an ISO 639-3 code (<code>kir</code>), a FLORES-200 code (<code>kir_Cyrl</code>), or, for the LLM backend, a language name; with <code>translate_tgt_script</code> the LLM backend can also be asked for a specific script (e.g.&nbsp;Uzbek in Cyrillic).</p>
+</section>
+</section>
+<section id="sec-intra-family" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="sec-intra-family"><span class="header-section-number">10.4</span> Intra-Family Translation</h2>
+<section id="closely-related-pairs" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="closely-related-pairs"><span class="header-section-number">10.4.1</span> Closely Related Pairs</h3>
+<p>Related languages share vocabulary and constructions that a model may exploit. Whether this improves translation over an equally resourced cross-family pair is a controlled empirical question. False cognates, different loanwords, language-specific auxiliary constructions and suffix allomorphy can still prevent correct copying or transfer.</p>
+<p>An exploratory all-pairs comparison is available in the recorded Exercise 6. NLLB-200 600M with greedy decoding was applied to the first 15 X-WMT sentences per direction for six languages. chrF ranges from 31.3 (Turkish→Bashkir) to 56.6 (Bashkir→Kyrgyz). The mean is 44.3 for eight same-branch, same-script directions, 43.5 for four cross-branch, same-script directions, and 40.3 for eighteen cross-branch, cross-script directions. There are no same-branch, cross-script directions in this sample. Directions also use different sentence content. The groups are small and unbalanced. They cannot isolate script or genealogical effects, let alone rank language pairs.</p>
+</section>
+<section id="pivot-strategies" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="pivot-strategies"><span class="header-section-number">10.4.2</span> Pivot Strategies</h3>
+<p>When direct parallel data is limited, <strong>pivot translation</strong> routes the translation through an intermediate language. How limited depends on the pair: the TIL release has 12,216 Kazakh–Kyrgyz training pairs but 119,946 Uzbek–Kyrgyz ones, and NLLB-200 was trained on its own collection. Two possible routes for Uzbek→Kyrgyz are illustrated below.</p>
+<p><strong>Turkish pivot:</strong> Uzbek→Turkish→Kyrgyz. A larger English–Turkish corpus is no evidence that both legs of this route beat direct Uzbek→Kyrgyz translation. Inspect pair-specific data and compare outputs on the same held-out sentences.</p>
+<p><strong>Russian pivot:</strong> Uzbek→Russian→Kyrgyz provides another route. Shared terminology may help in some domains, but each decoding step can introduce errors. Exercise 4 compares both pivots with direct NLLB-200 translation on the same 50 X-WMT Uzbek–Kyrgyz sentences. Direct translation scores chrF++ 41.2, the Russian pivot 40.3 and the Turkish pivot 36.5. The Turkish route takes about twice as long in that run. In one sentence, its first leg enters a repetition loop and the second translates the repetitions. Record such error propagation alongside scores and latency, using fixed decoding settings.</p>
+</section>
+<section id="multilingual-nmt" class="level3" data-number="10.4.3">
+<h3 data-number="10.4.3" class="anchored" data-anchor-id="multilingual-nmt"><span class="header-section-number">10.4.3</span> Multilingual NMT</h3>
+<p>A multilingual model shares parameters across directions and uses language tags to specify the requested output. The multiway TIL study evaluates this approach <span class="citation" data-cites="mirzakhalov-etal-2021-evaluating">(<a href="../references.html#ref-mirzakhalov-etal-2021-evaluating" role="doc-biblioref">Mirzakhalov, Babu, Kunafin, et al. 2021</a>)</span>. Results depend on the directions, sampling strategy, model capacity and domains; parameter sharing does not guarantee an improvement for every pair.</p>
+<p>A useful experiment compares bilingual and multilingual systems with matched architectures, evaluation data and reported training budgets. Target-language tags must follow the model’s own convention: an illustrative <code>&lt;2kaz&gt;</code> prefix is not interchangeable with NLLB’s <code>kaz_Cyrl</code> token.</p>
+</section>
+<section id="zero-shot-intra-family-transfer" class="level3" data-number="10.4.4">
+<h3 data-number="10.4.4" class="anchored" data-anchor-id="zero-shot-intra-family-transfer"><span class="header-section-number">10.4.4</span> Zero-Shot Intra-Family Transfer</h3>
+<p>Zero-shot translation means evaluating a direction without its task-specific parallel training data. A multilingual model that represents both languages is a different starting point from a Turkish–Kazakh-only model fed Azerbaijani input. Related vocabulary may permit some transfer, but neither genealogy nor transliteration guarantees it. Compare native-script and converted input on the same held-out set, and check output language as well as adequacy.</p>
+</section>
+</section>
+<section id="sec-low-resource-mt" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="sec-low-resource-mt"><span class="header-section-number">10.5</span> Low-Resource Neural MT Strategies</h2>
+<section id="back-translation" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="back-translation"><span class="header-section-number">10.5.1</span> Back-Translation</h3>
+<p>Back-translation is a widely used data augmentation strategy for low-resource MT <span class="citation" data-cites="sennrich2016backtranslation">(<a href="../references.html#ref-sennrich2016backtranslation" role="doc-biblioref">Sennrich, Haddow, and Birch 2016</a>)</span>. Given a monolingual corpus in the target language (e.g., Kyrgyz news articles), an existing MT system translates this corpus in the reverse direction (Kyrgyz→Turkish) to produce synthetic source sentences. The resulting synthetic parallel corpus (synthetic Turkish, real Kyrgyz) is then combined with real parallel data to train the final system.</p>
+<p>Back-translation depends on the backward system’s output. A Kyrgyz→Turkish Apertium system or small TIL baseline may generate noisy synthetic source sentences; test whether adding them helps. Source-side perplexity can flag some disfluency but can miss fluent mistranslations. Also inspect a sample for language, alignment, duplication and adequacy.</p>
+<p>For Uyghur and other very low-resource Turkic languages, back-translation from a monolingual corpus offers a way to bootstrap: a reverse-direction system, where one exists, can generate candidate training pairs whose usefulness must be evaluated.</p>
+</section>
+<section id="fine-tuning-nllb-200" class="level3" data-number="10.5.2">
+<h3 data-number="10.5.2" class="anchored" data-anchor-id="fine-tuning-nllb-200"><span class="header-section-number">10.5.2</span> Fine-Tuning NLLB-200</h3>
+<p>NLLB-200 <span class="citation" data-cites="costa2022nllb">(<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">NLLB Team et al. 2024</a>)</span> provides a pretrained starting point for the varieties in <a href="#tbl-nllb-codes" class="quarto-xref">Table&nbsp;<span>10.3</span></a>. Compare fine-tuning on a language pair or domain with the unadapted model and a bilingual system trained from scratch. Adaptation may improve the target task, but can also overfit or reduce performance elsewhere.</p>
+<p>The tutorial uses <code>facebook/nllb-200-distilled-600M</code>. Memory requirements depend on sequence length, batch size, optimiser and precision; a single GPU is not guaranteed to suffice. The <a href="https://huggingface.co/facebook/nllb-200-distilled-600M">model card</a> describes research use and a CC BY-NC 4.0 licence. Check suitability and licence terms before deployment; a large model is not automatically ready for production.</p>
+</section>
+<section id="transfer-learning-from-turkish" class="level3" data-number="10.5.3">
+<h3 data-number="10.5.3" class="anchored" data-anchor-id="transfer-learning-from-turkish"><span class="header-section-number">10.5.3</span> Transfer Learning from Turkish</h3>
+<p>Turkish-trained weights are one possible initialisation for an under-resourced language. Their value relative to a multilingual checkpoint must be tested. Kyrgyz and Tatar already have NLLB language codes, so they are not examples of missing NLLB coverage.</p>
+<p>Adapting NLLB to a language outside its inventory requires training data and a policy for language tokens and vocabulary. For Karakalpak, <span class="citation" data-cites="mamasaidov-shopulatov-2024-open">Mamasaidov and Shopulatov (<a href="../references.html#ref-mamasaidov-shopulatov-2024-open" role="doc-biblioref">2024</a>)</span> trained a SentencePiece model, added 13,195 tokens to the distilled 600M model and initialised them from their subword embeddings. They used 100,000 sentence pairs each with Uzbek, Russian and English. Their baselines assigned Karakalpak the Kazakh or Uzbek code; that code substitution alone leaves the model without language-specific adaptation.</p>
+</section>
+<section id="synthetic-data-from-apertium" class="level3" data-number="10.5.4">
+<h3 data-number="10.5.4" class="anchored" data-anchor-id="synthetic-data-from-apertium"><span class="header-section-number">10.5.4</span> Synthetic Data from Apertium</h3>
+<p>For a supported translation direction, an Apertium system can generate synthetic parallel sentences from monolingual data (<a href="#sec-rbmt-apertium" class="quarto-xref"><span>Section 10.2</span></a>). A neural system can then train on a mixture of these sentence pairs and genuine parallel data. Evaluate whether the synthetic pairs help on held-out data from the intended domain.</p>
+</section>
+</section>
+<section id="sec-ch10-hands-on" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="sec-ch10-hands-on"><span class="header-section-number">10.6</span> Hands-On: A Fine-Tuning Procedure for Kazakh–Kyrgyz Translation with NLLB-200</h2>
+<p><strong>Question.</strong> Does adaptation improve Kazakh–Kyrgyz translation over the original checkpoint?</p>
+<p><strong>Inputs.</strong> Prepared disjoint parallel splits and the pinned NLLB checkpoint.</p>
+<p><strong>Compute.</strong> Model downloads and fine-tuning resources; record the actual hardware and elapsed time.</p>
+<p><strong>Output.</strong> Baseline and adapted predictions, BLEU/chrF++ signatures and split manifests.</p>
+<p><strong>Interpretation.</strong> Compare both systems on the same reserved sentences and inspect incomplete outputs.</p>
+<p>The executable tutorial is <code>code/ch10-mt/train.py</code>, with its input contract in <code>code/ch10-mt/README.md</code>. It adapts <code>facebook/nllb-200-distilled-600M</code> from Kazakh (<code>kaz_Cyrl</code>) to Kyrgyz (<code>kir_Cyrl</code>). The code mechanics have been checked with a tiny random model. The book reports no fine-tuned score; the Turkish–Kazakh greedy scores above illustrate baseline reporting but are not a Kazakh–Kyrgyz baseline. The runner evaluates the unadapted model on the prepared Kazakh–Kyrgyz data under the same four-beam decoding policy as the adapted model.</p>
+<section id="prepare-independent-splits" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="prepare-independent-splits"><span class="header-section-number">10.6.1</span> Prepare independent splits</h3>
+<p>Prepare <code>train.tsv</code>, <code>validation.tsv</code> and <code>test.tsv</code>, each with the header <code>document_id</code>, <code>src</code>, <code>tgt</code> (tab-separated). Keep original source-document groups together across all corpora and synthetic translations. Use validation for checkpoint selection and reserve the test set for the final fixed comparison. The loader rejects malformed or empty records, duplicate pairs, and cross-split document or normalised source/target text overlap. Unknown source-document provenance is a limitation to resolve, not a reason to invent independent IDs.</p>
+<p>The TIL release lists 12,216 Kazakh–Kyrgyz training pairs (<a href="#tbl-til-data" class="quarto-xref">Table&nbsp;<span>10.1</span></a>); an arbitrary tail of that file is not necessarily an independent validation set. Record upstream corpus revisions, licences, grouping and split rules alongside the prepared files. The runner saves their hashes and actual sizes.</p>
+</section>
+<section id="set-and-verify-both-language-tokens" class="level3" data-number="10.6.2">
+<h3 data-number="10.6.2" class="anchored" data-anchor-id="set-and-verify-both-language-tokens"><span class="header-section-number">10.6.2</span> Set and verify both language tokens</h3>
+<p>The runner uses the explicit <code>NllbTokenizer</code> class and pins the model and tokeniser revision. This matters because an automatic tokeniser loader may not preserve language-specific behaviour across library versions. The source encoding must begin with the Kazakh token and target labels with the Kyrgyz token; both must terminate in EOS.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> NllbTokenizer</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> <span class="st">"facebook/nllb-200-distilled-600M"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>REVISION <span class="op">=</span> <span class="st">"f8d333a098d19b4fd9a8b18f94170487ad3f821d"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> NllbTokenizer.from_pretrained(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    MODEL_NAME, revision<span class="op">=</span>REVISION,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    src_lang<span class="op">=</span><span class="st">"kaz_Cyrl"</span>, tgt_lang<span class="op">=</span><span class="st">"kir_Cyrl"</span>, legacy_behaviour<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>source_ids <span class="op">=</span> tokenizer(<span class="st">"Алматы"</span>)[<span class="st">"input_ids"</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>target_ids <span class="op">=</span> tokenizer(text_target<span class="op">=</span><span class="st">"Бишкек"</span>)[<span class="st">"input_ids"</span>]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> source_ids[<span class="dv">0</span>] <span class="op">==</span> tokenizer.convert_tokens_to_ids(<span class="st">"kaz_Cyrl"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> target_ids[<span class="dv">0</span>] <span class="op">==</span> tokenizer.convert_tokens_to_ids(<span class="st">"kir_Cyrl"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> source_ids[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> target_ids[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> tokenizer.eos_token_id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>All training and evaluation sentences are encoded without truncation. Examples above the declared token budgets stop the run so that segmentation and reconstruction can be addressed explicitly. Dynamic padding masks target padding with <code>-100</code> for the loss.</p>
+</section>
+<section id="use-the-same-decoding-policy-throughout" class="level3" data-number="10.6.3">
+<h3 data-number="10.6.3" class="anchored" data-anchor-id="use-the-same-decoding-policy-throughout"><span class="header-section-number">10.6.3</span> Use the same decoding policy throughout</h3>
+<p>The target token must be set <strong>before development evaluation</strong>, not only during later interactive inference. The runner applies this configuration to both the original and adapted model:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model.generation_config.forced_bos_token_id <span class="op">=</span> tokenizer.convert_tokens_to_ids(<span class="st">"kir_Cyrl"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model.generation_config.max_length <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model.generation_config.max_new_tokens <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model.generation_config.num_beams <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model.generation_config.do_sample <span class="op">=</span> <span class="va">False</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The corresponding <code>Seq2SeqTrainingArguments</code> use <code>predict_with_generate=True</code>, <code>generation_max_length=256</code> and <code>generation_num_beams=4</code>. They were chosen for the tutorial and have not been tuned. The model is selected by validation <strong>chrF++</strong> (<code>metric_for_best_model="chrfpp"</code>), with epoch evaluation and checkpoint saving. Batch size and precision must be chosen for the available hardware.</p>
+</section>
+<section id="score-original-references-and-retain-outputs" class="level3" data-number="10.6.4">
+<h3 data-number="10.6.4" class="anchored" data-anchor-id="score-original-references-and-retain-outputs"><span class="header-section-number">10.6.4</span> Score original references and retain outputs</h3>
+<p>The metric callback decodes generated token IDs but compares them with the <strong>original reference strings</strong>, avoiding changes caused by decoding tokenised labels. It checks equal sentence counts and reports corpus BLEU (<code>tokenize="13a"</code>) and chrF++ (<code>word_order=2</code>). The 13a tokeniser gives a reproducible baseline; it knows nothing about Turkic morphology.</p>
+<p>Run from the book root in an environment with the versions listed in the companion README:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> code/ch10-mt/train.py path/to/prepared-splits <span class="at">--output</span> nllb-kaz-kir</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script first measures the original model’s development performance. It then trains, restores and saves the checkpoint with the best development score. Once training choices are fixed, it evaluates both checkpoints on the same test data with identical decoding.</p>
+<p>Saved outputs include predictions, SacreBLEU signatures, versions, language-token IDs, split hashes and counts of outputs that reach the generation limit. Inspect those outputs for incomplete translations. Report development and test BLEU and chrF++ for both models, hardware, wall time and a paired analysis of their errors. The adapted model may improve or worsen the baseline.</p>
+<p><strong>Status: procedure only.</strong> The full adaptation run is not reported here. The exercise comparisons use their own declared model configurations.</p>
+</section>
+</section>
+<section id="sec-ch10-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch10-synthesis">What to Take Forward</h2>
+<p>Translation experiments need supported language directions, documented parallel data and a reserved test set. Performance varies across the tested directions, but the small all-pairs comparison cannot attribute those differences to relatedness or script. In a separate comparison on 50 Uzbek–Kyrgyz sentences, direct translation outperforms both tested pivots (Exercise 4). Establish the pretrained direct baseline first, then test pivoting, back-translation or adaptation under the same decoding and scoring settings. <a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a> extends the pipeline from written text to speech.</p>
+</section>
+<section id="sec-ch10-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch10-further-reading">Further Reading</h2>
+<p>The TIL corpus and bilingual baselines are described in <span class="citation" data-cites="mirzakhalov2021large">Mirzakhalov, Babu, Ataman, et al. (<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">2021</a>)</span>; multiway multilingual experiments are reported separately in <span class="citation" data-cites="mirzakhalov-etal-2021-evaluating">Mirzakhalov, Babu, Kunafin, et al. (<a href="../references.html#ref-mirzakhalov-etal-2021-evaluating" role="doc-biblioref">2021</a>)</span>. <span class="citation" data-cites="costa2022nllb">NLLB Team et al. (<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">2024</a>)</span> describes the NLLB-200 model architecture, training data, and evaluation methodology; its supplementary materials include coverage statistics for all 200 languages, including the eleven Turkic varieties.</p>
+<p>For Apertium’s rule-based approach, <span class="citation" data-cites="forcada2011apertium">Forcada et al. (<a href="../references.html#ref-forcada2011apertium" role="doc-biblioref">2011</a>)</span> provides the architectural overview, while <span class="citation" data-cites="khanna2021apertium">Khanna et al. (<a href="../references.html#ref-khanna2021apertium" role="doc-biblioref">2021</a>)</span> documents Apertium as of that publication. <span class="citation" data-cites="washington2014finite">Washington, Salimzyanov, and Tyers (<a href="../references.html#ref-washington2014finite" role="doc-biblioref">2014</a>)</span> describes the finite-state morphological transducers for three Kipchak languages (Kazakh, Tatar and Kumyk) on which Apertium’s analysis and generation stages for these languages are built.</p>
+<p>MT evaluation metrics are introduced in the “Machine Translation” chapter of <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span>. <span class="citation" data-cites="sennrich2016backtranslation">Sennrich, Haddow, and Birch (<a href="../references.html#ref-sennrich2016backtranslation" role="doc-biblioref">2016</a>)</span> describes back-translation for neural MT. For using NLLB-200 inside a Turkic pipeline (translation and sentence embeddings for the covered Turkic varieties), see <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span>.</p>
+</section>
+<section id="sec-ch10-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch10-exercises">Exercises</h2>
+<ol type="1">
+<li><p><strong>Data scarcity analysis.</strong> Using <a href="#tbl-til-data" class="quarto-xref">Table&nbsp;<span>10.1</span></a> as a reference, compute the ratio between English–Turkish and English–Uyghur sentence pair counts. Choose two differently resourced pairs and design a learning-curve experiment. Specify domain, metric and acceptance criteria; do not assume a universal sentence-count threshold.</p></li>
+<li><p><strong>Metric comparison.</strong> Take 20 English sentences and translate them into Turkish using <code>facebook/nllb-200-distilled-600M</code>, with two decoding settings (for example greedy and beam search) as competing systems. Use references written or checked by a competent speaker, such as the human-post-edited X-WMT test sets. Compute corpus BLEU and chrF++, retaining metric signatures. For sentence-level diagnostics, state the BLEU smoothing and effective-order settings. Inspect examples where the two metrics rank competing outputs differently; their raw score magnitudes are not directly comparable. Distinguish legitimate variants from meaning-changing suffix errors.</p></li>
+<li><p><strong>Apertium pipeline trace.</strong> Install Apertium and the Kazakh–Tatar language pair (or, without an Apertium installation, run its stages by hand with the Kazakh analyser, the pair’s bilingual dictionary and the Tatar generator). Translate the Kazakh sentence <em>Бүгін ауа райы өте жақсы.</em> (“The weather is very nice today.”) and trace each stage of the pipeline: morphological analysis output, lexical transfer output, structural transfer output, and morphological generation output. What does the trace reveal about how each stage handles this sentence?</p></li>
+<li><p><strong>Pivot translation comparison.</strong> For the language pair Uzbek→Kyrgyz, implement two translation strategies using NLLB-200: (a) direct translation with codes <code>uzn_Latn → kir_Cyrl</code>; (b) pivot through Turkish (<code>uzn_Latn → tur_Latn</code>, then <code>tur_Latn → kir_Cyrl</code>). With TurkicNLP, (a) is <code>Pipeline("uzb", processors=["translate"], translate_tgt_lang="kir")</code> and (b) chains a <code>uzb→tur</code> and a <code>tur→kir</code> pipeline. Translate the same 50 held-out sentences (for example from the X-WMT Uzbek–Kyrgyz test set) under matched decoding settings; evaluate each strategy with chrF++, record added latency and inspect error propagation. Which approach scores higher on this sample? Use paired examples to investigate possible causes rather than treating the score difference as an explanation.</p></li>
+<li><p><strong>Back-translation experiment.</strong> Configure a separate Kyrgyz→Kazakh NLLB model (<code>src_lang="kir_Cyrl"</code>, <code>tgt_lang="kaz_Cyrl"</code>, forced target token <code>kaz_Cyrl</code>) to back-translate a small training-only monolingual Kyrgyz corpus (1,000 sentences from Wikipedia or news, disjoint from development/test source documents) into Kazakh, producing synthetic Kazakh. Combine this synthetic data with the available real training pairs and retrain the model. Tune the synthetic-data amount on validation, then compare fixed systems on the same untouched test set. Does adding back-translated data improve chrF++? How sensitive is the gain to the size of the back-translated corpus?</p></li>
+<li><p><strong>An intra-Turkic quality matrix.</strong> Load the FLORES-200 devtest sentences for the eleven NLLB Turkic varieties (<a href="#tbl-nllb-codes" class="quarto-xref">Table&nbsp;<span>10.3</span></a>), or the X-WMT test sets for the six languages that X-WMT and NLLB share. Align by documented sentence IDs or verify correspondence from the release; do not assume that independently filtered files remain row-aligned. For an exploratory subset, select and record the sentence IDs (for example 200) and translate between distinct-language pairs with <code>facebook/nllb-200-distilled-600M</code> (one TurkicNLP <code>translate</code> pipeline per source language, with <code>translate_tgt_lang</code> set to each target) and compute chrF against the references. Plot the matrix as a heatmap. Label the matrix as a subset experiment, exclude identity directions, and tune choices only on development data. Do within-branch pairs score higher than cross-branch pairs? Do same-script pairs score higher than cross-script pairs with similar genealogical distance?</p></li>
+<li><p><strong>Beyond NLLB’s languages.</strong> NLLB-200 does not cover Nogai, Kumyk or Sakha, but TurkicNLP’s LLM backend accepts all 24 toolkit language labels. Take 20 Nogai (or Sakha) sentences with reference translations into Russian, written or checked by a native speaker. Translate them with <code>Pipeline("nog", processors=["tokenize", "translate"], translate_backend="llm", translate_tgt_lang="rus", ...)</code> using two models of different sizes, and compute chrF against the references. Then reverse the task with a short prompt to the same models (Russian → Nogai) and use the unrestricted <code>lid.model.predict(...)</code> method of <code>turkicnlp.LanguageDetection()</code> on the outputs. How often does it assign another language label (<a href="03-scripts-orthography.html#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>)? Have a competent speaker check those cases: an LID label is not a verified language annotation.</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-forcada2011apertium" class="csl-entry" role="listitem">
+Forcada, Mikel L., Mireia Ginestí-Rosell, Jacob Nordfalk, Jim O’Regan, Sergio Ortiz-Rojas, Juan Antonio Pérez-Ortiz, Felipe Sánchez-Martínez, Gema Ramírez-Sánchez, and Francis M. Tyers. 2011. <span>“Apertium: A Free/Open-Source Platform for Rule-Based Machine Translation.”</span> <em>Machine Translation</em> 25 (2): 127–44. <a href="https://doi.org/10.1007/s10590-011-9090-0">https://doi.org/10.1007/s10590-011-9090-0</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+<div id="ref-jurafsky2024slp" class="csl-entry" role="listitem">
+Jurafsky, Daniel, and James H. Martin. 2024. <em>Speech and Language Processing</em>. 3rd ed.
+</div>
+<div id="ref-khanna2021apertium" class="csl-entry" role="listitem">
+Khanna, Tanmai, Jonathan N. Washington, Francis M. Tyers, Sevilay Bayatlı, Daniel G. Swanson, Tommi A. Pirinen, Irene Tang, and Hèctor Alòs i Font. 2021. <span>“Recent Advances in <span>Apertium</span>, a Free/Open-Source Rule-Based Machine Translation Platform for Low-Resource Languages.”</span> <em>Machine Translation</em> 35 (4): 475–502. <a href="https://doi.org/10.1007/s10590-021-09260-6">https://doi.org/10.1007/s10590-021-09260-6</a>.
+</div>
+<div id="ref-mamasaidov-shopulatov-2024-open" class="csl-entry" role="listitem">
+Mamasaidov, Mukhammadsaid, and Abror Shopulatov. 2024. <span>“Open Language Data Initiative: Advancing Low-Resource Machine Translation for <span>K</span>arakalpak.”</span> In <em>Proceedings of the Ninth Conference on Machine Translation</em>, 606–13. Miami, Florida, USA: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.wmt-1.48">https://doi.org/10.18653/v1/2024.wmt-1.48</a>.
+</div>
+<div id="ref-mirzakhalov2021large" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Duygu Ataman, Sherzod Kariev, Francis Tyers, Otabek Abduraufov, Mammad Hajili, et al. 2021. <span>“A Large-Scale Study of Machine Translation in <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing</em>, 5876–90. Online; Punta Cana, Dominican Republic: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.emnlp-main.475">https://doi.org/10.18653/v1/2021.emnlp-main.475</a>.
+</div>
+<div id="ref-mirzakhalov-etal-2021-evaluating" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Aigiz Kunafin, Ahsan Wahab, Bekhzodbek Moydinboyev, Sardana Ivanova, Mokhiyakhon Uzokova, et al. 2021. <span>“Evaluating Multiway Multilingual <span>NMT</span> in the <span>T</span>urkic Languages.”</span> In <em>Proceedings of the Sixth Conference on Machine Translation</em>, 518–30. Online: Association for Computational Linguistics. <a href="https://aclanthology.org/2021.wmt-1.60/">https://aclanthology.org/2021.wmt-1.60/</a>.
+</div>
+<div id="ref-costa2022nllb" class="csl-entry" role="listitem">
+NLLB Team, Marta R. Costa-jussà, James Cross, Onur Çelebi, Maha Elbayad, Kenneth Heafield, Kevin Heffernan, et al. 2024. <span>“Scaling Neural Machine Translation to 200 Languages.”</span> <em>Nature</em> 630 (8018): 841–46. <a href="https://doi.org/10.1038/s41586-024-07335-x">https://doi.org/10.1038/s41586-024-07335-x</a>.
+</div>
+<div id="ref-papineni2002bleu" class="csl-entry" role="listitem">
+Papineni, Kishore, Salim Roukos, Todd Ward, and Wei-Jing Zhu. 2002. <span>“<span>B</span>leu: A Method for Automatic Evaluation of Machine Translation.”</span> In <em>Proceedings of the 40th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 311–18. Philadelphia, Pennsylvania, USA: Association for Computational Linguistics. <a href="https://doi.org/10.3115/1073083.1073135">https://doi.org/10.3115/1073083.1073135</a>.
+</div>
+<div id="ref-popovic2015chrf" class="csl-entry" role="listitem">
+Popović, Maja. 2015. <span>“Chr<span>F</span>: Character n-Gram <span>F</span>-Score for Automatic <span>MT</span> Evaluation.”</span> In <em>Proceedings of the Tenth Workshop on Statistical Machine Translation</em>, 392–95. Lisbon, Portugal: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/W15-3049">https://doi.org/10.18653/v1/W15-3049</a>.
+</div>
+<div id="ref-popovic2017chrfpp" class="csl-entry" role="listitem">
+———. 2017. <span>“Chr<span>F</span>++: Words Helping Character n-Grams.”</span> In <em>Proceedings of the Second Conference on Machine Translation</em>, 612–18. Copenhagen, Denmark: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/W17-4770">https://doi.org/10.18653/v1/W17-4770</a>.
+</div>
+<div id="ref-post2018sacrebleu" class="csl-entry" role="listitem">
+Post, Matt. 2018. <span>“A Call for Clarity in Reporting <span>BLEU</span> Scores.”</span> In <em>Proceedings of the Third Conference on Machine Translation: Research Papers</em>, 186–91. Brussels, Belgium: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/W18-6319">https://doi.org/10.18653/v1/W18-6319</a>.
+</div>
+<div id="ref-rei2020comet" class="csl-entry" role="listitem">
+Rei, Ricardo, Craig Stewart, Ana C Farinha, and Alon Lavie. 2020. <span>“<span>COMET</span>: A Neural Framework for <span>MT</span> Evaluation.”</span> In <em>Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em>, 2685–2702. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.emnlp-main.213">https://doi.org/10.18653/v1/2020.emnlp-main.213</a>.
+</div>
+<div id="ref-sennrich2016backtranslation" class="csl-entry" role="listitem">
+Sennrich, Rico, Barry Haddow, and Alexandra Birch. 2016. <span>“Improving Neural Machine Translation Models with Monolingual Data.”</span> In <em>Proceedings of the 54th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 86–96. Berlin, Germany: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P16-1009">https://doi.org/10.18653/v1/P16-1009</a>.
+</div>
+<div id="ref-washington2014finite" class="csl-entry" role="listitem">
+Washington, Jonathan, Ilnar Salimzyanov, and Francis Tyers. 2014. <span>“Finite-State Morphological Transducers for Three <span>K</span>ypchak Languages.”</span> In <em>Proceedings of the Ninth International Conference on Language Resources and Evaluation (<span>LREC</span>’14)</em>, 3378–85. Reykjavik, Iceland: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L14-1143/">https://aclanthology.org/L14-1143/</a>.
+</div>
+<div id="ref-yeshpanov2024kazparc" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Alina Polonskaya, and Huseyin Atakan Varol. 2024. <span>“<span>K</span>az<span>P</span>ar<span>C</span>: <span>K</span>azakh Parallel Corpus for Machine Translation.”</span> In <em>Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (<span>LREC</span>-<span>COLING</span> 2024)</em>, 9633–44. Torino, Italia: ELRA; ICCL. <a href="https://aclanthology.org/2024.lrec-main.842/">https://aclanthology.org/2024.lrec-main.842/</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/09-sequence-labeling.html" class="pagination-link" aria-label="Sequence Labelling: POS Tagging, NER, and Chunking">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/11-speech-technologies.html" class="pagination-link" aria-label="Speech Technologies">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

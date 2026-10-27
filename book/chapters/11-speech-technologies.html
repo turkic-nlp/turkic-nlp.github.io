@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>11&nbsp; Speech Technologies – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/12-pretrained-lms.html" rel="next">
+<link href="../chapters/10-machine-translation.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html">Applications</a></li><li class="breadcrumb-item"><a href="../chapters/11-speech-technologies.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-phonology" id="toc-sec-phonology" class="nav-link active" data-scroll-target="#sec-phonology"><span class="header-section-number">11.1</span> Phonological Sketch of Turkic Languages</a>
+  <ul class="collapse">
+  <li><a href="#vowel-systems-and-orthography" id="toc-vowel-systems-and-orthography" class="nav-link" data-scroll-target="#vowel-systems-and-orthography"><span class="header-section-number">11.1.1</span> Vowel Systems and Orthography</a></li>
+  <li><a href="#consonants-and-transfer" id="toc-consonants-and-transfer" class="nav-link" data-scroll-target="#consonants-and-transfer"><span class="header-section-number">11.1.2</span> Consonants and Transfer</a></li>
+  <li><a href="#prosody" id="toc-prosody" class="nav-link" data-scroll-target="#prosody"><span class="header-section-number">11.1.3</span> Prosody</a></li>
+  </ul></li>
+  <li><a href="#sec-asr" id="toc-sec-asr" class="nav-link" data-scroll-target="#sec-asr"><span class="header-section-number">11.2</span> Automatic Speech Recognition</a>
+  <ul class="collapse">
+  <li><a href="#end-to-end-architectures" id="toc-end-to-end-architectures" class="nav-link" data-scroll-target="#end-to-end-architectures"><span class="header-section-number">11.2.1</span> End-to-End Architectures</a></li>
+  <li><a href="#whisper" id="toc-whisper" class="nav-link" data-scroll-target="#whisper"><span class="header-section-number">11.2.2</span> Whisper</a></li>
+  <li><a href="#turkicasr" id="toc-turkicasr" class="nav-link" data-scroll-target="#turkicasr"><span class="header-section-number">11.2.3</span> TurkicASR</a></li>
+  <li><a href="#open-speech-datasets-common-voice-and-fleurs" id="toc-open-speech-datasets-common-voice-and-fleurs" class="nav-link" data-scroll-target="#open-speech-datasets-common-voice-and-fleurs"><span class="header-section-number">11.2.4</span> Open Speech Datasets: Common Voice and FLEURS</a></li>
+  </ul></li>
+  <li><a href="#sec-tts" id="toc-sec-tts" class="nav-link" data-scroll-target="#sec-tts"><span class="header-section-number">11.3</span> Text-to-Speech</a>
+  <ul class="collapse">
+  <li><a href="#text-and-pronunciation-in-turkic-tts" id="toc-text-and-pronunciation-in-turkic-tts" class="nav-link" data-scroll-target="#text-and-pronunciation-in-turkic-tts"><span class="header-section-number">11.3.1</span> Text and Pronunciation in Turkic TTS</a></li>
+  <li><a href="#kazakhtts2-and-turkictts" id="toc-kazakhtts2-and-turkictts" class="nav-link" data-scroll-target="#kazakhtts2-and-turkictts"><span class="header-section-number">11.3.2</span> KazakhTTS2 and TurkicTTS</a></li>
+  <li><a href="#neural-tts-architectures" id="toc-neural-tts-architectures" class="nav-link" data-scroll-target="#neural-tts-architectures"><span class="header-section-number">11.3.3</span> Neural TTS Architectures</a></li>
+  <li><a href="#availability-and-evaluated-quality" id="toc-availability-and-evaluated-quality" class="nav-link" data-scroll-target="#availability-and-evaluated-quality"><span class="header-section-number">11.3.4</span> Availability and Evaluated Quality</a></li>
+  </ul></li>
+  <li><a href="#sec-low-resource-speech" id="toc-sec-low-resource-speech" class="nav-link" data-scroll-target="#sec-low-resource-speech"><span class="header-section-number">11.4</span> Speech for Low-Resource Languages</a>
+  <ul class="collapse">
+  <li><a href="#cross-lingual-acoustic-model-transfer" id="toc-cross-lingual-acoustic-model-transfer" class="nav-link" data-scroll-target="#cross-lingual-acoustic-model-transfer"><span class="header-section-number">11.4.1</span> Cross-Lingual Acoustic Model Transfer</a></li>
+  <li><a href="#data-augmentation" id="toc-data-augmentation" class="nav-link" data-scroll-target="#data-augmentation"><span class="header-section-number">11.4.2</span> Data Augmentation</a></li>
+  <li><a href="#massively-multilingual-speech-models" id="toc-massively-multilingual-speech-models" class="nav-link" data-scroll-target="#massively-multilingual-speech-models"><span class="header-section-number">11.4.3</span> Massively Multilingual Speech Models</a></li>
+  <li><a href="#speech-recognition-with-turkicnlp" id="toc-speech-recognition-with-turkicnlp" class="nav-link" data-scroll-target="#speech-recognition-with-turkicnlp"><span class="header-section-number">11.4.4</span> Speech Recognition with TurkicNLP</a></li>
+  </ul></li>
+  <li><a href="#sec-ch11-hands-on" id="toc-sec-ch11-hands-on" class="nav-link" data-scroll-target="#sec-ch11-hands-on"><span class="header-section-number">11.5</span> Hands-On: A Fine-Tuning Procedure for Kazakh ASR with Whisper</a></li>
+  <li><a href="#sec-ch11-synthesis" id="toc-sec-ch11-synthesis" class="nav-link" data-scroll-target="#sec-ch11-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch11-further-reading" id="toc-sec-ch11-further-reading" class="nav-link" data-scroll-target="#sec-ch11-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch11-exercises" id="toc-sec-ch11-exercises" class="nav-link" data-scroll-target="#sec-ch11-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-sequence-labeling.html">Applications</a></li><li class="breadcrumb-item"><a href="../chapters/11-speech-technologies.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-11-speech-technologies" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Describe the phonological characteristics of Turkic languages (vowel systems, consonant inventories and prosodic patterns) and explain how they affect speech technology design</li>
+<li>Explain the three main end-to-end ASR architectures (CTC, attention encoder-decoder, RNN-T) at the level needed to evaluate system choices for Turkic languages</li>
+<li>Characterise the Turkic ASR ecosystem: Whisper coverage, TurkicASR, Söyle, massively multilingual models, and the open datasets Common Voice and FLEURS</li>
+<li>Explain how written vowel distinctions, pronunciation and prosody affect text-to-speech synthesis</li>
+<li>Audit released TTS coverage separately from evaluated quality and identify evidence gaps</li>
+<li>Design a first ASR experiment using cross-lingual acoustic transfer and data augmentation for a low-resource Turkic language</li>
+</ul>
+</div>
+</div>
+<p>Speech systems connect recordings with written text. They must handle the target language’s sounds, spelling and pronunciation. Related languages may offer useful training data, but performance also depends on speakers, recording conditions and domain.</p>
+<p>This chapter covers the phonological foundations relevant to speech processing (<a href="#sec-phonology" class="quarto-xref"><span>Section 11.1</span></a>), automatic speech recognition (<a href="#sec-asr" class="quarto-xref"><span>Section 11.2</span></a>), text-to-speech synthesis (<a href="#sec-tts" class="quarto-xref"><span>Section 11.3</span></a>), and the specific low-resource strategies applicable to Turkic speech (<a href="#sec-low-resource-speech" class="quarto-xref"><span>Section 11.4</span></a>). The hands-on provides a Whisper fine-tuning recipe for Kazakh ASR using the Hugging Face ecosystem.</p>
+<section id="sec-phonology" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sec-phonology"><span class="header-section-number">11.1</span> Phonological Sketch of Turkic Languages</h2>
+<section id="vowel-systems-and-orthography" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="vowel-systems-and-orthography"><span class="header-section-number">11.1.1</span> Vowel Systems and Orthography</h3>
+<p>The grammar-based inventory in <a href="02-computational-phenotype.html#tbl-vowel-inventories" class="quarto-xref">Table&nbsp;<span>2.4</span></a> distinguishes phoneme analyses from alphabet letters. Use that inventory and the harmony discussion in <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a> when designing a pronunciation lexicon; a single family-wide vowel count is inappropriate. Johanson treats sound types and vowel systems in Chapters 12–18 and word accents in Chapter 50 <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021</a>)</span>. Standard Uzbek and harmony-preserving Uzbek varieties must be distinguished.</p>
+<p>A speech system maps between acoustic realisations and a particular transcription convention. Surface suffix vowels are normally already written: the abstract morphophoneme <em>A</em> in a morphological rule is not an unspecified vowel in ordinary Turkish input. Pronunciation modelling must still handle allophony, loans, abbreviations and variety-specific spelling–sound correspondences.</p>
+</section>
+<section id="consonants-and-transfer" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="consonants-and-transfer"><span class="header-section-number">11.1.2</span> Consonants and Transfer</h3>
+<p>Transliteration can obscure sound differences. Standard Turkish <em>ğ</em> usually lengthens the preceding vowel or surfaces as a glide; Kazakh <em>ғ</em> is a voiced back fricative. An acoustic encoder may nevertheless transfer useful features to sounds absent from its source language. Evaluate that transfer on held-out target speech and inspect the confusions, rather than predicting accuracy from shared letters.</p>
+</section>
+<section id="prosody" class="level3" data-number="11.1.3">
+<h3 data-number="11.1.3" class="anchored" data-anchor-id="prosody"><span class="header-section-number">11.1.3</span> Prosody</h3>
+<p>Stress, phrase boundaries, duration and intonation depend on the language, variety and construction. A blanket final-stress rule is insufficient. A morphological analyser can supply candidate features, but selecting the reading and predicting prosody require contextual modelling. Evaluate an analyser-assisted front end against the same model without those features, with fluent listeners and matched recordings.</p>
+<p><strong>A Turkmen example.</strong> Turkmen retains primary long vowels <span class="citation" data-cites="gokcur2016longvowels">(<a href="../references.html#ref-gokcur2016longvowels" role="doc-biblioref">Gökçür 2016</a>)</span>. Its spelling usually leaves length unmarked. The exception is ‹üý› for /yː/ (Johanson’s /üː/), as in <em>süýt</em> ‘milk’ and <em>güýç</em> ‘strength’ <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 257–58</a>)</span>. Thus <em>at</em> can represent /at/ ‘horse’ or /aːt/ ‘name’, and <em>ot</em> /ot/ ‘grass’ or /oːt/ ‘fire’ <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 248, 258</a>)</span>. Before a vowel-initial suffix, the consonant following the long vowel becomes voiced: compare <em>ady</em> ‘his/her name’ with <em>aty</em> ‘his/her horse’.</p>
+<p>The Apertium analyser gives both <em>at</em> nouns the same <code>at&lt;n&gt;</code> analysis, alongside a verb reading, and both <em>ot</em> nouns the same <code>ot&lt;n&gt;</code>. A TTS front end therefore needs lexical and contextual information beyond these analyses to choose a pronunciation.</p>
+<p>Turkmen also differs from Turkish in its consonants. In native words, ‹s› and ‹z› represent /θ/ and /ð/: <em>süýt</em> /θyːt/ ‘milk’, <em>duz</em> /duːð/ ‘salt’. Plain /s/ and /z/ occur in loans <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021, 258, 262</a>)</span>. Turkish letter-to-sound rules would miss this distinction. These transcriptions use IPA; Johanson writes the same sounds as /üː/, /θ/ and /δ/ in Turkological notation.</p>
+</section>
+</section>
+<section id="sec-asr" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="sec-asr"><span class="header-section-number">11.2</span> Automatic Speech Recognition</h2>
+<section id="end-to-end-architectures" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="end-to-end-architectures"><span class="header-section-number">11.2.1</span> End-to-End Architectures</h3>
+<p>Three widely used end-to-end ASR architectures provide the background for the Turkic systems discussed here. For algorithmic details see the chapter on automatic speech recognition in <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span>.</p>
+<p><strong>CTC (Connectionist Temporal Classification)</strong> <span class="citation" data-cites="graves2006ctc">(<a href="../references.html#ref-graves2006ctc" role="doc-biblioref">Graves et al. 2006</a>)</span> trains an encoder to predict a probability distribution over output units (such as characters or subwords) and a blank symbol at each encoder time step, then uses the CTC loss to align the predicted sequence with the target text without requiring explicit frame-to-phoneme alignment. Its frame-level predictions are conditionally independent given the encoded audio. Greedy decoding needs no autoregressive decoder, while beam search may incorporate an external language model; MMS and the Omnilingual CTC models below use this design.</p>
+<p><strong>Attention encoder-decoder</strong> uses an encoder (typically a convolutional front-end followed by transformer layers) to produce a sequence of audio representations, and a decoder that attends over these representations to generate output tokens autoregressively. This architecture is the basis of Whisper <span class="citation" data-cites="radford2023whisper">(<a href="../references.html#ref-radford2023whisper" role="doc-biblioref">Radford et al. 2023</a>)</span>. The decoder uses preceding output tokens as well as the audio.</p>
+<p><strong>RNN-T (Recurrent Neural Network Transducer)</strong> <span class="citation" data-cites="graves2012sequence">(<a href="../references.html#ref-graves2012sequence" role="doc-biblioref">Graves 2012</a>)</span> combines an acoustic encoder with a prediction network that encodes the preceding output labels. A joint network uses both representations to predict the next label or blank. RNN-T supports streaming when the acoustic encoder and decoding policy are causal. Compare latency and recognition error on the intended workload; architecture by itself decides little about suitability for deployment.</p>
+</section>
+<section id="whisper" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="whisper"><span class="header-section-number">11.2.2</span> Whisper</h3>
+<p>The original Whisper models <span class="citation" data-cites="radford2023whisper">(<a href="../references.html#ref-radford2023whisper" role="doc-biblioref">Radford et al. 2023</a>)</span> were trained by OpenAI on 680,000 hours of weakly supervised web audio; 117,000 of those hours cover 96 languages other than English. Their tokeniser has 99 language tokens. The later <code>large-v3</code> model added Cantonese, bringing the count to 100 in its <a href="https://huggingface.co/openai/whisper-large-v3/blob/main/generation_config.json">generation configuration</a>. Whisper uses an attention encoder-decoder architecture with a log-mel spectrogram front end and a transformer encoder and decoder. The original release had five sizes (tiny, base, small, medium, large), with the large model having 1,550 million parameters.</p>
+<p>Whisper has dedicated tokens for seven Turkic languages: Turkish (<code>tr</code>), Azerbaijani (<code>az</code>), Uzbek (<code>uz</code>), Kazakh (<code>kk</code>), Tatar (<code>tt</code>), Turkmen (<code>tk</code>) and Bashkir (<code>ba</code>). <strong>Kyrgyz and Uyghur have no dedicated Whisper language tokens.</strong> Training audio varies widely by language; the paper notes that most languages have less than 1,000 hours. Its FLEURS and Common Voice word error rates provide per-language reference baselines.</p>
+<p>Exercise 4 tests an int8 ONNX export of Whisper small with greedy decoding on Piper-synthesised speech: 20 Turkish items from one voice and 30 Kazakh items from six voices. Normalised CER is 5.9% and 54.4%, respectively. Different texts and voices prevent attributing this gap to language alone. Within the Kazakh sample, the Kazakh token outperforms each tested alternative language token and automatic language detection. These synthetic-audio diagnostics leave performance on real recordings unmeasured.</p>
+<p>Evaluate Whisper on the intended domain for every language, including Turkish; for Kyrgyz and Uyghur, start from a model that covers them (TurkicASR, Söyle, MMS, or Omnilingual ASR) instead. The <code>whisper-small</code> (244 million parameters) and <code>whisper-medium</code> (769 million) checkpoints are common starting points for fine-tuning; measure memory and runtime on the hardware at hand.</p>
+</section>
+<section id="turkicasr" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="turkicasr"><span class="header-section-number">11.2.3</span> TurkicASR</h3>
+<p>TurkicASR <span class="citation" data-cites="mussakhojayeva2023turkicasr">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>)</span> is a multilingual ASR system developed at ISSAI that covers 10 Turkic languages: Azerbaijani, Bashkir, Chuvash, Kazakh, Kyrgyz, Sakha, Turkish, Tatar, Uzbek, and Uyghur. A single model is trained jointly on data from all ten languages; the work also released a 218.2-hour Turkish speech corpus.</p>
+<p><strong>Kazakh Speech Corpus 2 (KSC2)</strong> contains over a thousand hours of transcribed Kazakh speech, combining the earlier KSC and KazakhTTS2 recordings with television and radio, parliamentary speeches and podcasts, and including Kazakh–Russian code-switching <span class="citation" data-cites="mussakhojayeva2022ksc2">(<a href="../references.html#ref-mussakhojayeva2022ksc2" role="doc-biblioref">Mussakhojayeva, Khassanov, and Varol 2022a</a>)</span>.</p>
+<p>TurkicASR’s best jointly trained model reduced character and word error rates by 56.7% and 54.3% relative, on average, compared with monolingual models. Adding related Turkic language data helped more than adding English or Russian <span class="citation" data-cites="mussakhojayeva2023turkicasr">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>)</span>. These results support the tested multilingual recipe. A controlled comparison would be needed to separate the contributions of shared phonology, vocabulary and other factors, or to assess the benefit for another language.</p>
+<p><strong>Söyle</strong> <span class="citation" data-cites="mussakhojayeva2024soyle">(<a href="../references.html#ref-mussakhojayeva2024soyle" role="doc-biblioref">Mussakhojayeva et al. 2024</a>)</span> is a Whisper-based system from ISSAI covering 11 Turkic languages and the official languages of the United Nations, released together with the Tatar speech corpus TatSC. It is designed for noisy recording conditions and fine-tunes Whisper on noise-augmented speech, with improvements reported on the paper’s evaluation conditions. Deployment on a new microphone, domain or speaker population still requires a separate test.</p>
+</section>
+<section id="open-speech-datasets-common-voice-and-fleurs" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="open-speech-datasets-common-voice-and-fleurs"><span class="header-section-number">11.2.4</span> Open Speech Datasets: Common Voice and FLEURS</h3>
+<p><strong>Mozilla Common Voice</strong> <span class="citation" data-cites="ardila2020commonvoice">(<a href="../references.html#ref-ardila2020commonvoice" role="doc-biblioref">Ardila et al. 2020</a>)</span> is a crowd-sourced speech dataset collected through volunteer recording. Several Turkic languages have Common Voice datasets, and their sizes do not follow the general resource hierarchy. In the release statistics for Common Voice 27.0 (11 September 2026), Uyghur has 462 validated hours and Bashkir 259, against 130 for Turkish, 102 for Uzbek, 39 for Kyrgyz, 33 for Tatar, 25 for Chuvash, 16 for Sakha, 3 each for Kazakh and Turkmen and 1 for Azerbaijani (<code>datasets/scripted-speech/cv-corpus-27.0-2026-09-11.json</code> in the <code>common-voice/cv-dataset</code> repository, commit <code>65ca246</code>). These counts describe validated audio, not all submitted recordings. Check the current release statistics for each language before planning an experiment. <a href="https://huggingface.co/mozilla-foundation">Mozilla’s distribution notice</a> directs downloads to Mozilla Data Collective from October 2025, so older loading code may no longer work.</p>
+<p><strong>FLEURS</strong> <span class="citation" data-cites="conneau2023fleurs">(<a href="../references.html#ref-conneau2023fleurs" role="doc-biblioref">Conneau et al. 2023</a>)</span> provides about 12 hours of read speech per language for 102 languages, recorded for FLORES sentences, with fixed train/dev/test splits; its Turkic languages are Turkish, Azerbaijani, Kazakh, Kyrgyz and Uzbek. Its shared source-sentence design supports comparisons, but recordings, retained items and speakers differ across languages. Check prompt IDs and split contents when constructing a matched comparison; the approximate hours describe the whole dataset per language, not the training split alone.</p>
+</section>
+</section>
+<section id="sec-tts" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-tts"><span class="header-section-number">11.3</span> Text-to-Speech</h2>
+<section id="text-and-pronunciation-in-turkic-tts" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="text-and-pronunciation-in-turkic-tts"><span class="header-section-number">11.3.1</span> Text and Pronunciation in Turkic TTS</h3>
+<p>A grapheme-based TTS system receives the written surface form, including the selected suffix vowels. A phoneme-based system needs a pronunciation front end that respects the target variety. Suffix vowels use the language’s vowel inventory; each grammatical suffix does not need its own phoneme symbol. Morphological features may help disambiguation or prosody, but their benefit is an experimental question.</p>
+<p>Keep text normalisation (numbers, abbreviations and names), grapheme-to-phoneme conversion and prosodic prediction separate in error analysis. Test both frequent forms and productive unseen inflections. For synthesis, report intelligibility separately from naturalness and speaker similarity.</p>
+</section>
+<section id="kazakhtts2-and-turkictts" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="kazakhtts2-and-turkictts"><span class="header-section-number">11.3.2</span> KazakhTTS2 and TurkicTTS</h3>
+<p><strong>KazakhTTS2</strong> <span class="citation" data-cites="mussakhojayeva2022kazakhtts2">(<a href="../references.html#ref-mussakhojayeva2022kazakhtts2" role="doc-biblioref">Mussakhojayeva, Khassanov, and Varol 2022b</a>)</span> contains 271 hours of studio-recorded Kazakh speech from five speakers (three female, two male), up from 93 hours and two speakers in the first release, with subjective mean opinion scores of 3.6 to 4.2 across the speakers. Its repository releases Tacotron 2 models with Parallel WaveGAN vocoders for each speaker. Emotional speech is covered by the separate <strong>KazEmoTTS</strong> dataset: 74.85 hours from three narrators in six emotions <span class="citation" data-cites="abilbekov2024kazemotts">(<a href="../references.html#ref-abilbekov2024kazemotts" role="doc-biblioref">Abilbekov et al. 2024</a>)</span>. The open Piper voice <code>kk_KZ-issai-high</code>, a VITS model trained on the ISSAI data with six speakers, is used in this chapter’s exercises.</p>
+<p><strong>TurkicTTS</strong> <span class="citation" data-cites="yeshpanov2023turkictts">(<a href="../references.html#ref-yeshpanov2023turkictts" role="doc-biblioref">Yeshpanov, Mussakhojayeva, and Khassanov 2023</a>)</span> tests transliteration-based synthesis for ten languages, including Kazakh, its training language. The other nine are zero-shot targets. Letters are mapped through IPA to Kazakh letters before a Kazakh-trained Tacotron 2 model synthesises the text. The authors report subjective evaluations of this procedure. Mapping target sounds to Kazakh letters can approximate or merge distinctions, so a shared representation does not guarantee faithful target-language pronunciation.</p>
+</section>
+<section id="neural-tts-architectures" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="neural-tts-architectures"><span class="header-section-number">11.3.3</span> Neural TTS Architectures</h3>
+<p>The released systems discussed here use Tacotron 2 and VITS. Codec language modelling provides a further architectural comparison:</p>
+<p><strong>Tacotron 2</strong> <span class="citation" data-cites="shen2018natural">(<a href="../references.html#ref-shen2018natural" role="doc-biblioref">Shen et al. 2018</a>)</span> uses a sequence-to-sequence architecture with attention to convert grapheme or phoneme sequences to mel spectrogram frames, followed by a separate neural vocoder (WaveNet in the original paper, Parallel WaveGAN in the KazakhTTS2 release) to convert spectrograms to audio. KazakhTTS2 and TurkicTTS both use it.</p>
+<p><strong>VITS (Variational Inference with adversarial learning for end-to-end TTS)</strong> <span class="citation" data-cites="kim2021conditional">(<a href="../references.html#ref-kim2021conditional" role="doc-biblioref">Kim, Kong, and Son 2021</a>)</span> is an end-to-end architecture that combines the acoustic model and vocoder in a single network trained with a generative adversarial loss. Its inference procedure can sample durations and latent variables. Repeated output therefore depends on the random seed and noise settings (Exercise 3 measures this for the selected Piper implementation). The MMS and Piper Turkic voices are VITS models. Its relative quality depends on data, training and the listener evaluation.</p>
+<p><strong>VALL-E style codec language modelling</strong> <span class="citation" data-cites="wang2023neural">(<a href="../references.html#ref-wang2023neural" role="doc-biblioref">Chen et al. 2025</a>)</span> treats TTS as a language modelling problem over discrete speech codec tokens. The cited work studies voice-conditioned synthesis; its quality on Turkic languages is untested. Data and compute requirements depend on the checkpoint and adaptation protocol. Voice-cloning experiments additionally require explicit permission for the intended voice use.</p>
+</section>
+<section id="availability-and-evaluated-quality" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="availability-and-evaluated-quality"><span class="header-section-number">11.3.4</span> Availability and Evaluated Quality</h3>
+<p>Public VITS checkpoints exist for <a href="https://huggingface.co/facebook/mms-tts-chv">MMS Chuvash TTS</a> and <a href="https://huggingface.co/facebook/mms-tts-crh">MMS Crimean Tatar TTS</a>, both under CC BY-NC 4.0. The pinned entries in <a href="appendix-b.html#tbl-verified-models" class="quarto-xref">Table&nbsp;<span>B.6</span></a> document their availability. Assess naturalness, dialect coverage and suitability for the intended use separately.</p>
+<p>For each candidate, check its tokeniser’s expected script, training domain, speaker coverage and licence, then run a shared prompt set. Use blinded, counterbalanced listener judgements with the same prompts, listening conditions and evaluation scale for competing systems. Do not compare a new MOS directly with a historical score collected from different listeners.</p>
+</section>
+</section>
+<section id="sec-low-resource-speech" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-low-resource-speech"><span class="header-section-number">11.4</span> Speech for Low-Resource Languages</h2>
+<section id="cross-lingual-acoustic-model-transfer" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="cross-lingual-acoustic-model-transfer"><span class="header-section-number">11.4.1</span> Cross-Lingual Acoustic Model Transfer</h3>
+<p>Start with a checkpoint whose input/output conventions and language coverage fit the task. Compare its unadapted output with full fine-tuning and a declared partial-freezing policy. Build learning curves by increasing <strong>training</strong> hours while keeping validation speakers and transcripts fixed; select the recipe on validation, then evaluate once on the reserved test set. No universal number of hours guarantees useful ASR. Shared phonetic structure motivates transfer but does not identify its cause without controlled comparisons <span class="citation" data-cites="mussakhojayeva2023turkicasr">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>)</span>.</p>
+</section>
+<section id="data-augmentation" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">11.4.2</span> Data Augmentation</h3>
+<p>Apply augmentation to training recordings only, recording its algorithm, probability, seed and parameter distribution. Resampling-based speed perturbation changes pitch and duration together <span class="citation" data-cites="ko2015speed">(<a href="../references.html#ref-ko2015speed" role="doc-biblioref">Ko et al. 2015</a>)</span>. Pitch-preserving time stretching changes duration separately. Pitch shifting varies a recording’s pitch while retaining the same speaker.</p>
+<p>Exercise 2 checks these operations on synthetic Kazakh speech. Duration and median fundamental-frequency ratios use six items; ASR errors use 30. A speed factor of 0.9 produces about 1.11 times the duration and 0.90 times the fundamental frequency. The other operations approximately preserve the quantity they are designed to leave fixed.</p>
+<p>On this sample, time stretching and pitch shifting increase CER more than the tested speed perturbations or 20 dB noise. This tests recogniser sensitivity at inference. An experiment that trains with augmentation is needed to measure its benefit.</p>
+<p>SpecAugment <span class="citation" data-cites="park2019specaugment">(<a href="../references.html#ref-park2019specaugment" role="doc-biblioref">Park et al. 2019</a>)</span> masks time and frequency regions of the acoustic representation. Additive noise is mixed at a declared signal-to-noise ratio; reverberation is produced by <strong>convolving</strong> audio with a room impulse response. These are separate interventions. Preserve intelligibility and transcript alignment, and compare each intervention at the same update budget before combining them.</p>
+</section>
+<section id="massively-multilingual-speech-models" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="massively-multilingual-speech-models"><span class="header-section-number">11.4.3</span> Massively Multilingual Speech Models</h3>
+<p>Meta’s <strong>Massively Multilingual Speech (MMS)</strong> project covers recognition and synthesis in over 1,100 languages, and language identification in about 4,000 <span class="citation" data-cites="pratap2024mms">(<a href="../references.html#ref-pratap2024mms" role="doc-biblioref">Pratap et al. 2024</a>)</span>. It uses separate systems: wav2vec 2.0-based models for recognition and identification, and VITS for synthesis. Recordings of religious texts supply much of the data for small languages, limiting domain coverage; recording conditions also need checking.</p>
+<p>The later <strong>Omnilingual ASR</strong> system covers more than 1,600 languages with CTC models and models using an LLM-inspired decoder, ranging from about 300 million to 7 billion parameters <span class="citation" data-cites="omnilingual2025asr">(<a href="../references.html#ref-omnilingual2025asr" role="doc-biblioref">Omnilingual ASR Team et al. 2025</a>)</span>. TurkicNLP accepts 20 Turkic languages for this backend. Tuvan, Khalaj, Ottoman Turkish and Old Turkic lack an Omnilingual language code (TurkicNLP 0.5.0 README).</p>
+<p>MMS and Omnilingual ASR offer further candidates where the earlier systems lack coverage. Compare an unadapted model with fine-tuning on target-domain speech. Evaluate on FLEURS where available, or on held-out recordings from the intended domain.</p>
+</section>
+<section id="speech-recognition-with-turkicnlp" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="speech-recognition-with-turkicnlp"><span class="header-section-number">11.4.4</span> Speech Recognition with TurkicNLP</h3>
+<p>TurkicNLP wraps Omnilingual ASR as <code>SpeechRecognizer</code>. The wrapper takes TurkicNLP language codes, checks that the model supports them, splits recordings longer than the model’s 40-second limit at pauses, and returns transcripts in the language’s TurkicNLP script. Where the model writes another script, the toolkit transliterates: Karakalpak and Crimean Tatar come out of the model in Cyrillic and are returned in Latin. Speech recognition needs its own Python environment (<code>pip install "turkicnlp[all,asr]"</code> in a fresh environment, because the ASR dependencies pin older versions of PyTorch and NumPy).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> turkicnlp</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(turkicnlp.list_asr_languages(check_model<span class="op">=</span><span class="va">True</span>))   <span class="co"># e.g. {'kaz': {'Cyrl': 'kaz_Cyrl'}, ...}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>asr <span class="op">=</span> turkicnlp.SpeechRecognizer(model_card<span class="op">=</span><span class="st">"omniASR_LLM_1B"</span>, device<span class="op">=</span><span class="st">"cpu"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>texts <span class="op">=</span> asr.transcribe([<span class="st">"kaz_sample.wav"</span>, <span class="st">"tat_sample.wav"</span>], lang<span class="op">=</span>[<span class="st">"kaz"</span>, <span class="st">"tat"</span>], batch_size<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> asr.transcribe(<span class="st">"kaz_sample.wav"</span>, lang<span class="op">=</span><span class="st">"kaz"</span>, return_details<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> seg <span class="kw">in</span> res.segments:                       <span class="co"># time-aligned pieces of long recordings</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[</span><span class="sc">{</span>seg<span class="sc">.</span>start<span class="sc">:.2f}</span><span class="ss">-</span><span class="sc">{</span>seg<span class="sc">.</span>end<span class="sc">:.2f}</span><span class="ss">] </span><span class="sc">{</span>seg<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(asr.transcribe(<span class="st">"kaz_sample.wav"</span>, lang<span class="op">=</span><span class="st">"kaz"</span>, script<span class="op">=</span><span class="st">"Latn"</span>))   <span class="co"># 2021 Latin alphabet</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The transcript can go straight into the text pipeline:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> turkicnlp.Pipeline(<span class="st">"kaz"</span>, processors<span class="op">=</span>[<span class="st">"asr"</span>, <span class="st">"tokenize"</span>, <span class="st">"pos"</span>, <span class="st">"lemma"</span>, <span class="st">"depparse"</span>],</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         asr_model_card<span class="op">=</span><span class="st">"omniASR_LLM_1B"</span>, asr_device<span class="op">=</span><span class="st">"cpu"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp.from_audio(<span class="st">"kaz_sample.wav"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(doc.text, doc.audio_segments)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w <span class="kw">in</span> doc.words:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(w.text, w.upos, w.lemma, w.head, w.deprel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The wrapper’s documented Omnilingual output is lower-case and unpunctuated. This differs from edited training text and can affect tagging and parsing; measure downstream accuracy on checked transcripts rather than assuming the size or direction of the change. Memory use depends on the checkpoint, precision, loader and recording length; measure it in the intended environment.</p>
+</section>
+</section>
+<section id="sec-ch11-hands-on" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="sec-ch11-hands-on"><span class="header-section-number">11.5</span> Hands-On: A Fine-Tuning Procedure for Kazakh ASR with Whisper</h2>
+<p><strong>Question.</strong> Does Whisper adaptation improve recognition on held-out Kazakh recordings?</p>
+<p><strong>Inputs.</strong> The pinned FLEURS Kazakh release and Whisper-small checkpoint below.</p>
+<p><strong>Compute.</strong> Audio decoding, checkpoint downloads and training memory; a GPU is useful for fine-tuning.</p>
+<p><strong>Output.</strong> Saved predictions, raw and normalised WER/CER, and an experiment manifest.</p>
+<p><strong>Interpretation.</strong> Compare real-recording baseline and adapted output under the same scoring policy.</p>
+<p>The executable implementation is <a href="../code/ch11-speech/speech.py">speech.py</a>. It uses <code>google/fleurs</code>, configuration <code>kk_kz</code>, at revision <code>70bb2e84b976b7e960aa89f1c648e09c59f894dd</code>, and the pinned <code>openai/whisper-small</code> checkpoint in <a href="appendix-b.html#tbl-verified-models" class="quarto-xref">Table&nbsp;<span>B.6</span></a>. The current dataset release has Parquet files; the loader requests undecoded audio and uses SoundFile explicitly rather than assuming an older <code>datasets.Audio</code> array interface.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> code/ch11-speech/speech.py runs/kazakh-asr <span class="at">--epochs</span> 3 <span class="at">--seed</span> 42</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script keeps official train, validation and test splits separate. It rejects duplicate recording paths and cross-split identical transcripts, reports retained duration per split, and relies on the dataset card’s speaker separation because speaker IDs are not exposed in this schema. If these checks fail, investigate the release rather than silently redistributing benchmark items.</p>
+<p>Only finite mono 16 kHz recordings of at most 30 seconds enter this short-utterance recipe. Longer audio must be segmented with aligned transcripts in a separately documented experiment. Truncating a recording while retaining its whole transcript teaches the wrong alignment. Overlength decoder targets are also rejected.</p>
+<p>The collator removes the leading <strong>decoder-start</strong> token exactly once; Whisper inserts it during label shifting. It retains language/task tokens, supplies the acoustic attention mask, and masks label padding with <code>-100</code>. Checkpoint selection uses validation WER. After selection, the baseline and adapted checkpoint are decoded on the <strong>same complete test items</strong> with the same language, task and generation limit.</p>
+<p>The scorer compares predictions with the original reference strings. It reports corpus-level raw and conservatively normalised WER/CER, empty-reference counts, recording-ID hashes and per-item transcripts. Its normalisation preserves alphabet distinctions and apostrophes; state that policy when comparing scores. Reference words or characters form the denominator, while insertions against empty references still contribute to the numerator.</p>
+<p>The implementation checks exercise the collator, audio guards, metric arithmetic and a tiny randomly initialised Whisper forward/backward pass. The recorded Exercise 1 uses the same scoring functions on synthetic speech, but a different int8 ONNX export and runtime. Its error rates are not the unadapted FLEURS baseline for this training recipe.</p>
+<p>For long-recording inference, use a separately validated chunking/stitching procedure. For short recordings, call <code>model.eval()</code> and <code>torch.inference_mode()</code> and enforce the same sample-rate and duration checks.</p>
+<p><strong>Status: procedure only.</strong> The fine-tuning run on real recordings is not reported here.</p>
+</section>
+<section id="sec-ch11-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch11-synthesis">What to Take Forward</h2>
+<p>Speech systems connect written conventions with sounds, timing and speakers. The synthetic-audio probes illustrate recogniser behaviour on specific texts and voices; ranking languages by quality on this basis would overreach. Evaluate ASR on real recordings under a stated normalisation policy and TTS with listeners. Compare cross-language training and augmentation on held-out speech. <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a> returns to text and pretrained models.</p>
+</section>
+<section id="sec-ch11-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch11-further-reading">Further Reading</h2>
+<p>The TurkicASR system is described in <span class="citation" data-cites="mussakhojayeva2023turkicasr">Mussakhojayeva et al. (<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">2023</a>)</span>, the primary reference for ISSAI’s multilingual Turkic ASR. <span class="citation" data-cites="mussakhojayeva2022kazakhtts2">Mussakhojayeva, Khassanov, and Varol (<a href="../references.html#ref-mussakhojayeva2022kazakhtts2" role="doc-biblioref">2022b</a>)</span> describes KazakhTTS2, and <span class="citation" data-cites="yeshpanov2023turkictts">Yeshpanov, Mussakhojayeva, and Khassanov (<a href="../references.html#ref-yeshpanov2023turkictts" role="doc-biblioref">2023</a>)</span> the zero-shot TurkicTTS approach.</p>
+<p>The Whisper paper <span class="citation" data-cites="radford2023whisper">(<a href="../references.html#ref-radford2023whisper" role="doc-biblioref">Radford et al. 2023</a>)</span> describes the training procedure, data filtering methodology, and language coverage of the Whisper model series; its supplementary materials include per-language WER breakdowns that are the primary source for Turkic ASR baselines. For speech processing fundamentals including CTC, attention-based encoder-decoders, and the RNN-T architecture, the speech chapters of <span class="citation" data-cites="jurafsky2024slp">Jurafsky and Martin (<a href="../references.html#ref-jurafsky2024slp" role="doc-biblioref">2024</a>)</span> provide a thorough treatment.</p>
+<p>For Turkic phonology, <span class="citation" data-cites="Johanson_2021">Johanson (<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">2021</a>)</span> (chapters 12–18 and 50) covers vowel systems, consonant inventories, and prosodic patterns with systematic comparison across the family. Use these descriptions when checking pronunciation assumptions in a speech system.</p>
+</section>
+<section id="sec-ch11-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch11-exercises">Exercises</h2>
+<ol type="1">
+<li>Measure the unadapted Whisper baseline on a frozen Kazakh test set: raw and normalised WER and CER, total duration, results per speaker where identifiers are available, and error examples. FLEURS does not expose speaker IDs in the schema used here, so do not invent a speaker breakdown from recording paths. With the Hands-On script, compare it with the adapted checkpoint on the same items, choosing all decoding settings on validation.</li>
+<li>Apply resampling speed perturbation, pitch-preserving time stretching, pitch shifting and additive noise separately. Verify what each operation changes (duration, fundamental frequency, signal-to-noise ratio) and measure the recogniser’s sensitivity to each before using any of them in training, where they are compared at matched updates and seeds and kept in their source split.</li>
+<li>Compare TTS voices with an ASR-based transcription-error diagnostic, measure how much repeated sampling of the same text changes it, and distinguish recogniser errors from synthesis errors. This diagnostic alone cannot rank human intelligibility or naturalness. Use the same prompts for every voice and design a blinded, counterbalanced listening test for fluent, compensated listeners. Obtain permission for any cloned voice.</li>
+<li>Decode Kazakh and Turkish speech with the Whisper tokens of related languages and with automatic language detection. Check which Turkic language tokens the model accepts; for Kyrgyz or Uyghur, compare related-language and multilingual initialisations by fine-tuning instead of forcing an unsupported token.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-abilbekov2024kazemotts" class="csl-entry" role="listitem">
+Abilbekov, Adal, Saida Mussakhojayeva, Rustem Yeshpanov, and Huseyin Atakan Varol. 2024. <span>“<span>K</span>az<span>E</span>mo<span>TTS</span>: A Dataset for <span>K</span>azakh Emotional Text-to-Speech Synthesis.”</span> In <em>Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (<span>LREC</span>-<span>COLING</span> 2024)</em>, 9626–32. Torino, Italia: ELRA; ICCL. <a href="https://aclanthology.org/2024.lrec-main.841/">https://aclanthology.org/2024.lrec-main.841/</a>.
+</div>
+<div id="ref-ardila2020commonvoice" class="csl-entry" role="listitem">
+Ardila, Rosana, Megan Branson, Kelly Davis, Michael Kohler, Josh Meyer, Michael Henretty, Reuben Morais, Lindsay Saunders, Francis Tyers, and Gregor Weber. 2020. <span>“Common Voice: A Massively-Multilingual Speech Corpus.”</span> In <em>Proceedings of the Twelfth Language Resources and Evaluation Conference</em>, 4218–22. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2020.lrec-1.520/">https://aclanthology.org/2020.lrec-1.520/</a>.
+</div>
+<div id="ref-wang2023neural" class="csl-entry" role="listitem">
+Chen, Sanyuan, Chengyi Wang, Yu Wu, Ziqiang Zhang, Long Zhou, Shujie Liu, Zhuo Chen, et al. 2025. <span>“Neural Codec Language Models Are Zero-Shot Text to Speech Synthesizers.”</span> <em>IEEE Transactions on Audio, Speech and Language Processing</em> 33: 705–18. <a href="https://doi.org/10.1109/TASLPRO.2025.3530270">https://doi.org/10.1109/TASLPRO.2025.3530270</a>.
+</div>
+<div id="ref-conneau2023fleurs" class="csl-entry" role="listitem">
+Conneau, Alexis, Min Ma, Simran Khanuja, Yu Zhang, Vera Axelrod, Siddharth Dalmia, Jason Riesa, Clara Rivera, and Ankur Bapna. 2023. <span>“<span>FLEURS</span>: Few-Shot Learning Evaluation of Universal Representations of Speech.”</span> In <em>2022 IEEE Spoken Language Technology Workshop (SLT)</em>, 798–805. IEEE. <a href="https://doi.org/10.1109/SLT54892.2023.10023141">https://doi.org/10.1109/SLT54892.2023.10023141</a>.
+</div>
+<div id="ref-gokcur2016longvowels" class="csl-entry" role="listitem">
+Gökçür, Engin. 2016. <span>“Primary Long Vowels in <span>T</span>urkmen <span>T</span>urkish [<span>T</span>ürkmen <span>T</span>ürkçesinde Birincil Uzun Ünlüler].”</span> <em>The Journal of Academic Social Science Studies</em> 6 (47): 235–53. <a href="https://doi.org/10.9761/JASSS3460">https://doi.org/10.9761/JASSS3460</a>.
+</div>
+<div id="ref-graves2012sequence" class="csl-entry" role="listitem">
+Graves, Alex. 2012. <span>“Sequence Transduction with Recurrent Neural Networks.”</span> arXiv preprint arXiv:1211.3711. <a href="https://arxiv.org/abs/1211.3711">https://arxiv.org/abs/1211.3711</a>.
+</div>
+<div id="ref-graves2006ctc" class="csl-entry" role="listitem">
+Graves, Alex, Santiago Fernández, Faustino Gomez, and Jürgen Schmidhuber. 2006. <span>“Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks.”</span> In <em>Proceedings of the 23rd International Conference on Machine Learning (<span>ICML</span>)</em>, 369–76. ACM. <a href="https://doi.org/10.1145/1143844.1143891">https://doi.org/10.1145/1143844.1143891</a>.
+</div>
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+<div id="ref-jurafsky2024slp" class="csl-entry" role="listitem">
+Jurafsky, Daniel, and James H. Martin. 2024. <em>Speech and Language Processing</em>. 3rd ed.
+</div>
+<div id="ref-kim2021conditional" class="csl-entry" role="listitem">
+Kim, Jaehyeon, Jungil Kong, and Juhee Son. 2021. <span>“Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech.”</span> In <em>Proceedings of the 38th International Conference on Machine Learning (<span>ICML</span>)</em>, 139:5530–40. Proceedings of Machine Learning Research. PMLR.
+</div>
+<div id="ref-ko2015speed" class="csl-entry" role="listitem">
+Ko, Tom, Vijayaditya Peddinti, Daniel Povey, and Sanjeev Khudanpur. 2015. <span>“Audio Augmentation for Speech Recognition.”</span> In <em>Proceedings of Interspeech 2015</em>, 3586–89. ISCA. <a href="https://doi.org/10.21437/Interspeech.2015-711">https://doi.org/10.21437/Interspeech.2015-711</a>.
+</div>
+<div id="ref-mussakhojayeva2023turkicasr" class="csl-entry" role="listitem">
+Mussakhojayeva, Saida, Kaisar Dauletbek, Rustem Yeshpanov, and Huseyin Atakan Varol. 2023. <span>“Multilingual Speech Recognition for <span>Turkic</span> Languages.”</span> <em>Information</em> 14 (2): 74. <a href="https://doi.org/10.3390/info14020074">https://doi.org/10.3390/info14020074</a>.
+</div>
+<div id="ref-mussakhojayeva2024soyle" class="csl-entry" role="listitem">
+Mussakhojayeva, Saida, Rinat Gilmullin, Bulat Khakimov, Mansur Galimov, Daniil Orel, Adal Adilbekov, and Huseyin Atakan Varol. 2024. <span>“Noise-Robust Multilingual Speech Recognition and the <span>T</span>atar Speech Corpus.”</span> In <em>2024 International Conference on Artificial Intelligence in Information and Communication (<span>ICAIIC</span>)</em>, 732–37. IEEE. <a href="https://doi.org/10.1109/ICAIIC60209.2024.10463419">https://doi.org/10.1109/ICAIIC60209.2024.10463419</a>.
+</div>
+<div id="ref-mussakhojayeva2022ksc2" class="csl-entry" role="listitem">
+Mussakhojayeva, Saida, Yerbolat Khassanov, and Huseyin Atakan Varol. 2022a. <span>“<span>KSC2</span>: An Industrial-Scale Open-Source <span>K</span>azakh Speech Corpus.”</span> In <em>Proceedings of Interspeech 2022</em>, 1367–71. ISCA. <a href="https://doi.org/10.21437/Interspeech.2022-421">https://doi.org/10.21437/Interspeech.2022-421</a>.
+</div>
+<div id="ref-mussakhojayeva2022kazakhtts2" class="csl-entry" role="listitem">
+———. 2022b. <span>“<span>K</span>azakh<span>TTS</span>2: Extending the Open-Source <span>K</span>azakh <span>TTS</span> Corpus with More Data, Speakers, and Topics.”</span> In <em>Proceedings of the Thirteenth Language Resources and Evaluation Conference</em>, 5404–11. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2022.lrec-1.578/">https://aclanthology.org/2022.lrec-1.578/</a>.
+</div>
+<div id="ref-omnilingual2025asr" class="csl-entry" role="listitem">
+Omnilingual ASR Team, Gil Keren, Artyom Kozhevnikov, Yen Meng, Christophe Ropers, Matthew Setzler, Skyler Wang, et al. 2025. <span>“Omnilingual <span>ASR</span>: Open-Source Multilingual Speech Recognition for 1600+ Languages.”</span> arXiv preprint arXiv:2511.09690. <a href="https://arxiv.org/abs/2511.09690">https://arxiv.org/abs/2511.09690</a>.
+</div>
+<div id="ref-park2019specaugment" class="csl-entry" role="listitem">
+Park, Daniel S., William Chan, Yu Zhang, Chung-Cheng Chiu, Barret Zoph, Ekin D. Cubuk, and Quoc V. Le. 2019. <span>“<span>SpecAugment</span>: A Simple Data Augmentation Method for Automatic Speech Recognition.”</span> In <em>Proceedings of Interspeech 2019</em>, 2613–17. ISCA. <a href="https://doi.org/10.21437/Interspeech.2019-2680">https://doi.org/10.21437/Interspeech.2019-2680</a>.
+</div>
+<div id="ref-pratap2024mms" class="csl-entry" role="listitem">
+Pratap, Vineel, Andros Tjandra, Bowen Shi, Paden Tomasello, Arun Babu, Sayani Kundu, Ali Elkahky, et al. 2024. <span>“Scaling Speech Technology to 1,000+ Languages.”</span> <em>Journal of Machine Learning Research</em> 25 (97): 1–52. <a href="https://jmlr.org/papers/v25/23-1318.html">https://jmlr.org/papers/v25/23-1318.html</a>.
+</div>
+<div id="ref-radford2023whisper" class="csl-entry" role="listitem">
+Radford, Alec, Jong Wook Kim, Tao Xu, Greg Brockman, Christine McLeavey, and Ilya Sutskever. 2023. <span>“Robust Speech Recognition via Large-Scale Weak Supervision.”</span> In <em>Proceedings of the 40th International Conference on Machine Learning (<span>ICML</span>)</em>, 202:28492–518. Proceedings of Machine Learning Research. PMLR.
+</div>
+<div id="ref-shen2018natural" class="csl-entry" role="listitem">
+Shen, Jonathan, Ruoming Pang, Ron J. Weiss, Mike Schuster, Navdeep Jaitly, Zongheng Yang, Zhifeng Chen, et al. 2018. <span>“Natural <span>TTS</span> Synthesis by Conditioning <span>WaveNet</span> on Mel Spectrogram Predictions.”</span> In <em>2018 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em>, 4779–83. IEEE. <a href="https://doi.org/10.1109/ICASSP.2018.8461368">https://doi.org/10.1109/ICASSP.2018.8461368</a>.
+</div>
+<div id="ref-yeshpanov2023turkictts" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Saida Mussakhojayeva, and Yerbolat Khassanov. 2023. <span>“Multilingual Text-to-Speech Synthesis for <span>Turkic</span> Languages Using Transliteration.”</span> In <em>Proceedings of Interspeech 2023</em>, 5521–25. ISCA. <a href="https://doi.org/10.21437/Interspeech.2023-249">https://doi.org/10.21437/Interspeech.2023-249</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/10-machine-translation.html" class="pagination-link" aria-label="Machine Translation: Within and Beyond the Family">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/12-pretrained-lms.html" class="pagination-link" aria-label="Pretrained Language Models for Turkic">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

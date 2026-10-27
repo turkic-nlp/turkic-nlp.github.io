@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>16&nbsp; Cross-Lingual Transfer within the Turkic Family – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/17-endangered-ethics.html" rel="next">
+<link href="../chapters/15-evaluation-benchmarks.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/16-cross-lingual-transfer.html">Cross-Lingual Methods and the Resource Frontier</a></li><li class="breadcrumb-item"><a href="../chapters/16-cross-lingual-transfer.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-why-transfer" id="toc-sec-why-transfer" class="nav-link active" data-scroll-target="#sec-why-transfer"><span class="header-section-number">16.1</span> Why Related Languages Can Help</a>
+  <ul class="collapse">
+  <li><a href="#structural-and-lexical-hypotheses" id="toc-structural-and-lexical-hypotheses" class="nav-link" data-scroll-target="#structural-and-lexical-hypotheses"><span class="header-section-number">16.1.1</span> Structural and Lexical Hypotheses</a></li>
+  <li><a href="#evidence-from-tasks" id="toc-evidence-from-tasks" class="nav-link" data-scroll-target="#evidence-from-tasks"><span class="header-section-number">16.1.2</span> Evidence from Tasks</a></li>
+  </ul></li>
+  <li><a href="#sec-script-norm" id="toc-sec-script-norm" class="nav-link" data-scroll-target="#sec-script-norm"><span class="header-section-number">16.2</span> Script Conversion as an Experimental Condition</a></li>
+  <li><a href="#sec-strategy" id="toc-sec-strategy" class="nav-link" data-scroll-target="#sec-strategy"><span class="header-section-number">16.3</span> Transfer Strategy by Available Evidence</a></li>
+  <li><a href="#sec-multilingual" id="toc-sec-multilingual" class="nav-link" data-scroll-target="#sec-multilingual"><span class="header-section-number">16.4</span> Multilingual Turkic Training</a>
+  <ul class="collapse">
+  <li><a href="#pooling-data-across-languages" id="toc-pooling-data-across-languages" class="nav-link" data-scroll-target="#pooling-data-across-languages"><span class="header-section-number">16.4.1</span> Pooling Data Across Languages</a></li>
+  <li><a href="#evidence-from-speech-and-parsing" id="toc-evidence-from-speech-and-parsing" class="nav-link" data-scroll-target="#evidence-from-speech-and-parsing"><span class="header-section-number">16.4.2</span> Evidence from Speech and Parsing</a></li>
+  <li><a href="#language-specific-adapters" id="toc-language-specific-adapters" class="nav-link" data-scroll-target="#language-specific-adapters"><span class="header-section-number">16.4.3</span> Language-Specific Adapters</a></li>
+  <li><a href="#addressing-data-imbalance" id="toc-addressing-data-imbalance" class="nav-link" data-scroll-target="#addressing-data-imbalance"><span class="header-section-number">16.4.4</span> Addressing Data Imbalance</a></li>
+  </ul></li>
+  <li><a href="#sec-pivot" id="toc-sec-pivot" class="nav-link" data-scroll-target="#sec-pivot"><span class="header-section-number">16.5</span> Pivot Translation as Data Augmentation</a></li>
+  <li><a href="#sec-code-switching" id="toc-sec-code-switching" class="nav-link" data-scroll-target="#sec-code-switching"><span class="header-section-number">16.6</span> Code-Switched and Mixed Text</a></li>
+  <li><a href="#sec-ch16-hands-on" id="toc-sec-ch16-hands-on" class="nav-link" data-scroll-target="#sec-ch16-hands-on"><span class="header-section-number">16.7</span> Hands-On: Comparing Native Text and Script Conversion</a></li>
+  <li><a href="#sec-ch16-synthesis" id="toc-sec-ch16-synthesis" class="nav-link" data-scroll-target="#sec-ch16-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch16-further-reading" id="toc-sec-ch16-further-reading" class="nav-link" data-scroll-target="#sec-ch16-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch16-exercises" id="toc-sec-ch16-exercises" class="nav-link" data-scroll-target="#sec-ch16-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/16-cross-lingual-transfer.html">Cross-Lingual Methods and the Resource Frontier</a></li><li class="breadcrumb-item"><a href="../chapters/16-cross-lingual-transfer.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-16-cross-lingual-transfer" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Form testable hypotheses about within-family transfer using morphological and lexical evidence</li>
+<li>Design comparisons that distinguish script, relatedness and resource effects</li>
+<li>Evaluate proxy-language configurations where target task training data are unavailable</li>
+<li>Choose transfer methods to compare using the available target-language evidence</li>
+<li>Explain pooled training and test how temperature sampling changes language exposure</li>
+<li>Compare language-specific adapters with separate models and pooled training</li>
+<li>Distinguish pivot translation, back-translation and synthetic-data filtering</li>
+<li>Recognise the challenges of code-switched Turkic text</li>
+</ul>
+</div>
+</div>
+<p>Earlier chapters tested transfer in morphology, parsing, NER, translation and speech. <a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a> and <a href="13-meaning-retrieval.html" class="quarto-xref"><span>Chapter 13</span></a> also compared native and converted text for classification and retrieval. This chapter brings those methods together: choosing source languages, controlling script conversion, pooling training data and evaluating target-language results.</p>
+<section id="sec-why-transfer" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="sec-why-transfer"><span class="header-section-number">16.1</span> Why Related Languages Can Help</h2>
+<section id="structural-and-lexical-hypotheses" class="level3" data-number="16.1.1">
+<h3 data-number="16.1.1" class="anchored" data-anchor-id="structural-and-lexical-hypotheses"><span class="header-section-number">16.1.1</span> Structural and Lexical Hypotheses</h3>
+<p>Transfer reuses a model trained on one language to make predictions in another. Shared suffix patterns can help a tagger recognise similar grammatical functions; shared words can give an encoder familiar inputs. Multilingual pretraining offers another route: it can place texts from different languages in a shared representation space. A source language is therefore a candidate to test, using the target task and data to judge its usefulness.</p>
+<p>The morphology in <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a> suggests which constructions to compare. Written overlap may come from inherited cognates or shared loans, such as <em>kitap/kitab</em> ‘book’. Script conversion changes that overlap. Compare sources on the same target sentences and record script, training size and domain alongside the score (<a href="15-evaluation-benchmarks.html#sec-evaluation-principles" class="quarto-xref"><span>Section 15.1</span></a>).</p>
+</section>
+<section id="evidence-from-tasks" class="level3" data-number="16.1.2">
+<h3 data-number="16.1.2" class="anchored" data-anchor-id="evidence-from-tasks"><span class="header-section-number">16.1.2</span> Evidence from Tasks</h3>
+<p>Kardeş-NLU reports benefits from Turkish intermediate training in its evaluated settings <span class="citation" data-cites="senel2024kardes">(<a href="../references.html#ref-senel2024kardes" role="doc-biblioref">Senel et al. 2024</a>)</span>. The parser comparison in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a> and TurkicASR in <a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a> provide further task-specific evidence. The parser table uses matched words and includes very small target samples, especially Sakha; interpret its scores under that evaluation convention.</p>
+<p>“Zero-shot” here means applying a model without target task-labelled training. The model may have encountered the target language during multilingual pretraining. A proxy language is a chosen model input or routing configuration. Evaluate that choice on independent target annotations.</p>
+</section>
+</section>
+<section id="sec-script-norm" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="sec-script-norm"><span class="header-section-number">16.2</span> Script Conversion as an Experimental Condition</h2>
+<p>Script conversion supplies an alternative written input to the same task. The conversion conventions and their losses are explained in <a href="03-scripts-orthography.html#sec-transliteration" class="quarto-xref"><span>Section 3.4</span></a> and <a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>. Here the question is whether conversion helps transfer: compare it with native text under the model’s documented input conventions. <span class="citation" data-cites="muller2021unseen">Muller et al. (<a href="../references.html#ref-muller2021unseen" role="doc-biblioref">2021</a>)</span> motivates testing this for unseen scripts.</p>
+<ol type="1">
+<li>Identify the language and script on the original text.</li>
+<li>Record the converter, version and supported direction. Native Latin is not automatically CTS.</li>
+<li>Preserve original strings, whitespace, item IDs and an explicit character-boundary map.</li>
+<li>Run the model, recording any additional automatic script bridging.</li>
+<li>Map predictions back only where the alignment is unambiguous; report failures and coverage.</li>
+</ol>
+<p>Digraphs, deletions and context-sensitive mappings can shift character offsets even when word counts stay the same. Rebuilding text with <code>split()</code>/<code>join()</code> can also change its spacing. Preserve a map to the original boundaries; a lossy conversion may have no exact inverse.</p>
+</section>
+<section id="sec-strategy" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="sec-strategy"><span class="header-section-number">16.3</span> Transfer Strategy by Available Evidence</h2>
+<p>Available annotation, domain match, model coverage and cost jointly determine which comparisons are feasible. No fixed sentence count marks the point at which a larger model or training from scratch becomes preferable.</p>
+<div id="tbl-strategy-matrix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-strategy-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;16.1: Candidate comparisons, not measured resource thresholds.
+</figcaption>
+<div aria-describedby="tbl-strategy-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Available evidence</th>
+<th>Initial comparisons</th>
+<th>What to reserve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No target task labels</td>
+<td>Native multilingual/proxy baseline; optional conversion; existing FST where relevant</td>
+<td>Obtain independent target evaluation before claiming quality</td>
+</tr>
+<tr class="even">
+<td>Small labelled collection</td>
+<td>Zero-shot, head/adapter tuning, pooled training</td>
+<td>Source-disjoint development and test items</td>
+</tr>
+<tr class="odd">
+<td>Labelled data plus unlabelled text</td>
+<td>Continued pretraining vs.&nbsp;task tuning alone</td>
+<td>Exclude all evaluation texts from adaptation</td>
+</tr>
+<tr class="even">
+<td>Larger task data and compute budget</td>
+<td>Monolingual vs.&nbsp;multilingual; model-size and scratch-training controls</td>
+<td>Same test set and comparable tuning budgets</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Check existing resources before adapting a neighbouring language’s system. Nogai, for example, already has an Apertium module whose lexicon and rules can be extended. For translation, verify NLLB’s supported codes: adding a pivot cannot supply a missing language interface. Use development learning curves to estimate the value of further annotation or parallel data, and reserve separate gold sentences for final evaluation.</p>
+</section>
+<section id="sec-multilingual" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="sec-multilingual"><span class="header-section-number">16.4</span> Multilingual Turkic Training</h2>
+<section id="pooling-data-across-languages" class="level3" data-number="16.4.1">
+<h3 data-number="16.4.1" class="anchored" data-anchor-id="pooling-data-across-languages"><span class="header-section-number">16.4.1</span> Pooling Data Across Languages</h3>
+<p>Pool only after checking label conventions, tokenisation and split provenance. Language tags, language embeddings and separate adapters are alternative design choices; none is required by multilingual training. Compare a language-conditioned model with an otherwise matched shared model. A dominant corpus can influence training, but raw language percentages alone do not identify which linguistic mechanism produced a gain.</p>
+</section>
+<section id="evidence-from-speech-and-parsing" class="level3" data-number="16.4.2">
+<h3 data-number="16.4.2" class="anchored" data-anchor-id="evidence-from-speech-and-parsing"><span class="header-section-number">16.4.2</span> Evidence from Speech and Parsing</h3>
+<p>Speech and parsing provide two task-specific comparisons. In speech, the TurkicASR system <span class="citation" data-cites="mussakhojayeva2023turkicasr">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>)</span> trains a single model jointly on transcribed speech in ten Turkic languages and reports improvements for languages with little data; these results do not isolate the contribution of shared phonetics. In parsing, TurkicNLP’s multilingual parser, trained on twenty UD-format treebanks of ten Turkic languages, is evaluated in the frozen matched-word comparison in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a>. Its gold/silver reference mixture and small samples limit interpretation <span class="citation" data-cites="hakimov2025turkicnlp">(<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">Hakimov 2026</a>)</span>.</p>
+<p>Transfer failures should be analysed by language, domain and task. Report branch and script alongside the results, without treating them as explanations by themselves.</p>
+</section>
+<section id="language-specific-adapters" class="level3" data-number="16.4.3">
+<h3 data-number="16.4.3" class="anchored" data-anchor-id="language-specific-adapters"><span class="header-section-number">16.4.3</span> Language-Specific Adapters</h3>
+<p>State each training stage. One recipe begins with a shared pretrained encoder, optionally updates it on pooled text, then freezes it while training a target adapter <strong>and task head</strong>. Another trains shared weights and adapters jointly. Compare these as separate experiments. Distinguish bottleneck adapters from LoRA and report the modules trained, parameter counts and measured inference overhead.</p>
+<p>Freezing shared weights prevents those weights from being overwritten during that stage, but does not guarantee preservation of end-to-end predictions: adapters and heads change outputs. Save all trained components and check reload equivalence.</p>
+</section>
+<section id="addressing-data-imbalance" class="level3" data-number="16.4.4">
+<h3 data-number="16.4.4" class="anchored" data-anchor-id="addressing-data-imbalance"><span class="header-section-number">16.4.4</span> Addressing Data Imbalance</h3>
+<p>Temperature sampling chooses language <span class="math inline">\(i\)</span> with probability</p>
+<p><span class="math display">\[p_i=\frac{n_i^{1/T}}{\sum_j n_j^{1/T}}.\]</span></p>
+<p>With a synthetic 9:1 corpus-size ratio, <span class="math inline">\(T=1\)</span> samples 90%/10% and <span class="math inline">\(T=2\)</span> samples 75%/25%. The figures are illustrative arithmetic. In an actual run, track examples and updates per language. Choosing one language per batch controls exposure across steps; mixing all languages into every batch needs a compatible batch design. Select temperature on development data and check both smaller and larger languages.</p>
+</section>
+</section>
+<section id="sec-pivot" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="sec-pivot"><span class="header-section-number">16.5</span> Pivot Translation as Data Augmentation</h2>
+<p>A pivot translates source→pivot→target when both component directions are supported. Verify the actual released pair/model and script for each leg; a development repository is evidence neither of released coverage nor of translation quality. Compare direct translation, pivoting and any synthetic-data adaptation on the same independent target test set (<a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a>).</p>
+<p>Evaluate the complete source→pivot→target output. Scores for the two legs cannot simply be combined: the second model may preserve, introduce or repair errors.</p>
+<p>Back-translation uses a target→source system to pair real target sentences with synthetic source text. Document filtering and keep source-document groups intact across splits. Check the real text too. Round-trip consistency can reward copying or repeatable mistakes, so combine it with language checks, alignment diagnostics and independent human review.</p>
+<p>Compare filtered data with random subsets of equal size. Exercise 4 measures reference overlap on such subsets without training on them. To test their value for adaptation, generate separate training data and reserve the benchmark test set for final evaluation.</p>
+<div id="fig-transfer-strategy-decision-tree" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Flowchart branching on target labels, optional conversion and rule-based comparisons, ending in target evaluation.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transfer-strategy-decision-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/fig-transfer-strategy-decision-tree/output.png" class="img-fluid figure-img" style="width:100.0%" alt="Flowchart branching on target labels, optional conversion and rule-based comparisons, ending in target evaluation.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transfer-strategy-decision-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.1: An evaluation workflow for choosing a cross-lingual transfer strategy. Target task labels determine the initial comparison. Script conversion and an available finite-state transducer are options to test; final selection depends on held-out target performance, coverage, cost and error analysis.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-code-switching" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="sec-code-switching"><span class="header-section-number">16.6</span> Code-Switched and Mixed Text</h2>
+<p>Distinguish an established borrowing from an active switch between languages, and state the annotation convention for ambiguous cases. A shared script cannot identify language boundaries. Preserve mixed-language segments and evaluate token-level language labels, task labels and segment boundaries separately. Turkish–German SAGT and Turkish–English BUTR resources must be named according to the exact released treebank; consult the official inventory in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a> rather than treating every Turkish treebank as monolingual.</p>
+<p>Inserting words synthetically perturbs the input. Natural code-switching may look quite different. Have proficient speakers check naturalness and preservation of the task label, and report real mixed-language evaluation separately.</p>
+</section>
+<section id="sec-ch16-hands-on" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="sec-ch16-hands-on"><span class="header-section-number">16.7</span> Hands-On: Comparing Native Text and Script Conversion</h2>
+<p><strong>Question.</strong> Does consistent script conversion change Kazakh-to-Kyrgyz NER?</p>
+<p><strong>Inputs.</strong> Source training and independent target annotations, converter metadata and a declared entity schema.</p>
+<p><strong>Compute.</strong> The Exercise 1 CRF runs on CPU; the full protocol also needs original character offsets.</p>
+<p><strong>Output.</strong> Span scores by script condition and a mapping-failure report.</p>
+<p><strong>Interpretation.</strong> Compare matched conditions and keep token-level results distinct from original-offset validation.</p>
+<p>Use a source-trained model and independently annotated target sentences with immutable IDs and original character spans. Keep source training data and target development/test groups disjoint. Harmonise entity schemas <strong>before</strong> scoring: map PERSON/PER to PER, ORGANIZATION/ORG to ORG, and GPE/LOCATION/LOC to LOC; excluded types become O under this explicitly reduced task.</p>
+<p>The tested helpers in <a href="../code/ch16-transfer/transfer.py">transfer.py</a> reconstruct BIO spans from original offsets, reject orphan <code>I</code> tags, and map converted spans through unique stable character boundaries. A span cutting a digraph or ambiguous deleted unit is rejected and counted, not silently moved. The conservative prefix-probing converter is intended for short diagnostics and is quadratic in text length.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transfer <span class="im">import</span> conversion_map, restore_span  <span class="co"># code/ch16-transfer on PYTHONPATH</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts <span class="im">import</span> Script</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkicnlp.scripts.transliterator <span class="im">import</span> Transliterator</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>converter <span class="op">=</span> Transliterator(<span class="st">"kir"</span>, Script.CYRILLIC, Script.COMMON_TURKIC)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>original <span class="op">=</span> <span class="st">"Бишкекте жыйын өттү."</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>converted, boundaries <span class="op">=</span> conversion_map(original, converter.transliterate)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For each model-predicted (start, end, type) span in converted text:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># original_span = restore_span(predicted_span, boundaries)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Log the checkpoint, converter and processor trace. If the pipeline automatically bridges the input to a different model script, the nominal native/CTS labels do not describe the actual model inputs; inspect those inputs before comparing results. Score strict entity spans on the same original gold annotations, with mapping failures included in the coverage report.</p>
+<p>To investigate genealogy, add related and unrelated source languages under comparable training sizes and tuning budgets. A descriptive regression across a few dependent language pairs cannot isolate a causal script effect. Use paired item-level comparisons, multiple seeds and an independently collected set in addition to potentially exposed parallel benchmarks.</p>
+<p>Exercise 1 compares token-aligned versions of Kazakh→Kyrgyz NER. A CRF with the <a href="09-sequence-labeling.html" class="quarto-xref"><span>Chapter 9</span></a> features is trained on 20,000 KazNERD training sentences and evaluated on 3,867 KyrgyzNER test sentences. The reduced schema also maps KyrgyzNER’s INSTITUTION and BUSINESS types to ORG, as in <a href="09-sequence-labeling.html" class="quarto-xref"><span>Chapter 9</span></a>. Native Cyrillic gives span F1 31.9; converting both sides to the toolkit’s Common Turkic Script (CTS) gives 34.6. Training on native text and testing on CTS gives 6.9. This single-sample comparison describes one feature set; uncertainty across training samples remains unmeasured (<a href="15-evaluation-benchmarks.html#sec-evaluation-principles" class="quarto-xref"><span>Section 15.1</span></a>).</p>
+<p>Word-by-word conversion preserves token indices, so the exercise scores token-level entity boundaries. It does not restore predictions to the source’s original character offsets. Its span parser ignores orphan <code>I</code> tags.</p>
+<p>A separate diagnostic uses the stricter <code>bio_spans</code> helper, which rejects one sentence. It restores 3,090 gold spans and fails on one. However, it reconstructs sentences with spaces, so those offsets belong to reconstructed text. The full Hands-On requires original offsets and an explicit policy for malformed BIO sequences.</p>
+<p><strong>Status: completed.</strong> Exercise 1 records the token-aligned comparison: strict entity-span F1 is 31.9 native/native and 34.6 CTS/CTS. The original-character-offset protocol remains a procedure; its mapping diagnostic is described above.</p>
+</section>
+<section id="sec-ch16-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch16-synthesis">What to Take Forward</h2>
+<p>Transfer reuses supervision, representations or tools across languages, and each method changes a different part of the system. The Kazakh–Kyrgyz NER comparison shows how much the input convention matters: matching scripts on both sides gave span F1 31.9 (native) and 34.6 (CTS), while a native-trained model tested on converted text fell to 6.9. Choose candidate sources from linguistic and resource evidence, keep the input conditions explicit, and decide on target-language scores with a budget for annotation and review. <a href="17-endangered-ethics.html" class="quarto-xref"><span>Chapter 17</span></a> asks what to build when target data are scarce and the community decides.</p>
+</section>
+<section id="sec-ch16-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch16-further-reading">Further Reading</h2>
+<p>Kardeş-NLU <span class="citation" data-cites="senel2024kardes">(<a href="../references.html#ref-senel2024kardes" role="doc-biblioref">Senel et al. 2024</a>)</span> studies sentence-level transfer to Turkic languages with Turkish as a high-resource relative. <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span> measures transfer of morphology and parsing through proxy languages, and the effect of a common script on tokenisation and lexical overlap. For choosing transfer languages in general, see <span class="citation" data-cites="lin-etal-2019-choosing">Lin et al. (<a href="../references.html#ref-lin-etal-2019-choosing" role="doc-biblioref">2019</a>)</span>.</p>
+<p>For multilingual training methodology, the TurkicASR paper <span class="citation" data-cites="mussakhojayeva2023turkicasr">(<a href="../references.html#ref-mussakhojayeva2023turkicasr" role="doc-biblioref">Mussakhojayeva et al. 2023</a>)</span> provides a case study of Turkic multilingual pooling, with experiments comparing combinations of training languages. For text, <span class="citation" data-cites="hakimov2025turkicnlp">Hakimov (<a href="../references.html#ref-hakimov2025turkicnlp" role="doc-biblioref">2026</a>)</span> evaluates multilingual Turkic morphology and parsing with proxy languages and temperature sampling, and <span class="citation" data-cites="muller2021unseen">Muller et al. (<a href="../references.html#ref-muller2021unseen" role="doc-biblioref">2021</a>)</span> studies transliteration as a way to help multilingual models with unseen scripts.</p>
+<p><span class="citation" data-cites="conneau2020xlmr">Conneau et al. (<a href="../references.html#ref-conneau2020xlmr" role="doc-biblioref">2020</a>)</span> introduces XLM-R and reports multilingual transfer experiments. For translation, <span class="citation" data-cites="costa2022nllb">NLLB Team et al. (<a href="../references.html#ref-costa2022nllb" role="doc-biblioref">2024</a>)</span> discusses low-resource training, back-translation and filtering. The TIL corpus <span class="citation" data-cites="mirzakhalov2021large">(<a href="../references.html#ref-mirzakhalov2021large" role="doc-biblioref">Mirzakhalov, Babu, Ataman, et al. 2021</a>)</span> supplies parallel data; a separate multiway study reports multilingual experiments <span class="citation" data-cites="mirzakhalov-etal-2021-evaluating">(<a href="../references.html#ref-mirzakhalov-etal-2021-evaluating" role="doc-biblioref">Mirzakhalov, Babu, Kunafin, et al. 2021</a>)</span>.</p>
+<p><span class="citation" data-cites="forcada2011apertium">Forcada et al. (<a href="../references.html#ref-forcada2011apertium" role="doc-biblioref">2011</a>)</span> and <span class="citation" data-cites="khanna2021apertium">Khanna et al. (<a href="../references.html#ref-khanna2021apertium" role="doc-biblioref">2021</a>)</span> describe Apertium. The Kazakh and Kyrgyz FST papers <span class="citation" data-cites="washington2014finite washington2016kyrgyz">(<a href="../references.html#ref-washington2014finite" role="doc-biblioref">Washington, Salimzyanov, and Tyers 2014</a>; <a href="../references.html#ref-washington2016kyrgyz" role="doc-biblioref">Washington, Ipasov, and Tyers 2012</a>)</span> give examples of rule-based morphology that can be extended or combined with other methods.</p>
+</section>
+<section id="sec-ch16-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch16-exercises">Exercises</h2>
+<ol type="1">
+<li>Compare native/native, converted/converted and native/converted conditions using declared converter directions. Record failed mappings and actual model input scripts.</li>
+<li>Compare related and unrelated source training at matched data and compute budgets. Keep target test data out of proxy and hyperparameter selection.</li>
+<li>Test temperature sampling on an imbalanced multilingual training set and report effective exposure and per-language development scores.</li>
+<li>Compare unfiltered, quality-filtered and randomly reduced synthetic parallel data at the same retained size, scoring each retained set against real target references and checking what the filter selects for.</li>
+<li>Evaluate real code-switched text separately from synthetic perturbations, with borrowing conventions and label-preservation checks.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-conneau2020xlmr" class="csl-entry" role="listitem">
+Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. 2020. <span>“Unsupervised Cross-Lingual Representation Learning at Scale.”</span> In <em>Proceedings of the 58th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 8440–51. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.acl-main.747">https://doi.org/10.18653/v1/2020.acl-main.747</a>.
+</div>
+<div id="ref-forcada2011apertium" class="csl-entry" role="listitem">
+Forcada, Mikel L., Mireia Ginestí-Rosell, Jacob Nordfalk, Jim O’Regan, Sergio Ortiz-Rojas, Juan Antonio Pérez-Ortiz, Felipe Sánchez-Martínez, Gema Ramírez-Sánchez, and Francis M. Tyers. 2011. <span>“Apertium: A Free/Open-Source Platform for Rule-Based Machine Translation.”</span> <em>Machine Translation</em> 25 (2): 127–44. <a href="https://doi.org/10.1007/s10590-011-9090-0">https://doi.org/10.1007/s10590-011-9090-0</a>.
+</div>
+<div id="ref-hakimov2025turkicnlp" class="csl-entry" role="listitem">
+Hakimov, Sherzod. 2026. <span>“<span>TurkicNLP</span>: An <span>NLP</span> Toolkit for <span>Turkic</span> Languages.”</span> arXiv preprint arXiv:2602.19174. <a href="https://arxiv.org/abs/2602.19174">https://arxiv.org/abs/2602.19174</a>.
+</div>
+<div id="ref-khanna2021apertium" class="csl-entry" role="listitem">
+Khanna, Tanmai, Jonathan N. Washington, Francis M. Tyers, Sevilay Bayatlı, Daniel G. Swanson, Tommi A. Pirinen, Irene Tang, and Hèctor Alòs i Font. 2021. <span>“Recent Advances in <span>Apertium</span>, a Free/Open-Source Rule-Based Machine Translation Platform for Low-Resource Languages.”</span> <em>Machine Translation</em> 35 (4): 475–502. <a href="https://doi.org/10.1007/s10590-021-09260-6">https://doi.org/10.1007/s10590-021-09260-6</a>.
+</div>
+<div id="ref-lin-etal-2019-choosing" class="csl-entry" role="listitem">
+Lin, Yu-Hsiang, Chian-Yu Chen, Jean Lee, Zirui Li, Yuyan Zhang, Mengzhou Xia, Shruti Rijhwani, et al. 2019. <span>“Choosing Transfer Languages for Cross-Lingual Learning.”</span> In <em>Proceedings of the 57th Annual Meeting of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics</em>, 3125–35. Florence, Italy: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/P19-1301">https://doi.org/10.18653/v1/P19-1301</a>.
+</div>
+<div id="ref-mirzakhalov2021large" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Duygu Ataman, Sherzod Kariev, Francis Tyers, Otabek Abduraufov, Mammad Hajili, et al. 2021. <span>“A Large-Scale Study of Machine Translation in <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing</em>, 5876–90. Online; Punta Cana, Dominican Republic: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.emnlp-main.475">https://doi.org/10.18653/v1/2021.emnlp-main.475</a>.
+</div>
+<div id="ref-mirzakhalov-etal-2021-evaluating" class="csl-entry" role="listitem">
+Mirzakhalov, Jamshidbek, Anoop Babu, Aigiz Kunafin, Ahsan Wahab, Bekhzodbek Moydinboyev, Sardana Ivanova, Mokhiyakhon Uzokova, et al. 2021. <span>“Evaluating Multiway Multilingual <span>NMT</span> in the <span>T</span>urkic Languages.”</span> In <em>Proceedings of the Sixth Conference on Machine Translation</em>, 518–30. Online: Association for Computational Linguistics. <a href="https://aclanthology.org/2021.wmt-1.60/">https://aclanthology.org/2021.wmt-1.60/</a>.
+</div>
+<div id="ref-muller2021unseen" class="csl-entry" role="listitem">
+Muller, Benjamin, Antonios Anastasopoulos, Benoît Sagot, and Djamé Seddah. 2021. <span>“When Being Unseen from m<span>BERT</span> Is Just the Beginning: Handling New Languages with Multilingual Language Models.”</span> In <em>Proceedings of the 2021 Conference of the <span>N</span>orth <span>A</span>merican Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: Human Language Technologies</em>, 448–62. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.naacl-main.38">https://doi.org/10.18653/v1/2021.naacl-main.38</a>.
+</div>
+<div id="ref-mussakhojayeva2023turkicasr" class="csl-entry" role="listitem">
+Mussakhojayeva, Saida, Kaisar Dauletbek, Rustem Yeshpanov, and Huseyin Atakan Varol. 2023. <span>“Multilingual Speech Recognition for <span>Turkic</span> Languages.”</span> <em>Information</em> 14 (2): 74. <a href="https://doi.org/10.3390/info14020074">https://doi.org/10.3390/info14020074</a>.
+</div>
+<div id="ref-costa2022nllb" class="csl-entry" role="listitem">
+NLLB Team, Marta R. Costa-jussà, James Cross, Onur Çelebi, Maha Elbayad, Kenneth Heafield, Kevin Heffernan, et al. 2024. <span>“Scaling Neural Machine Translation to 200 Languages.”</span> <em>Nature</em> 630 (8018): 841–46. <a href="https://doi.org/10.1038/s41586-024-07335-x">https://doi.org/10.1038/s41586-024-07335-x</a>.
+</div>
+<div id="ref-senel2024kardes" class="csl-entry" role="listitem">
+Senel, Lütfi Kerem, Benedikt Ebing, Konul Baghirova, Hinrich Schuetze, and Goran Glavaš. 2024. <span>“Kardeş-<span>NLU</span>: Transfer to Low-Resource Languages with the Help of a High-Resource Cousin <span>–</span> a Benchmark and Evaluation for <span>T</span>urkic Languages.”</span> In <em>Proceedings of the 18th Conference of the <span>E</span>uropean Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 1672–88. St. Julian<span>’</span>s, Malta: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.eacl-long.100">https://doi.org/10.18653/v1/2024.eacl-long.100</a>.
+</div>
+<div id="ref-washington2016kyrgyz" class="csl-entry" role="listitem">
+Washington, Jonathan, Mirlan Ipasov, and Francis Tyers. 2012. <span>“A Finite-State Morphological Transducer for <span>K</span>yrgyz.”</span> In <em>Proceedings of the Eighth International Conference on Language Resources and Evaluation (<span>LREC</span>’12)</em>, 934–40. Istanbul, Turkey: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L12-1642/">https://aclanthology.org/L12-1642/</a>.
+</div>
+<div id="ref-washington2014finite" class="csl-entry" role="listitem">
+Washington, Jonathan, Ilnar Salimzyanov, and Francis Tyers. 2014. <span>“Finite-State Morphological Transducers for Three <span>K</span>ypchak Languages.”</span> In <em>Proceedings of the Ninth International Conference on Language Resources and Evaluation (<span>LREC</span>’14)</em>, 3378–85. Reykjavik, Iceland: European Language Resources Association (ELRA). <a href="https://aclanthology.org/L14-1143/">https://aclanthology.org/L14-1143/</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/15-evaluation-benchmarks.html" class="pagination-link" aria-label="Evaluation, Benchmarks, and Responsible Deployment">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/17-endangered-ethics.html" class="pagination-link" aria-label="Endangered Languages, Digital Preservation, and Ethics">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

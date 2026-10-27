@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>Appendix C — Turkic Language Reference – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-d.html" rel="next">
+<link href="../chapters/appendix-b.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-c.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-appc-identifiers" id="toc-sec-appc-identifiers" class="nav-link active" data-scroll-target="#sec-appc-identifiers"><span class="header-section-number">C.1</span> Language Identifiers and Scope</a></li>
+  <li><a href="#sec-appc-resources" id="toc-sec-appc-resources" class="nav-link" data-scroll-target="#sec-appc-resources"><span class="header-section-number">C.2</span> NLP Resource Evidence</a></li>
+  <li><a href="#sec-appc-scripts" id="toc-sec-appc-scripts" class="nav-link" data-scroll-target="#sec-appc-scripts"><span class="header-section-number">C.3</span> Script Reference</a>
+  <ul class="collapse">
+  <li><a href="#latin-characters-and-letter-marks" id="toc-latin-characters-and-letter-marks" class="nav-link" data-scroll-target="#latin-characters-and-letter-marks"><span class="header-section-number">C.3.1</span> Latin Characters and Letter Marks</a></li>
+  <li><a href="#cyrillic-characters" id="toc-cyrillic-characters" class="nav-link" data-scroll-target="#cyrillic-characters"><span class="header-section-number">C.3.2</span> Cyrillic Characters</a></li>
+  <li><a href="#perso-arabic-uyghur" id="toc-perso-arabic-uyghur" class="nav-link" data-scroll-target="#perso-arabic-uyghur"><span class="header-section-number">C.3.3</span> Perso-Arabic Uyghur</a></li>
+  </ul></li>
+  <li><a href="#sec-appc-typology" id="toc-sec-appc-typology" class="nav-link" data-scroll-target="#sec-appc-typology"><span class="header-section-number">C.4</span> Typology and Computational Interpretation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-a.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-c.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-appendix-c" class="quarto-section-identifier">Appendix C — Turkic Language Reference</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What This Appendix Covers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This appendix separates language identifiers, writing systems and computational evidence: identifiers and scope (<a href="#sec-appc-identifiers" class="quarto-xref"><span>Section C.1</span></a>), the evidence needed before calling a resource available (<a href="#sec-appc-resources" class="quarto-xref"><span>Section C.2</span></a>), a script reference (<a href="#sec-appc-scripts" class="quarto-xref"><span>Section C.3</span></a>) and the typological properties the chapters use (<a href="#sec-appc-typology" class="quarto-xref"><span>Section C.4</span></a>).</p>
+</div>
+</div>
+<p>The language table lists <strong>23</strong> contemporary languages. It differs from the 24 entries of TurkicNLP 0.5.0 (<a href="01-turkic-world.html" class="quarto-xref"><span>Chapter 1</span></a>): the table adds Shor (<code>cjs</code>) and Chulym (<code>clc</code>), which the toolkit does not cover, and leaves out the toolkit’s historical Ottoman Turkish (<code>ota</code>) and Old Turkic (<code>otk</code>) and its separate South Azerbaijani entry (<code>azb</code>). For toolkit coverage, use its versioned registry; for corpus or model labels, use a resource-specific crosswalk.</p>
+<section id="sec-appc-identifiers" class="level2" data-number="C.1">
+<h2 data-number="C.1" class="anchored" data-anchor-id="sec-appc-identifiers"><span class="header-section-number">C.1</span> Language Identifiers and Scope</h2>
+<div id="tbl-language-reference" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-language-reference-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;C.1: Selected contemporary languages in this appendix; 23 rows, distinct from toolkit coverage. Groupings summarise the book’s linguistic discussion; script examples are not an exhaustive statement of legal status. Population estimates and unverified Glottocodes are omitted.
+</figcaption>
+<div aria-describedby="tbl-language-reference-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language</th>
+<th>ISO 639-3</th>
+<th>Descriptive grouping</th>
+<th>Script examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turkish</td>
+<td>tur</td>
+<td>Oghuz</td>
+<td>Latin</td>
+</tr>
+<tr class="even">
+<td>Azerbaijani</td>
+<td>aze</td>
+<td>Oghuz</td>
+<td>Latin / Cyrillic / Arabic (variety-dependent)</td>
+</tr>
+<tr class="odd">
+<td>Turkmen</td>
+<td>tuk</td>
+<td>Oghuz</td>
+<td>Latin</td>
+</tr>
+<tr class="even">
+<td>Gagauz</td>
+<td>gag</td>
+<td>Oghuz</td>
+<td>Latin</td>
+</tr>
+<tr class="odd">
+<td>Kazakh</td>
+<td>kaz</td>
+<td>Kipchak</td>
+<td>Cyrillic; versioned Latin schemes</td>
+</tr>
+<tr class="even">
+<td>Kyrgyz</td>
+<td>kir</td>
+<td>Kipchak</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Tatar</td>
+<td>tat</td>
+<td>Kipchak</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="even">
+<td>Bashkir</td>
+<td>bak</td>
+<td>Kipchak</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Kumyk</td>
+<td>kum</td>
+<td>Kipchak</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="even">
+<td>Nogai</td>
+<td>nog</td>
+<td>Kipchak</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Karachay-Balkar</td>
+<td>krc</td>
+<td>Kipchak</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="even">
+<td>Crimean Tatar</td>
+<td>crh</td>
+<td>Kipchak</td>
+<td>Latin / Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Karakalpak</td>
+<td>kaa</td>
+<td>Kipchak</td>
+<td>Latin</td>
+</tr>
+<tr class="even">
+<td>Uzbek</td>
+<td>uzb</td>
+<td>Karluk</td>
+<td>Latin / Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Uyghur</td>
+<td>uig</td>
+<td>Karluk</td>
+<td>Perso-Arabic</td>
+</tr>
+<tr class="even">
+<td>Sakha (Yakut)</td>
+<td>sah</td>
+<td>Siberian (Northern)</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Tuvan</td>
+<td>tyv</td>
+<td>Siberian (Southern)</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="even">
+<td>Khakas</td>
+<td>kjh</td>
+<td>Siberian (Southern)</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Southern Altai</td>
+<td>alt</td>
+<td>Kipchak (Eastern)</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="even">
+<td>Shor</td>
+<td>cjs</td>
+<td>Siberian (Southern)</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Chulym</td>
+<td>clc</td>
+<td>Siberian (Southern)</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="even">
+<td>Chuvash</td>
+<td>chv</td>
+<td>Oghur</td>
+<td>Cyrillic</td>
+</tr>
+<tr class="odd">
+<td>Khalaj</td>
+<td>klj</td>
+<td>Arghu</td>
+<td>Arabic / Latin</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><code>aze</code> (Azerbaijani) and <code>uzb</code> (Uzbek) are macrolanguage identifiers; resources may instead use North/South Azerbaijani (<code>azj</code>/<code>azb</code>) or Northern/Southern Uzbek (<code>uzn</code>/<code>uzs</code>). <code>alt</code> denotes Southern Altai, not every variety called Altai. Do not join corpus labels, Wikipedia editions, Hub tags and toolkit codes by string substitution. Record a many-to-one or one-to-many mapping explicitly.</p>
+<p>Speaker estimates need a source table or page, reference year, geography and a definition such as first language, self-reported ability or total speakers. Estimates with different definitions cannot support a single ranking, so this table omits them. Glottocodes also await individual verification. Consult the <a href="https://iso639-3.sil.org/code_tables/639/data">ISO 639-3 registry</a> and <a href="https://glottolog.org/">Glottolog</a> for identifiers. The codes here were checked against an installed ISO dataset, rather than a fresh registry snapshot.</p>
+</section>
+<section id="sec-appc-resources" class="level2" data-number="C.2">
+<h2 data-number="C.2" class="anchored" data-anchor-id="sec-appc-resources"><span class="header-section-number">C.2</span> NLP Resource Evidence</h2>
+<div id="tbl-nlp-resources" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nlp-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;C.2: Resource evidence must retain task, source, release and evaluation status. Unknown and search failure are not “No”.
+</figcaption>
+<div aria-describedby="tbl-nlp-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Versioned evidence</th>
+<th>What it does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Is a treebank officially released?</td>
+<td>UD 2.17 inventory in <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a></td>
+<td>A local silver file is not a released gold treebank</td>
+</tr>
+<tr class="even">
+<td>Is an analyser registered?</td>
+<td>Toolkit/Apertium module and revision in <a href="06-finite-state-morphology.html" class="quarto-xref"><span>Chapter 6</span></a></td>
+<td>Nonempty features are not accuracy</td>
+</tr>
+<tr class="odd">
+<td>Are model weights released?</td>
+<td>Pinned entries in <a href="appendix-b.html#tbl-verified-models" class="quarto-xref">Table&nbsp;<span>B.6</span></a></td>
+<td>Availability is not target-domain quality</td>
+</tr>
+<tr class="even">
+<td>Is evaluation available?</td>
+<td>Dataset release, labels and splits in <a href="09-sequence-labeling.html" class="quarto-xref"><span>Chapter 9</span></a> through <a href="15-evaluation-benchmarks.html" class="quarto-xref"><span>Chapter 15</span></a></td>
+<td>Software support is not benchmark coverage</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>MMS, for example, releases Chuvash and Crimean Tatar TTS checkpoints (<a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a>); their suitability for production needs separate testing. The five-language audit in <a href="17-endangered-ethics.html#sec-ch17-hands-on" class="quarto-xref"><span>Section 17.6</span></a> records availability, unknowns and failed queries separately. Verify model architecture before assigning a label such as “BERT-class”, and retain each resource’s licence and task type.</p>
+</section>
+<section id="sec-appc-scripts" class="level2" data-number="C.3">
+<h2 data-number="C.3" class="anchored" data-anchor-id="sec-appc-scripts"><span class="header-section-number">C.3</span> Script Reference</h2>
+<section id="latin-characters-and-letter-marks" class="level3" data-number="C.3.1">
+<h3 data-number="C.3.1" class="anchored" data-anchor-id="latin-characters-and-letter-marks"><span class="header-section-number">C.3.1</span> Latin Characters and Letter Marks</h3>
+<p>Turkish dotted <code>İ/i</code> and dotless <code>I/ı</code> need locale-aware casing. Azerbaijani Latin <code>ə</code>/<code>Ə</code> (U+0259/U+018F) must not be confused with Cyrillic <code>ә</code>/<code>Ә</code> (U+04D9/U+04D8). Similar appearance does not imply identical code points or script.</p>
+<p>Uzbek <em>oʻ/gʻ</em> and the tutuq sign appear with several digital apostrophe-like characters. Choose a declared encoding convention for a derived copy, retaining the original; using U+0027 does not by itself prove that every tokeniser will segment incorrectly. The context-sensitive search-key helper in <a href="04-corpora-at-scale.html#sec-corpora-pipeline" class="quarto-xref"><span>Section 4.3</span></a> only normalises <em>o/g</em> letter marks and leaves other punctuation alone.</p>
+<p>Kazakh Latin schemes are versioned proposals and orthographic conventions, not interchangeable transliterations. Use the dated sources in <a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a> and record the chosen converter instead of combining apostrophe, acute and later diacritic inventories into one “current alphabet”.</p>
+</section>
+<section id="cyrillic-characters" class="level3" data-number="C.3.2">
+<h3 data-number="C.3.2" class="anchored" data-anchor-id="cyrillic-characters"><span class="header-section-number">C.3.2</span> Cyrillic Characters</h3>
+<div id="tbl-cyrillic-letters" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cyrillic-letters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;C.3: Selected Cyrillic characters, checked against Unicode names and code points by the generator. These are encoding identities, not cross-language pronunciation claims.
+</figcaption>
+<div aria-describedby="tbl-cyrillic-letters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Lowercase</th>
+<th>Uppercase</th>
+<th>Code points (lower / upper)</th>
+<th>Unicode name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ң</td>
+<td>Ң</td>
+<td>U+04A3 / U+04A2</td>
+<td>CYRILLIC SMALL LETTER EN WITH DESCENDER</td>
+</tr>
+<tr class="even">
+<td>ү</td>
+<td>Ү</td>
+<td>U+04AF / U+04AE</td>
+<td>CYRILLIC SMALL LETTER STRAIGHT U</td>
+</tr>
+<tr class="odd">
+<td>ұ</td>
+<td>Ұ</td>
+<td>U+04B1 / U+04B0</td>
+<td>CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE</td>
+</tr>
+<tr class="even">
+<td>ә</td>
+<td>Ә</td>
+<td>U+04D9 / U+04D8</td>
+<td>CYRILLIC SMALL LETTER SCHWA</td>
+</tr>
+<tr class="odd">
+<td>ғ</td>
+<td>Ғ</td>
+<td>U+0493 / U+0492</td>
+<td>CYRILLIC SMALL LETTER GHE WITH STROKE</td>
+</tr>
+<tr class="even">
+<td>қ</td>
+<td>Қ</td>
+<td>U+049B / U+049A</td>
+<td>CYRILLIC SMALL LETTER KA WITH DESCENDER</td>
+</tr>
+<tr class="odd">
+<td>ө</td>
+<td>Ө</td>
+<td>U+04E9 / U+04E8</td>
+<td>CYRILLIC SMALL LETTER BARRED O</td>
+</tr>
+<tr class="even">
+<td>һ</td>
+<td>Һ</td>
+<td>U+04BB / U+04BA</td>
+<td>CYRILLIC SMALL LETTER SHHA</td>
+</tr>
+<tr class="odd">
+<td>ҙ</td>
+<td>Ҙ</td>
+<td>U+0499 / U+0498</td>
+<td>CYRILLIC SMALL LETTER ZE WITH DESCENDER</td>
+</tr>
+<tr class="even">
+<td>ҫ</td>
+<td>Ҫ</td>
+<td>U+04AB / U+04AA</td>
+<td>CYRILLIC SMALL LETTER ES WITH DESCENDER</td>
+</tr>
+<tr class="odd">
+<td>ҥ</td>
+<td>Ҥ</td>
+<td>U+04A5 / U+04A4</td>
+<td>CYRILLIC SMALL LIGATURE EN GHE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The table gives no single IPA value per character: pronunciation and phonemic analysis depend on the language. Kazakh <code>қ/ғ</code> are not letters of the Kyrgyz alphabet. <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a>’s source-specific vowel table and <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a>’s harmony descriptions provide the linguistic context.</p>
+</section>
+<section id="perso-arabic-uyghur" class="level3" data-number="C.3.3">
+<h3 data-number="C.3.3" class="anchored" data-anchor-id="perso-arabic-uyghur"><span class="header-section-number">C.3.3</span> Perso-Arabic Uyghur</h3>
+<p>Distinguish vowel letters from sequences that include an initial hamza carrier; strings such as <code>ئو</code> contain more than one Unicode code point. Preserve right-to-left text logically, including joining behaviour and meaningful controls. Inspect NFC, code points and rendered output separately. Removing every invisible control as “noise” can damage text. Conversion to ULY or a Cyrillic convention needs a declared scheme and loss report (<a href="03-scripts-orthography.html" class="quarto-xref"><span>Chapter 3</span></a>). The recurring Uyghur sentence (<a href="01-turkic-world.html#tbl-recurring-examples" class="quarto-xref">Table&nbsp;<span>1.4</span></a>) shows one text in three views: the original, the treebank’s ULY transliteration and the toolkit’s CTS rendering (<a href="03-scripts-orthography.html#sec-cts" class="quarto-xref"><span>Section 3.6</span></a>).</p>
+</section>
+</section>
+<section id="sec-appc-typology" class="level2" data-number="C.4">
+<h2 data-number="C.4" class="anchored" data-anchor-id="sec-appc-typology"><span class="header-section-number">C.4</span> Typology and Computational Interpretation</h2>
+<div id="tbl-typological-features" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-typological-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;C.4: Typological interpretation replaces unsupported numerical rankings.
+</figcaption>
+<div aria-describedby="tbl-typological-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Interpretation for this book</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vowel inventories and harmony</td>
+<td>Use source-specific analyses in <a href="02-computational-phenotype.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a>; avoid a binary strict/partial scale</td>
+</tr>
+<tr class="even">
+<td>Constituent order</td>
+<td>SOV is the usual base order; contact varieties and discourse patterns require separate treatment (<a href="08-syntax-ud.html#sec-syntax-sketch" class="quarto-xref"><span>Section 8.1</span></a>)</td>
+</tr>
+<tr class="odd">
+<td>Null subjects</td>
+<td>Grammar and context may license an absent subject; agreement is not gender marking</td>
+</tr>
+<tr class="even">
+<td>Case and morphology</td>
+<td>Specify the grammatical/annotation scheme instead of ranking languages by raw case counts</td>
+</tr>
+<tr class="odd">
+<td>Morphological density</td>
+<td>Measure a defined corpus statistic; “high/moderate” is not an observed morpheme ratio</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>These properties suggest what to test; they guarantee no particular NLP outcome. SOV order does not by itself imply longer dependencies, and morphological richness alone does not explain every model error. See <a href="05-morphological-structure.html" class="quarto-xref"><span>Chapter 5</span></a> and <a href="08-syntax-ud.html" class="quarto-xref"><span>Chapter 8</span></a> for constructions, annotation choices and controlled comparisons <span class="citation" data-cites="Johanson_2021">(<a href="../references.html#ref-Johanson_2021" role="doc-biblioref">Johanson 2021</a>)</span>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Johanson_2021" class="csl-entry" role="listitem">
+Johanson, Lars. 2021. <em>Turkic</em>. Cambridge Language Surveys. Cambridge University Press. <a href="https://doi.org/10.1017/9781139016704">https://doi.org/10.1017/9781139016704</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/appendix-b.html" class="pagination-link" aria-label="Computational Resources and Tools">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-d.html" class="pagination-link" aria-label="Glossary">
+        <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

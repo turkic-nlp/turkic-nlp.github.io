@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical introduction to NLP across Turkic languages: linguistic structure, scripts, corpora, models, and evaluation, with worked exercises and documented evidence.">
+
+<title>14&nbsp; Generation, Dialogue, and Interactive Evaluation – Natural Language Processing Across Turkic Languages: Methods and Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/15-evaluation-benchmarks.html" rel="next">
+<link href="../chapters/13-meaning-retrieval.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/12-pretrained-lms.html">Language Models</a></li><li class="breadcrumb-item"><a href="../chapters/14-generation-dialogue.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Natural Language Processing Across Turkic Languages: Methods and Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-info.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publication Details</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Language Family</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-turkic-world.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Turkic World: Languages, Speakers, and the Resource Reality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-computational-phenotype.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Computational Phenotype of Turkic Languages</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Writing Systems and Corpora</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-scripts-orthography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scripts, Encoding, and Orthographic Engineering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-corpora-at-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building Turkic Corpora at Scale</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Morphology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-morphological-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Morphological Structure: A Linguistic Foundation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-finite-state-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Finite-State Morphology: The Rule-Based Approach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-neural-morphology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Morphology and the Tokenisation Problem</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Syntax</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-syntax-ud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Syntactic Structure and Universal Dependencies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-sequence-labeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sequence Labelling: POS Tagging, NER, and Chunking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-machine-translation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Machine Translation: Within and Beyond the Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-speech-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Speech Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Language Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-pretrained-lms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Pretrained Language Models for Turkic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-meaning-retrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-generation-dialogue.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-evaluation-benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cross-Lingual Methods and the Resource Frontier</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-cross-lingual-transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cross-Lingual Transfer within the Turkic Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-endangered-ethics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Endangered Languages, Digital Preservation, and Ethics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Mathematical Foundations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational Resources and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Turkic Language Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-gen-failures" id="toc-sec-gen-failures" class="nav-link active" data-scroll-target="#sec-gen-failures"><span class="header-section-number">14.1</span> What Goes Wrong When Models Write Turkic Text</a></li>
+  <li><a href="#sec-gen-fidelity" id="toc-sec-gen-fidelity" class="nav-link" data-scroll-target="#sec-gen-fidelity"><span class="header-section-number">14.2</span> Measuring Fidelity Automatically</a></li>
+  <li><a href="#sec-gen-data" id="toc-sec-gen-data" class="nav-link" data-scroll-target="#sec-gen-data"><span class="header-section-number">14.3</span> Generation Tasks and Data</a></li>
+  <li><a href="#sec-gen-eval" id="toc-sec-gen-eval" class="nav-link" data-scroll-target="#sec-gen-eval"><span class="header-section-number">14.4</span> Evaluating Generated Text</a>
+  <ul class="collapse">
+  <li><a href="#metrics-against-references" id="toc-metrics-against-references" class="nav-link" data-scroll-target="#metrics-against-references"><span class="header-section-number">14.4.1</span> Metrics against references</a></li>
+  <li><a href="#llms-as-judges" id="toc-llms-as-judges" class="nav-link" data-scroll-target="#llms-as-judges"><span class="header-section-number">14.4.2</span> LLMs as judges</a></li>
+  </ul></li>
+  <li><a href="#sec-gen-games" id="toc-sec-gen-games" class="nav-link" data-scroll-target="#sec-gen-games"><span class="header-section-number">14.5</span> Interactive Evaluation with Dialogue Games</a>
+  <ul class="collapse">
+  <li><a href="#why-games" id="toc-why-games" class="nav-link" data-scroll-target="#why-games"><span class="header-section-number">14.5.1</span> Why games</a></li>
+  <li><a href="#taboo-needs-morphology" id="toc-taboo-needs-morphology" class="nav-link" data-scroll-target="#taboo-needs-morphology"><span class="header-section-number">14.5.2</span> Taboo needs morphology</a></li>
+  <li><a href="#wordle-and-other-games" id="toc-wordle-and-other-games" class="nav-link" data-scroll-target="#wordle-and-other-games"><span class="header-section-number">14.5.3</span> Wordle and other games</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">14.5.4</span> Results</a></li>
+  <li><a href="#address-and-politeness" id="toc-address-and-politeness" class="nav-link" data-scroll-target="#address-and-politeness"><span class="header-section-number">14.5.5</span> Address and politeness</a></li>
+  </ul></li>
+  <li><a href="#sec-gen-drift" id="toc-sec-gen-drift" class="nav-link" data-scroll-target="#sec-gen-drift"><span class="header-section-number">14.6</span> Language Drift in Ordinary Chat</a></li>
+  <li><a href="#sec-gen-speech" id="toc-sec-gen-speech" class="nav-link" data-scroll-target="#sec-gen-speech"><span class="header-section-number">14.7</span> Spoken Dialogue</a></li>
+  <li><a href="#sec-ch-gen-hands-on" id="toc-sec-ch-gen-hands-on" class="nav-link" data-scroll-target="#sec-ch-gen-hands-on"><span class="header-section-number">14.8</span> Hands-On: A Procedure for Kazakh Taboo with a Morphological Rule Checker</a></li>
+  <li><a href="#sec-ch14-synthesis" id="toc-sec-ch14-synthesis" class="nav-link" data-scroll-target="#sec-ch14-synthesis">What to Take Forward</a></li>
+  <li><a href="#sec-ch14-further-reading" id="toc-sec-ch14-further-reading" class="nav-link" data-scroll-target="#sec-ch14-further-reading">Further Reading</a></li>
+  <li><a href="#sec-ch14-exercises" id="toc-sec-ch14-exercises" class="nav-link" data-scroll-target="#sec-ch14-exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/12-pretrained-lms.html">Language Models</a></li><li class="breadcrumb-item"><a href="../chapters/14-generation-dialogue.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-book-14-generation-dialogue" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Generation, Dialogue, and Interactive Evaluation</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Describe the ways in which language models fail when they write Turkic text: drift into another language, script switching, malformed words, and pragmatic errors</li>
+<li>Measure language and script fidelity automatically, and use morphological-analyser coverage as a diagnostic requiring human validation</li>
+<li>Design a validation of an LLM judge against human judgements in the target language</li>
+<li>Survey the data for generation and dialogue in Turkic languages, and its gaps</li>
+<li>Adapt dialogue games such as Taboo and Wordle to Turkic languages, including rule checking that respects morphology</li>
+<li>Measure how language fidelity changes over the turns of an interaction</li>
+</ul>
+</div>
+</div>
+<p><a href="13-meaning-retrieval.html" class="quarto-xref"><span>Chapter 13</span></a> examined how to find supporting text. This chapter asks how to evaluate the answers and conversations a model produces. Multiple-choice scores do not directly test whether an answer stays in the requested language and script, uses appropriate word forms or suits the social context.</p>
+<p>The chapter moves from individual answers to extended interaction. Its final section uses dialogue games: structured conversations between models with explicit rules <span class="citation" data-cites="chalamalasetti-etal-2023-clembench">(<a href="../references.html#ref-chalamalasetti-etal-2023-clembench" role="doc-biblioref">Chalamalasetti et al. 2023</a>)</span>. Those rules make comparisons repeatable, once the language-specific word lists and instructions have been validated.</p>
+<section id="sec-gen-failures" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="sec-gen-failures"><span class="header-section-number">14.1</span> What Goes Wrong When Models Write Turkic Text</h2>
+<p>The following seven categories organise the evaluation. They can occur in other languages too, and their order says nothing about frequency.</p>
+<ol type="1">
+<li><strong>Drift into a neighbouring language.</strong> Kazakh output with Kyrgyz or Tatar words; Turkish words in Azerbaijani, Turkmen, or Gagauz output. Turkish has the largest token total among the listed Turkic subsets of HPLT v3 (<a href="04-corpora-at-scale.html#tbl-hplt-v3" class="quarto-xref">Table&nbsp;<span>4.1</span></a>); this does not reveal any particular model’s training mixture or prove the cause of drift. In Exercise 2, GlotLID <span class="citation" data-cites="kargaran-etal-2023-glotlid">(<a href="../references.html#ref-kargaran-etal-2023-glotlid" role="doc-biblioref">Kargaran et al. 2023</a>)</span> labels 20 of the 66 sentences that Qwen2.5-1.5B-Instruct wrote in answer to Kazakh questions as Kyrgyz.</li>
+<li><strong>Drift into the contact language.</strong> Russian words and phrases in Kazakh, Kyrgyz, Tatar, or Bashkir output; sometimes a switch to Russian after a few sentences. Language confusion of this kind has been documented for many languages <span class="citation" data-cites="marchisio2024confusion">(<a href="../references.html#ref-marchisio2024confusion" role="doc-biblioref">Marchisio et al. 2024</a>)</span>.</li>
+<li><strong>Script switching.</strong> An Uzbek answer in Cyrillic to a question asked in Latin, or the reverse; Kazakh in a mixture of Cyrillic and one of the Latin alphabets.</li>
+<li><strong>Malformed words.</strong> Vowel-harmony violations (a back-vowel suffix on a front-vowel stem), suffixes in the wrong order, or invented suffix combinations. An annotator must distinguish genuine errors from loanword exceptions, dialectal forms and legitimate allomorphy.</li>
+<li><strong>Wrong level of address.</strong> Languages such as Turkish, Uzbek and Kazakh distinguish a familiar ‘you’ (Turkish and Uzbek <em>sen</em>, Kazakh <em>сен</em>) from a polite or plural one (<em>siz</em>, <em>сіз</em>). The choice depends on age, relationship, and setting, and it shows up in verb agreement and possessive suffixes as well as in the pronoun.</li>
+<li><strong>Evidential meaning.</strong> Some forms can convey indirect evidence or reported information: Turkish <em>-mIş</em>, Kazakh <em>-ған екен</em>. Evaluate the choice in its discourse context; a past-tense form is not universally a claim of eyewitness knowledge, and a summary need not mechanically copy every source suffix.</li>
+<li><strong>Cultural grounding.</strong> Names, holidays, units, place names or idioms that do not fit the requested context. A foreign name or borrowed expression is not itself an error.</li>
+</ol>
+<p>Exercise 2 collects examples of several types from one small open model, Qwen2.5-1.5B-Instruct <span class="citation" data-cites="qwen2024qwen25">(<a href="../references.html#ref-qwen2024qwen25" role="doc-biblioref">Qwen Team et al. 2024</a>)</span>, answering everyday cultural questions:</p>
+<ul>
+<li><em>Neighbouring language.</em> Asked in Kazakh when and how Nauryz is celebrated, the model begins <em>Наурыз - бул Кыргызстандын …</em>, with Kyrgyz <em>бул</em> ‘this’ (Kazakh <em>бұл</em>) and the Kyrgyz genitive of Kyrgyzstan (Kazakh <em>Қырғызстанның</em>), and goes on to talk about Kyrgyzstan.</li>
+<li><em>Contact language and script.</em> Asked in Latin-script Uzbek about Navroʻz, it answers <em>Navro‘z bayrami 15-16 декабря</em>: a Russian month name in Cyrillic inside a Latin-script sentence. Asked about Alisher Navoiy, it writes <em>literaturniy tili</em>, a transliterated Russian adjective, instead of Uzbek <em>adabiy til</em> ‘literary language’.</li>
+<li><em>Cultural grounding.</em> The Kazakh answer about Abai Qunanbaiuly calls him one of Kazakhstan’s cities.</li>
+</ul>
+<p>The model did not produce clear cases of the address and evidentiality types in these answers; finding them needs prompts that require them, such as the role plays described below. Repetition loops, which affected several answers, are not specific to Turkic languages.</p>
+</section>
+<section id="sec-gen-fidelity" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="sec-gen-fidelity"><span class="header-section-number">14.2</span> Measuring Fidelity Automatically</h2>
+<p>Three automatic signals help triage output; none establishes correctness alone:</p>
+<ul>
+<li><strong>Language, per sentence.</strong> Search the full LID label space, including Russian and English. A Turkic-restricted classifier must select a Turkic label even for Russian. Retain the top label, score and text; choose an abstention threshold on development examples from the target and competing languages, then validate it on held-out data. Audit short, mixed and ambiguous spans manually (<a href="03-scripts-orthography.html#sec-lid" class="quarto-xref"><span>Section 3.7</span></a>). Shared words and quotations are not automatically drift.</li>
+<li><strong>Script, per word or letter.</strong> Declare the requested script and the denominator. Report mixed and unknown cases separately; names, quotations and code can legitimately use another script.</li>
+<li><strong>Raw analyser recognition.</strong> Count alphabetic word tokens with at least one finite, non-failure FST reading. Report numerator, denominator and transducer hash. A pipeline’s guessed lemma or <code>UPOS != "X"</code> can include heuristic fallback and is not raw transducer acceptance.</li>
+</ul>
+<p>An FST can accept a grammatical word used in the wrong context, including a word shared with another language. It can also reject a valid name, loan or dialectal form missing from its lexicon. Use coverage as a diagnostic. Compare matched human-written text and validate against independent error annotations before setting a threshold.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run from the book root; provide a tokenizer and a pinned HFST transducer.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"code/ch04-corpus"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> corpus <span class="im">import</span> fst_coverage</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyser_coverage(text, tokenize, transducer):</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fst_coverage(tokenize(text), transducer.lookup)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns accepted_words, eligible_words and coverage (None if no eligible words).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A handful of illustrative sentences says nothing reliable about the languages as a whole. To validate this diagnostic, measure false alarms and missed errors on held-out examples, including names, shared vocabulary and code-switching. Keep raw recognition and any normalised-lookup variant as separate measurements.</p>
+<p>Exercise 3 compares 1,000 KazNERD news sentences <span class="citation" data-cites="yeshpanov2022kaznerd">(<a href="../references.html#ref-yeshpanov2022kaznerd" role="doc-biblioref">Yeshpanov, Khassanov, and Varol 2022</a>)</span> with 668 news-style sentences generated by Qwen2.5-1.5B-Instruct. Apertium accepts 94.5% of the human text’s word tokens and 84.1% of the model’s. Restricting the model sample to sentences labelled Kazakh by GlotLID raises coverage to 84.7%, though such sentences can still contain mixed-language words.</p>
+<p>Frequent rejected model tokens include the Kyrgyz forms <em>Берилген</em>, <em>өзгөрүшү</em> and <em>Бул</em> (Kazakh <em>берілген</em>, <em>өзгеруі</em>, <em>бұл</em>). Rejections in the human text include different cases: <em>і</em> and <em>іі</em> are Roman numerals typed with Cyrillic <em>і</em>; <em>нші</em> is an ordinal suffix separated from its numeral (<em>2-нші</em>); and <em>көпбалалы</em> ‘having many children’ is a valid word absent from the lexicon. These observations need systematic annotation. The samples differ in content and length, and repeated model phrases affect token counts. Independent judgements are needed to measure false alarms and missed errors.</p>
+</section>
+<section id="sec-gen-data" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="sec-gen-data"><span class="header-section-number">14.3</span> Generation Tasks and Data</h2>
+<p><strong>Summarisation.</strong> MLSUM includes Turkish news summaries <span class="citation" data-cites="scialom2020mlsum">(<a href="../references.html#ref-scialom2020mlsum" role="doc-biblioref">Scialom et al. 2020</a>)</span>. XL-Sum’s published current repository statistics list Azerbaijani (6,478 train / 809 validation / 809 test), Kyrgyz (2,266 / 500 / 500), Turkish (27,176 / 3,397 / 3,397) and Uzbek (4,728 / 590 / 590) <span class="citation" data-cites="hasan2021xlsum">(<a href="../references.html#ref-hasan2021xlsum" role="doc-biblioref">Hasan et al. 2021</a>)</span>. These are article–summary pairs from BBC; the totals differ from the repository’s legacy v1.0 release. See the <a href="https://github.com/csebuetnlp/xl-sum#dataset">maintainers’ split table</a>. The four entries show what data exist; other Turkic summarisation resources may be missing from the list.</p>
+<p><strong>Instruction and chat data.</strong> Distinguish native-authored, translated, synthetic and mixed collections. Translation can introduce unsuitable names, units or contexts; native authorship alone does not guarantee factual or linguistic quality. For every selected release record provenance, revision, split sizes, language/script, licence and independent quality checks. Sherkala-Chat’s Kazakh instruction data, for example, combine translated sets with an automatically built, manually checked Kazakhstan-specific set (<a href="12-pretrained-lms.html" class="quarto-xref"><span>Chapter 12</span></a>). This chapter does not inventory instruction releases, and no family-wide absence is claimed.</p>
+<p><strong>Dialogue data.</strong> Separate single-turn instruction pairs, open conversation, task-oriented exchanges and spoken dialogue. Their supervision and evaluation units differ. For each release, check native versus translated provenance and redistribution terms, and record what the documentation does not say. A search that finds no resource is not proof that none exists.</p>
+</section>
+<section id="sec-gen-eval" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="sec-gen-eval"><span class="header-section-number">14.4</span> Evaluating Generated Text</h2>
+<section id="metrics-against-references" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="metrics-against-references"><span class="header-section-number">14.4.1</span> Metrics against references</h3>
+<p>For summaries and translations with references, chrF adds character-level overlap to the word-level evidence from BLEU. A wrong suffix affects the whole word match in BLEU and a smaller set of character matches in chrF (<a href="10-machine-translation.html" class="quarto-xref"><span>Chapter 10</span></a>). Neither metric directly measures morphological correctness, and their relative usefulness depends on the task. Open-ended answers, dialogue and pragmatic choices need evaluation beyond reference overlap.</p>
+</section>
+<section id="llms-as-judges" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="llms-as-judges"><span class="header-section-number">14.4.2</span> LLMs as judges</h3>
+<p>Using a strong LLM to rate generated text is now common <span class="citation" data-cites="zheng2023judge">(<a href="../references.html#ref-zheng2023judge" role="doc-biblioref">Zheng et al. 2023</a>)</span>. Validate each judge on the target language and error types. Include language confusion and morphological errors rather than assuming a general rating captures them.</p>
+<p>Exercise 4 pairs 100 Kazakh SIB-200 sentences <span class="citation" data-cites="adelani2024sib">(<a href="../references.html#ref-adelani2024sib" role="doc-biblioref">Adelani et al. 2024</a>)</span> with automatic changes: 25 each involving vowel harmony, a Russian conjunction, a Kyrgyz cognate or a word in Latin script. Only the harmony change (<em>қайықтар</em> → *<em>қайықтер</em>) reliably creates an ungrammatical standard form. The other changes may produce acceptable variants. Russian <em>но</em> occurs in informal Kazakh–Russian mixing, Latin spelling need not be a grammatical error, and replacing <em>мен</em> with <em>менен</em> yields an existing Kazakh word: the ablative of <em>мен</em> ‘I’, meaning ‘from me’.</p>
+<p>The pairs carry labels for the applied changes, without speaker validation of whether each result is wrong. Qwen2.5-1.5B-Instruct chooses “A” in 91 pairs with an English prompt and 88 with a Kazakh prompt. It chooses the original sentence in 34 and 32 pairs; 5 and 12 replies are unparsable. Randomisation leaves the original first in only 37 pairs. These results reveal a strong position preference in this setup, while leaving error-detection ability unresolved.</p>
+<p>Before comparing judges, have speakers label errors, acceptable variants and register differences. Drop or relabel substitutions that produce valid words, and present every pair in both orders.</p>
+<p>Until such checks have been done for a language, LLM judgements of Turkic text should be validated against at least a small sample of human judgements (<a href="15-evaluation-benchmarks.html#sec-human-eval" class="quarto-xref"><span>Section 15.4</span></a>).</p>
+</section>
+</section>
+<section id="sec-gen-games" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="sec-gen-games"><span class="header-section-number">14.5</span> Interactive Evaluation with Dialogue Games</h2>
+<section id="why-games" class="level3" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="why-games"><span class="header-section-number">14.5.1</span> Why games</h3>
+<p>A dialogue game is a short, rule-governed interaction between two players. Here the players are both models, or a model and a program. clembench <span class="citation" data-cites="chalamalasetti-etal-2023-clembench">(<a href="../references.html#ref-chalamalasetti-etal-2023-clembench" role="doc-biblioref">Chalamalasetti et al. 2023</a>)</span> evaluates chat-optimised language models by having them play such games: word guessing, reference games, and others. The program that runs the game checks every move against the rules and scores the outcome. Games have three advantages for comparing Turkic languages:</p>
+<ul>
+<li><strong>The same game can be run in every language</strong>, but translation alone does not equate difficulty. Match word frequency, ambiguity, clue informativeness, alphabet rules and cultural familiarity, and report remaining differences.</li>
+<li><strong>Rule violations are measured, not just success.</strong> A model that wins Taboo by using a forbidden word has broken a rule.</li>
+<li><strong>Long interactions show drift.</strong> Language and script fidelity can be measured turn by turn.</li>
+</ul>
+</section>
+<section id="taboo-needs-morphology" class="level3" data-number="14.5.2">
+<h3 data-number="14.5.2" class="anchored" data-anchor-id="taboo-needs-morphology"><span class="header-section-number">14.5.2</span> Taboo needs morphology</h3>
+<p>In Taboo, one player must describe a target word without using it or a few related words, and the other player must guess the target. Exact matching can miss inflected forbidden words, in English as well as Turkic languages. If the target is <em>ev</em> ‘house’, the describer can write <em>evlerimizden</em> ‘from our houses’ and a surface-string check will not notice. Morphological analysis can identify additional candidates, but ambiguous readings and unknown words need an explicit review policy.</p>
+<p>Use the rule checker (<code>code/ch14-generation/turkic_taboo_checker.py</code>) with a pinned transducer. It reports exact surface hits, lemma candidates and unresolved tokens separately. It considers all analyser readings, so an ambiguous reading can produce a candidate that needs contextual adjudication. There is no prefix fallback: a shared prefix is not evidence of a forbidden lemma, and a retrieval experiment’s best truncation length is not a validated game-rule threshold.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"code/ch14-generation"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> turkic_taboo_checker <span class="im">import</span> check_tokens</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># tokens: output of the declared tokenizer; lookup: pinned HFST lookup callback.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> check_tokens(tokens, forbidden<span class="op">=</span>[<span class="st">"үй"</span>, <span class="st">"пәтер"</span>, <span class="st">"тұр"</span>],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      lookup<span class="op">=</span>transducer.lookup, lang<span class="op">=</span><span class="st">"kaz"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># result contains surface_hits, lemma_candidates and unresolved.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The forbidden list must use the selected analyser’s lemma convention. Record any infinitive/stem conversion explicitly; do not strip a universal suffix across languages. Freeze whether ambiguous candidates invalidate a turn or trigger human review. Tokenisation and casing must be identical for the surface and morphological comparisons.</p>
+</section>
+<section id="wordle-and-other-games" class="level3" data-number="14.5.3">
+<h3 data-number="14.5.3" class="anchored" data-anchor-id="wordle-and-other-games"><span class="header-section-number">14.5.3</span> Wordle and other games</h3>
+<p>Wordle asks a player to find a five-letter word from feedback on each letter. It depends on the alphabet and on what counts as a word. Turkic alphabets differ in size and letter frequencies, and the allowed word list may contain lemmas, inflected forms or both. Specify that choice and whether length counts orthographic letters, grapheme clusters or code points; normalise Unicode and apply language-aware casing consistently. Reference games, where one player describes an item so the other can pick it out, can be localised with culturally familiar content.</p>
+</section>
+<section id="results" class="level3" data-number="14.5.4">
+<h3 data-number="14.5.4" class="anchored" data-anchor-id="results"><span class="header-section-number">14.5.4</span> Results</h3>
+<p>Exercise 1 uses Qwen2.5-1.5B-Instruct as both describer and guesser for twelve Kazakh targets, with at most three rounds. No game is won. Three opening clues contain the target itself (<em>Кітап</em>, <em>Жылқы</em>, <em>Балық</em>), which the surface check catches; the other nine games reach the turn limit. The lemma checker detects no additional violations and leaves the outcomes unchanged. Missed violations remain possible: 72 of the 246 clue words have no analyser reading, and the exercise allows unresolved tokens to pass. GlotLID labels four of the 30 clues Kyrgyz.</p>
+<p>The target lists still need speaker review. All twelve targets are frequent concrete nouns, so they cover no range of frequency bands. <em>Күн</em> means both ‘sun’ and ‘day’, but its forbidden words address only ‘sun’. Other forbidden lemmas have homonyms: <em>іш-</em> ‘drink’ and <em>іш</em> ‘inside, belly’; <em>жаз-</em> ‘write’ and <em>жаз</em> ‘summer’; <em>ат</em> ‘horse’ and ‘name’; <em>бет</em> ‘page’ and ‘face’; <em>мін-</em> ‘ride’ and <em>мін</em> ‘fault’. A lemma-only checker can flag an allowed sense. Record part of speech as well as lemma, and adjudicate remaining ambiguity in context.</p>
+<p>The exercise also differs from the Hands-On protocol: unresolved words pass without adjudication, and the guess matcher checks only the first word. It could therefore accept a multiword response despite the one-word instruction. Fix these policies and validate the word list before comparing systems.</p>
+</section>
+<section id="address-and-politeness" class="level3" data-number="14.5.5">
+<h3 data-number="14.5.5" class="anchored" data-anchor-id="address-and-politeness"><span class="header-section-number">14.5.5</span> Address and politeness</h3>
+<p>Test address with role plays written by native speakers. Each should specify a relationship and setting, such as a student speaking to a teacher or two friends talking. Ask speakers which forms are acceptable for that situation and variety. Pronouns and agreement offer clues, but pro-drop may leave the choice unexpressed. Retain ambiguous and omitted cases in the report instead of forcing them into familiar or polite categories.</p>
+</section>
+</section>
+<section id="sec-gen-drift" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="sec-gen-drift"><span class="header-section-number">14.6</span> Language Drift in Ordinary Chat</h2>
+<p>Ask models ordinary questions in a Turkic language and check the language and script of each answer. Short and mixed-language answers need manual review.</p>
+<p>Exercise 2 does this for 25 culturally grounded questions each in Kazakh and Uzbek with Qwen2.5-1.5B-Instruct. Only 13 of the 25 Kazakh answers have every sentence labelled Kazakh by GlotLID; 20 of their 66 sentences are labelled Kyrgyz, and Apertium accepts only 58.7% of their words. GlotLID labels 83 of the 84 Uzbek-answer sentences Uzbek, with every sentence so labelled in 24 of the 25 answers. Yet one answer contains Cyrillic Russian month names. The labels help select passages for review; an answer that passes may still mix languages or get the facts wrong.</p>
+</section>
+<section id="sec-gen-speech" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="sec-gen-speech"><span class="header-section-number">14.7</span> Spoken Dialogue</h2>
+<p>Voice assistants combine speech recognition (<a href="11-speech-technologies.html" class="quarto-xref"><span>Chapter 11</span></a>), a dialogue model, and speech synthesis. Published MMS checkpoints include Chuvash and Crimean Tatar TTS (<a href="appendix-b.html#tbl-verified-models" class="quarto-xref">Table&nbsp;<span>B.6</span></a>); checkpoint availability is not evidence of conversational quality. Audit each component’s language, licence, input/output script, latency and held-out quality, then test the combined system with speakers.</p>
+</section>
+<section id="sec-ch-gen-hands-on" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="sec-ch-gen-hands-on"><span class="header-section-number">14.8</span> Hands-On: A Procedure for Kazakh Taboo with a Morphological Rule Checker</h2>
+<p><strong>Question.</strong> How well can a Kazakh Taboo game enforce morphological rules?</p>
+<p><strong>Inputs.</strong> Twenty speaker-reviewed targets, forbidden lemmas, two declared model roles and the bounded controller.</p>
+<p><strong>Compute.</strong> Inference for the selected models, plus fluent-speaker adjudication; local controller tests use scripted replies.</p>
+<p><strong>Output.</strong> Turn logs, rule-check outcomes, guesses and language/script diagnostics.</p>
+<p><strong>Interpretation.</strong> Count failed and unresolved games and compare automated checks with human decisions.</p>
+<p>This is a protocol for a simplified Kazakh Taboo experiment. Exercise 1 illustrates a simpler version with one small model and twelve targets; the differences are described above.</p>
+<ol type="1">
+<li>Ask a speaker to select 20 target lemmas across frequency bands, with three related forbidden lemmas each. Record the variety, script and adjudication policy.</li>
+<li>Use the bounded controller in <code>code/ch14-generation/game.py</code>. Supply separate describer and guesser callbacks, a clue checker and an explicit guess-matching policy. The target and forbidden list belong only in the describer’s context.</li>
+<li>Allow at most three rounds. Stop on a rejected clue, a correct guess, an unresolved rule check or the turn limit. Save each turn and its outcome; do not drop failed games from denominators.</li>
+<li>Record unrestricted language labels, script signals and raw FST recognition for each utterance. Have a speaker adjudicate ambiguous lemma candidates and unresolved tokens before comparing checkers.</li>
+</ol>
+<p>The local scripted-reply test verifies controller flow and target secrecy; the model game requires the protocol above.</p>
+<p>Questions to answer:</p>
+<ol type="1">
+<li>How many violations does the surface checker miss?</li>
+<li>Do the models drift into Russian or another Turkic language during the game? In which turns?</li>
+<li>Are the guesser’s answers in the base form, or inflected? How should the game score an inflected correct guess?</li>
+</ol>
+<p><strong>Status: procedure only.</strong> The speaker-reviewed twenty-target game is not run here. Exercise 1 records a separate twelve-target diagnostic whose target list remains unchecked.</p>
+</section>
+<section id="sec-ch14-synthesis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch14-synthesis">What to Take Forward</h2>
+<p>Useful generated text needs more than fluent-looking words. The Kazakh generation exercises produce sentences labelled Kyrgyz by GlotLID and lower analyser recognition than the human news sample. These diagnostics flag passages for review; speaker judgements establish whether they contain language or grammatical errors. Validate automatic judges against human decisions before relying on their scores. <a href="15-evaluation-benchmarks.html" class="quarto-xref"><span>Chapter 15</span></a> combines these checks with task scores, baselines and uncertainty.</p>
+</section>
+<section id="sec-ch14-further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch14-further-reading">Further Reading</h2>
+<ul>
+<li><span class="citation" data-cites="chalamalasetti-etal-2023-clembench">Chalamalasetti et al. (<a href="../references.html#ref-chalamalasetti-etal-2023-clembench" role="doc-biblioref">2023</a>)</span> introduces clembench and the dialogue-game approach to evaluating chat models.</li>
+<li><span class="citation" data-cites="marchisio2024confusion">Marchisio et al. (<a href="../references.html#ref-marchisio2024confusion" role="doc-biblioref">2024</a>)</span> studies language confusion: models answering in the wrong language or mixing languages.</li>
+<li><span class="citation" data-cites="zheng2023judge">Zheng et al. (<a href="../references.html#ref-zheng2023judge" role="doc-biblioref">2023</a>)</span> studies strong LLMs as judges and discusses their biases.</li>
+<li><span class="citation" data-cites="scialom2020mlsum">Scialom et al. (<a href="../references.html#ref-scialom2020mlsum" role="doc-biblioref">2020</a>)</span> and <span class="citation" data-cites="hasan2021xlsum">Hasan et al. (<a href="../references.html#ref-hasan2021xlsum" role="doc-biblioref">2021</a>)</span> describe the multilingual summarisation datasets that include Turkic languages.</li>
+</ul>
+</section>
+<section id="sec-ch14-exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sec-ch14-exercises">Exercises</h2>
+<ol type="1">
+<li><strong>Port a game.</strong> Play Kazakh Taboo with a model as describer and guesser, using the controller and rule checker of the Hands-On. Compare the surface and lemma checkers, track the language of each clue by round, and decide how to score inflected guesses. Then document every language-specific decision needed to port one more clembench game: word lists, morphology in the rule checks, script and cultural content.</li>
+<li><strong>Error collection.</strong> Ask a model 25 culturally grounded questions each in two Turkic languages (holidays, food, place names, proverbs). Measure language, script and analyser coverage automatically, then classify the errors in the answers with the seven types of <a href="#sec-gen-failures" class="quarto-xref"><span>Section 14.1</span></a>.</li>
+<li><strong>Coverage baseline.</strong> Compute analyser coverage on 1,000 sentences of human-written news text and on model-written news in the same language. How large is the difference, and what kinds of words account for it?</li>
+<li><strong>Judging a judge.</strong> Create pairs in which the second sentence contains one Turkic-specific error from <a href="#sec-gen-failures" class="quarto-xref"><span>Section 14.1</span></a>. Ask an LLM judge which sentence is correct, with the order counterbalanced. Which error types does it miss, and does it prefer one position?</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-adelani2024sib" class="csl-entry" role="listitem">
+Adelani, David Ifeoluwa, Hannah Liu, Xiaoyu Shen, Nikita Vassilyev, Jesujoba O. Alabi, Yanke Mao, Haonan Gao, and En-Shiun Annie Lee. 2024. <span>“<span>SIB</span>-200: A Simple, Inclusive, and Big Evaluation Dataset for Topic Classification in 200+ Languages and Dialects.”</span> In <em>Proceedings of the 18th Conference of the <span>E</span>uropean Chapter of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics (Volume 1: Long Papers)</em>, 226–45. St. Julian<span>’</span>s, Malta: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.eacl-long.14">https://doi.org/10.18653/v1/2024.eacl-long.14</a>.
+</div>
+<div id="ref-chalamalasetti-etal-2023-clembench" class="csl-entry" role="listitem">
+Chalamalasetti, Kranti, Jana Götze, Sherzod Hakimov, Brielen Madureira, Philipp Sadler, and David Schlangen. 2023. <span>“Clembench: Using Game Play to Evaluate Chat-Optimized Language Models as Conversational Agents.”</span> In <em>Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing</em>, 11174–219. Singapore: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.emnlp-main.689">https://doi.org/10.18653/v1/2023.emnlp-main.689</a>.
+</div>
+<div id="ref-hasan2021xlsum" class="csl-entry" role="listitem">
+Hasan, Tahmid, Abhik Bhattacharjee, Md. Saiful Islam, Kazi Mubasshir, Yuan-Fang Li, Yong-Bin Kang, M. Sohel Rahman, and Rifat Shahriyar. 2021. <span>“<span>XL</span>-Sum: Large-Scale Multilingual Abstractive Summarization for 44 Languages.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>ACL</span>-<span>IJCNLP</span> 2021</em>, 4693–703. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.findings-acl.413">https://doi.org/10.18653/v1/2021.findings-acl.413</a>.
+</div>
+<div id="ref-kargaran-etal-2023-glotlid" class="csl-entry" role="listitem">
+Kargaran, Amir Hossein, Ayyoob Imani, François Yvon, and Hinrich Schuetze. 2023. <span>“<span>G</span>lot<span>LID</span>: Language Identification for Low-Resource Languages.”</span> In <em>Findings of the <span>A</span>ssociation for <span>C</span>omputational <span>L</span>inguistics: <span>EMNLP</span> 2023</em>, 6155–6218. Singapore: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2023.findings-emnlp.410">https://doi.org/10.18653/v1/2023.findings-emnlp.410</a>.
+</div>
+<div id="ref-marchisio2024confusion" class="csl-entry" role="listitem">
+Marchisio, Kelly, Wei-Yin Ko, Alexandre Berard, Théo Dehaze, and Sebastian Ruder. 2024. <span>“Understanding and Mitigating Language Confusion in <span>LLM</span>s.”</span> In <em>Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing</em>, 6653–77. Miami, Florida, USA: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2024.emnlp-main.380">https://doi.org/10.18653/v1/2024.emnlp-main.380</a>.
+</div>
+<div id="ref-qwen2024qwen25" class="csl-entry" role="listitem">
+Qwen Team, An Yang, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, et al. 2024. <span>“Qwen2.5 Technical Report.”</span> arXiv preprint arXiv:2412.15115. <a href="https://arxiv.org/abs/2412.15115">https://arxiv.org/abs/2412.15115</a>.
+</div>
+<div id="ref-scialom2020mlsum" class="csl-entry" role="listitem">
+Scialom, Thomas, Paul-Alexis Dray, Sylvain Lamprier, Benjamin Piwowarski, and Jacopo Staiano. 2020. <span>“<span>MLSUM</span>: The Multilingual Summarization Corpus.”</span> In <em>Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em>, 8051–67. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2020.emnlp-main.647">https://doi.org/10.18653/v1/2020.emnlp-main.647</a>.
+</div>
+<div id="ref-yeshpanov2022kaznerd" class="csl-entry" role="listitem">
+Yeshpanov, Rustem, Yerbolat Khassanov, and Huseyin Atakan Varol. 2022. <span>“<span>K</span>az<span>NERD</span>: <span>K</span>azakh Named Entity Recognition Dataset.”</span> In <em>Proceedings of the Thirteenth Language Resources and Evaluation Conference</em>, 417–26. Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2022.lrec-1.44/">https://aclanthology.org/2022.lrec-1.44/</a>.
+</div>
+<div id="ref-zheng2023judge" class="csl-entry" role="listitem">
+Zheng, Lianmin, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin, et al. 2023. <span>“Judging <span>LLM</span>-as-a-Judge with <span>MT</span>-Bench and Chatbot Arena.”</span> In <em>Advances in Neural Information Processing Systems 36 (<span>NeurIPS</span> 2023), Datasets and Benchmarks Track</em>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/13-meaning-retrieval.html" class="pagination-link" aria-label="Meaning: Embeddings, Semantic Resources, and Retrieval">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Meaning: Embeddings, Semantic Resources, and Retrieval</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/15-evaluation-benchmarks.html" class="pagination-link" aria-label="Evaluation, Benchmarks, and Responsible Deployment">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation, Benchmarks, and Responsible Deployment</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
